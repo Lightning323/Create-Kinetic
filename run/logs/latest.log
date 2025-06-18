@@ -1,0 +1,714 @@
+[18Jun2025 11:52:19.814] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher running: args [--launchTarget, forgeclientuserdev, --version, MOD_DEV, --assetIndex, 5, --assetsDir, C:\Users\sampw\.gradle\caches\forge_gradle\assets, --gameDir, ., --fml.forgeVersion, 47.4.2, --fml.mcVersion, 1.20.1, --fml.forgeGroup, net.minecraftforge, --fml.mcpVersion, 20230612.114412, --mixin.config, createkinetic.mixins.json]
+[18Jun2025 11:52:19.824] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher 10.0.9+10.0.9+main.dcd20f30 starting: java version 17.0.12 by Amazon.com Inc.; OS Windows 11 arch amd64 version 10.0
+[18Jun2025 11:52:20.201] [main/INFO] [net.minecraftforge.fml.loading.ImmediateWindowHandler/]: Loading ImmediateWindowProvider fmlearlywindow
+[18Jun2025 11:52:20.388] [main/INFO] [EARLYDISPLAY/]: Trying GL version 4.6
+[18Jun2025 11:52:20.919] [main/INFO] [EARLYDISPLAY/]: Requested GL version 4.6 got version 4.6
+[18Jun2025 11:52:21.182] [main/INFO] [mixin/]: SpongePowered MIXIN Subsystem Version=0.8.5 Source=union:/C:/Users/sampw/.gradle/caches/modules-2/files-2.1/org.spongepowered/mixin/0.8.5/9d1c0c3a304ae6697ecd477218fa61b850bf57fc/mixin-0.8.5.jar%23128!/ Service=ModLauncher Env=CLIENT
+[18Jun2025 11:52:21.188] [pool-2-thread-1/INFO] [EARLYDISPLAY/]: GL info: AMD Radeon(TM) Graphics GL version 4.6.14802 Core Profile Forward-Compatible Context 21.40.56.05 30.0.14056.5001, ATI Technologies Inc.
+[18Jun2025 11:52:22.399] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\sampw\.gradle\caches\modules-2\files-2.1\net.minecraftforge\javafmllanguage\1.20.1-47.4.2\69932762bf197a54e59c5beb40e2a796cb7b0344\javafmllanguage-1.20.1-47.4.2.jar is missing mods.toml file
+[18Jun2025 11:52:22.407] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\sampw\.gradle\caches\modules-2\files-2.1\net.minecraftforge\lowcodelanguage\1.20.1-47.4.2\558f84c8439daeb45b9d72391572781e8d52039f\lowcodelanguage-1.20.1-47.4.2.jar is missing mods.toml file
+[18Jun2025 11:52:22.413] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\sampw\.gradle\caches\modules-2\files-2.1\net.minecraftforge\mclanguage\1.20.1-47.4.2\b861aade365eff21af88b465e5fb32b643b2db4d\mclanguage-1.20.1-47.4.2.jar is missing mods.toml file
+[18Jun2025 11:52:22.421] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\sampw\.gradle\caches\modules-2\files-2.1\net.minecraftforge\fmlcore\1.20.1-47.4.2\e64efc556f126e900f6656987f2641f639b7a3e2\fmlcore-1.20.1-47.4.2.jar is missing mods.toml file
+[18Jun2025 11:52:22.638] [main/INFO] [net.minecraftforge.fml.loading.moddiscovery.JarInJarDependencyLocator/]: No dependencies to load found. Skipping!
+[18Jun2025 11:52:27.156] [main/INFO] [cpw.mods.modlauncher.LaunchServiceHandler/MODLAUNCHER]: Launching target 'forgeclientuserdev' with arguments [--version, MOD_DEV, --gameDir, ., --assetsDir, C:\Users\sampw\.gradle\caches\forge_gradle\assets, --assetIndex, 5]
+[18Jun2025 11:52:27.466] [main/WARN] [mixin/]: Reference map 'createkinetic.refmap.json' for createkinetic.mixins.json could not be read. If this is a development environment you can ignore this message
+[18Jun2025 11:52:38.799] [Datafixer Bootstrap/INFO] [com.mojang.datafixers.DataFixerBuilder/]: 188 Datafixer optimizations took 462 milliseconds
+[18Jun2025 11:52:44.884] [Render thread/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/sampw/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.2_mapped_official_1.20.1/forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/assets/.mcassetsroot' uses unexpected schema
+[18Jun2025 11:52:44.885] [Render thread/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/sampw/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.2_mapped_official_1.20.1/forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/data/.mcassetsroot' uses unexpected schema
+[18Jun2025 11:52:45.010] [Render thread/INFO] [com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService/]: Environment: authHost='https://authserver.mojang.com', accountsHost='https://api.mojang.com', sessionHost='https://sessionserver.mojang.com', servicesHost='https://api.minecraftservices.com', name='PROD'
+[18Jun2025 11:52:45.059] [Render thread/INFO] [net.minecraft.client.Minecraft/]: Setting user: Dev
+[18Jun2025 11:52:45.568] [Render thread/INFO] [net.minecraft.client.Minecraft/]: Backend library: LWJGL version 3.3.1 build 7
+[18Jun2025 11:52:46.641] [modloading-worker-0/INFO] [net.minecraftforge.common.ForgeMod/FORGEMOD]: Forge mod loading, version 47.4.2, for MC 1.20.1 with MCP 20230612.114412
+[18Jun2025 11:52:46.642] [modloading-worker-0/INFO] [net.minecraftforge.common.MinecraftForge/FORGE]: MinecraftForge v47.4.2 Initialized
+[18Jun2025 11:52:49.007] [Render thread/INFO] [net.minecraftforge.gametest.ForgeGameTestHooks/]: Enabled Gametest Namespaces: [createkinetic]
+[18Jun2025 11:52:49.316] [Render thread/INFO] [net.minecraft.server.packs.resources.ReloadableResourceManager/]: Reloading ResourceManager: vanilla, mod_resources
+[18Jun2025 11:52:49.497] [Worker-Main-12/INFO] [org.zipcoder.createkinetic.Createkinetic/]: HELLO FROM COMMON SETUP
+[18Jun2025 11:52:49.498] [Worker-Main-12/INFO] [org.zipcoder.createkinetic.Createkinetic/]: DIRT BLOCK >> minecraft:dirt
+[18Jun2025 11:52:49.498] [Worker-Main-12/INFO] [org.zipcoder.createkinetic.Createkinetic/]: DIRT BLOCK >> minecraft:dirt
+[18Jun2025 11:52:49.499] [Worker-Main-12/INFO] [org.zipcoder.createkinetic.Createkinetic/]: The magic number is... 42
+[18Jun2025 11:52:49.501] [Worker-Main-12/INFO] [org.zipcoder.createkinetic.Createkinetic/]: ITEM >> iron_ingot
+[18Jun2025 11:52:49.856] [Worker-Main-1/INFO] [net.minecraft.client.gui.font.providers.UnihexProvider/]: Found unifont_all_no_pua-15.0.06.hex, loading
+[18Jun2025 11:52:50.028] [Forge Version Check/INFO] [net.minecraftforge.fml.VersionChecker/]: [forge] Starting version check at https://files.minecraftforge.net/net/minecraftforge/forge/promotions_slim.json
+[18Jun2025 11:52:50.249] [Worker-Main-5/INFO] [org.zipcoder.createkinetic.Createkinetic/]: HELLO FROM CLIENT SETUP
+[18Jun2025 11:52:50.250] [Worker-Main-5/INFO] [org.zipcoder.createkinetic.Createkinetic/]: MINECRAFT NAME >> Dev
+[18Jun2025 11:52:51.437] [Forge Version Check/INFO] [net.minecraftforge.fml.VersionChecker/]: [forge] Found status: AHEAD Current: 47.4.2 Target: null
+[18Jun2025 11:52:56.464] [Render thread/WARN] [net.minecraft.client.sounds.SoundEngine/]: Missing sound for event: minecraft:item.goat_horn.play
+[18Jun2025 11:52:56.464] [Render thread/WARN] [net.minecraft.client.sounds.SoundEngine/]: Missing sound for event: minecraft:entity.goat.screaming.horn_break
+[18Jun2025 11:52:57.007] [Render thread/INFO] [com.mojang.blaze3d.audio.Library/]: OpenAL initialized on device OpenAL Soft on Speaker (Realtek(R) Audio)
+[18Jun2025 11:52:57.009] [Render thread/INFO] [net.minecraft.client.sounds.SoundEngine/SOUNDS]: Sound engine started
+[18Jun2025 11:52:57.251] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 1024x512x4 minecraft:textures/atlas/blocks.png-atlas
+[18Jun2025 11:52:57.443] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 256x256x4 minecraft:textures/atlas/signs.png-atlas
+[18Jun2025 11:52:57.446] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 512x512x4 minecraft:textures/atlas/shield_patterns.png-atlas
+[18Jun2025 11:52:57.453] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 512x512x4 minecraft:textures/atlas/banner_patterns.png-atlas
+[18Jun2025 11:52:57.458] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 1024x1024x4 minecraft:textures/atlas/armor_trims.png-atlas
+[18Jun2025 11:52:57.507] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 256x256x4 minecraft:textures/atlas/chest.png-atlas
+[18Jun2025 11:52:57.510] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 128x64x4 minecraft:textures/atlas/decorated_pot.png-atlas
+[18Jun2025 11:52:57.514] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 512x256x4 minecraft:textures/atlas/shulker_boxes.png-atlas
+[18Jun2025 11:52:57.517] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 512x256x4 minecraft:textures/atlas/beds.png-atlas
+[18Jun2025 11:52:58.106] [Render thread/WARN] [net.minecraft.client.renderer.ShaderInstance/]: Shader rendertype_entity_translucent_emissive could not find sampler named Sampler2 in the specified shader program.
+[18Jun2025 11:52:58.226] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 256x256x0 minecraft:textures/atlas/particles.png-atlas
+[18Jun2025 11:52:58.232] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 256x256x0 minecraft:textures/atlas/paintings.png-atlas
+[18Jun2025 11:52:58.234] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 128x128x0 minecraft:textures/atlas/mob_effects.png-atlas
+[18Jun2025 11:52:58.805] [Realms Notification Availability checker #1/INFO] [com.mojang.realmsclient.client.RealmsClient/]: Could not authorize you against Realms server: java.lang.RuntimeException: Failed to parse into SignedJWT: 0
+[18Jun2025 11:53:01.980] [Render thread/INFO] [net.minecraftforge.registries.GameData/REGISTRIES]: Injecting existing registry data into this CLIENT instance
+[18Jun2025 11:53:05.864] [Render thread/INFO] [net.minecraft.world.item.crafting.RecipeManager/]: Loaded 7 recipes
+[18Jun2025 11:53:06.188] [Render thread/INFO] [net.minecraft.advancements.AdvancementList/]: Loaded 1271 advancements
+[18Jun2025 11:53:07.087] [Server thread/INFO] [net.minecraft.client.server.IntegratedServer/]: Starting integrated minecraft server version 1.20.1
+[18Jun2025 11:53:07.088] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Generating keypair
+[18Jun2025 11:53:07.792] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Preparing start region for dimension minecraft:overworld
+[18Jun2025 11:53:10.373] [Render thread/INFO] [net.minecraft.server.level.progress.LoggerChunkProgressListener/]: Preparing spawn area: 0%
+[18Jun2025 11:53:10.373] [Render thread/INFO] [net.minecraft.server.level.progress.LoggerChunkProgressListener/]: Preparing spawn area: 0%
+[18Jun2025 11:53:10.373] [Render thread/INFO] [net.minecraft.server.level.progress.LoggerChunkProgressListener/]: Preparing spawn area: 0%
+[18Jun2025 11:53:10.374] [Render thread/INFO] [net.minecraft.server.level.progress.LoggerChunkProgressListener/]: Preparing spawn area: 0%
+[18Jun2025 11:53:10.374] [Render thread/INFO] [net.minecraft.server.level.progress.LoggerChunkProgressListener/]: Preparing spawn area: 0%
+[18Jun2025 11:53:10.374] [Render thread/INFO] [net.minecraft.server.level.progress.LoggerChunkProgressListener/]: Preparing spawn area: 0%
+[18Jun2025 11:53:10.803] [Render thread/INFO] [net.minecraft.server.level.progress.LoggerChunkProgressListener/]: Preparing spawn area: 1%
+[18Jun2025 11:53:11.835] [Render thread/INFO] [net.minecraft.server.level.progress.LoggerChunkProgressListener/]: Preparing spawn area: 16%
+[18Jun2025 11:53:11.835] [Render thread/INFO] [net.minecraft.server.level.progress.LoggerChunkProgressListener/]: Preparing spawn area: 16%
+[18Jun2025 11:53:12.299] [Render thread/INFO] [net.minecraft.server.level.progress.LoggerChunkProgressListener/]: Preparing spawn area: 47%
+[18Jun2025 11:53:12.799] [Render thread/INFO] [net.minecraft.server.level.progress.LoggerChunkProgressListener/]: Preparing spawn area: 83%
+[18Jun2025 11:53:13.011] [Server thread/INFO] [net.minecraftforge.server.permission.PermissionAPI/]: Successfully initialized permission handler forge:default_handler
+[18Jun2025 11:53:13.012] [Server thread/INFO] [org.zipcoder.createkinetic.Createkinetic/]: HELLO from server starting
+[18Jun2025 11:53:13.030] [Render thread/INFO] [net.minecraft.server.level.progress.LoggerChunkProgressListener/]: Time elapsed: 5235 ms
+[18Jun2025 11:53:13.251] [Server thread/INFO] [net.minecraft.client.server.IntegratedServer/]: Changing view distance to 12, from 10
+[18Jun2025 11:53:13.255] [Server thread/INFO] [net.minecraft.client.server.IntegratedServer/]: Changing simulation distance to 12, from 0
+[18Jun2025 11:53:13.609] [Render thread/WARN] [io.netty.util.internal.SystemPropertyUtil/]: Unable to parse the boolean system property 'java.net.preferIPv6Addresses':system - using the default value: false
+[18Jun2025 11:53:15.294] [Netty Local Client IO #0/INFO] [net.minecraftforge.network.NetworkHooks/]: Connected to a modded server.
+[18Jun2025 11:53:15.550] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: Dev[local:E:a6353819] logged in with entity id 88 at (8.34627426191058, -60.0, 3.735577413858596)
+[18Jun2025 11:53:15.824] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Dev joined the game
+[18Jun2025 11:53:17.339] [Render thread/INFO] [net.minecraft.advancements.AdvancementList/]: Loaded 2 advancements
+[18Jun2025 11:53:37.963] [Server thread/INFO] [net.minecraft.client.server.IntegratedServer/]: Saving and pausing game...
+[18Jun2025 11:53:37.971] [Server thread/ERROR] [net.minecraft.Util/]: Failed to rename
+java.nio.file.FileSystemException: .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-6785172072763356358.dat -> .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat: The process cannot access the file because it is being used by another process
+	at sun.nio.fs.WindowsException.translateToIOException(WindowsException.java:92) ~[?:?]
+	at sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:103) ~[?:?]
+	at sun.nio.fs.WindowsFileCopy.move(WindowsFileCopy.java:403) ~[?:?]
+	at sun.nio.fs.WindowsFileSystemProvider.move(WindowsFileSystemProvider.java:293) ~[?:?]
+	at java.nio.file.Files.move(Files.java:1432) ~[?:?]
+	at net.minecraft.Util$5.getAsBoolean(Util.java:502) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.executeInSequence(Util.java:560) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.runWithRetries(Util.java:571) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceOrMoveFile(Util.java:598) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceFile(Util.java:587) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceFile(Util.java:583) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.world.level.storage.PlayerDataStorage.save(PlayerDataStorage.java:33) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.players.PlayerList.save(PlayerList.java:332) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.client.server.IntegratedPlayerList.save(IntegratedPlayerList.java:29) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.players.PlayerList.saveAll(PlayerList.java:645) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.saveEverything(MinecraftServer.java:531) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.client.server.IntegratedServer.tickServer(IntegratedServer.java:77) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:661) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.lambda$spin$2(MinecraftServer.java:251) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at java.lang.Thread.run(Thread.java:840) ~[?:?]
+[18Jun2025 11:53:37.972] [Server thread/WARN] [net.minecraft.Util/]: Failed to execute rename .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-6785172072763356358.dat to .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat
+[18Jun2025 11:53:37.972] [Server thread/ERROR] [net.minecraft.Util/]: Failed to replace .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat with .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-6785172072763356358.dat, retrying 0/10
+[18Jun2025 11:53:37.973] [Server thread/ERROR] [net.minecraft.Util/]: Failed to rename
+java.nio.file.FileSystemException: .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-6785172072763356358.dat -> .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat: The process cannot access the file because it is being used by another process
+	at sun.nio.fs.WindowsException.translateToIOException(WindowsException.java:92) ~[?:?]
+	at sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:103) ~[?:?]
+	at sun.nio.fs.WindowsFileCopy.move(WindowsFileCopy.java:403) ~[?:?]
+	at sun.nio.fs.WindowsFileSystemProvider.move(WindowsFileSystemProvider.java:293) ~[?:?]
+	at java.nio.file.Files.move(Files.java:1432) ~[?:?]
+	at net.minecraft.Util$5.getAsBoolean(Util.java:502) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.executeInSequence(Util.java:560) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.runWithRetries(Util.java:571) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceOrMoveFile(Util.java:598) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceFile(Util.java:587) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceFile(Util.java:583) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.world.level.storage.PlayerDataStorage.save(PlayerDataStorage.java:33) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.players.PlayerList.save(PlayerList.java:332) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.client.server.IntegratedPlayerList.save(IntegratedPlayerList.java:29) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.players.PlayerList.saveAll(PlayerList.java:645) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.saveEverything(MinecraftServer.java:531) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.client.server.IntegratedServer.tickServer(IntegratedServer.java:77) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:661) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.lambda$spin$2(MinecraftServer.java:251) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at java.lang.Thread.run(Thread.java:840) ~[?:?]
+[18Jun2025 11:53:37.974] [Server thread/WARN] [net.minecraft.Util/]: Failed to execute rename .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-6785172072763356358.dat to .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat
+[18Jun2025 11:53:37.974] [Server thread/ERROR] [net.minecraft.Util/]: Failed to replace .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat with .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-6785172072763356358.dat, retrying 1/10
+[18Jun2025 11:53:37.975] [Server thread/ERROR] [net.minecraft.Util/]: Failed to rename
+java.nio.file.FileSystemException: .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-6785172072763356358.dat -> .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat: The process cannot access the file because it is being used by another process
+	at sun.nio.fs.WindowsException.translateToIOException(WindowsException.java:92) ~[?:?]
+	at sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:103) ~[?:?]
+	at sun.nio.fs.WindowsFileCopy.move(WindowsFileCopy.java:403) ~[?:?]
+	at sun.nio.fs.WindowsFileSystemProvider.move(WindowsFileSystemProvider.java:293) ~[?:?]
+	at java.nio.file.Files.move(Files.java:1432) ~[?:?]
+	at net.minecraft.Util$5.getAsBoolean(Util.java:502) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.executeInSequence(Util.java:560) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.runWithRetries(Util.java:571) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceOrMoveFile(Util.java:598) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceFile(Util.java:587) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceFile(Util.java:583) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.world.level.storage.PlayerDataStorage.save(PlayerDataStorage.java:33) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.players.PlayerList.save(PlayerList.java:332) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.client.server.IntegratedPlayerList.save(IntegratedPlayerList.java:29) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.players.PlayerList.saveAll(PlayerList.java:645) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.saveEverything(MinecraftServer.java:531) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.client.server.IntegratedServer.tickServer(IntegratedServer.java:77) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:661) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.lambda$spin$2(MinecraftServer.java:251) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at java.lang.Thread.run(Thread.java:840) ~[?:?]
+[18Jun2025 11:53:37.978] [Server thread/WARN] [net.minecraft.Util/]: Failed to execute rename .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-6785172072763356358.dat to .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat
+[18Jun2025 11:53:37.978] [Server thread/ERROR] [net.minecraft.Util/]: Failed to replace .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat with .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-6785172072763356358.dat, retrying 2/10
+[18Jun2025 11:53:37.978] [Server thread/ERROR] [net.minecraft.Util/]: Failed to rename
+java.nio.file.FileSystemException: .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-6785172072763356358.dat -> .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat: The process cannot access the file because it is being used by another process
+	at sun.nio.fs.WindowsException.translateToIOException(WindowsException.java:92) ~[?:?]
+	at sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:103) ~[?:?]
+	at sun.nio.fs.WindowsFileCopy.move(WindowsFileCopy.java:403) ~[?:?]
+	at sun.nio.fs.WindowsFileSystemProvider.move(WindowsFileSystemProvider.java:293) ~[?:?]
+	at java.nio.file.Files.move(Files.java:1432) ~[?:?]
+	at net.minecraft.Util$5.getAsBoolean(Util.java:502) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.executeInSequence(Util.java:560) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.runWithRetries(Util.java:571) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceOrMoveFile(Util.java:598) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceFile(Util.java:587) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceFile(Util.java:583) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.world.level.storage.PlayerDataStorage.save(PlayerDataStorage.java:33) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.players.PlayerList.save(PlayerList.java:332) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.client.server.IntegratedPlayerList.save(IntegratedPlayerList.java:29) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.players.PlayerList.saveAll(PlayerList.java:645) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.saveEverything(MinecraftServer.java:531) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.client.server.IntegratedServer.tickServer(IntegratedServer.java:77) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:661) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.lambda$spin$2(MinecraftServer.java:251) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at java.lang.Thread.run(Thread.java:840) ~[?:?]
+[18Jun2025 11:53:37.979] [Server thread/WARN] [net.minecraft.Util/]: Failed to execute rename .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-6785172072763356358.dat to .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat
+[18Jun2025 11:53:37.979] [Server thread/ERROR] [net.minecraft.Util/]: Failed to replace .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat with .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-6785172072763356358.dat, retrying 3/10
+[18Jun2025 11:53:37.980] [Server thread/ERROR] [net.minecraft.Util/]: Failed to rename
+java.nio.file.FileSystemException: .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-6785172072763356358.dat -> .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat: The process cannot access the file because it is being used by another process
+	at sun.nio.fs.WindowsException.translateToIOException(WindowsException.java:92) ~[?:?]
+	at sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:103) ~[?:?]
+	at sun.nio.fs.WindowsFileCopy.move(WindowsFileCopy.java:403) ~[?:?]
+	at sun.nio.fs.WindowsFileSystemProvider.move(WindowsFileSystemProvider.java:293) ~[?:?]
+	at java.nio.file.Files.move(Files.java:1432) ~[?:?]
+	at net.minecraft.Util$5.getAsBoolean(Util.java:502) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.executeInSequence(Util.java:560) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.runWithRetries(Util.java:571) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceOrMoveFile(Util.java:598) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceFile(Util.java:587) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceFile(Util.java:583) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.world.level.storage.PlayerDataStorage.save(PlayerDataStorage.java:33) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.players.PlayerList.save(PlayerList.java:332) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.client.server.IntegratedPlayerList.save(IntegratedPlayerList.java:29) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.players.PlayerList.saveAll(PlayerList.java:645) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.saveEverything(MinecraftServer.java:531) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.client.server.IntegratedServer.tickServer(IntegratedServer.java:77) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:661) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.lambda$spin$2(MinecraftServer.java:251) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at java.lang.Thread.run(Thread.java:840) ~[?:?]
+[18Jun2025 11:53:37.981] [Server thread/WARN] [net.minecraft.Util/]: Failed to execute rename .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-6785172072763356358.dat to .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat
+[18Jun2025 11:53:37.981] [Server thread/ERROR] [net.minecraft.Util/]: Failed to replace .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat with .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-6785172072763356358.dat, retrying 4/10
+[18Jun2025 11:53:37.992] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[New World]'/minecraft:overworld
+[18Jun2025 11:53:38.012] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[New World]'/minecraft:the_end
+[18Jun2025 11:53:38.015] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[New World]'/minecraft:the_nether
+[18Jun2025 11:55:38.563] [Server thread/INFO] [net.minecraft.client.server.IntegratedServer/]: Saving and pausing game...
+[18Jun2025 11:55:38.570] [Server thread/ERROR] [net.minecraft.Util/]: Failed to rename
+java.nio.file.FileSystemException: .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-14440300723127549788.dat -> .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat: The process cannot access the file because it is being used by another process
+	at sun.nio.fs.WindowsException.translateToIOException(WindowsException.java:92) ~[?:?]
+	at sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:103) ~[?:?]
+	at sun.nio.fs.WindowsFileCopy.move(WindowsFileCopy.java:403) ~[?:?]
+	at sun.nio.fs.WindowsFileSystemProvider.move(WindowsFileSystemProvider.java:293) ~[?:?]
+	at java.nio.file.Files.move(Files.java:1432) ~[?:?]
+	at net.minecraft.Util$5.getAsBoolean(Util.java:502) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.executeInSequence(Util.java:560) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.runWithRetries(Util.java:571) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceOrMoveFile(Util.java:598) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceFile(Util.java:587) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceFile(Util.java:583) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.world.level.storage.PlayerDataStorage.save(PlayerDataStorage.java:33) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.players.PlayerList.save(PlayerList.java:332) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.client.server.IntegratedPlayerList.save(IntegratedPlayerList.java:29) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.players.PlayerList.saveAll(PlayerList.java:645) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.saveEverything(MinecraftServer.java:531) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.client.server.IntegratedServer.tickServer(IntegratedServer.java:77) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:661) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.lambda$spin$2(MinecraftServer.java:251) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at java.lang.Thread.run(Thread.java:840) ~[?:?]
+[18Jun2025 11:55:38.571] [Server thread/WARN] [net.minecraft.Util/]: Failed to execute rename .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-14440300723127549788.dat to .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat
+[18Jun2025 11:55:38.571] [Server thread/ERROR] [net.minecraft.Util/]: Failed to replace .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat with .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-14440300723127549788.dat, retrying 0/10
+[18Jun2025 11:55:38.572] [Server thread/ERROR] [net.minecraft.Util/]: Failed to rename
+java.nio.file.FileSystemException: .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-14440300723127549788.dat -> .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat: The process cannot access the file because it is being used by another process
+	at sun.nio.fs.WindowsException.translateToIOException(WindowsException.java:92) ~[?:?]
+	at sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:103) ~[?:?]
+	at sun.nio.fs.WindowsFileCopy.move(WindowsFileCopy.java:403) ~[?:?]
+	at sun.nio.fs.WindowsFileSystemProvider.move(WindowsFileSystemProvider.java:293) ~[?:?]
+	at java.nio.file.Files.move(Files.java:1432) ~[?:?]
+	at net.minecraft.Util$5.getAsBoolean(Util.java:502) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.executeInSequence(Util.java:560) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.runWithRetries(Util.java:571) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceOrMoveFile(Util.java:598) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceFile(Util.java:587) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceFile(Util.java:583) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.world.level.storage.PlayerDataStorage.save(PlayerDataStorage.java:33) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.players.PlayerList.save(PlayerList.java:332) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.client.server.IntegratedPlayerList.save(IntegratedPlayerList.java:29) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.players.PlayerList.saveAll(PlayerList.java:645) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.saveEverything(MinecraftServer.java:531) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.client.server.IntegratedServer.tickServer(IntegratedServer.java:77) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:661) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.lambda$spin$2(MinecraftServer.java:251) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at java.lang.Thread.run(Thread.java:840) ~[?:?]
+[18Jun2025 11:55:38.573] [Server thread/WARN] [net.minecraft.Util/]: Failed to execute rename .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-14440300723127549788.dat to .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat
+[18Jun2025 11:55:38.573] [Server thread/ERROR] [net.minecraft.Util/]: Failed to replace .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat with .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-14440300723127549788.dat, retrying 1/10
+[18Jun2025 11:55:38.574] [Server thread/ERROR] [net.minecraft.Util/]: Failed to rename
+java.nio.file.FileSystemException: .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-14440300723127549788.dat -> .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat: The process cannot access the file because it is being used by another process
+	at sun.nio.fs.WindowsException.translateToIOException(WindowsException.java:92) ~[?:?]
+	at sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:103) ~[?:?]
+	at sun.nio.fs.WindowsFileCopy.move(WindowsFileCopy.java:403) ~[?:?]
+	at sun.nio.fs.WindowsFileSystemProvider.move(WindowsFileSystemProvider.java:293) ~[?:?]
+	at java.nio.file.Files.move(Files.java:1432) ~[?:?]
+	at net.minecraft.Util$5.getAsBoolean(Util.java:502) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.executeInSequence(Util.java:560) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.runWithRetries(Util.java:571) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceOrMoveFile(Util.java:598) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceFile(Util.java:587) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceFile(Util.java:583) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.world.level.storage.PlayerDataStorage.save(PlayerDataStorage.java:33) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.players.PlayerList.save(PlayerList.java:332) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.client.server.IntegratedPlayerList.save(IntegratedPlayerList.java:29) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.players.PlayerList.saveAll(PlayerList.java:645) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.saveEverything(MinecraftServer.java:531) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.client.server.IntegratedServer.tickServer(IntegratedServer.java:77) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:661) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.lambda$spin$2(MinecraftServer.java:251) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at java.lang.Thread.run(Thread.java:840) ~[?:?]
+[18Jun2025 11:55:38.575] [Server thread/WARN] [net.minecraft.Util/]: Failed to execute rename .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-14440300723127549788.dat to .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat
+[18Jun2025 11:55:38.575] [Server thread/ERROR] [net.minecraft.Util/]: Failed to replace .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat with .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-14440300723127549788.dat, retrying 2/10
+[18Jun2025 11:55:38.576] [Server thread/ERROR] [net.minecraft.Util/]: Failed to rename
+java.nio.file.FileSystemException: .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-14440300723127549788.dat -> .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat: The process cannot access the file because it is being used by another process
+	at sun.nio.fs.WindowsException.translateToIOException(WindowsException.java:92) ~[?:?]
+	at sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:103) ~[?:?]
+	at sun.nio.fs.WindowsFileCopy.move(WindowsFileCopy.java:403) ~[?:?]
+	at sun.nio.fs.WindowsFileSystemProvider.move(WindowsFileSystemProvider.java:293) ~[?:?]
+	at java.nio.file.Files.move(Files.java:1432) ~[?:?]
+	at net.minecraft.Util$5.getAsBoolean(Util.java:502) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.executeInSequence(Util.java:560) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.runWithRetries(Util.java:571) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceOrMoveFile(Util.java:598) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceFile(Util.java:587) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceFile(Util.java:583) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.world.level.storage.PlayerDataStorage.save(PlayerDataStorage.java:33) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.players.PlayerList.save(PlayerList.java:332) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.client.server.IntegratedPlayerList.save(IntegratedPlayerList.java:29) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.players.PlayerList.saveAll(PlayerList.java:645) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.saveEverything(MinecraftServer.java:531) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.client.server.IntegratedServer.tickServer(IntegratedServer.java:77) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:661) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.lambda$spin$2(MinecraftServer.java:251) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at java.lang.Thread.run(Thread.java:840) ~[?:?]
+[18Jun2025 11:55:38.576] [Server thread/WARN] [net.minecraft.Util/]: Failed to execute rename .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-14440300723127549788.dat to .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat
+[18Jun2025 11:55:38.577] [Server thread/ERROR] [net.minecraft.Util/]: Failed to replace .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat with .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-14440300723127549788.dat, retrying 3/10
+[18Jun2025 11:55:38.578] [Server thread/ERROR] [net.minecraft.Util/]: Failed to rename
+java.nio.file.FileSystemException: .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-14440300723127549788.dat -> .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat: The process cannot access the file because it is being used by another process
+	at sun.nio.fs.WindowsException.translateToIOException(WindowsException.java:92) ~[?:?]
+	at sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:103) ~[?:?]
+	at sun.nio.fs.WindowsFileCopy.move(WindowsFileCopy.java:403) ~[?:?]
+	at sun.nio.fs.WindowsFileSystemProvider.move(WindowsFileSystemProvider.java:293) ~[?:?]
+	at java.nio.file.Files.move(Files.java:1432) ~[?:?]
+	at net.minecraft.Util$5.getAsBoolean(Util.java:502) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.executeInSequence(Util.java:560) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.runWithRetries(Util.java:571) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceOrMoveFile(Util.java:598) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceFile(Util.java:587) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceFile(Util.java:583) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.world.level.storage.PlayerDataStorage.save(PlayerDataStorage.java:33) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.players.PlayerList.save(PlayerList.java:332) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.client.server.IntegratedPlayerList.save(IntegratedPlayerList.java:29) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.players.PlayerList.saveAll(PlayerList.java:645) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.saveEverything(MinecraftServer.java:531) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.client.server.IntegratedServer.tickServer(IntegratedServer.java:77) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:661) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.lambda$spin$2(MinecraftServer.java:251) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at java.lang.Thread.run(Thread.java:840) ~[?:?]
+[18Jun2025 11:55:38.578] [Server thread/WARN] [net.minecraft.Util/]: Failed to execute rename .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-14440300723127549788.dat to .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat
+[18Jun2025 11:55:38.578] [Server thread/ERROR] [net.minecraft.Util/]: Failed to replace .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat with .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-14440300723127549788.dat, retrying 4/10
+[18Jun2025 11:55:38.579] [Server thread/ERROR] [net.minecraft.Util/]: Failed to rename
+java.nio.file.FileSystemException: .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-14440300723127549788.dat -> .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat: The process cannot access the file because it is being used by another process
+	at sun.nio.fs.WindowsException.translateToIOException(WindowsException.java:92) ~[?:?]
+	at sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:103) ~[?:?]
+	at sun.nio.fs.WindowsFileCopy.move(WindowsFileCopy.java:403) ~[?:?]
+	at sun.nio.fs.WindowsFileSystemProvider.move(WindowsFileSystemProvider.java:293) ~[?:?]
+	at java.nio.file.Files.move(Files.java:1432) ~[?:?]
+	at net.minecraft.Util$5.getAsBoolean(Util.java:502) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.executeInSequence(Util.java:560) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.runWithRetries(Util.java:571) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceOrMoveFile(Util.java:598) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceFile(Util.java:587) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceFile(Util.java:583) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.world.level.storage.PlayerDataStorage.save(PlayerDataStorage.java:33) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.players.PlayerList.save(PlayerList.java:332) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.client.server.IntegratedPlayerList.save(IntegratedPlayerList.java:29) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.players.PlayerList.saveAll(PlayerList.java:645) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.saveEverything(MinecraftServer.java:531) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.client.server.IntegratedServer.tickServer(IntegratedServer.java:77) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:661) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.lambda$spin$2(MinecraftServer.java:251) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at java.lang.Thread.run(Thread.java:840) ~[?:?]
+[18Jun2025 11:55:38.580] [Server thread/WARN] [net.minecraft.Util/]: Failed to execute rename .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-14440300723127549788.dat to .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat
+[18Jun2025 11:55:38.580] [Server thread/ERROR] [net.minecraft.Util/]: Failed to replace .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat with .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-14440300723127549788.dat, retrying 5/10
+[18Jun2025 11:55:38.581] [Server thread/ERROR] [net.minecraft.Util/]: Failed to rename
+java.nio.file.FileSystemException: .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-14440300723127549788.dat -> .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat: The process cannot access the file because it is being used by another process
+	at sun.nio.fs.WindowsException.translateToIOException(WindowsException.java:92) ~[?:?]
+	at sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:103) ~[?:?]
+	at sun.nio.fs.WindowsFileCopy.move(WindowsFileCopy.java:403) ~[?:?]
+	at sun.nio.fs.WindowsFileSystemProvider.move(WindowsFileSystemProvider.java:293) ~[?:?]
+	at java.nio.file.Files.move(Files.java:1432) ~[?:?]
+	at net.minecraft.Util$5.getAsBoolean(Util.java:502) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.executeInSequence(Util.java:560) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.runWithRetries(Util.java:571) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceOrMoveFile(Util.java:598) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceFile(Util.java:587) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceFile(Util.java:583) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.world.level.storage.PlayerDataStorage.save(PlayerDataStorage.java:33) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.players.PlayerList.save(PlayerList.java:332) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.client.server.IntegratedPlayerList.save(IntegratedPlayerList.java:29) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.players.PlayerList.saveAll(PlayerList.java:645) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.saveEverything(MinecraftServer.java:531) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.client.server.IntegratedServer.tickServer(IntegratedServer.java:77) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:661) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.lambda$spin$2(MinecraftServer.java:251) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at java.lang.Thread.run(Thread.java:840) ~[?:?]
+[18Jun2025 11:55:38.581] [Server thread/WARN] [net.minecraft.Util/]: Failed to execute rename .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-14440300723127549788.dat to .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat
+[18Jun2025 11:55:38.581] [Server thread/ERROR] [net.minecraft.Util/]: Failed to replace .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat with .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-14440300723127549788.dat, retrying 6/10
+[18Jun2025 11:55:38.581] [Server thread/ERROR] [net.minecraft.Util/]: Failed to rename
+java.nio.file.FileSystemException: .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-14440300723127549788.dat -> .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat: The process cannot access the file because it is being used by another process
+	at sun.nio.fs.WindowsException.translateToIOException(WindowsException.java:92) ~[?:?]
+	at sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:103) ~[?:?]
+	at sun.nio.fs.WindowsFileCopy.move(WindowsFileCopy.java:403) ~[?:?]
+	at sun.nio.fs.WindowsFileSystemProvider.move(WindowsFileSystemProvider.java:293) ~[?:?]
+	at java.nio.file.Files.move(Files.java:1432) ~[?:?]
+	at net.minecraft.Util$5.getAsBoolean(Util.java:502) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.executeInSequence(Util.java:560) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.runWithRetries(Util.java:571) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceOrMoveFile(Util.java:598) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceFile(Util.java:587) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceFile(Util.java:583) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.world.level.storage.PlayerDataStorage.save(PlayerDataStorage.java:33) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.players.PlayerList.save(PlayerList.java:332) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.client.server.IntegratedPlayerList.save(IntegratedPlayerList.java:29) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.players.PlayerList.saveAll(PlayerList.java:645) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.saveEverything(MinecraftServer.java:531) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.client.server.IntegratedServer.tickServer(IntegratedServer.java:77) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:661) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.lambda$spin$2(MinecraftServer.java:251) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at java.lang.Thread.run(Thread.java:840) ~[?:?]
+[18Jun2025 11:55:38.582] [Server thread/WARN] [net.minecraft.Util/]: Failed to execute rename .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-14440300723127549788.dat to .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat
+[18Jun2025 11:55:38.582] [Server thread/ERROR] [net.minecraft.Util/]: Failed to replace .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat with .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-14440300723127549788.dat, retrying 7/10
+[18Jun2025 11:55:38.582] [Server thread/ERROR] [net.minecraft.Util/]: Failed to rename
+java.nio.file.FileSystemException: .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-14440300723127549788.dat -> .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat: The process cannot access the file because it is being used by another process
+	at sun.nio.fs.WindowsException.translateToIOException(WindowsException.java:92) ~[?:?]
+	at sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:103) ~[?:?]
+	at sun.nio.fs.WindowsFileCopy.move(WindowsFileCopy.java:403) ~[?:?]
+	at sun.nio.fs.WindowsFileSystemProvider.move(WindowsFileSystemProvider.java:293) ~[?:?]
+	at java.nio.file.Files.move(Files.java:1432) ~[?:?]
+	at net.minecraft.Util$5.getAsBoolean(Util.java:502) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.executeInSequence(Util.java:560) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.runWithRetries(Util.java:571) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceOrMoveFile(Util.java:598) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceFile(Util.java:587) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceFile(Util.java:583) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.world.level.storage.PlayerDataStorage.save(PlayerDataStorage.java:33) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.players.PlayerList.save(PlayerList.java:332) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.client.server.IntegratedPlayerList.save(IntegratedPlayerList.java:29) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.players.PlayerList.saveAll(PlayerList.java:645) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.saveEverything(MinecraftServer.java:531) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.client.server.IntegratedServer.tickServer(IntegratedServer.java:77) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:661) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.lambda$spin$2(MinecraftServer.java:251) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at java.lang.Thread.run(Thread.java:840) ~[?:?]
+[18Jun2025 11:55:38.584] [Server thread/WARN] [net.minecraft.Util/]: Failed to execute rename .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-14440300723127549788.dat to .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat
+[18Jun2025 11:55:38.584] [Server thread/ERROR] [net.minecraft.Util/]: Failed to replace .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat with .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-14440300723127549788.dat, retrying 8/10
+[18Jun2025 11:55:38.585] [Server thread/ERROR] [net.minecraft.Util/]: Failed to rename
+java.nio.file.FileSystemException: .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-14440300723127549788.dat -> .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat: The process cannot access the file because it is being used by another process
+	at sun.nio.fs.WindowsException.translateToIOException(WindowsException.java:92) ~[?:?]
+	at sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:103) ~[?:?]
+	at sun.nio.fs.WindowsFileCopy.move(WindowsFileCopy.java:403) ~[?:?]
+	at sun.nio.fs.WindowsFileSystemProvider.move(WindowsFileSystemProvider.java:293) ~[?:?]
+	at java.nio.file.Files.move(Files.java:1432) ~[?:?]
+	at net.minecraft.Util$5.getAsBoolean(Util.java:502) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.executeInSequence(Util.java:560) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.runWithRetries(Util.java:571) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceOrMoveFile(Util.java:598) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceFile(Util.java:587) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceFile(Util.java:583) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.world.level.storage.PlayerDataStorage.save(PlayerDataStorage.java:33) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.players.PlayerList.save(PlayerList.java:332) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.client.server.IntegratedPlayerList.save(IntegratedPlayerList.java:29) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.players.PlayerList.saveAll(PlayerList.java:645) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.saveEverything(MinecraftServer.java:531) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.client.server.IntegratedServer.tickServer(IntegratedServer.java:77) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:661) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.lambda$spin$2(MinecraftServer.java:251) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at java.lang.Thread.run(Thread.java:840) ~[?:?]
+[18Jun2025 11:55:38.586] [Server thread/WARN] [net.minecraft.Util/]: Failed to execute rename .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-14440300723127549788.dat to .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat
+[18Jun2025 11:55:38.586] [Server thread/ERROR] [net.minecraft.Util/]: Failed to replace .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat with .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-14440300723127549788.dat, retrying 9/10
+[18Jun2025 11:55:38.586] [Server thread/ERROR] [net.minecraft.Util/]: Failed to replace .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat with .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-14440300723127549788.dat, aborting, progress might be lost
+[18Jun2025 11:55:38.594] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[New World]'/minecraft:overworld
+[18Jun2025 11:55:38.606] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[New World]'/minecraft:the_end
+[18Jun2025 11:55:38.609] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[New World]'/minecraft:the_nether
+[18Jun2025 11:55:39.272] [Server thread/INFO] [net.minecraft.server.network.ServerGamePacketListenerImpl/]: Dev lost connection: Disconnected
+[18Jun2025 11:55:39.272] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Dev left the game
+[18Jun2025 11:55:39.280] [Server thread/ERROR] [net.minecraft.Util/]: Failed to rename
+java.nio.file.FileSystemException: .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-4129339461284738892.dat -> .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat: The process cannot access the file because it is being used by another process
+	at sun.nio.fs.WindowsException.translateToIOException(WindowsException.java:92) ~[?:?]
+	at sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:103) ~[?:?]
+	at sun.nio.fs.WindowsFileCopy.move(WindowsFileCopy.java:403) ~[?:?]
+	at sun.nio.fs.WindowsFileSystemProvider.move(WindowsFileSystemProvider.java:293) ~[?:?]
+	at java.nio.file.Files.move(Files.java:1432) ~[?:?]
+	at net.minecraft.Util$5.getAsBoolean(Util.java:502) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.executeInSequence(Util.java:560) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.runWithRetries(Util.java:571) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceOrMoveFile(Util.java:598) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceFile(Util.java:587) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceFile(Util.java:583) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.world.level.storage.PlayerDataStorage.save(PlayerDataStorage.java:33) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.players.PlayerList.save(PlayerList.java:332) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.client.server.IntegratedPlayerList.save(IntegratedPlayerList.java:29) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.players.PlayerList.remove(PlayerList.java:349) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.network.ServerGamePacketListenerImpl.onDisconnect(ServerGamePacketListenerImpl.java:1134) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.network.Connection.handleDisconnection(Connection.java:434) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.network.ServerConnectionListener.tick(ServerConnectionListener.java:157) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.tickChildren(MinecraftServer.java:907) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.tickServer(MinecraftServer.java:814) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.client.server.IntegratedServer.tickServer(IntegratedServer.java:89) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:661) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.lambda$spin$2(MinecraftServer.java:251) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at java.lang.Thread.run(Thread.java:840) ~[?:?]
+[18Jun2025 11:55:39.281] [Server thread/WARN] [net.minecraft.Util/]: Failed to execute rename .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-4129339461284738892.dat to .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat
+[18Jun2025 11:55:39.281] [Server thread/ERROR] [net.minecraft.Util/]: Failed to replace .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat with .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-4129339461284738892.dat, retrying 0/10
+[18Jun2025 11:55:39.281] [Server thread/ERROR] [net.minecraft.Util/]: Failed to rename
+java.nio.file.FileSystemException: .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-4129339461284738892.dat -> .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat: The process cannot access the file because it is being used by another process
+	at sun.nio.fs.WindowsException.translateToIOException(WindowsException.java:92) ~[?:?]
+	at sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:103) ~[?:?]
+	at sun.nio.fs.WindowsFileCopy.move(WindowsFileCopy.java:403) ~[?:?]
+	at sun.nio.fs.WindowsFileSystemProvider.move(WindowsFileSystemProvider.java:293) ~[?:?]
+	at java.nio.file.Files.move(Files.java:1432) ~[?:?]
+	at net.minecraft.Util$5.getAsBoolean(Util.java:502) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.executeInSequence(Util.java:560) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.runWithRetries(Util.java:571) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceOrMoveFile(Util.java:598) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceFile(Util.java:587) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceFile(Util.java:583) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.world.level.storage.PlayerDataStorage.save(PlayerDataStorage.java:33) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.players.PlayerList.save(PlayerList.java:332) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.client.server.IntegratedPlayerList.save(IntegratedPlayerList.java:29) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.players.PlayerList.remove(PlayerList.java:349) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.network.ServerGamePacketListenerImpl.onDisconnect(ServerGamePacketListenerImpl.java:1134) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.network.Connection.handleDisconnection(Connection.java:434) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.network.ServerConnectionListener.tick(ServerConnectionListener.java:157) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.tickChildren(MinecraftServer.java:907) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.tickServer(MinecraftServer.java:814) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.client.server.IntegratedServer.tickServer(IntegratedServer.java:89) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:661) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.lambda$spin$2(MinecraftServer.java:251) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at java.lang.Thread.run(Thread.java:840) ~[?:?]
+[18Jun2025 11:55:39.282] [Server thread/WARN] [net.minecraft.Util/]: Failed to execute rename .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-4129339461284738892.dat to .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat
+[18Jun2025 11:55:39.282] [Server thread/ERROR] [net.minecraft.Util/]: Failed to replace .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat with .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-4129339461284738892.dat, retrying 1/10
+[18Jun2025 11:55:39.283] [Server thread/ERROR] [net.minecraft.Util/]: Failed to rename
+java.nio.file.FileSystemException: .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-4129339461284738892.dat -> .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat: The process cannot access the file because it is being used by another process
+	at sun.nio.fs.WindowsException.translateToIOException(WindowsException.java:92) ~[?:?]
+	at sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:103) ~[?:?]
+	at sun.nio.fs.WindowsFileCopy.move(WindowsFileCopy.java:403) ~[?:?]
+	at sun.nio.fs.WindowsFileSystemProvider.move(WindowsFileSystemProvider.java:293) ~[?:?]
+	at java.nio.file.Files.move(Files.java:1432) ~[?:?]
+	at net.minecraft.Util$5.getAsBoolean(Util.java:502) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.executeInSequence(Util.java:560) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.runWithRetries(Util.java:571) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceOrMoveFile(Util.java:598) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceFile(Util.java:587) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceFile(Util.java:583) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.world.level.storage.PlayerDataStorage.save(PlayerDataStorage.java:33) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.players.PlayerList.save(PlayerList.java:332) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.client.server.IntegratedPlayerList.save(IntegratedPlayerList.java:29) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.players.PlayerList.remove(PlayerList.java:349) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.network.ServerGamePacketListenerImpl.onDisconnect(ServerGamePacketListenerImpl.java:1134) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.network.Connection.handleDisconnection(Connection.java:434) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.network.ServerConnectionListener.tick(ServerConnectionListener.java:157) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.tickChildren(MinecraftServer.java:907) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.tickServer(MinecraftServer.java:814) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.client.server.IntegratedServer.tickServer(IntegratedServer.java:89) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:661) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.lambda$spin$2(MinecraftServer.java:251) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at java.lang.Thread.run(Thread.java:840) ~[?:?]
+[18Jun2025 11:55:39.285] [Server thread/WARN] [net.minecraft.Util/]: Failed to execute rename .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-4129339461284738892.dat to .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat
+[18Jun2025 11:55:39.285] [Server thread/ERROR] [net.minecraft.Util/]: Failed to replace .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat with .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-4129339461284738892.dat, retrying 2/10
+[18Jun2025 11:55:39.285] [Server thread/ERROR] [net.minecraft.Util/]: Failed to rename
+java.nio.file.FileSystemException: .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-4129339461284738892.dat -> .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat: The process cannot access the file because it is being used by another process
+	at sun.nio.fs.WindowsException.translateToIOException(WindowsException.java:92) ~[?:?]
+	at sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:103) ~[?:?]
+	at sun.nio.fs.WindowsFileCopy.move(WindowsFileCopy.java:403) ~[?:?]
+	at sun.nio.fs.WindowsFileSystemProvider.move(WindowsFileSystemProvider.java:293) ~[?:?]
+	at java.nio.file.Files.move(Files.java:1432) ~[?:?]
+	at net.minecraft.Util$5.getAsBoolean(Util.java:502) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.executeInSequence(Util.java:560) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.runWithRetries(Util.java:571) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceOrMoveFile(Util.java:598) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceFile(Util.java:587) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceFile(Util.java:583) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.world.level.storage.PlayerDataStorage.save(PlayerDataStorage.java:33) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.players.PlayerList.save(PlayerList.java:332) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.client.server.IntegratedPlayerList.save(IntegratedPlayerList.java:29) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.players.PlayerList.remove(PlayerList.java:349) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.network.ServerGamePacketListenerImpl.onDisconnect(ServerGamePacketListenerImpl.java:1134) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.network.Connection.handleDisconnection(Connection.java:434) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.network.ServerConnectionListener.tick(ServerConnectionListener.java:157) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.tickChildren(MinecraftServer.java:907) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.tickServer(MinecraftServer.java:814) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.client.server.IntegratedServer.tickServer(IntegratedServer.java:89) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:661) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.lambda$spin$2(MinecraftServer.java:251) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at java.lang.Thread.run(Thread.java:840) ~[?:?]
+[18Jun2025 11:55:39.286] [Server thread/WARN] [net.minecraft.Util/]: Failed to execute rename .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-4129339461284738892.dat to .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat
+[18Jun2025 11:55:39.286] [Server thread/ERROR] [net.minecraft.Util/]: Failed to replace .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat with .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-4129339461284738892.dat, retrying 3/10
+[18Jun2025 11:55:39.287] [Server thread/ERROR] [net.minecraft.Util/]: Failed to rename
+java.nio.file.FileSystemException: .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-4129339461284738892.dat -> .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat: The process cannot access the file because it is being used by another process
+	at sun.nio.fs.WindowsException.translateToIOException(WindowsException.java:92) ~[?:?]
+	at sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:103) ~[?:?]
+	at sun.nio.fs.WindowsFileCopy.move(WindowsFileCopy.java:403) ~[?:?]
+	at sun.nio.fs.WindowsFileSystemProvider.move(WindowsFileSystemProvider.java:293) ~[?:?]
+	at java.nio.file.Files.move(Files.java:1432) ~[?:?]
+	at net.minecraft.Util$5.getAsBoolean(Util.java:502) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.executeInSequence(Util.java:560) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.runWithRetries(Util.java:571) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceOrMoveFile(Util.java:598) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceFile(Util.java:587) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceFile(Util.java:583) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.world.level.storage.PlayerDataStorage.save(PlayerDataStorage.java:33) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.players.PlayerList.save(PlayerList.java:332) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.client.server.IntegratedPlayerList.save(IntegratedPlayerList.java:29) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.players.PlayerList.remove(PlayerList.java:349) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.network.ServerGamePacketListenerImpl.onDisconnect(ServerGamePacketListenerImpl.java:1134) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.network.Connection.handleDisconnection(Connection.java:434) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.network.ServerConnectionListener.tick(ServerConnectionListener.java:157) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.tickChildren(MinecraftServer.java:907) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.tickServer(MinecraftServer.java:814) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.client.server.IntegratedServer.tickServer(IntegratedServer.java:89) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:661) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.lambda$spin$2(MinecraftServer.java:251) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at java.lang.Thread.run(Thread.java:840) ~[?:?]
+[18Jun2025 11:55:39.288] [Server thread/WARN] [net.minecraft.Util/]: Failed to execute rename .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-4129339461284738892.dat to .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat
+[18Jun2025 11:55:39.288] [Server thread/ERROR] [net.minecraft.Util/]: Failed to replace .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat with .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-4129339461284738892.dat, retrying 4/10
+[18Jun2025 11:55:39.289] [Server thread/ERROR] [net.minecraft.Util/]: Failed to rename
+java.nio.file.FileSystemException: .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-4129339461284738892.dat -> .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat: The process cannot access the file because it is being used by another process
+	at sun.nio.fs.WindowsException.translateToIOException(WindowsException.java:92) ~[?:?]
+	at sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:103) ~[?:?]
+	at sun.nio.fs.WindowsFileCopy.move(WindowsFileCopy.java:403) ~[?:?]
+	at sun.nio.fs.WindowsFileSystemProvider.move(WindowsFileSystemProvider.java:293) ~[?:?]
+	at java.nio.file.Files.move(Files.java:1432) ~[?:?]
+	at net.minecraft.Util$5.getAsBoolean(Util.java:502) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.executeInSequence(Util.java:560) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.runWithRetries(Util.java:571) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceOrMoveFile(Util.java:598) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceFile(Util.java:587) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceFile(Util.java:583) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.world.level.storage.PlayerDataStorage.save(PlayerDataStorage.java:33) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.players.PlayerList.save(PlayerList.java:332) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.client.server.IntegratedPlayerList.save(IntegratedPlayerList.java:29) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.players.PlayerList.remove(PlayerList.java:349) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.network.ServerGamePacketListenerImpl.onDisconnect(ServerGamePacketListenerImpl.java:1134) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.network.Connection.handleDisconnection(Connection.java:434) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.network.ServerConnectionListener.tick(ServerConnectionListener.java:157) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.tickChildren(MinecraftServer.java:907) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.tickServer(MinecraftServer.java:814) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.client.server.IntegratedServer.tickServer(IntegratedServer.java:89) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:661) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.lambda$spin$2(MinecraftServer.java:251) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at java.lang.Thread.run(Thread.java:840) ~[?:?]
+[18Jun2025 11:55:39.290] [Server thread/WARN] [net.minecraft.Util/]: Failed to execute rename .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-4129339461284738892.dat to .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat
+[18Jun2025 11:55:39.290] [Server thread/ERROR] [net.minecraft.Util/]: Failed to replace .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat with .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-4129339461284738892.dat, retrying 5/10
+[18Jun2025 11:55:39.291] [Server thread/ERROR] [net.minecraft.Util/]: Failed to rename
+java.nio.file.FileSystemException: .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-4129339461284738892.dat -> .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat: The process cannot access the file because it is being used by another process
+	at sun.nio.fs.WindowsException.translateToIOException(WindowsException.java:92) ~[?:?]
+	at sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:103) ~[?:?]
+	at sun.nio.fs.WindowsFileCopy.move(WindowsFileCopy.java:403) ~[?:?]
+	at sun.nio.fs.WindowsFileSystemProvider.move(WindowsFileSystemProvider.java:293) ~[?:?]
+	at java.nio.file.Files.move(Files.java:1432) ~[?:?]
+	at net.minecraft.Util$5.getAsBoolean(Util.java:502) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.executeInSequence(Util.java:560) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.runWithRetries(Util.java:571) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceOrMoveFile(Util.java:598) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceFile(Util.java:587) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceFile(Util.java:583) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.world.level.storage.PlayerDataStorage.save(PlayerDataStorage.java:33) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.players.PlayerList.save(PlayerList.java:332) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.client.server.IntegratedPlayerList.save(IntegratedPlayerList.java:29) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.players.PlayerList.remove(PlayerList.java:349) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.network.ServerGamePacketListenerImpl.onDisconnect(ServerGamePacketListenerImpl.java:1134) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.network.Connection.handleDisconnection(Connection.java:434) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.network.ServerConnectionListener.tick(ServerConnectionListener.java:157) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.tickChildren(MinecraftServer.java:907) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.tickServer(MinecraftServer.java:814) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.client.server.IntegratedServer.tickServer(IntegratedServer.java:89) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:661) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.lambda$spin$2(MinecraftServer.java:251) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at java.lang.Thread.run(Thread.java:840) ~[?:?]
+[18Jun2025 11:55:39.292] [Server thread/WARN] [net.minecraft.Util/]: Failed to execute rename .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-4129339461284738892.dat to .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat
+[18Jun2025 11:55:39.292] [Server thread/ERROR] [net.minecraft.Util/]: Failed to replace .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat with .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-4129339461284738892.dat, retrying 6/10
+[18Jun2025 11:55:39.293] [Server thread/ERROR] [net.minecraft.Util/]: Failed to rename
+java.nio.file.FileSystemException: .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-4129339461284738892.dat -> .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat: The process cannot access the file because it is being used by another process
+	at sun.nio.fs.WindowsException.translateToIOException(WindowsException.java:92) ~[?:?]
+	at sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:103) ~[?:?]
+	at sun.nio.fs.WindowsFileCopy.move(WindowsFileCopy.java:403) ~[?:?]
+	at sun.nio.fs.WindowsFileSystemProvider.move(WindowsFileSystemProvider.java:293) ~[?:?]
+	at java.nio.file.Files.move(Files.java:1432) ~[?:?]
+	at net.minecraft.Util$5.getAsBoolean(Util.java:502) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.executeInSequence(Util.java:560) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.runWithRetries(Util.java:571) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceOrMoveFile(Util.java:598) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceFile(Util.java:587) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceFile(Util.java:583) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.world.level.storage.PlayerDataStorage.save(PlayerDataStorage.java:33) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.players.PlayerList.save(PlayerList.java:332) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.client.server.IntegratedPlayerList.save(IntegratedPlayerList.java:29) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.players.PlayerList.remove(PlayerList.java:349) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.network.ServerGamePacketListenerImpl.onDisconnect(ServerGamePacketListenerImpl.java:1134) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.network.Connection.handleDisconnection(Connection.java:434) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.network.ServerConnectionListener.tick(ServerConnectionListener.java:157) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.tickChildren(MinecraftServer.java:907) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.tickServer(MinecraftServer.java:814) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.client.server.IntegratedServer.tickServer(IntegratedServer.java:89) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:661) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.lambda$spin$2(MinecraftServer.java:251) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at java.lang.Thread.run(Thread.java:840) ~[?:?]
+[18Jun2025 11:55:39.293] [Server thread/WARN] [net.minecraft.Util/]: Failed to execute rename .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-4129339461284738892.dat to .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat
+[18Jun2025 11:55:39.294] [Server thread/ERROR] [net.minecraft.Util/]: Failed to replace .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat with .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-4129339461284738892.dat, retrying 7/10
+[18Jun2025 11:55:39.294] [Server thread/ERROR] [net.minecraft.Util/]: Failed to rename
+java.nio.file.FileSystemException: .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-4129339461284738892.dat -> .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat: The process cannot access the file because it is being used by another process
+	at sun.nio.fs.WindowsException.translateToIOException(WindowsException.java:92) ~[?:?]
+	at sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:103) ~[?:?]
+	at sun.nio.fs.WindowsFileCopy.move(WindowsFileCopy.java:403) ~[?:?]
+	at sun.nio.fs.WindowsFileSystemProvider.move(WindowsFileSystemProvider.java:293) ~[?:?]
+	at java.nio.file.Files.move(Files.java:1432) ~[?:?]
+	at net.minecraft.Util$5.getAsBoolean(Util.java:502) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.executeInSequence(Util.java:560) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.runWithRetries(Util.java:571) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceOrMoveFile(Util.java:598) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceFile(Util.java:587) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.Util.safeReplaceFile(Util.java:583) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.world.level.storage.PlayerDataStorage.save(PlayerDataStorage.java:33) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.players.PlayerList.save(PlayerList.java:332) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.client.server.IntegratedPlayerList.save(IntegratedPlayerList.java:29) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.players.PlayerList.remove(PlayerList.java:349) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.network.ServerGamePacketListenerImpl.onDisconnect(ServerGamePacketListenerImpl.java:1134) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.network.Connection.handleDisconnection(Connection.java:434) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.network.ServerConnectionListener.tick(ServerConnectionListener.java:157) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.tickChildren(MinecraftServer.java:907) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.tickServer(MinecraftServer.java:814) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.client.server.IntegratedServer.tickServer(IntegratedServer.java:89) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:661) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.lambda$spin$2(MinecraftServer.java:251) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1.jar%23191!/:?]
+	at java.lang.Thread.run(Thread.java:840) ~[?:?]
+[18Jun2025 11:55:39.295] [Server thread/WARN] [net.minecraft.Util/]: Failed to execute rename .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-4129339461284738892.dat to .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat
+[18Jun2025 11:55:39.296] [Server thread/ERROR] [net.minecraft.Util/]: Failed to replace .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a.dat with .\saves\New World\playerdata\380df991-f603-344c-a090-369bad2a924a-4129339461284738892.dat, retrying 8/10
+[18Jun2025 11:55:39.304] [Server thread/INFO] [net.minecraft.server.network.ServerGamePacketListenerImpl/]: Stopping singleplayer server as player logged out
+[18Jun2025 11:55:39.378] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Stopping server
+[18Jun2025 11:55:39.379] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving players
+[18Jun2025 11:55:39.379] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving worlds
+[18Jun2025 11:55:40.818] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[New World]'/minecraft:overworld
+[18Jun2025 11:55:43.385] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[New World]'/minecraft:the_end
+[18Jun2025 11:55:43.387] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[New World]'/minecraft:the_nether
+[18Jun2025 11:55:43.414] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: ThreadedAnvilChunkStorage (New World): All chunks are saved
+[18Jun2025 11:55:43.414] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: ThreadedAnvilChunkStorage (DIM1): All chunks are saved
+[18Jun2025 11:55:43.414] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
+[18Jun2025 11:55:43.414] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: ThreadedAnvilChunkStorage: All dimensions are saved
+[18Jun2025 11:55:45.622] [Render thread/INFO] [net.minecraft.client.Minecraft/]: Stopping!
