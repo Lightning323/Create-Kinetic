@@ -1,12 +1,604 @@
-[18Jun2025 11:58:56.441] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher running: args [--launchTarget, forgeclientuserdev, --version, MOD_DEV, --assetIndex, 5, --assetsDir, C:\Users\sampw\.gradle\caches\forge_gradle\assets, --gameDir, ., --fml.forgeVersion, 47.4.2, --fml.mcVersion, 1.20.1, --fml.forgeGroup, net.minecraftforge, --fml.mcpVersion, 20230612.114412, --mixin.config, createkinetic.mixins.json]
-[18Jun2025 11:58:56.473] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher 10.0.9+10.0.9+main.dcd20f30 starting: java version 17.0.12 by Amazon.com Inc.; OS Windows 11 arch amd64 version 10.0
-[18Jun2025 11:58:56.911] [main/INFO] [net.minecraftforge.fml.loading.ImmediateWindowHandler/]: Loading ImmediateWindowProvider fmlearlywindow
-[18Jun2025 11:58:57.090] [main/INFO] [EARLYDISPLAY/]: Trying GL version 4.6
-[18Jun2025 11:58:57.452] [main/INFO] [EARLYDISPLAY/]: Requested GL version 4.6 got version 4.6
-[18Jun2025 11:58:57.735] [pool-2-thread-1/INFO] [EARLYDISPLAY/]: GL info: AMD Radeon(TM) Graphics GL version 4.6.14802 Core Profile Forward-Compatible Context 21.40.56.05 30.0.14056.5001, ATI Technologies Inc.
-[18Jun2025 11:58:57.737] [main/INFO] [mixin/]: SpongePowered MIXIN Subsystem Version=0.8.5 Source=union:/C:/Users/sampw/.gradle/caches/modules-2/files-2.1/org.spongepowered/mixin/0.8.5/9d1c0c3a304ae6697ecd477218fa61b850bf57fc/mixin-0.8.5.jar%23128!/ Service=ModLauncher Env=CLIENT
-[18Jun2025 11:58:58.520] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\sampw\.gradle\caches\modules-2\files-2.1\net.minecraftforge\javafmllanguage\1.20.1-47.4.2\69932762bf197a54e59c5beb40e2a796cb7b0344\javafmllanguage-1.20.1-47.4.2.jar is missing mods.toml file
-[18Jun2025 11:58:58.527] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\sampw\.gradle\caches\modules-2\files-2.1\net.minecraftforge\lowcodelanguage\1.20.1-47.4.2\558f84c8439daeb45b9d72391572781e8d52039f\lowcodelanguage-1.20.1-47.4.2.jar is missing mods.toml file
-[18Jun2025 11:58:58.534] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\sampw\.gradle\caches\modules-2\files-2.1\net.minecraftforge\mclanguage\1.20.1-47.4.2\b861aade365eff21af88b465e5fb32b643b2db4d\mclanguage-1.20.1-47.4.2.jar is missing mods.toml file
-[18Jun2025 11:58:58.542] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\sampw\.gradle\caches\modules-2\files-2.1\net.minecraftforge\fmlcore\1.20.1-47.4.2\e64efc556f126e900f6656987f2641f639b7a3e2\fmlcore-1.20.1-47.4.2.jar is missing mods.toml file
-[18Jun2025 11:58:58.750] [main/INFO] [net.minecraftforge.fml.loading.moddiscovery.JarInJarDependencyLocator/]: No dependencies to load found. Skipping!
+[20Jun2025 12:32:13.531] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher running: args [--launchTarget, forgeclientuserdev, --version, MOD_DEV, --assetIndex, 5, --assetsDir, C:\Users\sampw\.gradle\caches\forge_gradle\assets, --gameDir, ., --fml.forgeVersion, 47.4.2, --fml.mcVersion, 1.20.1, --fml.forgeGroup, net.minecraftforge, --fml.mcpVersion, 20230612.114412, --mixin.config, createkinetic.mixins.json]
+[20Jun2025 12:32:13.556] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher 10.0.9+10.0.9+main.dcd20f30 starting: java version 17.0.12 by Amazon.com Inc.; OS Windows 11 arch amd64 version 10.0
+[20Jun2025 12:32:14.010] [main/INFO] [net.minecraftforge.fml.loading.ImmediateWindowHandler/]: Loading ImmediateWindowProvider fmlearlywindow
+[20Jun2025 12:32:14.177] [main/INFO] [EARLYDISPLAY/]: Trying GL version 4.6
+[20Jun2025 12:32:14.505] [main/INFO] [EARLYDISPLAY/]: Requested GL version 4.6 got version 4.6
+[20Jun2025 12:32:14.712] [main/INFO] [mixin/]: SpongePowered MIXIN Subsystem Version=0.8.5 Source=union:/C:/Users/sampw/.gradle/caches/modules-2/files-2.1/org.spongepowered/mixin/0.8.5/9d1c0c3a304ae6697ecd477218fa61b850bf57fc/mixin-0.8.5.jar%23130!/ Service=ModLauncher Env=CLIENT
+[20Jun2025 12:32:14.728] [pool-2-thread-1/INFO] [EARLYDISPLAY/]: GL info: AMD Radeon(TM) Graphics GL version 4.6.14802 Core Profile Forward-Compatible Context 21.40.56.05 30.0.14056.5001, ATI Technologies Inc.
+[20Jun2025 12:32:15.515] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\sampw\.gradle\caches\modules-2\files-2.1\net.minecraftforge\javafmllanguage\1.20.1-47.4.2\69932762bf197a54e59c5beb40e2a796cb7b0344\javafmllanguage-1.20.1-47.4.2.jar is missing mods.toml file
+[20Jun2025 12:32:15.523] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\sampw\.gradle\caches\modules-2\files-2.1\net.minecraftforge\lowcodelanguage\1.20.1-47.4.2\558f84c8439daeb45b9d72391572781e8d52039f\lowcodelanguage-1.20.1-47.4.2.jar is missing mods.toml file
+[20Jun2025 12:32:15.531] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\sampw\.gradle\caches\modules-2\files-2.1\net.minecraftforge\mclanguage\1.20.1-47.4.2\b861aade365eff21af88b465e5fb32b643b2db4d\mclanguage-1.20.1-47.4.2.jar is missing mods.toml file
+[20Jun2025 12:32:15.540] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\sampw\.gradle\caches\modules-2\files-2.1\net.minecraftforge\fmlcore\1.20.1-47.4.2\e64efc556f126e900f6656987f2641f639b7a3e2\fmlcore-1.20.1-47.4.2.jar is missing mods.toml file
+[20Jun2025 12:32:17.213] [main/INFO] [net.minecraftforge.fml.loading.moddiscovery.JarInJarDependencyLocator/]: Found 26 dependencies adding them to mods collection
+[20Jun2025 12:32:22.190] [main/INFO] [mixin/]: Compatibility level set to JAVA_17
+[20Jun2025 12:32:22.251] [main/INFO] [cpw.mods.modlauncher.LaunchServiceHandler/MODLAUNCHER]: Launching target 'forgeclientuserdev' with arguments [--version, MOD_DEV, --gameDir, ., --assetsDir, C:\Users\sampw\.gradle\caches\forge_gradle\assets, --assetIndex, 5]
+[20Jun2025 12:32:22.558] [main/WARN] [mixin/]: Reference map 'createkinetic.refmap.json' for createkinetic.mixins.json could not be read. If this is a development environment you can ignore this message
+[20Jun2025 12:32:23.991] [main/INFO] [mixin/]: Remapping refMap valkyrienskies-120-common-refmap.json using C:\Local Files\Java\Minecraft Mods\CreateKinetic\build\createSrgToMcp\output.srg
+[20Jun2025 12:32:23.995] [main/INFO] [mixin/]: Remapping refMap valkyrienskies-refmap.json using C:\Local Files\Java\Minecraft Mods\CreateKinetic\build\createSrgToMcp\output.srg
+[20Jun2025 12:32:24.032] [main/INFO] [Embeddium/]: Loaded configuration file for Embeddium: 53 options available, 0 override(s) found
+[20Jun2025 12:32:24.041] [main/INFO] [Embeddium-GraphicsAdapterProbe/]: Searching for graphics cards...
+[20Jun2025 12:32:24.824] [main/INFO] [Embeddium-GraphicsAdapterProbe/]: Found graphics card: GraphicsAdapterInfo[vendor=AMD, name=AMD Radeon(TM) Graphics, version=DriverVersion=30.0.14056.5001]
+[20Jun2025 12:32:24.847] [main/INFO] [mixin/]: Remapping refMap embeddium-refmap.json using C:\Local Files\Java\Minecraft Mods\CreateKinetic\build\createSrgToMcp\output.srg
+[20Jun2025 12:32:26.205] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/content/kinetics/deployer/DeployerHandler (java.lang.ClassNotFoundException: com.simibubi.create.content.kinetics.deployer.DeployerHandler)
+[20Jun2025 12:32:26.206] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.content.kinetics.deployer.DeployerHandler was not found valkyrienskies-common.mixins.json:mod_compat.create.IMixinDeployerHandler
+[20Jun2025 12:32:26.211] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/content/kinetics/deployer/DeployerMovementBehaviour (java.lang.ClassNotFoundException: com.simibubi.create.content.kinetics.deployer.DeployerMovementBehaviour)
+[20Jun2025 12:32:26.211] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.content.kinetics.deployer.DeployerMovementBehaviour was not found valkyrienskies-common.mixins.json:mod_compat.create.IMixinDeployerMovementBehaviour
+[20Jun2025 12:32:26.216] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/content/kinetics/fan/AirCurrent (java.lang.ClassNotFoundException: com.simibubi.create.content.kinetics.fan.AirCurrent)
+[20Jun2025 12:32:26.216] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.content.kinetics.fan.AirCurrent was not found valkyrienskies-common.mixins.json:mod_compat.create.MixinAirCurrent
+[20Jun2025 12:32:26.220] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/content/kinetics/fan/AirFlowParticle (java.lang.ClassNotFoundException: com.simibubi.create.content.kinetics.fan.AirFlowParticle)
+[20Jun2025 12:32:26.221] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.content.kinetics.fan.AirFlowParticle was not found valkyrienskies-common.mixins.json:mod_compat.create.MixinAirFlowParticle
+[20Jun2025 12:32:26.226] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/content/kinetics/belt/transport/BeltMovementHandler (java.lang.ClassNotFoundException: com.simibubi.create.content.kinetics.belt.transport.BeltMovementHandler)
+[20Jun2025 12:32:26.226] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.content.kinetics.belt.transport.BeltMovementHandler was not found valkyrienskies-common.mixins.json:mod_compat.create.MixinBeltMovementHandler
+[20Jun2025 12:32:26.231] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/content/contraptions/Contraption (java.lang.ClassNotFoundException: com.simibubi.create.content.contraptions.Contraption)
+[20Jun2025 12:32:26.231] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.content.contraptions.Contraption was not found valkyrienskies-common.mixins.json:mod_compat.create.MixinContraption
+[20Jun2025 12:32:26.236] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/content/contraptions/ContraptionCollider (java.lang.ClassNotFoundException: com.simibubi.create.content.contraptions.ContraptionCollider)
+[20Jun2025 12:32:26.237] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.content.contraptions.ContraptionCollider was not found valkyrienskies-common.mixins.json:mod_compat.create.MixinContraptionCollider
+[20Jun2025 12:32:26.242] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/content/logistics/depot/EntityLauncher (java.lang.ClassNotFoundException: com.simibubi.create.content.logistics.depot.EntityLauncher)
+[20Jun2025 12:32:26.242] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.content.logistics.depot.EntityLauncher was not found valkyrienskies-common.mixins.json:mod_compat.create.MixinEntityLauncher
+[20Jun2025 12:32:26.247] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/content/redstone/link/RedstoneLinkNetworkHandler (java.lang.ClassNotFoundException: com.simibubi.create.content.redstone.link.RedstoneLinkNetworkHandler)
+[20Jun2025 12:32:26.247] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.content.redstone.link.RedstoneLinkNetworkHandler was not found valkyrienskies-common.mixins.json:mod_compat.create.MixinRedstoneLinkNetworkHandler
+[20Jun2025 12:32:26.252] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/content/logistics/depot/SharedDepotBlockMethods (java.lang.ClassNotFoundException: com.simibubi.create.content.logistics.depot.SharedDepotBlockMethods)
+[20Jun2025 12:32:26.252] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.content.logistics.depot.SharedDepotBlockMethods was not found valkyrienskies-common.mixins.json:mod_compat.create.MixinSharedDepotBlockMethods
+[20Jun2025 12:32:26.256] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/foundation/collision/Matrix3d (java.lang.ClassNotFoundException: com.simibubi.create.foundation.collision.Matrix3d)
+[20Jun2025 12:32:26.257] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.foundation.collision.Matrix3d was not found valkyrienskies-common.mixins.json:mod_compat.create.accessors.Matrix3dAccessor
+[20Jun2025 12:32:26.261] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/foundation/outliner/Outline$OutlineParams (java.lang.ClassNotFoundException: com.simibubi.create.foundation.outliner.Outline$OutlineParams)
+[20Jun2025 12:32:26.262] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.foundation.outliner.Outline$OutlineParams was not found valkyrienskies-common.mixins.json:mod_compat.create.accessors.OutlineParamsAccessor
+[20Jun2025 12:32:26.266] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/content/kinetics/base/BlockBreakingMovementBehaviour (java.lang.ClassNotFoundException: com.simibubi.create.content.kinetics.base.BlockBreakingMovementBehaviour)
+[20Jun2025 12:32:26.267] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.content.kinetics.base.BlockBreakingMovementBehaviour was not found valkyrienskies-common.mixins.json:mod_compat.create.behaviour.MixinBlockBreakingMovementBehaviour
+[20Jun2025 12:32:26.271] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/foundation/blockEntity/behaviour/filtering/FilteringBehaviour (java.lang.ClassNotFoundException: com.simibubi.create.foundation.blockEntity.behaviour.filtering.FilteringBehaviour)
+[20Jun2025 12:32:26.272] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.foundation.blockEntity.behaviour.filtering.FilteringBehaviour was not found valkyrienskies-common.mixins.json:mod_compat.create.behaviour.MixinFilteringBehaviour
+[20Jun2025 12:32:26.276] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/content/redstone/link/LinkBehaviour (java.lang.ClassNotFoundException: com.simibubi.create.content.redstone.link.LinkBehaviour)
+[20Jun2025 12:32:26.276] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.content.redstone.link.LinkBehaviour was not found valkyrienskies-common.mixins.json:mod_compat.create.behaviour.MixinLinkBehaviour
+[20Jun2025 12:32:26.281] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/foundation/blockEntity/behaviour/scrollValue/ScrollValueBehaviour (java.lang.ClassNotFoundException: com.simibubi.create.foundation.blockEntity.behaviour.scrollValue.ScrollValueBehaviour)
+[20Jun2025 12:32:26.281] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.foundation.blockEntity.behaviour.scrollValue.ScrollValueBehaviour was not found valkyrienskies-common.mixins.json:mod_compat.create.behaviour.MixinScrollValueBehaviour
+[20Jun2025 12:32:26.286] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/foundation/blockEntity/behaviour/filtering/SidedFilteringBehaviour (java.lang.ClassNotFoundException: com.simibubi.create.foundation.blockEntity.behaviour.filtering.SidedFilteringBehaviour)
+[20Jun2025 12:32:26.286] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.foundation.blockEntity.behaviour.filtering.SidedFilteringBehaviour was not found valkyrienskies-common.mixins.json:mod_compat.create.behaviour.MixinSidedFilteringBehaviour
+[20Jun2025 12:32:26.291] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/content/kinetics/crusher/CrushingWheelBlock (java.lang.ClassNotFoundException: com.simibubi.create.content.kinetics.crusher.CrushingWheelBlock)
+[20Jun2025 12:32:26.291] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.content.kinetics.crusher.CrushingWheelBlock was not found valkyrienskies-common.mixins.json:mod_compat.create.block.MixinCrushingWheelBlock
+[20Jun2025 12:32:26.296] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/content/logistics/depot/EjectorBlock (java.lang.ClassNotFoundException: com.simibubi.create.content.logistics.depot.EjectorBlock)
+[20Jun2025 12:32:26.296] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.content.logistics.depot.EjectorBlock was not found valkyrienskies-common.mixins.json:mod_compat.create.block.MixinEjectorBlock
+[20Jun2025 12:32:26.301] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/content/redstone/contact/RedstoneContactBlock (java.lang.ClassNotFoundException: com.simibubi.create.content.redstone.contact.RedstoneContactBlock)
+[20Jun2025 12:32:26.301] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.content.redstone.contact.RedstoneContactBlock was not found valkyrienskies-common.mixins.json:mod_compat.create.block.MixinRedstoneContactBlock
+[20Jun2025 12:32:26.306] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/content/contraptions/chassis/StickerBlock (java.lang.ClassNotFoundException: com.simibubi.create.content.contraptions.chassis.StickerBlock)
+[20Jun2025 12:32:26.306] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.content.contraptions.chassis.StickerBlock was not found valkyrienskies-common.mixins.json:mod_compat.create.block.MixinStickerBlock
+[20Jun2025 12:32:26.310] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/content/contraptions/bearing/MechanicalBearingBlockEntity (java.lang.ClassNotFoundException: com.simibubi.create.content.contraptions.bearing.MechanicalBearingBlockEntity)
+[20Jun2025 12:32:26.311] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.content.contraptions.bearing.MechanicalBearingBlockEntity was not found valkyrienskies-common.mixins.json:mod_compat.create.blockentity.IMixinMechanicalBearingTileEntity
+[20Jun2025 12:32:26.314] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/content/kinetics/crusher/CrushingWheelControllerBlockEntity (java.lang.ClassNotFoundException: com.simibubi.create.content.kinetics.crusher.CrushingWheelControllerBlockEntity)
+[20Jun2025 12:32:26.315] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.content.kinetics.crusher.CrushingWheelControllerBlockEntity was not found valkyrienskies-common.mixins.json:mod_compat.create.blockentity.MixinCrushingWheelControllerTileEntity
+[20Jun2025 12:32:26.319] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/content/logistics/depot/EjectorBlockEntity (java.lang.ClassNotFoundException: com.simibubi.create.content.logistics.depot.EjectorBlockEntity)
+[20Jun2025 12:32:26.320] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.content.logistics.depot.EjectorBlockEntity was not found valkyrienskies-common.mixins.json:mod_compat.create.blockentity.MixinEjectorTileEntity
+[20Jun2025 12:32:26.324] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/content/kinetics/fan/EncasedFanBlockEntity (java.lang.ClassNotFoundException: com.simibubi.create.content.kinetics.fan.EncasedFanBlockEntity)
+[20Jun2025 12:32:26.324] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.content.kinetics.fan.EncasedFanBlockEntity was not found valkyrienskies-common.mixins.json:mod_compat.create.blockentity.MixinEncasedFanTileEntity
+[20Jun2025 12:32:26.329] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/content/contraptions/AbstractContraptionEntity (java.lang.ClassNotFoundException: com.simibubi.create.content.contraptions.AbstractContraptionEntity)
+[20Jun2025 12:32:26.329] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.content.contraptions.AbstractContraptionEntity was not found valkyrienskies-common.mixins.json:mod_compat.create.entity.MixinAbstractContraptionEntity
+[20Jun2025 12:32:26.334] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/content/trains/entity/CarriageContraptionEntity (java.lang.ClassNotFoundException: com.simibubi.create.content.trains.entity.CarriageContraptionEntity)
+[20Jun2025 12:32:26.334] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.content.trains.entity.CarriageContraptionEntity was not found valkyrienskies-common.mixins.json:mod_compat.create.entity.MixinCarriageContraptionEntity
+[20Jun2025 12:32:26.338] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/content/contraptions/ControlledContraptionEntity (java.lang.ClassNotFoundException: com.simibubi.create.content.contraptions.ControlledContraptionEntity)
+[20Jun2025 12:32:26.339] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.content.contraptions.ControlledContraptionEntity was not found valkyrienskies-common.mixins.json:mod_compat.create.entity.MixinControlledContraptionEntity
+[20Jun2025 12:32:26.343] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/content/contraptions/actors/seat/SeatEntity (java.lang.ClassNotFoundException: com.simibubi.create.content.contraptions.actors.seat.SeatEntity)
+[20Jun2025 12:32:26.343] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.content.contraptions.actors.seat.SeatEntity was not found valkyrienskies-common.mixins.json:mod_compat.create.entity.MixinSeatEntity
+[20Jun2025 12:32:26.348] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/content/contraptions/actors/trainControls/ControlsInputPacket (java.lang.ClassNotFoundException: com.simibubi.create.content.contraptions.actors.trainControls.ControlsInputPacket)
+[20Jun2025 12:32:26.348] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.content.contraptions.actors.trainControls.ControlsInputPacket was not found valkyrienskies-common.mixins.json:mod_compat.create.packets.MixinControlsInputPacket
+[20Jun2025 12:32:26.353] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/content/trains/track/CurvedTrackDestroyPacket (java.lang.ClassNotFoundException: com.simibubi.create.content.trains.track.CurvedTrackDestroyPacket)
+[20Jun2025 12:32:26.353] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.content.trains.track.CurvedTrackDestroyPacket was not found valkyrienskies-common.mixins.json:mod_compat.create.packets.MixinCurvedTrackDestroyPacket
+[20Jun2025 12:32:26.358] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/content/contraptions/glue/SuperGlueRemovalPacket (java.lang.ClassNotFoundException: com.simibubi.create.content.contraptions.glue.SuperGlueRemovalPacket)
+[20Jun2025 12:32:26.358] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.content.contraptions.glue.SuperGlueRemovalPacket was not found valkyrienskies-common.mixins.json:mod_compat.create.packets.MixinSuperGlueRemovalPacket
+[20Jun2025 12:32:26.363] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/foundation/networking/BlockEntityConfigurationPacket (java.lang.ClassNotFoundException: com.simibubi.create.foundation.networking.BlockEntityConfigurationPacket)
+[20Jun2025 12:32:26.363] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.foundation.networking.BlockEntityConfigurationPacket was not found valkyrienskies-common.mixins.json:mod_compat.create.packets.MixinTileEntityConfigurationPacket
+[20Jun2025 12:32:26.367] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/content/trains/entity/TrainRelocationPacket (java.lang.ClassNotFoundException: com.simibubi.create.content.trains.entity.TrainRelocationPacket)
+[20Jun2025 12:32:26.367] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.content.trains.entity.TrainRelocationPacket was not found valkyrienskies-common.mixins.json:mod_compat.create.packets.MixinTrainRelocationPacket
+[20Jun2025 12:32:26.372] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/content/contraptions/actors/seat/SeatBlock (java.lang.ClassNotFoundException: com.simibubi.create.content.contraptions.actors.seat.SeatBlock)
+[20Jun2025 12:32:26.372] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.content.contraptions.actors.seat.SeatBlock was not found valkyrienskies-common.mixins.json:mod_compat.create.pr.MixinSeatBlock
+[20Jun2025 12:32:26.376] [main/WARN] [mixin/]: Error loading class: rbasamoyai/createbigcannons/cannon_control/contraption/PitchOrientedContraptionEntity (java.lang.ClassNotFoundException: rbasamoyai.createbigcannons.cannon_control.contraption.PitchOrientedContraptionEntity)
+[20Jun2025 12:32:26.381] [main/WARN] [mixin/]: Error loading class: me/duquee/createutilities/blocks/voidtypes/VoidLinkBehaviour (java.lang.ClassNotFoundException: me.duquee.createutilities.blocks.voidtypes.VoidLinkBehaviour)
+[20Jun2025 12:32:26.381] [main/WARN] [mixin/]: @Mixin target me.duquee.createutilities.blocks.voidtypes.VoidLinkBehaviour was not found valkyrienskies-common.mixins.json:mod_compat.create_utilities.MixinVoidLinkBehaviour
+[20Jun2025 12:32:26.385] [main/WARN] [mixin/]: Error loading class: com/jamieswhiteshirt/reachentityattributes/ReachEntityAttributes (java.lang.ClassNotFoundException: com.jamieswhiteshirt.reachentityattributes.ReachEntityAttributes)
+[20Jun2025 12:32:26.880] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/foundation/outliner/AABBOutline (java.lang.ClassNotFoundException: com.simibubi.create.foundation.outliner.AABBOutline)
+[20Jun2025 12:32:26.881] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.foundation.outliner.AABBOutline was not found valkyrienskies-common.mixins.json:mod_compat.create.client.MixinAABBOutline
+[20Jun2025 12:32:26.885] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/foundation/outliner/BlockClusterOutline (java.lang.ClassNotFoundException: com.simibubi.create.foundation.outliner.BlockClusterOutline)
+[20Jun2025 12:32:26.885] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.foundation.outliner.BlockClusterOutline was not found valkyrienskies-common.mixins.json:mod_compat.create.client.MixinBlockClusterOutline
+[20Jun2025 12:32:26.890] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/content/trains/entity/CarriageContraptionInstance (java.lang.ClassNotFoundException: com.simibubi.create.content.trains.entity.CarriageContraptionInstance)
+[20Jun2025 12:32:26.890] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.content.trains.entity.CarriageContraptionInstance was not found valkyrienskies-common.mixins.json:mod_compat.create.client.MixinCarriageContraptionInstance
+[20Jun2025 12:32:26.894] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/content/kinetics/simpleRelays/CogwheelBlockItem$SmallCogHelper (java.lang.ClassNotFoundException: com.simibubi.create.content.kinetics.simpleRelays.CogwheelBlockItem$SmallCogHelper)
+[20Jun2025 12:32:26.895] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.content.kinetics.simpleRelays.CogwheelBlockItem$SmallCogHelper was not found valkyrienskies-common.mixins.json:mod_compat.create.client.MixinCogwheelBlockItem
+[20Jun2025 12:32:26.899] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/content/kinetics/simpleRelays/CogwheelBlockItem$LargeCogHelper (java.lang.ClassNotFoundException: com.simibubi.create.content.kinetics.simpleRelays.CogwheelBlockItem$LargeCogHelper)
+[20Jun2025 12:32:26.899] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.content.kinetics.simpleRelays.CogwheelBlockItem$LargeCogHelper was not found valkyrienskies-common.mixins.json:mod_compat.create.client.MixinCogwheelBlockItem
+[20Jun2025 12:32:26.903] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/content/kinetics/simpleRelays/CogwheelBlockItem$DiagonalCogHelper (java.lang.ClassNotFoundException: com.simibubi.create.content.kinetics.simpleRelays.CogwheelBlockItem$DiagonalCogHelper)
+[20Jun2025 12:32:26.903] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.content.kinetics.simpleRelays.CogwheelBlockItem$DiagonalCogHelper was not found valkyrienskies-common.mixins.json:mod_compat.create.client.MixinCogwheelBlockItem
+[20Jun2025 12:32:26.907] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/content/kinetics/simpleRelays/CogwheelBlockItem$IntegratedLargeCogHelper (java.lang.ClassNotFoundException: com.simibubi.create.content.kinetics.simpleRelays.CogwheelBlockItem$IntegratedLargeCogHelper)
+[20Jun2025 12:32:26.908] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.content.kinetics.simpleRelays.CogwheelBlockItem$IntegratedLargeCogHelper was not found valkyrienskies-common.mixins.json:mod_compat.create.client.MixinCogwheelBlockItem
+[20Jun2025 12:32:26.912] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/content/kinetics/simpleRelays/CogwheelBlockItem$IntegratedSmallCogHelper (java.lang.ClassNotFoundException: com.simibubi.create.content.kinetics.simpleRelays.CogwheelBlockItem$IntegratedSmallCogHelper)
+[20Jun2025 12:32:26.912] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.content.kinetics.simpleRelays.CogwheelBlockItem$IntegratedSmallCogHelper was not found valkyrienskies-common.mixins.json:mod_compat.create.client.MixinCogwheelBlockItem
+[20Jun2025 12:32:26.917] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/content/kinetics/simpleRelays/CogwheelBlockItem$DiagonalCogHelper (java.lang.ClassNotFoundException: com.simibubi.create.content.kinetics.simpleRelays.CogwheelBlockItem$DiagonalCogHelper)
+[20Jun2025 12:32:26.917] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.content.kinetics.simpleRelays.CogwheelBlockItem$DiagonalCogHelper was not found valkyrienskies-common.mixins.json:mod_compat.create.client.MixinCogwheelBlockItemHitOnShaft
+[20Jun2025 12:32:26.922] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/content/contraptions/render/ContraptionRenderDispatcher (java.lang.ClassNotFoundException: com.simibubi.create.content.contraptions.render.ContraptionRenderDispatcher)
+[20Jun2025 12:32:26.922] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.content.contraptions.render.ContraptionRenderDispatcher was not found valkyrienskies-common.mixins.json:mod_compat.create.client.MixinContraptionRenderDispatcher
+[20Jun2025 12:32:26.926] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/content/contraptions/render/ContraptionRenderInfo (java.lang.ClassNotFoundException: com.simibubi.create.content.contraptions.render.ContraptionRenderInfo)
+[20Jun2025 12:32:26.927] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.content.contraptions.render.ContraptionRenderInfo was not found valkyrienskies-common.mixins.json:mod_compat.create.client.MixinContraptionRenderInfo
+[20Jun2025 12:32:26.931] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/content/contraptions/elevator/ElevatorControlsHandler (java.lang.ClassNotFoundException: com.simibubi.create.content.contraptions.elevator.ElevatorControlsHandler)
+[20Jun2025 12:32:26.931] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.content.contraptions.elevator.ElevatorControlsHandler was not found valkyrienskies-common.mixins.json:mod_compat.create.client.MixinElevatorControlsHandler
+[20Jun2025 12:32:26.935] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/foundation/blockEntity/behaviour/filtering/FilteringRenderer (java.lang.ClassNotFoundException: com.simibubi.create.foundation.blockEntity.behaviour.filtering.FilteringRenderer)
+[20Jun2025 12:32:26.936] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.foundation.blockEntity.behaviour.filtering.FilteringRenderer was not found valkyrienskies-common.mixins.json:mod_compat.create.client.MixinFilteringRenderer
+[20Jun2025 12:32:26.940] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/foundation/utility/ghost/GhostBlockRenderer$DefaultGhostBlockRenderer (java.lang.ClassNotFoundException: com.simibubi.create.foundation.utility.ghost.GhostBlockRenderer$DefaultGhostBlockRenderer)
+[20Jun2025 12:32:26.941] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.foundation.utility.ghost.GhostBlockRenderer$DefaultGhostBlockRenderer was not found valkyrienskies-common.mixins.json:mod_compat.create.client.MixinGhostBlockRenderer
+[20Jun2025 12:32:26.945] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/foundation/utility/ghost/GhostBlockRenderer$TransparentGhostBlockRenderer (java.lang.ClassNotFoundException: com.simibubi.create.foundation.utility.ghost.GhostBlockRenderer$TransparentGhostBlockRenderer)
+[20Jun2025 12:32:26.945] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.foundation.utility.ghost.GhostBlockRenderer$TransparentGhostBlockRenderer was not found valkyrienskies-common.mixins.json:mod_compat.create.client.MixinGhostBlockRenderer
+[20Jun2025 12:32:26.949] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/content/redstone/link/LinkRenderer (java.lang.ClassNotFoundException: com.simibubi.create.content.redstone.link.LinkRenderer)
+[20Jun2025 12:32:26.949] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.content.redstone.link.LinkRenderer was not found valkyrienskies-common.mixins.json:mod_compat.create.client.MixinLinkRenderer
+[20Jun2025 12:32:26.954] [main/WARN] [mixin/]: Error loading class: com/jozufozu/flywheel/vanilla/MinecartInstance (java.lang.ClassNotFoundException: com.jozufozu.flywheel.vanilla.MinecartInstance)
+[20Jun2025 12:32:26.954] [main/WARN] [mixin/]: @Mixin target com.jozufozu.flywheel.vanilla.MinecartInstance was not found valkyrienskies-common.mixins.json:mod_compat.create.client.MixinMinecartInstance
+[20Jun2025 12:32:26.958] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/content/contraptions/bearing/SailBlock$PlacementHelper (java.lang.ClassNotFoundException: com.simibubi.create.content.contraptions.bearing.SailBlock$PlacementHelper)
+[20Jun2025 12:32:26.959] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.content.contraptions.bearing.SailBlock$PlacementHelper was not found valkyrienskies-common.mixins.json:mod_compat.create.client.MixinMultiplePlacementHelpers
+[20Jun2025 12:32:26.963] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/foundation/placement/PoleHelper (java.lang.ClassNotFoundException: com.simibubi.create.foundation.placement.PoleHelper)
+[20Jun2025 12:32:26.963] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.foundation.placement.PoleHelper was not found valkyrienskies-common.mixins.json:mod_compat.create.client.MixinMultiplePlacementHelpers
+[20Jun2025 12:32:26.967] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/content/decoration/girder/GirderPlacementHelper (java.lang.ClassNotFoundException: com.simibubi.create.content.decoration.girder.GirderPlacementHelper)
+[20Jun2025 12:32:26.967] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.content.decoration.girder.GirderPlacementHelper was not found valkyrienskies-common.mixins.json:mod_compat.create.client.MixinMultiplePlacementHelpers
+[20Jun2025 12:32:26.972] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/content/trains/display/FlapDisplayBlock$PlacementHelper (java.lang.ClassNotFoundException: com.simibubi.create.content.trains.display.FlapDisplayBlock$PlacementHelper)
+[20Jun2025 12:32:26.972] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.content.trains.display.FlapDisplayBlock$PlacementHelper was not found valkyrienskies-common.mixins.json:mod_compat.create.client.MixinMultiplePlacementHelpers
+[20Jun2025 12:32:26.976] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/foundation/outliner/Outline (java.lang.ClassNotFoundException: com.simibubi.create.foundation.outliner.Outline)
+[20Jun2025 12:32:26.976] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.foundation.outliner.Outline was not found valkyrienskies-common.mixins.json:mod_compat.create.client.MixinOutline
+[20Jun2025 12:32:26.981] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/foundation/placement/PlacementHelpers (java.lang.ClassNotFoundException: com.simibubi.create.foundation.placement.PlacementHelpers)
+[20Jun2025 12:32:26.981] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.foundation.placement.PlacementHelpers was not found valkyrienskies-common.mixins.json:mod_compat.create.client.MixinPlacementHelpers
+[20Jun2025 12:32:26.986] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/foundation/sound/SoundScapes (java.lang.ClassNotFoundException: com.simibubi.create.foundation.sound.SoundScapes)
+[20Jun2025 12:32:26.986] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.foundation.sound.SoundScapes was not found valkyrienskies-common.mixins.json:mod_compat.create.client.MixinSoundScapes
+[20Jun2025 12:32:26.991] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/foundation/render/BlockEntityRenderHelper (java.lang.ClassNotFoundException: com.simibubi.create.foundation.render.BlockEntityRenderHelper)
+[20Jun2025 12:32:26.991] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.foundation.render.BlockEntityRenderHelper was not found valkyrienskies-common.mixins.json:mod_compat.create.client.MixinTileEntityRenderHelper
+[20Jun2025 12:32:26.995] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/content/trains/entity/TrainRelocator (java.lang.ClassNotFoundException: com.simibubi.create.content.trains.entity.TrainRelocator)
+[20Jun2025 12:32:26.995] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.content.trains.entity.TrainRelocator was not found valkyrienskies-common.mixins.json:mod_compat.create.client.MixinTrainRelocator
+[20Jun2025 12:32:27.000] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/foundation/blockEntity/behaviour/ValueBox (java.lang.ClassNotFoundException: com.simibubi.create.foundation.blockEntity.behaviour.ValueBox)
+[20Jun2025 12:32:27.000] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.foundation.blockEntity.behaviour.ValueBox was not found valkyrienskies-common.mixins.json:mod_compat.create.client.MixinValueBox
+[20Jun2025 12:32:27.004] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/foundation/block/BigOutlines (java.lang.ClassNotFoundException: com.simibubi.create.foundation.block.BigOutlines)
+[20Jun2025 12:32:27.005] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.foundation.block.BigOutlines was not found valkyrienskies-common.mixins.json:mod_compat.create.client.trackOutlines.MixinBigOutlines
+[20Jun2025 12:32:27.009] [main/WARN] [mixin/]: Error loading class: com/jozufozu/flywheel/backend/instancing/instancing/InstancingEngine (java.lang.ClassNotFoundException: com.jozufozu.flywheel.backend.instancing.instancing.InstancingEngine)
+[20Jun2025 12:32:27.014] [main/WARN] [mixin/]: Error loading class: com/jozufozu/flywheel/backend/instancing/blockentity/BlockEntityInstanceManager (java.lang.ClassNotFoundException: com.jozufozu.flywheel.backend.instancing.blockentity.BlockEntityInstanceManager)
+[20Jun2025 12:32:27.018] [main/WARN] [mixin/]: Error loading class: com/jozufozu/flywheel/backend/instancing/InstanceManager (java.lang.ClassNotFoundException: com.jozufozu.flywheel.backend.instancing.InstanceManager)
+[20Jun2025 12:32:27.023] [main/WARN] [mixin/]: Error loading class: com/jozufozu/flywheel/backend/instancing/InstanceWorld (java.lang.ClassNotFoundException: com.jozufozu.flywheel.backend.instancing.InstanceWorld)
+[20Jun2025 12:32:27.027] [main/WARN] [mixin/]: Error loading class: com/jozufozu/flywheel/backend/instancing/instancing/InstancingEngine (java.lang.ClassNotFoundException: com.jozufozu.flywheel.backend.instancing.instancing.InstancingEngine)
+[20Jun2025 12:32:27.042] [main/WARN] [mixin/]: Error loading class: com/sonicether/soundphysics/SoundPhysics (java.lang.ClassNotFoundException: com.sonicether.soundphysics.SoundPhysics)
+[20Jun2025 12:32:27.091] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/content/kinetics/base/BlockBreakingKineticBlockEntity (java.lang.ClassNotFoundException: com.simibubi.create.content.kinetics.base.BlockBreakingKineticBlockEntity)
+[20Jun2025 12:32:27.092] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.content.kinetics.base.BlockBreakingKineticBlockEntity was not found valkyrienskies-forge.mixins.json:compat.create.MixinBlockBreakingKineticTileEntity
+[20Jun2025 12:32:27.096] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/content/kinetics/millstone/MillstoneBlock (java.lang.ClassNotFoundException: com.simibubi.create.content.kinetics.millstone.MillstoneBlock)
+[20Jun2025 12:32:27.096] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.content.kinetics.millstone.MillstoneBlock was not found valkyrienskies-forge.mixins.json:compat.create.MixinBlocks
+[20Jun2025 12:32:27.100] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/content/processing/basin/BasinBlock (java.lang.ClassNotFoundException: com.simibubi.create.content.processing.basin.BasinBlock)
+[20Jun2025 12:32:27.101] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.content.processing.basin.BasinBlock was not found valkyrienskies-forge.mixins.json:compat.create.MixinBlocks
+[20Jun2025 12:32:27.105] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/content/logistics/chute/AbstractChuteBlock (java.lang.ClassNotFoundException: com.simibubi.create.content.logistics.chute.AbstractChuteBlock)
+[20Jun2025 12:32:27.105] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.content.logistics.chute.AbstractChuteBlock was not found valkyrienskies-forge.mixins.json:compat.create.MixinBlocks
+[20Jun2025 12:32:27.110] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/content/contraptions/ControlledContraptionEntity (java.lang.ClassNotFoundException: com.simibubi.create.content.contraptions.ControlledContraptionEntity)
+[20Jun2025 12:32:27.110] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.content.contraptions.ControlledContraptionEntity was not found valkyrienskies-forge.mixins.json:compat.create.MixinControlledContraptionEntity
+[20Jun2025 12:32:27.115] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/content/trains/track/TrackBlockOutline (java.lang.ClassNotFoundException: com.simibubi.create.content.trains.track.TrackBlockOutline)
+[20Jun2025 12:32:27.115] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.content.trains.track.TrackBlockOutline was not found valkyrienskies-forge.mixins.json:compat.create.client.trackOutlines.MixinTrackBlockOutline
+[20Jun2025 12:32:27.120] [main/WARN] [mixin/]: Error loading class: blusunrize/immersiveengineering/common/gui/BlockEntityInventory (java.lang.ClassNotFoundException: blusunrize.immersiveengineering.common.gui.BlockEntityInventory)
+[20Jun2025 12:32:27.125] [main/WARN] [mixin/]: Error loading class: org/cyclops/integrateddynamics/core/block/VoxelShapeComponents (java.lang.ClassNotFoundException: org.cyclops.integrateddynamics.core.block.VoxelShapeComponents)
+[20Jun2025 12:32:27.125] [main/WARN] [mixin/]: @Mixin target org.cyclops.integrateddynamics.core.block.VoxelShapeComponents was not found valkyrienskies-forge.mixins.json:compat.integrateddynamics.MixinVoxelShapeComponents
+[20Jun2025 12:32:27.130] [main/WARN] [mixin/]: Error loading class: me/desht/modularrouters/container/RouterMenu (java.lang.ClassNotFoundException: me.desht.modularrouters.container.RouterMenu)
+[20Jun2025 12:32:27.135] [main/WARN] [mixin/]: Error loading class: net/dries007/tfc/world/TFCChunkGenerator (java.lang.ClassNotFoundException: net.dries007.tfc.world.TFCChunkGenerator)
+[20Jun2025 12:32:27.139] [main/WARN] [mixin/]: Error loading class: cofh/core/block/entity/TileCoFH (java.lang.ClassNotFoundException: cofh.core.block.entity.TileCoFH)
+[20Jun2025 12:32:27.144] [main/WARN] [mixin/]: Error loading class: li/cil/tis3d/common/entity/InfraredPacketEntity (java.lang.ClassNotFoundException: li.cil.tis3d.common.entity.InfraredPacketEntity)
+[20Jun2025 12:32:27.166] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/content/contraptions/ContraptionHandlerClient (java.lang.ClassNotFoundException: com.simibubi.create.content.contraptions.ContraptionHandlerClient)
+[20Jun2025 12:32:27.167] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.content.contraptions.ContraptionHandlerClient was not found valkyrienskies-forge.mixins.json:compat.create.client.MixinContraptionHandlerClient
+[20Jun2025 12:32:27.171] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/content/contraptions/render/ContraptionRenderInfo (java.lang.ClassNotFoundException: com.simibubi.create.content.contraptions.render.ContraptionRenderInfo)
+[20Jun2025 12:32:27.172] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.content.contraptions.render.ContraptionRenderInfo was not found valkyrienskies-forge.mixins.json:compat.create.client.MixinContraptionRenderInfo
+[20Jun2025 12:32:27.177] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/content/contraptions/render/FlwContraption (java.lang.ClassNotFoundException: com.simibubi.create.content.contraptions.render.FlwContraption)
+[20Jun2025 12:32:27.177] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.content.contraptions.render.FlwContraption was not found valkyrienskies-forge.mixins.json:compat.create.client.MixinFlwContraption
+[20Jun2025 12:32:27.182] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/content/contraptions/glue/SuperGlueSelectionHandler (java.lang.ClassNotFoundException: com.simibubi.create.content.contraptions.glue.SuperGlueSelectionHandler)
+[20Jun2025 12:32:27.182] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.content.contraptions.glue.SuperGlueSelectionHandler was not found valkyrienskies-forge.mixins.json:compat.create.client.MixinSuperGlueSelectionHandler
+[20Jun2025 12:32:27.186] [main/WARN] [mixin/]: Error loading class: li/cil/tis3d/client/renderer/block/entity/CasingBlockEntityRenderer (java.lang.ClassNotFoundException: li.cil.tis3d.client.renderer.block.entity.CasingBlockEntityRenderer)
+[20Jun2025 12:32:27.191] [main/WARN] [mixin/]: Error loading class: li/cil/tis3d/client/renderer/RenderContextImpl (java.lang.ClassNotFoundException: li.cil.tis3d.client.renderer.RenderContextImpl)
+[20Jun2025 12:32:27.247] [main/ERROR] [mixin/]: valkyrienskies-common.mixins.json:feature.container_distance_check.MixinContainer: Interface mixin contains a non-public method! Found includeShipsInDistanceCheck(Lnet/minecraft/world/entity/player/Player;DDD)D in valkyrienskies-common.mixins.json:feature.container_distance_check.MixinContainer
+org.spongepowered.asm.mixin.transformer.throwables.InvalidInterfaceMixinException: Interface mixin contains a non-public method! Found includeShipsInDistanceCheck(Lnet/minecraft/world/entity/player/Player;DDD)D in valkyrienskies-common.mixins.json:feature.container_distance_check.MixinContainer
+	at org.spongepowered.asm.mixin.transformer.MixinPreProcessorInterface.prepareMethod(MixinPreProcessorInterface.java:65) ~[mixin-0.8.5.jar:0.8.5+Jenkins-b310.git-155314e6e91465dad727e621a569906a410cd6f4]
+	at org.spongepowered.asm.mixin.transformer.MixinPreProcessorStandard.prepare(MixinPreProcessorStandard.java:187) ~[mixin-0.8.5.jar:0.8.5+Jenkins-b310.git-155314e6e91465dad727e621a569906a410cd6f4]
+	at org.spongepowered.asm.mixin.transformer.MixinInfo$State.validate(MixinInfo.java:322) ~[mixin-0.8.5.jar:0.8.5+Jenkins-b310.git-155314e6e91465dad727e621a569906a410cd6f4]
+	at org.spongepowered.asm.mixin.transformer.MixinInfo.validate(MixinInfo.java:913) ~[mixin-0.8.5.jar:0.8.5+Jenkins-b310.git-155314e6e91465dad727e621a569906a410cd6f4]
+	at org.spongepowered.asm.mixin.transformer.MixinConfig.postInitialise(MixinConfig.java:801) ~[mixin-0.8.5.jar:0.8.5+Jenkins-b310.git-155314e6e91465dad727e621a569906a410cd6f4]
+	at org.spongepowered.asm.mixin.transformer.MixinProcessor.prepareConfigs(MixinProcessor.java:567) ~[mixin-0.8.5.jar:0.8.5+Jenkins-b310.git-155314e6e91465dad727e621a569906a410cd6f4]
+	at org.spongepowered.asm.mixin.transformer.MixinProcessor.select(MixinProcessor.java:462) ~[mixin-0.8.5.jar:0.8.5+Jenkins-b310.git-155314e6e91465dad727e621a569906a410cd6f4]
+	at org.spongepowered.asm.mixin.transformer.MixinProcessor.checkSelect(MixinProcessor.java:438) ~[mixin-0.8.5.jar:0.8.5+Jenkins-b310.git-155314e6e91465dad727e621a569906a410cd6f4]
+	at org.spongepowered.asm.mixin.transformer.MixinProcessor.applyMixins(MixinProcessor.java:290) ~[mixin-0.8.5.jar:0.8.5+Jenkins-b310.git-155314e6e91465dad727e621a569906a410cd6f4]
+	at org.spongepowered.asm.mixin.transformer.MixinTransformer.transformClass(MixinTransformer.java:250) ~[mixin-0.8.5.jar:0.8.5+Jenkins-b310.git-155314e6e91465dad727e621a569906a410cd6f4]
+	at org.spongepowered.asm.service.modlauncher.MixinTransformationHandler.processClass(MixinTransformationHandler.java:131) ~[mixin-0.8.5.jar:0.8.5+Jenkins-b310.git-155314e6e91465dad727e621a569906a410cd6f4]
+	at org.spongepowered.asm.launch.MixinLaunchPluginLegacy.processClass(MixinLaunchPluginLegacy.java:131) ~[mixin-0.8.5.jar:0.8.5+Jenkins-b310.git-155314e6e91465dad727e621a569906a410cd6f4]
+	at cpw.mods.modlauncher.serviceapi.ILaunchPluginService.processClassWithFlags(ILaunchPluginService.java:156) ~[modlauncher-10.0.9.jar:10.0.9+10.0.9+main.dcd20f30]
+	at cpw.mods.modlauncher.LaunchPluginHandler.offerClassNodeToPlugins(LaunchPluginHandler.java:88) ~[modlauncher-10.0.9.jar:?]
+	at cpw.mods.modlauncher.ClassTransformer.transform(ClassTransformer.java:120) ~[modlauncher-10.0.9.jar:?]
+	at cpw.mods.modlauncher.TransformingClassLoader.maybeTransformClassBytes(TransformingClassLoader.java:50) ~[modlauncher-10.0.9.jar:?]
+	at cpw.mods.cl.ModuleClassLoader.readerToClass(ModuleClassLoader.java:113) ~[securejarhandler-2.1.10.jar:?]
+	at cpw.mods.cl.ModuleClassLoader.lambda$findClass$15(ModuleClassLoader.java:219) ~[securejarhandler-2.1.10.jar:?]
+	at cpw.mods.cl.ModuleClassLoader.loadFromModule(ModuleClassLoader.java:229) ~[securejarhandler-2.1.10.jar:?]
+	at cpw.mods.cl.ModuleClassLoader.findClass(ModuleClassLoader.java:219) ~[securejarhandler-2.1.10.jar:?]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:637) ~[?:?]
+	at java.lang.Class.forName(Class.java:545) ~[?:?]
+	at net.minecraftforge.fml.earlydisplay.DisplayWindow.lambda$updateModuleReads$13(DisplayWindow.java:615) ~[fmlearlydisplay-1.20.1-47.4.2.jar:1.0]
+	at java.util.Optional.map(Optional.java:260) ~[?:?]
+	at net.minecraftforge.fml.earlydisplay.DisplayWindow.updateModuleReads(DisplayWindow.java:615) ~[fmlearlydisplay-1.20.1-47.4.2.jar:1.0]
+	at net.minecraftforge.fml.loading.ImmediateWindowHandler.acceptGameLayer(ImmediateWindowHandler.java:71) ~[fmlloader-1.20.1-47.4.2.jar:1.0]
+	at net.minecraftforge.fml.loading.FMLLoader.beforeStart(FMLLoader.java:216) ~[fmlloader-1.20.1-47.4.2.jar:1.0]
+	at net.minecraftforge.fml.loading.targets.CommonLaunchHandler.launchService(CommonLaunchHandler.java:92) ~[fmlloader-1.20.1-47.4.2.jar:?]
+	at cpw.mods.modlauncher.LaunchServiceHandlerDecorator.launch(LaunchServiceHandlerDecorator.java:30) ~[modlauncher-10.0.9.jar:?]
+	at cpw.mods.modlauncher.LaunchServiceHandler.launch(LaunchServiceHandler.java:53) ~[modlauncher-10.0.9.jar:?]
+	at cpw.mods.modlauncher.LaunchServiceHandler.launch(LaunchServiceHandler.java:71) ~[modlauncher-10.0.9.jar:?]
+	at cpw.mods.modlauncher.Launcher.run(Launcher.java:108) ~[modlauncher-10.0.9.jar:?]
+	at cpw.mods.modlauncher.Launcher.main(Launcher.java:78) ~[modlauncher-10.0.9.jar:?]
+	at cpw.mods.modlauncher.BootstrapLaunchConsumer.accept(BootstrapLaunchConsumer.java:26) ~[modlauncher-10.0.9.jar:?]
+	at cpw.mods.modlauncher.BootstrapLaunchConsumer.accept(BootstrapLaunchConsumer.java:23) ~[modlauncher-10.0.9.jar:?]
+	at cpw.mods.bootstraplauncher.BootstrapLauncher.main(BootstrapLauncher.java:141) ~[bootstraplauncher-1.1.2.jar:?]
+[20Jun2025 12:32:27.933] [main/INFO] [MixinExtras|Service/]: Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.3.5).
+[20Jun2025 12:32:41.798] [Datafixer Bootstrap/INFO] [com.mojang.datafixers.DataFixerBuilder/]: 188 Datafixer optimizations took 553 milliseconds
+[20Jun2025 12:32:47.169] [Render thread/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/sampw/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.2_mapped_official_1.20.1/forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/assets/.mcassetsroot' uses unexpected schema
+[20Jun2025 12:32:47.170] [Render thread/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/sampw/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.2_mapped_official_1.20.1/forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/data/.mcassetsroot' uses unexpected schema
+[20Jun2025 12:32:47.233] [Render thread/INFO] [com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService/]: Environment: authHost='https://authserver.mojang.com', accountsHost='https://api.mojang.com', sessionHost='https://sessionserver.mojang.com', servicesHost='https://api.minecraftservices.com', name='PROD'
+[20Jun2025 12:32:47.250] [Render thread/INFO] [net.minecraft.client.Minecraft/]: Setting user: Dev
+[20Jun2025 12:32:47.596] [Render thread/INFO] [net.minecraft.client.Minecraft/]: Backend library: LWJGL version 3.3.1 build 7
+[20Jun2025 12:32:47.836] [Render thread/INFO] [Embeddium-PostlaunchChecks/]: OpenGL Vendor: ATI Technologies Inc.
+[20Jun2025 12:32:47.837] [Render thread/INFO] [Embeddium-PostlaunchChecks/]: OpenGL Renderer: AMD Radeon(TM) Graphics
+[20Jun2025 12:32:47.837] [Render thread/INFO] [Embeddium-PostlaunchChecks/]: OpenGL Version: 4.6.14802 Core Profile Forward-Compatible Context 21.40.56.05 30.0.14056.5001
+[20Jun2025 12:32:49.104] [modloading-worker-0/INFO] [net.minecraftforge.common.ForgeMod/FORGEMOD]: Forge mod loading, version 47.4.2, for MC 1.20.1 with MCP 20230612.114412
+[20Jun2025 12:32:49.105] [modloading-worker-0/INFO] [net.minecraftforge.common.MinecraftForge/FORGE]: MinecraftForge v47.4.2 Initialized
+[20Jun2025 12:32:50.149] [modloading-worker-0/INFO] [thedarkcolour.kotlinforforge.test.KotlinForForge/]: Kotlin For Forge Enabled!
+[20Jun2025 12:32:55.695] [Render thread/ERROR] [Embeddium-MixinTaintDetector/]: Mod mixin into Embeddium internals detected. This instance is now tainted. The Embeddium team does not provide any guarantee of support for issues encountered while such mods are installed.
+[20Jun2025 12:32:55.696] [Render thread/WARN] [Embeddium-MixinTaintDetector/]: Mod(s) [valkyrienskies] are modifying Embeddium class me.jellysquid.mods.sodium.client.render.SodiumWorldRenderer, which may cause instability.
+[20Jun2025 12:32:56.218] [Render thread/INFO] [net.minecraftforge.gametest.ForgeGameTestHooks/]: Enabled Gametest Namespaces: [createkinetic]
+[20Jun2025 12:32:56.942] [Render thread/INFO] [net.minecraft.server.packs.resources.ReloadableResourceManager/]: Reloading ResourceManager: vanilla, mod_resources
+[20Jun2025 12:32:57.069] [Worker-Main-2/INFO] [org.zipcoder.createkinetic.Createkinetic/]: HELLO FROM COMMON SETUP
+[20Jun2025 12:32:57.069] [Worker-Main-2/INFO] [org.zipcoder.createkinetic.Createkinetic/]: DIRT BLOCK >> minecraft:dirt
+[20Jun2025 12:32:57.069] [Worker-Main-2/INFO] [org.zipcoder.createkinetic.Createkinetic/]: DIRT BLOCK >> minecraft:dirt
+[20Jun2025 12:32:57.071] [Worker-Main-2/INFO] [org.zipcoder.createkinetic.Createkinetic/]: The magic number is... 42
+[20Jun2025 12:32:57.073] [Worker-Main-2/INFO] [org.zipcoder.createkinetic.Createkinetic/]: ITEM >> iron_ingot
+[20Jun2025 12:32:57.442] [Forge Version Check/INFO] [net.minecraftforge.fml.VersionChecker/]: [forge] Starting version check at https://files.minecraftforge.net/net/minecraftforge/forge/promotions_slim.json
+[20Jun2025 12:32:57.551] [Worker-Main-10/INFO] [net.minecraft.client.gui.font.providers.UnihexProvider/]: Found unifont_all_no_pua-15.0.06.hex, loading
+[20Jun2025 12:32:58.034] [Worker-Main-15/INFO] [org.zipcoder.createkinetic.Createkinetic/]: HELLO FROM CLIENT SETUP
+[20Jun2025 12:32:58.034] [Worker-Main-15/INFO] [org.zipcoder.createkinetic.Createkinetic/]: MINECRAFT NAME >> Dev
+[20Jun2025 12:32:58.857] [Forge Version Check/INFO] [net.minecraftforge.fml.VersionChecker/]: [forge] Found status: AHEAD Current: 47.4.2 Target: null
+[20Jun2025 12:32:59.712] [Worker-Main-8/WARN] [net.minecraft.client.resources.model.ModelBakery/]: Unable to load model: 'minecraft:valkyrienskies' referenced from: valkyrienskies:test_flap#facing=north: java.io.FileNotFoundException: minecraft:models/valkyrienskies.json
+[20Jun2025 12:32:59.727] [Worker-Main-8/WARN] [net.minecraft.client.resources.model.ModelBakery/]: Unable to load model: 'valkyrienskies:test_sphere#inventory' referenced from: valkyrienskies:test_sphere#inventory: java.io.FileNotFoundException: valkyrienskies:models/item/test_sphere.json
+[20Jun2025 12:32:59.727] [Worker-Main-8/WARN] [net.minecraft.client.resources.model.ModelBakery/]: Unable to load model: 'valkyrienskies:ship_assembler#inventory' referenced from: valkyrienskies:ship_assembler#inventory: java.io.FileNotFoundException: valkyrienskies:models/item/ship_assembler.json
+[20Jun2025 12:33:01.536] [Worker-Main-8/WARN] [net.minecraft.client.resources.model.ModelManager/]: Missing textures in model valkyrienskies:test_flap#facing=north:
+    minecraft:textures/atlas/blocks.png:valkyrienskies:test_wing
+[20Jun2025 12:33:01.536] [Worker-Main-8/WARN] [net.minecraft.client.resources.model.ModelManager/]: Missing textures in model valkyrienskies:test_wing#facing=east:
+    minecraft:textures/atlas/blocks.png:valkyrienskies:test_wing
+[20Jun2025 12:33:01.537] [Worker-Main-8/WARN] [net.minecraft.client.resources.model.ModelManager/]: Missing textures in model valkyrienskies:test_wing#facing=south:
+    minecraft:textures/atlas/blocks.png:valkyrienskies:test_wing
+[20Jun2025 12:33:01.537] [Worker-Main-8/WARN] [net.minecraft.client.resources.model.ModelManager/]: Missing textures in model valkyrienskies:test_sphere#:
+    minecraft:textures/atlas/blocks.png:valkyrienskies:test_sphere
+[20Jun2025 12:33:01.537] [Worker-Main-8/WARN] [net.minecraft.client.resources.model.ModelManager/]: Missing textures in model valkyrienskies:test_flap#inventory:
+    minecraft:textures/atlas/blocks.png:valkyrienskies:test_wing
+[20Jun2025 12:33:01.537] [Worker-Main-8/WARN] [net.minecraft.client.resources.model.ModelManager/]: Missing textures in model valkyrienskies:test_flap#facing=west:
+    minecraft:textures/atlas/blocks.png:valkyrienskies:test_wing
+[20Jun2025 12:33:01.538] [Worker-Main-8/WARN] [net.minecraft.client.resources.model.ModelManager/]: Missing textures in model valkyrienskies:test_wing#facing=up:
+    minecraft:textures/atlas/blocks.png:valkyrienskies:test_wing
+[20Jun2025 12:33:01.538] [Worker-Main-8/WARN] [net.minecraft.client.resources.model.ModelManager/]: Missing textures in model valkyrienskies:test_wing#inventory:
+    minecraft:textures/atlas/blocks.png:valkyrienskies:test_wing
+[20Jun2025 12:33:01.538] [Worker-Main-8/WARN] [net.minecraft.client.resources.model.ModelManager/]: Missing textures in model valkyrienskies:test_flap#facing=down:
+    minecraft:textures/atlas/blocks.png:valkyrienskies:test_wing
+[20Jun2025 12:33:04.451] [Render thread/WARN] [net.minecraft.client.sounds.SoundEngine/]: Missing sound for event: minecraft:item.goat_horn.play
+[20Jun2025 12:33:04.451] [Render thread/WARN] [net.minecraft.client.sounds.SoundEngine/]: Missing sound for event: minecraft:entity.goat.screaming.horn_break
+[20Jun2025 12:33:04.709] [Render thread/INFO] [com.mojang.blaze3d.audio.Library/]: OpenAL initialized on device OpenAL Soft on Headphones (TW3)
+[20Jun2025 12:33:04.711] [Render thread/INFO] [net.minecraft.client.sounds.SoundEngine/SOUNDS]: Sound engine started
+[20Jun2025 12:33:04.967] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 1024x512x4 minecraft:textures/atlas/blocks.png-atlas
+[20Jun2025 12:33:05.201] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 256x256x4 minecraft:textures/atlas/signs.png-atlas
+[20Jun2025 12:33:05.205] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 512x512x4 minecraft:textures/atlas/shield_patterns.png-atlas
+[20Jun2025 12:33:05.211] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 512x512x4 minecraft:textures/atlas/banner_patterns.png-atlas
+[20Jun2025 12:33:05.216] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 1024x1024x4 minecraft:textures/atlas/armor_trims.png-atlas
+[20Jun2025 12:33:05.275] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 256x256x4 minecraft:textures/atlas/chest.png-atlas
+[20Jun2025 12:33:05.277] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 128x64x4 minecraft:textures/atlas/decorated_pot.png-atlas
+[20Jun2025 12:33:05.282] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 512x256x4 minecraft:textures/atlas/shulker_boxes.png-atlas
+[20Jun2025 12:33:05.285] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 512x256x4 minecraft:textures/atlas/beds.png-atlas
+[20Jun2025 12:33:05.660] [Render thread/WARN] [net.minecraft.client.renderer.ShaderInstance/]: Shader rendertype_entity_translucent_emissive could not find sampler named Sampler2 in the specified shader program.
+[20Jun2025 12:33:05.794] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 256x256x0 minecraft:textures/atlas/particles.png-atlas
+[20Jun2025 12:33:05.802] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 256x256x0 minecraft:textures/atlas/paintings.png-atlas
+[20Jun2025 12:33:05.811] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 128x128x0 minecraft:textures/atlas/mob_effects.png-atlas
+[20Jun2025 12:33:06.388] [Realms Notification Availability checker #1/INFO] [com.mojang.realmsclient.client.RealmsClient/]: Could not authorize you against Realms server: java.lang.RuntimeException: Failed to parse into SignedJWT: 0
+[20Jun2025 12:33:19.657] [Render thread/INFO] [net.minecraftforge.registries.GameData/REGISTRIES]: Injecting existing registry data into this CLIENT instance
+[20Jun2025 12:33:23.449] [Render thread/INFO] [net.minecraft.world.item.crafting.RecipeManager/]: Loaded 7 recipes
+[20Jun2025 12:33:23.663] [Render thread/INFO] [net.minecraft.advancements.AdvancementList/]: Loaded 1271 advancements
+[20Jun2025 12:33:24.410] [Render thread/WARN] [org.valkyrienskies.mod.common.config.MassDatapackResolver/]: No specified tag 'minecraft:carpets' doesn't exist!
+[20Jun2025 12:33:24.642] [Server thread/INFO] [net.minecraft.client.server.IntegratedServer/]: Starting integrated minecraft server version 1.20.1
+[20Jun2025 12:33:24.643] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Generating keypair
+[20Jun2025 12:33:25.760] [Server thread/INFO] [org.valkyrienskies.core.impl.networking.VSNetworking/]: We are not using UDP, falling back to TCP
+[20Jun2025 12:33:26.235] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Preparing start region for dimension minecraft:overworld
+[20Jun2025 12:33:30.192] [Render thread/INFO] [net.minecraft.server.level.progress.LoggerChunkProgressListener/]: Preparing spawn area: 0%
+[20Jun2025 12:33:30.192] [Render thread/INFO] [net.minecraft.server.level.progress.LoggerChunkProgressListener/]: Preparing spawn area: 0%
+[20Jun2025 12:33:30.193] [Render thread/INFO] [net.minecraft.server.level.progress.LoggerChunkProgressListener/]: Preparing spawn area: 0%
+[20Jun2025 12:33:30.193] [Render thread/INFO] [net.minecraft.server.level.progress.LoggerChunkProgressListener/]: Preparing spawn area: 0%
+[20Jun2025 12:33:30.194] [Render thread/INFO] [net.minecraft.server.level.progress.LoggerChunkProgressListener/]: Preparing spawn area: 0%
+[20Jun2025 12:33:30.194] [Render thread/INFO] [net.minecraft.server.level.progress.LoggerChunkProgressListener/]: Preparing spawn area: 0%
+[20Jun2025 12:33:30.194] [Render thread/INFO] [net.minecraft.server.level.progress.LoggerChunkProgressListener/]: Preparing spawn area: 0%
+[20Jun2025 12:33:30.194] [Render thread/INFO] [net.minecraft.server.level.progress.LoggerChunkProgressListener/]: Preparing spawn area: 0%
+[20Jun2025 12:33:30.293] [Render thread/INFO] [net.minecraft.server.level.progress.LoggerChunkProgressListener/]: Preparing spawn area: 0%
+[20Jun2025 12:33:30.791] [Render thread/INFO] [net.minecraft.server.level.progress.LoggerChunkProgressListener/]: Preparing spawn area: 9%
+[20Jun2025 12:33:31.290] [Render thread/INFO] [net.minecraft.server.level.progress.LoggerChunkProgressListener/]: Preparing spawn area: 54%
+[20Jun2025 12:33:31.790] [Render thread/INFO] [net.minecraft.server.level.progress.LoggerChunkProgressListener/]: Preparing spawn area: 92%
+[20Jun2025 12:33:31.802] [Server thread/INFO] [net.minecraftforge.server.permission.PermissionAPI/]: Successfully initialized permission handler forge:default_handler
+[20Jun2025 12:33:31.803] [Server thread/INFO] [org.zipcoder.createkinetic.Createkinetic/]: HELLO from server starting
+[20Jun2025 12:33:31.821] [Render thread/INFO] [net.minecraft.server.level.progress.LoggerChunkProgressListener/]: Time elapsed: 5551 ms
+[20Jun2025 12:33:32.180] [Server thread/INFO] [net.minecraft.client.server.IntegratedServer/]: Changing view distance to 12, from 10
+[20Jun2025 12:33:32.184] [Server thread/INFO] [net.minecraft.client.server.IntegratedServer/]: Changing simulation distance to 12, from 0
+[20Jun2025 12:33:32.443] [Render thread/WARN] [io.netty.util.internal.SystemPropertyUtil/]: Unable to parse the boolean system property 'java.net.preferIPv6Addresses':system - using the default value: false
+[20Jun2025 12:33:33.408] [Netty Local Client IO #0/INFO] [net.minecraftforge.network.NetworkHooks/]: Connected to a modded server.
+[20Jun2025 12:33:33.631] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: Dev[local:E:a103d293] logged in with entity id 90 at (10.10697802909106, -60.0, -13.51845974573082)
+[20Jun2025 12:33:33.753] [Render thread/WARN] [Embeddium-MixinTaintDetector/]: Mod(s) [valkyrienskies] are modifying Embeddium class me.jellysquid.mods.sodium.client.render.chunk.map.ChunkTracker, which may cause instability.
+[20Jun2025 12:33:33.793] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Dev joined the game
+[20Jun2025 12:33:33.990] [Render thread/WARN] [Embeddium-MixinTaintDetector/]: Mod(s) [valkyrienskies] are modifying Embeddium class me.jellysquid.mods.sodium.client.render.chunk.RenderSectionManager, which may cause instability.
+[20Jun2025 12:33:34.137] [Render thread/WARN] [mixin/]: Error loading class: net/fabricmc/fabric/api/blockview/v2/FabricBlockView (java.lang.ClassNotFoundException: net.fabricmc.fabric.api.blockview.v2.FabricBlockView)
+[20Jun2025 12:33:34.153] [Render thread/WARN] [mixin/]: Error loading class: net/fabricmc/fabric/api/rendering/data/v1/RenderAttachedBlockView (java.lang.ClassNotFoundException: net.fabricmc.fabric.api.rendering.data.v1.RenderAttachedBlockView)
+[20Jun2025 12:33:34.337] [Render thread/INFO] [ChunkBuilder/]: Started 10 worker threads
+[20Jun2025 12:33:34.829] [Render thread/WARN] [org.valkyrienskies.mod.common.config.MassDatapackResolver/]: No specified tag 'minecraft:carpets' doesn't exist!
+[20Jun2025 12:33:35.139] [Render thread/INFO] [net.minecraft.advancements.AdvancementList/]: Loaded 2 advancements
+[20Jun2025 12:33:37.986] [Server thread/ERROR] [net.minecraft.network.protocol.PacketUtils/]: Failed to handle packet net.minecraft.network.protocol.game.ServerboundUseItemPacket@7cca76a0, suppressing error
+java.lang.NullPointerException: Cannot invoke "java.util.function.Consumer.accept(Object)" because "this._onUse" is null
+	at org.zipcoder.createkinetic.items.TotemItem.use(TotemItem.java:52) ~[%23196!/:?]
+	at net.minecraft.world.item.ItemStack.use(ItemStack.java:275) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.level.ServerPlayerGameMode.useItem(ServerPlayerGameMode.java:286) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.network.ServerGamePacketListenerImpl.handleUseItem(ServerGamePacketListenerImpl.java:1085) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.network.protocol.game.ServerboundUseItemPacket.handle(ServerboundUseItemPacket.java:27) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.network.protocol.game.ServerboundUseItemPacket.handle(ServerboundUseItemPacket.java:7) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.network.protocol.PacketUtils.lambda$ensureRunningOnSameThread$0(PacketUtils.java:22) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.TickTask.run(TickTask.java:17) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.util.thread.BlockableEventLoop.doRunTask(BlockableEventLoop.java:143) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.util.thread.ReentrantBlockableEventLoop.doRunTask(ReentrantBlockableEventLoop.java:22) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.doRunTask(MinecraftServer.java:770) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.doRunTask(MinecraftServer.java:161) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.util.thread.BlockableEventLoop.pollTask(BlockableEventLoop.java:116) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.pollTaskInternal(MinecraftServer.java:753) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.pollTask(MinecraftServer.java:747) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.util.thread.BlockableEventLoop.runAllTasks(BlockableEventLoop.java:104) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.waitUntilNextTick(MinecraftServer.java:732) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:665) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.lambda$spin$2(MinecraftServer.java:251) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at java.lang.Thread.run(Thread.java:840) ~[?:?]
+[20Jun2025 12:33:40.795] [Server thread/ERROR] [net.minecraft.network.protocol.PacketUtils/]: Failed to handle packet net.minecraft.network.protocol.game.ServerboundUseItemPacket@18a7f0b7, suppressing error
+java.lang.NullPointerException: Cannot invoke "java.util.function.Consumer.accept(Object)" because "this._onUse" is null
+	at org.zipcoder.createkinetic.items.TotemItem.use(TotemItem.java:52) ~[%23196!/:?]
+	at net.minecraft.world.item.ItemStack.use(ItemStack.java:275) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.level.ServerPlayerGameMode.useItem(ServerPlayerGameMode.java:286) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.network.ServerGamePacketListenerImpl.handleUseItem(ServerGamePacketListenerImpl.java:1085) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.network.protocol.game.ServerboundUseItemPacket.handle(ServerboundUseItemPacket.java:27) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.network.protocol.game.ServerboundUseItemPacket.handle(ServerboundUseItemPacket.java:7) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.network.protocol.PacketUtils.lambda$ensureRunningOnSameThread$0(PacketUtils.java:22) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.TickTask.run(TickTask.java:17) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.util.thread.BlockableEventLoop.doRunTask(BlockableEventLoop.java:143) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.util.thread.ReentrantBlockableEventLoop.doRunTask(ReentrantBlockableEventLoop.java:22) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.doRunTask(MinecraftServer.java:770) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.doRunTask(MinecraftServer.java:161) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.util.thread.BlockableEventLoop.pollTask(BlockableEventLoop.java:116) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.pollTaskInternal(MinecraftServer.java:753) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.pollTask(MinecraftServer.java:747) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.util.thread.BlockableEventLoop.runAllTasks(BlockableEventLoop.java:104) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.waitUntilNextTick(MinecraftServer.java:732) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:665) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.lambda$spin$2(MinecraftServer.java:251) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at java.lang.Thread.run(Thread.java:840) ~[?:?]
+[20Jun2025 12:33:43.254] [Server thread/INFO] [net.minecraft.client.server.IntegratedServer/]: Saving and pausing game...
+[20Jun2025 12:33:43.282] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[New World]'/minecraft:overworld
+[20Jun2025 12:33:43.364] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[New World]'/minecraft:the_nether
+[20Jun2025 12:33:43.367] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[New World]'/minecraft:the_end
+[20Jun2025 12:37:38.550] [Server thread/ERROR] [net.minecraft.network.protocol.PacketUtils/]: Failed to handle packet net.minecraft.network.protocol.game.ServerboundUseItemPacket@2594e8bd, suppressing error
+java.lang.NullPointerException: Cannot invoke "java.util.function.Consumer.accept(Object)" because "this._onUse" is null
+	at org.zipcoder.createkinetic.items.TotemItem.use(TotemItem.java:52) ~[%23196!/:?]
+	at net.minecraft.world.item.ItemStack.use(ItemStack.java:275) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.level.ServerPlayerGameMode.useItem(ServerPlayerGameMode.java:286) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.network.ServerGamePacketListenerImpl.handleUseItem(ServerGamePacketListenerImpl.java:1085) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.network.protocol.game.ServerboundUseItemPacket.handle(ServerboundUseItemPacket.java:27) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.network.protocol.game.ServerboundUseItemPacket.handle(ServerboundUseItemPacket.java:7) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.network.protocol.PacketUtils.lambda$ensureRunningOnSameThread$0(PacketUtils.java:22) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.TickTask.run(TickTask.java:17) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.util.thread.BlockableEventLoop.doRunTask(BlockableEventLoop.java:143) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.util.thread.ReentrantBlockableEventLoop.doRunTask(ReentrantBlockableEventLoop.java:22) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.doRunTask(MinecraftServer.java:770) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.doRunTask(MinecraftServer.java:161) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.util.thread.BlockableEventLoop.pollTask(BlockableEventLoop.java:116) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.pollTaskInternal(MinecraftServer.java:753) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.pollTask(MinecraftServer.java:747) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.util.thread.BlockableEventLoop.managedBlock(BlockableEventLoop.java:126) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.waitUntilNextTick(MinecraftServer.java:733) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:665) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.lambda$spin$2(MinecraftServer.java:251) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at java.lang.Thread.run(Thread.java:840) ~[?:?]
+[20Jun2025 12:37:40.811] [Server thread/INFO] [net.minecraft.client.server.IntegratedServer/]: Saving and pausing game...
+[20Jun2025 12:37:40.826] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[New World]'/minecraft:overworld
+[20Jun2025 12:37:40.844] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[New World]'/minecraft:the_nether
+[20Jun2025 12:37:40.849] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[New World]'/minecraft:the_end
+[20Jun2025 12:38:05.211] [Server thread/INFO] [net.minecraft.client.server.IntegratedServer/]: Saving and pausing game...
+[20Jun2025 12:38:05.224] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[New World]'/minecraft:overworld
+[20Jun2025 12:38:05.236] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[New World]'/minecraft:the_nether
+[20Jun2025 12:38:05.239] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[New World]'/minecraft:the_end
+[20Jun2025 12:38:06.210] [Server thread/INFO] [net.minecraft.client.server.IntegratedServer/]: Saving and pausing game...
+[20Jun2025 12:38:06.237] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[New World]'/minecraft:overworld
+[20Jun2025 12:38:06.248] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[New World]'/minecraft:the_nether
+[20Jun2025 12:38:06.249] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[New World]'/minecraft:the_end
+[20Jun2025 12:38:38.191] [Render thread/INFO] [net.minecraft.client.gui.components.ChatComponent/]: [System] [CHAT] No ship found
+[20Jun2025 12:38:38.913] [Server thread/INFO] [net.minecraft.client.server.IntegratedServer/]: Saving and pausing game...
+[20Jun2025 12:38:38.928] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[New World]'/minecraft:overworld
+[20Jun2025 12:38:38.940] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[New World]'/minecraft:the_nether
+[20Jun2025 12:38:38.943] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[New World]'/minecraft:the_end
+[20Jun2025 12:40:21.815] [Server thread/INFO] [net.minecraft.client.server.IntegratedServer/]: Saving and pausing game...
+[20Jun2025 12:40:21.828] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[New World]'/minecraft:overworld
+[20Jun2025 12:40:21.841] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[New World]'/minecraft:the_nether
+[20Jun2025 12:40:21.844] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[New World]'/minecraft:the_end
+[20Jun2025 12:41:14.567] [Server thread/INFO] [net.minecraft.client.server.IntegratedServer/]: Saving and pausing game...
+[20Jun2025 12:41:14.581] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[New World]'/minecraft:overworld
+[20Jun2025 12:41:14.593] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[New World]'/minecraft:the_nether
+[20Jun2025 12:41:14.595] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[New World]'/minecraft:the_end
+[20Jun2025 12:52:54.385] [Server thread/INFO] [net.minecraft.client.server.IntegratedServer/]: Saving and pausing game...
+[20Jun2025 12:52:54.399] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[New World]'/minecraft:overworld
+[20Jun2025 12:52:54.408] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[New World]'/minecraft:the_nether
+[20Jun2025 12:52:54.410] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[New World]'/minecraft:the_end
+[20Jun2025 12:56:33.700] [Server thread/ERROR] [net.minecraft.network.protocol.PacketUtils/]: Failed to handle packet net.minecraft.network.protocol.game.ServerboundUseItemPacket@86c4383, suppressing error
+java.lang.NullPointerException: Cannot invoke "java.util.function.Consumer.accept(Object)" because "this._onUse" is null
+	at org.zipcoder.createkinetic.items.TotemItem.use(TotemItem.java:52) ~[%23196!/:?]
+	at net.minecraft.world.item.ItemStack.use(ItemStack.java:275) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.level.ServerPlayerGameMode.useItem(ServerPlayerGameMode.java:286) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.network.ServerGamePacketListenerImpl.handleUseItem(ServerGamePacketListenerImpl.java:1085) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.network.protocol.game.ServerboundUseItemPacket.handle(ServerboundUseItemPacket.java:27) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.network.protocol.game.ServerboundUseItemPacket.handle(ServerboundUseItemPacket.java:7) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.network.protocol.PacketUtils.lambda$ensureRunningOnSameThread$0(PacketUtils.java:22) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.TickTask.run(TickTask.java:17) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.util.thread.BlockableEventLoop.doRunTask(BlockableEventLoop.java:143) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.util.thread.ReentrantBlockableEventLoop.doRunTask(ReentrantBlockableEventLoop.java:22) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.doRunTask(MinecraftServer.java:770) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.doRunTask(MinecraftServer.java:161) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.util.thread.BlockableEventLoop.pollTask(BlockableEventLoop.java:116) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.pollTaskInternal(MinecraftServer.java:753) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.pollTask(MinecraftServer.java:747) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.util.thread.BlockableEventLoop.runAllTasks(BlockableEventLoop.java:104) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.waitUntilNextTick(MinecraftServer.java:732) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:665) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.lambda$spin$2(MinecraftServer.java:251) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at java.lang.Thread.run(Thread.java:840) ~[?:?]
+[20Jun2025 12:56:36.655] [Server thread/ERROR] [net.minecraft.network.protocol.PacketUtils/]: Failed to handle packet net.minecraft.network.protocol.game.ServerboundUseItemPacket@3f360133, suppressing error
+java.lang.NullPointerException: Cannot invoke "java.util.function.Consumer.accept(Object)" because "this._onUse" is null
+	at org.zipcoder.createkinetic.items.TotemItem.use(TotemItem.java:52) ~[%23196!/:?]
+	at net.minecraft.world.item.ItemStack.use(ItemStack.java:275) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.level.ServerPlayerGameMode.useItem(ServerPlayerGameMode.java:286) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.network.ServerGamePacketListenerImpl.handleUseItem(ServerGamePacketListenerImpl.java:1085) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.network.protocol.game.ServerboundUseItemPacket.handle(ServerboundUseItemPacket.java:27) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.network.protocol.game.ServerboundUseItemPacket.handle(ServerboundUseItemPacket.java:7) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.network.protocol.PacketUtils.lambda$ensureRunningOnSameThread$0(PacketUtils.java:22) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.TickTask.run(TickTask.java:17) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.util.thread.BlockableEventLoop.doRunTask(BlockableEventLoop.java:143) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.util.thread.ReentrantBlockableEventLoop.doRunTask(ReentrantBlockableEventLoop.java:22) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.doRunTask(MinecraftServer.java:770) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.doRunTask(MinecraftServer.java:161) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.util.thread.BlockableEventLoop.pollTask(BlockableEventLoop.java:116) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.pollTaskInternal(MinecraftServer.java:753) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.pollTask(MinecraftServer.java:747) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.util.thread.BlockableEventLoop.managedBlock(BlockableEventLoop.java:126) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.waitUntilNextTick(MinecraftServer.java:733) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:665) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.lambda$spin$2(MinecraftServer.java:251) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at java.lang.Thread.run(Thread.java:840) ~[?:?]
+[20Jun2025 12:56:39.140] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: [Dev: Set own game mode to Survival Mode]
+[20Jun2025 12:56:39.148] [Render thread/INFO] [net.minecraft.client.gui.components.ChatComponent/]: [System] [CHAT] Set own game mode to Survival Mode
+[20Jun2025 12:56:39.553] [Server thread/ERROR] [net.minecraft.network.protocol.PacketUtils/]: Failed to handle packet net.minecraft.network.protocol.game.ServerboundUseItemPacket@84097bb, suppressing error
+java.lang.NullPointerException: Cannot invoke "java.util.function.Consumer.accept(Object)" because "this._onUse" is null
+	at org.zipcoder.createkinetic.items.TotemItem.use(TotemItem.java:52) ~[%23196!/:?]
+	at net.minecraft.world.item.ItemStack.use(ItemStack.java:275) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.level.ServerPlayerGameMode.useItem(ServerPlayerGameMode.java:286) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.network.ServerGamePacketListenerImpl.handleUseItem(ServerGamePacketListenerImpl.java:1085) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.network.protocol.game.ServerboundUseItemPacket.handle(ServerboundUseItemPacket.java:27) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.network.protocol.game.ServerboundUseItemPacket.handle(ServerboundUseItemPacket.java:7) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.network.protocol.PacketUtils.lambda$ensureRunningOnSameThread$0(PacketUtils.java:22) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.TickTask.run(TickTask.java:17) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.util.thread.BlockableEventLoop.doRunTask(BlockableEventLoop.java:143) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.util.thread.ReentrantBlockableEventLoop.doRunTask(ReentrantBlockableEventLoop.java:22) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.doRunTask(MinecraftServer.java:770) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.doRunTask(MinecraftServer.java:161) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.util.thread.BlockableEventLoop.pollTask(BlockableEventLoop.java:116) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.pollTaskInternal(MinecraftServer.java:753) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.pollTask(MinecraftServer.java:747) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.util.thread.BlockableEventLoop.runAllTasks(BlockableEventLoop.java:104) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.waitUntilNextTick(MinecraftServer.java:732) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:665) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.lambda$spin$2(MinecraftServer.java:251) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at java.lang.Thread.run(Thread.java:840) ~[?:?]
+[20Jun2025 12:56:42.201] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: [Dev: Set own game mode to Creative Mode]
+[20Jun2025 12:56:42.206] [Render thread/INFO] [net.minecraft.client.gui.components.ChatComponent/]: [System] [CHAT] Set own game mode to Creative Mode
+[20Jun2025 12:56:50.752] [Server thread/ERROR] [net.minecraft.network.protocol.PacketUtils/]: Failed to handle packet net.minecraft.network.protocol.game.ServerboundUseItemPacket@7b7bd71b, suppressing error
+java.lang.NullPointerException: Cannot invoke "java.util.function.Consumer.accept(Object)" because "this._onUse" is null
+	at org.zipcoder.createkinetic.items.TotemItem.use(TotemItem.java:52) ~[%23196!/:?]
+	at net.minecraft.world.item.ItemStack.use(ItemStack.java:275) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.level.ServerPlayerGameMode.useItem(ServerPlayerGameMode.java:286) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.network.ServerGamePacketListenerImpl.handleUseItem(ServerGamePacketListenerImpl.java:1085) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.network.protocol.game.ServerboundUseItemPacket.handle(ServerboundUseItemPacket.java:27) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.network.protocol.game.ServerboundUseItemPacket.handle(ServerboundUseItemPacket.java:7) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.network.protocol.PacketUtils.lambda$ensureRunningOnSameThread$0(PacketUtils.java:22) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.TickTask.run(TickTask.java:17) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.util.thread.BlockableEventLoop.doRunTask(BlockableEventLoop.java:143) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.util.thread.ReentrantBlockableEventLoop.doRunTask(ReentrantBlockableEventLoop.java:22) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.doRunTask(MinecraftServer.java:770) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.doRunTask(MinecraftServer.java:161) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.util.thread.BlockableEventLoop.pollTask(BlockableEventLoop.java:116) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.pollTaskInternal(MinecraftServer.java:753) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.pollTask(MinecraftServer.java:747) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.util.thread.BlockableEventLoop.runAllTasks(BlockableEventLoop.java:104) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.waitUntilNextTick(MinecraftServer.java:732) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:665) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.lambda$spin$2(MinecraftServer.java:251) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at java.lang.Thread.run(Thread.java:840) ~[?:?]
+[20Jun2025 12:56:53.202] [Server thread/ERROR] [net.minecraft.network.protocol.PacketUtils/]: Failed to handle packet net.minecraft.network.protocol.game.ServerboundUseItemPacket@21b39a95, suppressing error
+java.lang.NullPointerException: Cannot invoke "java.util.function.Consumer.accept(Object)" because "this._onUse" is null
+	at org.zipcoder.createkinetic.items.TotemItem.use(TotemItem.java:52) ~[%23196!/:?]
+	at net.minecraft.world.item.ItemStack.use(ItemStack.java:275) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.level.ServerPlayerGameMode.useItem(ServerPlayerGameMode.java:286) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.network.ServerGamePacketListenerImpl.handleUseItem(ServerGamePacketListenerImpl.java:1085) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.network.protocol.game.ServerboundUseItemPacket.handle(ServerboundUseItemPacket.java:27) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.network.protocol.game.ServerboundUseItemPacket.handle(ServerboundUseItemPacket.java:7) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.network.protocol.PacketUtils.lambda$ensureRunningOnSameThread$0(PacketUtils.java:22) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.TickTask.run(TickTask.java:17) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.util.thread.BlockableEventLoop.doRunTask(BlockableEventLoop.java:143) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.util.thread.ReentrantBlockableEventLoop.doRunTask(ReentrantBlockableEventLoop.java:22) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.doRunTask(MinecraftServer.java:770) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.doRunTask(MinecraftServer.java:161) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.util.thread.BlockableEventLoop.pollTask(BlockableEventLoop.java:116) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.pollTaskInternal(MinecraftServer.java:753) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.pollTask(MinecraftServer.java:747) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.util.thread.BlockableEventLoop.runAllTasks(BlockableEventLoop.java:104) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.waitUntilNextTick(MinecraftServer.java:732) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:665) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.lambda$spin$2(MinecraftServer.java:251) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at java.lang.Thread.run(Thread.java:840) ~[?:?]
+[20Jun2025 12:56:57.557] [Server thread/ERROR] [net.minecraft.network.protocol.PacketUtils/]: Failed to handle packet net.minecraft.network.protocol.game.ServerboundUseItemPacket@67120de2, suppressing error
+java.lang.NullPointerException: Cannot invoke "java.util.function.Consumer.accept(Object)" because "this._onUse" is null
+	at org.zipcoder.createkinetic.items.TotemItem.use(TotemItem.java:52) ~[%23196!/:?]
+	at net.minecraft.world.item.ItemStack.use(ItemStack.java:275) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.level.ServerPlayerGameMode.useItem(ServerPlayerGameMode.java:286) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.network.ServerGamePacketListenerImpl.handleUseItem(ServerGamePacketListenerImpl.java:1085) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.network.protocol.game.ServerboundUseItemPacket.handle(ServerboundUseItemPacket.java:27) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.network.protocol.game.ServerboundUseItemPacket.handle(ServerboundUseItemPacket.java:7) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.network.protocol.PacketUtils.lambda$ensureRunningOnSameThread$0(PacketUtils.java:22) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.TickTask.run(TickTask.java:17) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.util.thread.BlockableEventLoop.doRunTask(BlockableEventLoop.java:143) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.util.thread.ReentrantBlockableEventLoop.doRunTask(ReentrantBlockableEventLoop.java:22) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.doRunTask(MinecraftServer.java:770) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.doRunTask(MinecraftServer.java:161) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.util.thread.BlockableEventLoop.pollTask(BlockableEventLoop.java:116) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.pollTaskInternal(MinecraftServer.java:753) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.pollTask(MinecraftServer.java:747) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.util.thread.BlockableEventLoop.runAllTasks(BlockableEventLoop.java:104) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.waitUntilNextTick(MinecraftServer.java:732) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:665) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.lambda$spin$2(MinecraftServer.java:251) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at java.lang.Thread.run(Thread.java:840) ~[?:?]
+[20Jun2025 12:57:00.002] [Server thread/ERROR] [net.minecraft.network.protocol.PacketUtils/]: Failed to handle packet net.minecraft.network.protocol.game.ServerboundUseItemPacket@3f538d32, suppressing error
+java.lang.NullPointerException: Cannot invoke "java.util.function.Consumer.accept(Object)" because "this._onUse" is null
+	at org.zipcoder.createkinetic.items.TotemItem.use(TotemItem.java:52) ~[%23196!/:?]
+	at net.minecraft.world.item.ItemStack.use(ItemStack.java:275) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.level.ServerPlayerGameMode.useItem(ServerPlayerGameMode.java:286) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.network.ServerGamePacketListenerImpl.handleUseItem(ServerGamePacketListenerImpl.java:1085) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.network.protocol.game.ServerboundUseItemPacket.handle(ServerboundUseItemPacket.java:27) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.network.protocol.game.ServerboundUseItemPacket.handle(ServerboundUseItemPacket.java:7) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.network.protocol.PacketUtils.lambda$ensureRunningOnSameThread$0(PacketUtils.java:22) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.TickTask.run(TickTask.java:17) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.util.thread.BlockableEventLoop.doRunTask(BlockableEventLoop.java:143) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.util.thread.ReentrantBlockableEventLoop.doRunTask(ReentrantBlockableEventLoop.java:22) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.doRunTask(MinecraftServer.java:770) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.doRunTask(MinecraftServer.java:161) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.util.thread.BlockableEventLoop.pollTask(BlockableEventLoop.java:116) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.pollTaskInternal(MinecraftServer.java:753) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.pollTask(MinecraftServer.java:747) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.util.thread.BlockableEventLoop.runAllTasks(BlockableEventLoop.java:104) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.waitUntilNextTick(MinecraftServer.java:732) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:665) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at net.minecraft.server.MinecraftServer.lambda$spin$2(MinecraftServer.java:251) ~[forge-1.20.1-47.4.2_mapped_official_1.20.1-recomp.jar%23191!/:?]
+	at java.lang.Thread.run(Thread.java:840) ~[?:?]
+[20Jun2025 12:57:07.191] [Server thread/INFO] [net.minecraft.client.server.IntegratedServer/]: Saving and pausing game...
+[20Jun2025 12:57:07.203] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[New World]'/minecraft:overworld
+[20Jun2025 12:57:07.213] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[New World]'/minecraft:the_nether
+[20Jun2025 12:57:07.215] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[New World]'/minecraft:the_end
+[20Jun2025 12:57:07.804] [Server thread/INFO] [net.minecraft.server.network.ServerGamePacketListenerImpl/]: Dev lost connection: Disconnected
+[20Jun2025 12:57:07.805] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Dev left the game
+[20Jun2025 12:57:07.833] [Server thread/INFO] [net.minecraft.server.network.ServerGamePacketListenerImpl/]: Stopping singleplayer server as player logged out
+[20Jun2025 12:57:07.857] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Stopping server
+[20Jun2025 12:57:07.858] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving players
+[20Jun2025 12:57:07.858] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving worlds
+[20Jun2025 12:57:07.874] [Physics thread/INFO] [Burger Factory/]: Deleting VSPhysicsPipelineStage resources!
+[20Jun2025 12:57:07.878] [Physics thread/WARN] [org.valkyrienskies.core.impl.shadow.Ap/]: Physics pipeline ending
+[20Jun2025 12:57:08.017] [DefaultDispatcher-worker-3/INFO] [Burger Factory/]: VSPhysicsPipelineStage is fully deleted!
+[20Jun2025 12:57:08.958] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[New World]'/minecraft:overworld
+[20Jun2025 12:57:10.245] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[New World]'/minecraft:the_nether
+[20Jun2025 12:57:10.247] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[New World]'/minecraft:the_end
+[20Jun2025 12:57:10.289] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: ThreadedAnvilChunkStorage (New World): All chunks are saved
+[20Jun2025 12:57:10.290] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
+[20Jun2025 12:57:10.290] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: ThreadedAnvilChunkStorage (DIM1): All chunks are saved
+[20Jun2025 12:57:10.290] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: ThreadedAnvilChunkStorage: All dimensions are saved
+[20Jun2025 12:57:11.116] [Render thread/INFO] [ChunkBuilder/]: Stopping worker threads
