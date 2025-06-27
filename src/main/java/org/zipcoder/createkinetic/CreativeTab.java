@@ -9,6 +9,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 
 import static org.zipcoder.createkinetic.Createkinetic.MODID;
+import static org.zipcoder.createkinetic.ModItems.FREEZE_SHIP_TOTEM;
 import static org.zipcoder.createkinetic.ModItems.SHIP_TOTEM;
 
 public class CreativeTab {
@@ -21,7 +22,8 @@ public class CreativeTab {
                     .title(Component.translatable("itemGroup." + MODID + ".tab"))
                     .icon(() -> SHIP_TOTEM.get().getDefaultInstance())
                     .displayItems((parameters, output) -> {
-                        output.accept(SHIP_TOTEM.get()); // Add the example item to the tab. For your own tabs, this method is preferred over the event
+                        output.accept(SHIP_TOTEM.get());
+                        output.accept(FREEZE_SHIP_TOTEM.get());
                     }).build());
 
     //For vanilla tabs

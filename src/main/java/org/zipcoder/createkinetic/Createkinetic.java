@@ -28,6 +28,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.slf4j.Logger;
+import org.zipcoder.createkinetic.network.NetworkHandler;
 
 import static org.zipcoder.createkinetic.CreativeTab.CREATIVE_MODE_TABS;
 import static org.zipcoder.createkinetic.ModBlocks.BLOCKS;
@@ -49,7 +50,7 @@ public class Createkinetic {
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
 
-        // Register the Deferred Register to the mod event bus so blocks get registered
+         //Register the Deferred Register to the mod event bus so blocks get registered
         BLOCKS.register(modEventBus);
         // Register the Deferred Register to the mod event bus so items get registered
         ITEMS.register(modEventBus);
@@ -67,24 +68,11 @@ public class Createkinetic {
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
-        // Some common setup code
-        LOGGER.info("HELLO FROM COMMON SETUP");
-        LOGGER.info("DIRT BLOCK >> {}", ForgeRegistries.BLOCKS.getKey(Blocks.DIRT));
-
-        if (Config.logDirtBlock) LOGGER.info("DIRT BLOCK >> {}", ForgeRegistries.BLOCKS.getKey(Blocks.DIRT));
-
-        LOGGER.info(Config.magicNumberIntroduction + Config.magicNumber);
-
-        Config.items.forEach((item) -> LOGGER.info("ITEM >> {}", item.toString()));
+        NetworkHandler.registerMessages();
     }
 
-
-
-    // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
-        // Do something when the server starts
-        LOGGER.info("HELLO from server starting");
     }
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
@@ -93,9 +81,6 @@ public class Createkinetic {
 
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
-            // Some client setup code
-            LOGGER.info("HELLO FROM CLIENT SETUP");
-            LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
         }
     }
 }
