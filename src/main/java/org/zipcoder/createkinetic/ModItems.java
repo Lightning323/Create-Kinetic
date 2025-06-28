@@ -58,7 +58,7 @@ public class ModItems {
             player.sendSystemMessage(Component.literal("Teleport successful!"));
 
             if (freezeShip) {
-                executeParsedCommandOP(source, "vs set-static " + shipSlug + " true",true);
+                executeParsedCommandOP(source, "vs set-static " + shipSlug + " true",false);
                 String command = "/ship unfreeze " + shipSlug;
 
                 player.sendSystemMessage(
