@@ -49,7 +49,7 @@ public class ModItems {
 
         CommandSourceStack source = player.createCommandSourceStack();
         int exit = executeParsedCommandOP(source, "vs teleport " + shipSlug + " "
-                + rayTrace.getLocation().x + " " + rayTrace.getLocation().y + " " + rayTrace.getLocation().z);
+                + rayTrace.getLocation().x + " " + rayTrace.getLocation().y + " " + rayTrace.getLocation().z, false);
 
         if (exit == 0) {
             player.sendSystemMessage(Component.literal("Teleport failed!"));
@@ -58,7 +58,7 @@ public class ModItems {
             player.sendSystemMessage(Component.literal("Teleport successful!"));
 
             if (freezeShip) {
-                executeParsedCommandOP(source, "vs set-static " + shipSlug + " true");
+                executeParsedCommandOP(source, "vs set-static " + shipSlug + " true",true);
                 String command = "/ship unfreeze " + shipSlug;
 
                 player.sendSystemMessage(

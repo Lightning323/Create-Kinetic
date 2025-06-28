@@ -48,7 +48,7 @@ public class ModCommands {
     final static int DELETE_MASSLESS_THRESHOLD = 99;
     final static int PROXIMITY_RADIUS = 20;
 
-    public static int executeParsedCommandOP(CommandSourceStack originalSource, String command) {
+    public static int executeParsedCommandOP(CommandSourceStack originalSource, String command, boolean redirectOutput) {
         MinecraftServer server = originalSource.getServer();
         var dispatcher = server.getCommands().getDispatcher();
 
@@ -57,26 +57,31 @@ public class ModCommands {
             command = command.substring(1);
         }
 
-//        CommandSourceStack serverSource = server.createCommandSourceStack()
-//                .withPermission(4); // Full OP level
-
 
         try {
-            CommandSourceStack serverSource = new CommandSourceStack(
-                    originalSource.getPlayer(), // entity
-                    originalSource.getPlayer().position(), // position
-                    originalSource.getPlayer().getRotationVector(), // rotation
+            CommandSourceStack serverSource;
 
-                    server.getLevel(originalSource.getPlayer().level().dimension()).getServer()
-                            .getLevel(originalSource.getPlayer().level().dimension()), // server level access
+            if (redirectOutput) {
+                serverSource = new CommandSourceStack(
+                        originalSource.getPlayer(), // entity
+                        originalSource.getPlayer().position(), // position
+                        originalSource.getPlayer().getRotationVector(), // rotation
 
-                    4, // permission level (OP)
-                    originalSource.getPlayer().getName().getString(), // name
-                    originalSource.getPlayer().getDisplayName(), // display name
-                    server, // server
-                    originalSource.getPlayer() // entity again
-            ).withPermission(4)
-                    .withSuppressedOutput(); // ensure messages show
+                        server.getLevel(originalSource.getPlayer().level().dimension()).getServer()
+                                .getLevel(originalSource.getPlayer().level().dimension()), // server level access
+
+                        4, // permission level (OP)
+                        originalSource.getPlayer().getName().getString(), // name
+                        originalSource.getPlayer().getDisplayName(), // display name
+                        server, // server
+                        originalSource.getPlayer() // entity again
+                ).withPermission(4)
+                        .withSuppressedOutput(); // ensure messages show
+            } else {
+                serverSource = server.createCommandSourceStack()
+                        .withPermission(4) // Full OP level
+                        .withSuppressedOutput();
+            }
 
             ParseResults<CommandSourceStack> parseResults = dispatcher.parse(command, serverSource);
             return dispatcher.execute(parseResults);
@@ -170,7 +175,7 @@ public class ModCommands {
 
                 .then(Commands.literal("this")
                         .executes(ctx -> {
-                            return executeParsedCommandOP(ctx.getSource(), "vs get-ship");
+                            return executeParsedCommandOP(ctx.getSource(), "vs get-ship",true);
                         })
                 )
                 .then(Commands.literal("rename")
@@ -193,7 +198,7 @@ public class ModCommands {
                                                 }
                                             }
 
-                                            return executeParsedCommandOP(originalSource2, "vs ship " + oldSlug + " rename " + newSlug);
+                                            return executeParsedCommandOP(originalSource2, "vs ship " + oldSlug + " rename " + newSlug, true);
                                         })))
                 )
                 .then(Commands.literal("recover")
@@ -207,14 +212,14 @@ public class ModCommands {
                                     String shipSlug = StringArgumentType.getString(ctx, "ship");
                                     // Ship shipSlug = ShipArgument.Companion.getShip(ctx, "ship");
                                     return executeParsedCommandOP(ctx.getSource(), "vs teleport " + shipSlug + " "
-                                            + rayTrace.getLocation().x + " " + rayTrace.getLocation().y + " " + rayTrace.getLocation().z);
+                                            + rayTrace.getLocation().x + " " + rayTrace.getLocation().y + " " + rayTrace.getLocation().z, true);
                                 })))
                 .then(Commands.literal("freeze")
                         .then(RequiredArgumentBuilder.<CommandSourceStack, String>argument("ship", StringArgumentType.word())
                                 .suggests(shipSlugSuggestions())//ShipArgument.Companion.ships()
                                 .executes(ctx -> {
                                     String shipSlug = StringArgumentType.getString(ctx, "ship");
-                                    return executeParsedCommandOP(ctx.getSource(), "vs set-static " + shipSlug + " true");
+                                    return executeParsedCommandOP(ctx.getSource(), "vs set-static " + shipSlug + " true", true);
                                 }))
                 )
                 .then(Commands.literal("unfreeze")
@@ -222,7 +227,7 @@ public class ModCommands {
                                 .suggests(shipSlugSuggestions())//ShipArgument.Companion.ships()
                                 .executes(ctx -> {
                                     String shipSlug = StringArgumentType.getString(ctx, "ship");
-                                    return executeParsedCommandOP(ctx.getSource(), "vs set-static " + shipSlug + " false");
+                                    return executeParsedCommandOP(ctx.getSource(), "vs set-static " + shipSlug + " false",true);
                                 }))
                 )
         );
