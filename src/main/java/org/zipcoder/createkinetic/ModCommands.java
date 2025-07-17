@@ -175,7 +175,7 @@ public class ModCommands {
 
                 .then(Commands.literal("this")
                         .executes(ctx -> {
-                            return executeParsedCommandOP(ctx.getSource(), "vs get-ship",true);
+                            return executeParsedCommandOP(ctx.getSource(), "vs get-ship", true);
                         })
                 )
                 .then(Commands.literal("rename")
@@ -207,12 +207,8 @@ public class ModCommands {
                                 .suggests(shipSlugSuggestions())//ShipArgument.Companion.ships()
                                 .executes(ctx -> {
                                     Entity sourceEntity = ctx.getSource().getPlayer();
-                                    BlockHitResult rayTrace = (BlockHitResult) sourceEntity.pick(10, 1.0F, false);
-
                                     String shipSlug = StringArgumentType.getString(ctx, "ship");
-                                    // Ship shipSlug = ShipArgument.Companion.getShip(ctx, "ship");
-                                    return executeParsedCommandOP(ctx.getSource(), "vs teleport " + shipSlug + " "
-                                            + rayTrace.getLocation().x + " " + rayTrace.getLocation().y + " " + rayTrace.getLocation().z, true);
+                                    return recoverShip(ctx.getSource().getPlayer(), shipSlug);
                                 })))
                 .then(Commands.literal("freeze")
                         .then(RequiredArgumentBuilder.<CommandSourceStack, String>argument("ship", StringArgumentType.word())
@@ -227,12 +223,26 @@ public class ModCommands {
                                 .suggests(shipSlugSuggestions())//ShipArgument.Companion.ships()
                                 .executes(ctx -> {
                                     String shipSlug = StringArgumentType.getString(ctx, "ship");
-                                    return executeParsedCommandOP(ctx.getSource(), "vs set-static " + shipSlug + " false",true);
+                                    return executeParsedCommandOP(ctx.getSource(), "vs set-static " + shipSlug + " false", true);
                                 }))
                 )
         );
+    }
 
+    public static int recoverShip(ServerPlayer player, String shipSlug) {
+//        BlockHitResult rayTrace = (BlockHitResult) player.pick(5, 1.0F, false);
+        CommandSourceStack source = player.createCommandSourceStack();
 
+//        int teleportx = (int) rayTrace.getLocation().x;
+//        int teleporty = (int) Math.max(rayTrace.getLocation().y, player.getEyePosition().y);  //The ship cannot teleport below the player
+//        int teleportz = (int) rayTrace.getLocation().z;
+
+        int teleportx = (int) player.getEyePosition().x;
+        int teleporty = (int) player.getEyePosition().y;
+        int teleportz = (int) player.getEyePosition().z;
+
+        return executeParsedCommandOP(source, "vs teleport " + shipSlug + " "
+                + teleportx + " " + teleporty + " " + teleportz, false);
     }
 
     private static SuggestionProvider<CommandSourceStack> shipSlugSuggestions() {
