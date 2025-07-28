@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "createkinetic:block/iron_ender_chest"
+    }
+  }
+}

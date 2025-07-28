@@ -5,10 +5,23 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "createkinetic.refmap.json",
   "mixins": [
+    "enderChests.BlockEntityTypeMix",
+    "enderChests.BlocksMix",
+    "enderChests.CreativeModeTabsMix",
+    "enderChests.EnderChestBlockEntityMix",
+    "enderChests.ItemsMix",
+    "enderChests.MenuTypeMix",
+    "enderChests.PlayerEnderChestContainerMix",
+    "enderChests.ServerPlayerMix",
+    "enderChests.AbstractContainerMenuMix"
   ],
   "client": [
+    "enderChests.BlockEntityWithoutLevelRendererMix",
+    "enderChests.MenuScreensMix",
+    "enderChests.SheetsMix"
   ],
   "injectors": {
+    "maxShiftBy": 10,
     "defaultRequire": 1
   }
 }

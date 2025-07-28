@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "III",
+    "IeI",
+    "III"
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:lapis_lazuli"
+    },
+    "e": [
+      {
+        "item": "createkinetic:iron_ender_chest"
+      },
+      {
+        "item": "createkinetic:copper_ender_chest"
+      }
+    ]
+  },
+  "result": {
+    "item": "createkinetic:lapis_ender_chest"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "createkinetic:block/lapis_ender_chest"
+    }
+  }
+}

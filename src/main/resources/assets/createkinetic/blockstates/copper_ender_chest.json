@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "createkinetic:block/copper_ender_chest"
+    }
+  }
+}

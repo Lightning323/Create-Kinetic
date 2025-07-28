@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+      "createkinetic:iron_ender_chest",
+    "createkinetic:copper_ender_chest",
+    "createkinetic:gold_ender_chest",
+    "createkinetic:lapis_ender_chest",
+    "createkinetic:redstone_ender_chest",
+    "createkinetic:diamond_ender_chest",
+    "createkinetic:emerald_ender_chest",
+    "createkinetic:netherite_ender_chest"
+  ]
+}

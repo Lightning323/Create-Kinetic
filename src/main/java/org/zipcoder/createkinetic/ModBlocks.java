@@ -19,6 +19,9 @@ public class ModBlocks {
         return blockReg;
     }
 
+    //Ender chests
+    public static Block IRON_CHEST, COPPER_CHEST, GOLD_CHEST, LAPIS_CHEST, REDSTONE_CHEST, DIAMOND_CHEST, EMERALD_CHEST, NETHERITE_CHEST;
+
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
 //
 //    static {
