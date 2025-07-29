@@ -27,9 +27,6 @@ public class ModItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
 
 
-    //Ender chests
-    public static Item IRON_CHEST, COPPER_CHEST, GOLD_CHEST, LAPIS_CHEST, REDSTONE_CHEST, EMERALD_CHEST,DIAMOND_CHEST,  NETHERITE_CHEST;
-
     public static final RegistryObject<Item> SHIP_TOTEM = ITEMS.register("ship_totem",
             () -> new TotemItem((s, i) -> recoverShip(s, i, false))
     );

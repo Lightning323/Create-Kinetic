@@ -230,11 +230,15 @@ public class ModCommands {
     }
 
     public static int recoverShip(ServerPlayer player, String shipSlug) {
-        BlockHitResult rayTrace = (BlockHitResult) player.pick(5, 1.0F, false);
+//        BlockHitResult rayTrace = (BlockHitResult) player.pick(5, 1.0F, false);
         CommandSourceStack source = player.createCommandSourceStack();
 
+//        int teleportx = (int) rayTrace.getLocation().x;
+//        int teleporty = (int) Math.max(rayTrace.getLocation().y, player.getEyePosition().y);  //The ship cannot teleport below the player
+//        int teleportz = (int) rayTrace.getLocation().z;
+
         int teleportx = (int) player.getEyePosition().x;
-        int teleporty = (int) Math.max(rayTrace.getLocation().y, player.getEyePosition().y);  //The ship cannot teleport below the player
+        int teleporty = (int) player.getEyePosition().y;
         int teleportz = (int) player.getEyePosition().z;
 
         return executeParsedCommandOP(source, "vs teleport " + shipSlug + " "

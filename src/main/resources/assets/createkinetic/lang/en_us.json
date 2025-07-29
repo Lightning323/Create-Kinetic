@@ -2,14 +2,5 @@
   "createkinetic.createkinetic_tab": "Create Kinetic",
   "itemGroup.createkinetic.tab": "Create Kinetic",
   "item.createkinetic.ship_totem": "Ship Totem",
-  "item.createkinetic.freeze_ship_totem": "Ship Totem (Freeze)",
-
-  "block.createkinetic.diamond_ender_chest": "Large Ender Chest",
-  "container.enderchest.diamond": "Large Ender Chest",
-
-  "block.createkinetic.emerald_ender_chest": "Resonant Ender Chest",
-  "container.enderchest.emerald": "Resonant Ender Chest",
-
-  "block.createkinetic.netherite_ender_chest": "Advanced Ender Chest",
-  "container.enderchest.netherite": "Advanced Ender Chest"
+  "item.createkinetic.freeze_ship_totem": "Ship Totem (Freeze)"
 }
