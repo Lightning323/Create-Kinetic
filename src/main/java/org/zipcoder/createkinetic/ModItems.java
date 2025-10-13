@@ -38,7 +38,14 @@ public class ModItems {
     private static boolean recoverShip(ServerPlayer player, ItemStack i, boolean freezeShip) {
         String shipSlug = i.getHoverName().getString();
         if (shipSlug.isBlank() || !i.hasCustomHoverName()) {
-            player.sendSystemMessage(Component.literal("Please rename this totem to the slug of the ship you want to recover."));
+            player.sendSystemMessage(Component.literal("You cant use it yet! Rename this totem with ").append(
+                    Component.literal("/ship totem <shipName>")
+                            .withStyle(style -> style
+                                    .withColor(ChatFormatting.AQUA) // color it differently
+                                    .withClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/ship totem "))
+                                    .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.literal("Click to open command")))
+                            )
+            ));
             return false;
         }
 
@@ -60,8 +67,8 @@ public class ModItems {
                                         Component.literal(command)
                                                 .withStyle(style -> style
                                                         .withColor(ChatFormatting.AQUA) // color it differently
-                                                        .withClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, command))
-                                                        .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.literal("Click to copy command")))
+                                                        .withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, command))
+                                                        .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.literal("Click to run command")))
                                                 )
                                 )
                                 .append(Component.literal(" to unfreeze."))

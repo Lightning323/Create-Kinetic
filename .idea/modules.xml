@@ -5,7 +5,6 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/createkinetic.main.iml" filepath="$PROJECT_DIR$/.idea/modules/createkinetic.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/createkinetic.test.iml" filepath="$PROJECT_DIR$/.idea/modules/createkinetic.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/org.zipcoder.createkinetic.main.iml" filepath="$PROJECT_DIR$/.idea/modules/org.zipcoder.createkinetic.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/org.zipcoder.createkinetic.test.iml" filepath="$PROJECT_DIR$/.idea/modules/org.zipcoder.createkinetic.test.iml" />
     </modules>
   </component>
 </project>
