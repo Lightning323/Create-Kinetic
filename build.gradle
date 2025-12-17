@@ -169,14 +169,14 @@ repositories {
         url = 'https://maven.valkyrienskies.org'
     }
 
-
-//    maven { //Squid dev
-//        url "https://maven.squiddev.cc"
-//        content {
-//            includeGroup("cc.tweaked")
-//            includeGroup("org.squiddev")
-//        }
-//    }
+    maven {
+        name = "Squiddev maven cct"
+        url = "https://maven.squiddev.cc/"
+        content {
+            includeGroup("cc.tweaked")
+            includeModule("org.squiddev", "Cobalt")
+        }
+    }
 
 //    maven {
 //        // location of the maven that hosts JEI files since January 2023
@@ -218,22 +218,28 @@ dependencies {
 
     runtimeOnly fg.deobf("curse.maven:embeddium-908741:5681725")
     runtimeOnly fg.deobf("curse.maven:jei-238222:6600311")
+    implementation 'thedarkcolour:kotlinforforge:4.10.0'
+    implementation fg.deobf("com.tterrag.registrate:Registrate:${registrate_version}")
 
-    //Valkeryen skies
+
+    //VS2
     implementation("org.valkyrienskies.core:api:${vs_core_version}")
     implementation("org.valkyrienskies.core:impl:${vs_core_version}")
     implementation("org.valkyrienskies.core:api-game:${vs_core_version}")
     implementation("org.valkyrienskies.core:util:${vs_core_version}")
-    implementation fg.deobf("org.valkyrienskies:valkyrienskies-120-forge:${vs2_version}")
+    implementation(fg.deobf("org.valkyrienskies:valkyrienskies-120-forge:${vs2_version}"))
 
-    //Koltlin for Forge
-    implementation 'thedarkcolour:kotlinforforge:4.10.0'
-
-    //Create
+    //Create 0.5j
     implementation fg.deobf("com.simibubi.create:create-${create_minecraft_version}:${create_version}:slim") { transitive = false }
     implementation fg.deobf("com.jozufozu.flywheel:flywheel-forge-${flywheel_minecraft_version}:${flywheel_version}")
-//  Tterrag registrate
-    implementation fg.deobf("com.tterrag.registrate:Registrate:${registrate_version}")
+
+    //Create 6.0
+//    implementation fg.deobf("com.simibubi.create:create-${create_minecraft_version}:${create_version}:all") { transitive = false }
+//    implementation fg.deobf("dev.engine-room.flywheel:flywheel-forge-${flywheel_minecraft_version}:${flywheel_version}")
+//    implementation(fg.deobf("net.createmod.ponder:Ponder-Forge-${minecraft_version}:${ponder_version}"))
+
+    //Computer Craft
+    implementation fg.deobf("cc.tweaked:cc-tweaked-${minecraft_version}-forge:${cc_version}")
 
     // For more info:
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html

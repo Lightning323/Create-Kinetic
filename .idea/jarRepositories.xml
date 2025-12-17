@@ -51,5 +51,10 @@
       <option name="name" value="ModMaven" />
       <option name="url" value="https://modmaven.dev" />
     </remote-repository>
+    <remote-repository>
+      <option name="id" value="Squiddev maven cct" />
+      <option name="name" value="Squiddev maven cct" />
+      <option name="url" value="https://maven.squiddev.cc/" />
+    </remote-repository>
   </component>
 </project>
