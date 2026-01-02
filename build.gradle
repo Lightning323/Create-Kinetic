@@ -139,11 +139,6 @@ repositories {
     // Put repositories for dependencies here
     // ForgeGradle automatically adds the Forge maven and Maven Central for you
     mavenCentral()
-
-    maven { //tterrag repo
-        name = 'tterrag maven'
-        url = 'https://maven.tterrag.com/'
-    }
     maven {
         // location of a maven mirror for JEI files, as a fallback
         name = "ModMaven"
@@ -175,26 +170,54 @@ repositories {
         content {
             includeGroup("cc.tweaked")
             includeModule("org.squiddev", "Cobalt")
+
+            maven { url = "https://maven.bawnorton.com/releases" }
+
+            // region JEI mavens
+            maven {
+                // location of the maven that hosts JEI files before January 2023
+                name = "Progwml6's maven"
+                url = "https://dvs1.progwml6.com/files/maven/"
+            }
+            maven {
+                // location of the maven that hosts JEI files since January 2023
+                name = "Jared's maven"
+                url = "https://maven.blamejared.com/"
+            }
+
+            maven {
+                name "createmod maven"
+                url "https://maven.createmod.net/"
+            }
+            maven {
+                url "https://maven.squiddev.cc"
+                content {
+                    includeGroup("cc.tweaked")
+                }
+            }
+            maven { url = "https://maven.shedaniel.me/" } // Cloth Config, REI
+            maven { url = "https://maven.parchmentmc.org" } // Parchment mappings
+            maven { url = "https://maven.quiltmc.org/repository/release" } // Quilt Mappings
+            maven { // Flywheel
+                url = "https://maven.tterrag.com/"
+            }
+            maven {
+                url = "https://maven.realrobotix.me/createbigcannons/" // Create Big Cannons
+                content {
+                    includeGroup "com.rbasamoyai"
+                }
+            }
+
+            maven { url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/" }
         }
     }
-
-//    maven {
-//        // location of the maven that hosts JEI files since January 2023
-//        // location of the maven for Vazkii's mods
-//        name = "Jared's maven"
-//        url = "https://maven.blamejared.com/"
-//    }
-
-//    maven { // location of the maven for Curios API
-//        url = "https://maven.theillusivec4.top/"
-//    }
 
 
     // If you have mod jar dependencies in ./libs, you can declare them as a repository like so.
     // See https://docs.gradle.org/current/userguide/declaring_repositories.html#sub:flat_dir_resolver
-    // flatDir {
-    //     dir 'libs'
-    // }
+    flatDir {
+        dir 'libs'
+    }
 }
 
 dependencies {
@@ -217,26 +240,44 @@ dependencies {
     // implementation fg.deobf("blank:coolmod-${mc_version}:${coolmod_version}")
 
     runtimeOnly fg.deobf("curse.maven:embeddium-908741:5681725")
-    runtimeOnly fg.deobf("curse.maven:jei-238222:6600311")
+
+    // JEI for testing
+    runtimeOnly("maven.modrinth:jei:MdKE2PdF")
     implementation 'thedarkcolour:kotlinforforge:4.10.0'
-    implementation fg.deobf("com.tterrag.registrate:Registrate:${registrate_version}")
 
 
     //VS2
-    implementation("org.valkyrienskies.core:api:${vs_core_version}")
-    implementation("org.valkyrienskies.core:impl:${vs_core_version}")
-    implementation("org.valkyrienskies.core:api-game:${vs_core_version}")
-    implementation("org.valkyrienskies.core:util:${vs_core_version}")
-    implementation(fg.deobf("org.valkyrienskies:valkyrienskies-120-forge:${vs2_version}"))
+//    implementation("org.valkyrienskies.core:api:${vscore_version}")
+//    implementation("org.valkyrienskies.core:impl:${vscore_version}")
+//    implementation("org.valkyrienskies.core:util:${vscore_version}")
+//    implementation fg.deobf("org.valkyrienskies:valkyrienskies-120-forge:${vs2_version}")
 
-    //Create 0.5j
-    implementation fg.deobf("com.simibubi.create:create-${create_minecraft_version}:${create_version}:slim") { transitive = false }
-    implementation fg.deobf("com.jozufozu.flywheel:flywheel-forge-${flywheel_minecraft_version}:${flywheel_version}")
+    //VS2
+    implementation fg.deobf("org.valkyrienskies:valkyrienskies-120-forge:${rootProject.vs2_version}") { transitive = false
+        exclude group: 'org.valkyrienskies.core', module: ''
+    }
+    implementation("org.valkyrienskies.core:api:${rootProject.vscore_version}") { transitive = false
+        exclude group: 'org.joml', module: ''
+    }
+    implementation("org.valkyrienskies.core:util:${rootProject.vscore_version}") { transitive = false
+        exclude group: 'org.joml', module: ''
+    }
+    implementation("org.valkyrienskies.core:internal:${rootProject.vscore_version}") { transitive = false
+        exclude group: 'org.joml', module: ''
+    }
 
-    //Create 6.0
-//    implementation fg.deobf("com.simibubi.create:create-${create_minecraft_version}:${create_version}:all") { transitive = false }
-//    implementation fg.deobf("dev.engine-room.flywheel:flywheel-forge-${flywheel_minecraft_version}:${flywheel_version}")
-//    implementation(fg.deobf("net.createmod.ponder:Ponder-Forge-${minecraft_version}:${ponder_version}"))
+
+    implementation("org.valkyrienskies.kelvin:kelvin-forge:${rootProject.minecraft_version}-${rootProject.kelvin_version}") { transitive = false
+        exclude group: 'org.joml', module: ''
+    }
+
+    // Create and its dependencies
+    implementation("com.simibubi.create:create-${minecraft_version}:${create_forge_version}:slim") { transitive = false }
+    implementation("com.tterrag.registrate:Registrate:${registrate_forge_version}")
+    implementation("net.createmod.ponder:Ponder-Forge-${minecraft_version}:${ponder_version}")
+    implementation("curse.maven:vanillin-965702:6446560")
+    compileOnly("dev.engine-room.flywheel:flywheel-forge-api-${minecraft_version}:${flywheel_forge_version}")
+    runtimeOnly("dev.engine-room.flywheel:flywheel-forge-${minecraft_version}:${flywheel_forge_version}")
 
     //Computer Craft
     implementation fg.deobf("cc.tweaked:cc-tweaked-${minecraft_version}-forge:${cc_version}")

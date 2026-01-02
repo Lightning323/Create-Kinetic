@@ -13,9 +13,17 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber
 public class LootInjector {
 
-    static final int shipTotemChance = 33;
-    static final int freezeTotemChance = 12;
+    static final int shipTotemChance = 20;
+    static final int freezeTotemChance = 10;
     static final int emptyChance = Math.max(1, 100 - shipTotemChance - freezeTotemChance);
+
+    /**
+     * LootJS.modifiers((event) => {
+     *   event.addLootTypeModifier(LootType.CHEST).randomChance(0.15).addLoot("createkinetic:freeze_ship_totem");
+     *   event.addLootTypeModifier(LootType.CHEST).randomChance(0.2).addLoot("createkinetic:ship_totem");
+     * });
+     * @param event
+     */
 
     @SubscribeEvent
     public static void onLootLoad(LootTableLoadEvent event) {

@@ -20,7 +20,6 @@ import org.zipcoder.createkinetic.items.TotemItem;
 import java.util.function.Supplier;
 
 import static org.zipcoder.createkinetic.Createkinetic.MODID;
-import static org.zipcoder.createkinetic.ModCommands.executeParsedCommandOP;
 
 public class ModItems {
     // Create a Deferred Register to hold Items which will all be registered under the "createkinetic" namespace
@@ -36,46 +35,47 @@ public class ModItems {
     );
 
     private static boolean recoverShip(ServerPlayer player, ItemStack i, boolean freezeShip) {
-        String shipSlug = i.getHoverName().getString();
-        if (shipSlug.isBlank() || !i.hasCustomHoverName()) {
-            player.sendSystemMessage(Component.literal("You cant use it yet! Rename this totem with ").append(
-                    Component.literal("/ship totem <shipName>")
-                            .withStyle(style -> style
-                                    .withColor(ChatFormatting.AQUA) // color it differently
-                                    .withClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/ship totem "))
-                                    .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.literal("Click to open command")))
-                            )
-            ));
-            return false;
-        }
-
-        CommandSourceStack source = player.createCommandSourceStack();
-        int exit = ModCommands.recoverShip(player, shipSlug);
-        if (exit == 0) {
-            player.sendSystemMessage(Component.literal("Teleport failed!"));
-            return false;
-        } else {
-            player.sendSystemMessage(Component.literal("Teleport successful!"));
-
-            if (freezeShip) {
-                executeParsedCommandOP(source, "vs set-static " + shipSlug + " true", false);
-                String command = "/ship unfreeze " + shipSlug;
-
-                player.sendSystemMessage(
-                        Component.literal("Ship has been frozen. Use ")
-                                .append(
-                                        Component.literal(command)
-                                                .withStyle(style -> style
-                                                        .withColor(ChatFormatting.AQUA) // color it differently
-                                                        .withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, command))
-                                                        .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.literal("Click to run command")))
-                                                )
-                                )
-                                .append(Component.literal(" to unfreeze."))
-                );
-            }
-            return true;
-        }
+//        String shipSlug = i.getHoverName().getString();
+//        if (shipSlug.isBlank() || !i.hasCustomHoverName()) {
+//            player.sendSystemMessage(Component.literal("You cant use it yet! Rename this totem with ").append(
+//                    Component.literal("/ship totem <shipName>")
+//                            .withStyle(style -> style
+//                                    .withColor(ChatFormatting.AQUA) // color it differently
+//                                    .withClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/ship totem "))
+//                                    .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.literal("Click to open command")))
+//                            )
+//            ));
+//            return false;
+//        }
+//
+//        CommandSourceStack source = player.createCommandSourceStack();
+//        int exit = ModCommands.recoverShip(source.getServer(), player, shipSlug, true);
+//        if (exit == 0) {
+//            player.sendSystemMessage(Component.literal("Teleport failed!"));
+//            return false;
+//        } else {
+//            player.sendSystemMessage(Component.literal("Teleport successful!"));
+//
+//            if (freezeShip) {
+//                executeParsedCommandOP(source, "vs set-static " + shipSlug + " true", false);
+//                String command = "/ship unfreeze " + shipSlug;
+//
+//                player.sendSystemMessage(
+//                        Component.literal("Ship has been frozen. Use ")
+//                                .append(
+//                                        Component.literal(command)
+//                                                .withStyle(style -> style
+//                                                        .withColor(ChatFormatting.AQUA) // color it differently
+//                                                        .withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, command))
+//                                                        .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.literal("Click to run command")))
+//                                                )
+//                                )
+//                                .append(Component.literal(" to unfreeze."))
+//                );
+//            }
+//            return true;
+//        }
+        return false;
     }
 
 }

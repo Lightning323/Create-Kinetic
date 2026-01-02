@@ -3,6 +3,7 @@ package org.zipcoder.createkinetic;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.ParseResults;
+import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.RequiredArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
@@ -16,16 +17,13 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.valkyrienskies.core.api.ships.*;
-import org.valkyrienskies.core.apigame.world.ServerShipWorldCore;
+//import org.valkyrienskies.core.apigame.world.ServerShipWorldCore;
 import org.valkyrienskies.mod.common.VSGameUtilsKt;
 
 import java.util.ArrayList;
@@ -48,272 +46,304 @@ public class ModCommands {
     final static int DELETE_MASSLESS_THRESHOLD = 99;
     final static int PROXIMITY_RADIUS = 20;
 
-    public static int executeParsedCommandOP(CommandSourceStack originalSource, String command, boolean redirectOutput) {
-        MinecraftServer server = originalSource.getServer();
-        var dispatcher = server.getCommands().getDispatcher();
-
-        // Remove leading slash
-        if (command.startsWith("/")) {
-            command = command.substring(1);
-        }
-
-
-        try {
-            CommandSourceStack serverSource;
-
-            if (redirectOutput) {
-                serverSource = new CommandSourceStack(
-                        originalSource.getPlayer(), // entity
-                        originalSource.getPlayer().position(), // position
-                        originalSource.getPlayer().getRotationVector(), // rotation
-
-                        server.getLevel(originalSource.getPlayer().level().dimension()).getServer()
-                                .getLevel(originalSource.getPlayer().level().dimension()), // server level access
-
-                        4, // permission level (OP)
-                        originalSource.getPlayer().getName().getString(), // name
-                        originalSource.getPlayer().getDisplayName(), // display name
-                        server, // server
-                        originalSource.getPlayer() // entity again
-                ).withPermission(4)
-                        .withSuppressedOutput(); // ensure messages show
-            } else {
-                serverSource = server.createCommandSourceStack()
-                        .withPermission(4) // Full OP level
-                        .withSuppressedOutput();
-            }
-
-            ParseResults<CommandSourceStack> parseResults = dispatcher.parse(command, serverSource);
-            return dispatcher.execute(parseResults);
-        } catch (CommandSyntaxException e) {
-            originalSource.sendFailure(Component.literal("Error executing command: " + e.getMessage()));
-            return 0;
-        } catch (Exception e) {
-            originalSource.sendFailure(Component.literal("Error executing command: " + e.getMessage()));
-            return 0;
-        }
-    }
-
-    public static int executeParsedCommand(CommandSourceStack source, String command) {
-        // Use the server's command dispatcher
-        MinecraftServer server = source.getServer();
-        var dispatcher = server.getCommands().getDispatcher();
-
-        // Parse the command string (if a leading slash exists, remove it)
-        if (command.startsWith("/")) {
-            command = command.substring(1);
-        }
-        ParseResults<CommandSourceStack> parseResults = dispatcher.parse(command, source);
-        try {
-            // Execute the parsed command and return the result
-            return dispatcher.execute(parseResults);
-        } catch (CommandSyntaxException e) {
-            source.sendFailure(Component.literal("Error executing command: " + e.getMessage()));
-            return 0;
-        }
-    }
-
-
-    @SubscribeEvent
-    public static void onRegisterCommands(RegisterCommandsEvent event) {
-        CommandDispatcher<CommandSourceStack> dispatcher = event.getDispatcher();
-        /**
-         * OPERATOR COMMANDS
-         */
-        dispatcher.register(Commands.literal("vs")
-                .requires(source -> source.hasPermission(2)) // Only players with permission level 2 or higher see this command
-                .then(Commands.literal("deletemassless").requires(source -> source.hasPermission(2)).executes(context -> {
-                    vsDeleteMasslessShips(context);
-                    return Command.SINGLE_SUCCESS;
-                })).then(Commands.literal("total").requires(source -> source.hasPermission(2)).executes(context -> {
-                    vsCountShips(context);
-                    return Command.SINGLE_SUCCESS;
-                })));
-
-        /**
-         * NON-OPERATOR COMMANDS
-         */
-
-
-        dispatcher.register(Commands.literal("ship")
-                .then(Commands.literal("totem")
-                        .then(RequiredArgumentBuilder.<CommandSourceStack, String>argument("name", StringArgumentType.word())
-                                .suggests(shipSlugSuggestions())//ShipArgument.Companion.ships()
-                                .executes(ctx -> {
-                                    ServerPlayer player = ctx.getSource().getPlayerOrException();
-                                    ItemStack item = player.getMainHandItem(); // or getOffhandItem()
-
-                                    // Check if the item is a Totem
-                                    if (item.getItem() != ModItems.SHIP_TOTEM.get() &&
-                                            item.getItem() != ModItems.FREEZE_SHIP_TOTEM.get()) {
-                                        ctx.getSource().sendFailure(Component.literal("You must be holding a Ship Totem!"));
-                                        return 0;
-                                    }
-
-                                    String newName = StringArgumentType.getString(ctx, "name");
-
-                                    //Ensure the name actually exists
-                                    ServerShipWorldCore shipObjectWorld = VSGameUtilsKt.getShipObjectWorld(ctx.getSource().getServer());
-                                    boolean found = false;
-                                    for (ServerShip ship : shipObjectWorld.getAllShips()) {
-                                        if (ship != null && ship.getSlug() != null && newName.equals(ship.getSlug())) {
-                                            found = true;
-                                            break;
-                                        }
-                                    }
-                                    if (!found) {
-                                        ctx.getSource().sendFailure(Component.literal("No ship with that name exists!"));
-                                        return 0;
-                                    }
-
-                                    item.setHoverName(Component.literal(newName));
-
-                                    ctx.getSource().sendSuccess(() ->
-                                            Component.literal("Totem renamed to: " + newName), false);
-                                    return 1;
-                                })))
-
-                .then(Commands.literal("this")
-                        .executes(ctx -> {
-                            return executeParsedCommandOP(ctx.getSource(), "vs get-ship", true);
-                        })
-                )
-                .then(Commands.literal("rename")
-                        .then(RequiredArgumentBuilder.<CommandSourceStack, String>argument("old", StringArgumentType.word())
-                                .suggests(shipSlugSuggestions())//ShipArgument.Companion.ships()
-                                .then(argument("new", StringArgumentType.word()) // /neutron rename <old> <new>
-                                        .executes(ctx -> {
-                                            CommandSourceStack originalSource2 = (CommandSourceStack) ctx.getSource();
-                                            //Ship shipSlug = ShipArgument.Companion.getShip(ctx, "ship");
-                                            String oldSlug = StringArgumentType.getString(ctx, "old");
-                                            String newSlug = StringArgumentType.getString(ctx, "new");
-
-                                            //Ensure the new name doesn't already exist
-                                            ServerShipWorldCore shipObjectWorld = VSGameUtilsKt.getShipObjectWorld(ctx.getSource().getServer());
-                                            for (ServerShip ship : shipObjectWorld.getAllShips()) {
-                                                if (ship != null && ship.getSlug() != null && ship.getSlug().equalsIgnoreCase(newSlug)) {
-                                                    ctx.getSource().sendSystemMessage(
-                                                            Component.literal("Cannot rename to " + newSlug + " because it already exists."));
-                                                    return 0;
-                                                }
-                                            }
-
-                                            return executeParsedCommandOP(originalSource2, "vs ship " + oldSlug + " rename " + newSlug, true);
-                                        })))
-                )
-                .then(Commands.literal("recover")
-                        .requires(source -> source.hasPermission(2))
-                        .then(RequiredArgumentBuilder.<CommandSourceStack, String>argument("ship", StringArgumentType.word())
-                                .suggests(shipSlugSuggestions())//ShipArgument.Companion.ships()
-                                .executes(ctx -> {
-                                    Entity sourceEntity = ctx.getSource().getPlayer();
-                                    String shipSlug = StringArgumentType.getString(ctx, "ship");
-                                    return recoverShip(ctx.getSource().getPlayer(), shipSlug);
-                                })))
-                .then(Commands.literal("freeze")
-                        .then(RequiredArgumentBuilder.<CommandSourceStack, String>argument("ship", StringArgumentType.word())
-                                .suggests(shipSlugSuggestions())//ShipArgument.Companion.ships()
-                                .executes(ctx -> {
-                                    String shipSlug = StringArgumentType.getString(ctx, "ship");
-                                    return executeParsedCommandOP(ctx.getSource(), "vs set-static " + shipSlug + " true", true);
-                                }))
-                )
-                .then(Commands.literal("unfreeze")
-                        .then(RequiredArgumentBuilder.<CommandSourceStack, String>argument("ship", StringArgumentType.word())
-                                .suggests(shipSlugSuggestions())//ShipArgument.Companion.ships()
-                                .executes(ctx -> {
-                                    String shipSlug = StringArgumentType.getString(ctx, "ship");
-                                    return executeParsedCommandOP(ctx.getSource(), "vs set-static " + shipSlug + " false", true);
-                                }))
-                )
-        );
-    }
-
-    public static int recoverShip(ServerPlayer player, String shipSlug) {
-//        BlockHitResult rayTrace = (BlockHitResult) player.pick(5, 1.0F, false);
-        CommandSourceStack source = player.createCommandSourceStack();
-
-//        int teleportx = (int) rayTrace.getLocation().x;
-//        int teleporty = (int) Math.max(rayTrace.getLocation().y, player.getEyePosition().y);  //The ship cannot teleport below the player
-//        int teleportz = (int) rayTrace.getLocation().z;
-
-        int teleportx = (int) player.getEyePosition().x;
-        int teleporty = (int) player.getEyePosition().y;
-        int teleportz = (int) player.getEyePosition().z;
-
-        return executeParsedCommandOP(source, "vs teleport " + shipSlug + " "
-                + teleportx + " " + teleporty + " " + teleportz, false);
-    }
-
-    private static SuggestionProvider<CommandSourceStack> shipSlugSuggestions() {
-        return (CommandContext<CommandSourceStack> context, SuggestionsBuilder builder) -> {
-            List<String> suggestions = new ArrayList<>();
-            try {
-                ServerPlayer player = context.getSource().getPlayer();
-//                VSCommandSource vsContext = (VSCommandSource) context;
-//                QueryableShipData<LoadedShip> allShips = vsContext.getShipWorld().getLoadedShips();
-                ServerShipWorldCore shipObjectWorld = VSGameUtilsKt.getShipObjectWorld(context.getSource().getServer());
-
-                ResourceKey<Level> dimension = player.level().dimension();
-                String playerDimension = dimension.location().toString();
-                int chunkX = player.blockPosition().getX() >> 4;
-                int chunkZ = player.blockPosition().getZ() >> 4;
-
-                QueryableShipData<ServerShip> allShips = shipObjectWorld.getAllShips();
-                for (ServerShip ship : allShips) {
-                    //Only add suggestions from the same dimension
-                    if (ship.getChunkClaimDimension().endsWith(playerDimension)) {
-                        suggestions.add(ship.getSlug());
-                    }
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return SharedSuggestionProvider.suggest(suggestions, builder);
-        };
-    }
-
-
-    private static void vsCountShips(CommandContext<CommandSourceStack> cc) {
-        ServerShipWorldCore shipObjectWorld = VSGameUtilsKt.getShipObjectWorld(cc.getSource().getServer());
-        cc.getSource().sendSystemMessage(Component.literal("There are " + shipObjectWorld.getAllShips().size() + " total ships in the world."));
-
-        /**
-         * Player information
-         */
-        ServerPlayer player = cc.getSource().getPlayer();
-        ResourceKey<Level> dimension = player.level().dimension();
-        String playerDimension = dimension.location().toString();
-        int playerChunkX = player.blockPosition().getX() >> 4;
-        int playerChunkZ = player.blockPosition().getZ() >> 4;
-        System.out.println("Player Chunk X: " + playerChunkX + " Chunk Z: " + playerChunkZ);
-        System.out.println("Player Dimension: " + playerDimension);
-
-        /**
-         * Individual ship counters
-         */
-        AtomicInteger masslessShips = new AtomicInteger(0);
-        AtomicInteger shipsInThisDimension = new AtomicInteger(0);
-        AtomicInteger shipsWithinProximity = new AtomicInteger(0);
-
-
-        for (ServerShip ship : shipObjectWorld.getAllShips()) {
-            System.out.println("Ship " + ship.getSlug() + " is in dimension " + ship.getChunkClaimDimension());
-            if (ship.getInertiaData().getMass() < DELETE_MASSLESS_THRESHOLD) {
-                masslessShips.incrementAndGet();
-            }
-            if (ship.getChunkClaimDimension().endsWith(playerDimension)) {//Ship chunk claim dimension looks like this  minecraft:dimension:minecraft:overworld
-                shipsInThisDimension.incrementAndGet();
-                if (Math.abs(ship.getChunkClaim().getXMiddle() - playerChunkX) < PROXIMITY_RADIUS
-                        && Math.abs(ship.getChunkClaim().getZMiddle() - playerChunkZ) < PROXIMITY_RADIUS) {
-                    shipsWithinProximity.incrementAndGet(); //shipsWithinProximity
-                }
-            }
-        }
-        cc.getSource().sendSystemMessage(Component.literal("(" + masslessShips.get() + " massless ships)"));
-        cc.getSource().sendSystemMessage(Component.literal("(" + shipsInThisDimension.get() + " ships in this dimension)"));
-//        cc.getSource().sendSystemMessage(Component.literal("(" + shipsWithinProximity.get() + " ships within " + PROXIMITY_RADIUS + " chunk proximity)"));
-    }
+//    public static int executeParsedCommandOP(CommandSourceStack originalSource, String command, boolean redirectOutput) {
+//        MinecraftServer server = originalSource.getServer();
+//        var dispatcher = server.getCommands().getDispatcher();
+//
+//        // Remove leading slash
+//        if (command.startsWith("/")) {
+//            command = command.substring(1);
+//        }
+//
+//
+//        try {
+//            CommandSourceStack serverSource;
+//
+//            if (redirectOutput) {
+//                serverSource = new CommandSourceStack(
+//                        originalSource.getPlayer(), // entity
+//                        originalSource.getPlayer().position(), // position
+//                        originalSource.getPlayer().getRotationVector(), // rotation
+//
+//                        server.getLevel(originalSource.getPlayer().level().dimension()).getServer()
+//                                .getLevel(originalSource.getPlayer().level().dimension()), // server level access
+//
+//                        4, // permission level (OP)
+//                        originalSource.getPlayer().getName().getString(), // name
+//                        originalSource.getPlayer().getDisplayName(), // display name
+//                        server, // server
+//                        originalSource.getPlayer() // entity again
+//                ).withPermission(4)
+//                        .withSuppressedOutput(); // ensure messages show
+//            } else {
+//                serverSource = server.createCommandSourceStack()
+//                        .withPermission(4) // Full OP level
+//                        .withSuppressedOutput();
+//            }
+//
+//            ParseResults<CommandSourceStack> parseResults = dispatcher.parse(command, serverSource);
+//            return dispatcher.execute(parseResults);
+//        } catch (CommandSyntaxException e) {
+//            originalSource.sendFailure(Component.literal("Error executing command: " + e.getMessage()));
+//            return 0;
+//        } catch (Exception e) {
+//            originalSource.sendFailure(Component.literal("Error executing command: " + e.getMessage()));
+//            return 0;
+//        }
+//    }
+//
+//    public static int executeParsedCommand(CommandSourceStack source, String command) {
+//        // Use the server's command dispatcher
+//        MinecraftServer server = source.getServer();
+//        var dispatcher = server.getCommands().getDispatcher();
+//
+//        // Parse the command string (if a leading slash exists, remove it)
+//        if (command.startsWith("/")) {
+//            command = command.substring(1);
+//        }
+//        ParseResults<CommandSourceStack> parseResults = dispatcher.parse(command, source);
+//        try {
+//            // Execute the parsed command and return the result
+//            return dispatcher.execute(parseResults);
+//        } catch (CommandSyntaxException e) {
+//            source.sendFailure(Component.literal("Error executing command: " + e.getMessage()));
+//            return 0;
+//        }
+//    }
+//
+//
+//    @SubscribeEvent
+//    public static void onRegisterCommands(RegisterCommandsEvent event) {
+//        CommandDispatcher<CommandSourceStack> dispatcher = event.getDispatcher();
+//        /**
+//         * OPERATOR COMMANDS
+//         */
+//        dispatcher.register(Commands.literal("vs")
+//                .requires(source -> source.hasPermission(2)) // Only players with permission level 2 or higher see this command
+//                .then(Commands.literal("deletemassless").requires(source -> source.hasPermission(2)).executes(context -> {
+//                    vsDeleteMasslessShips(context);
+//                    return Command.SINGLE_SUCCESS;
+//                })).then(Commands.literal("total").requires(source -> source.hasPermission(2)).executes(context -> {
+//                    shipToPlayerDimension(context);
+//                    return Command.SINGLE_SUCCESS;
+//                })));
+//
+//        /**
+//         * NON-OPERATOR COMMANDS
+//         */
+//
+//
+//        dispatcher.register(Commands.literal("ship")
+//                .then(Commands.literal("totem")
+//                        .then(RequiredArgumentBuilder.<CommandSourceStack, String>argument("name", StringArgumentType.word())
+//                                .suggests(shipSlugSuggestions(true))//ShipArgument.Companion.ships()
+//                                .executes(ctx -> {
+//                                    ServerPlayer player = ctx.getSource().getPlayerOrException();
+//                                    ItemStack item = player.getMainHandItem(); // or getOffhandItem()
+//
+//                                    // Check if the item is a Totem
+//                                    if (item.getItem() != ModItems.SHIP_TOTEM.get() &&
+//                                            item.getItem() != ModItems.FREEZE_SHIP_TOTEM.get()) {
+//                                        ctx.getSource().sendFailure(Component.literal("You must be holding a Ship Totem!"));
+//                                        return 0;
+//                                    }
+//
+//                                    String newName = StringArgumentType.getString(ctx, "name");
+//
+//                                    //Ensure the name actually exists
+//                                    ServerShipWorldCore shipObjectWorld = VSGameUtilsKt.getShipObjectWorld(ctx.getSource().getServer());
+//                                    boolean found = false;
+//                                    for (ServerShip ship : shipObjectWorld.getAllShips()) {
+//                                        if (ship != null && ship.getSlug() != null && newName.equals(ship.getSlug())) {
+//                                            found = true;
+//                                            break;
+//                                        }
+//                                    }
+//                                    if (!found) {
+//                                        ctx.getSource().sendFailure(Component.literal("No ship with that name exists!"));
+//                                        return 0;
+//                                    }
+//
+//                                    item.setHoverName(Component.literal(newName));
+//
+//                                    ctx.getSource().sendSuccess(() ->
+//                                            Component.literal("Totem renamed to: " + newName), false);
+//                                    return 1;
+//                                })))
+//
+//                .then(Commands.literal("this")
+//                        .executes(ctx -> {
+//                            return executeParsedCommandOP(ctx.getSource(), "vs get-ship", true);
+//                        })
+//                )
+//                .then(Commands.literal("rename")
+//                        .then(RequiredArgumentBuilder.<CommandSourceStack, String>argument("old", StringArgumentType.word())
+//                                .suggests(shipSlugSuggestions(false))//ShipArgument.Companion.ships()
+//                                .then(argument("new", StringArgumentType.word()) // /neutron rename <old> <new>
+//                                        .executes(ctx -> {
+//                                            CommandSourceStack originalSource2 = (CommandSourceStack) ctx.getSource();
+//                                            //Ship shipSlug = ShipArgument.Companion.getShip(ctx, "ship");
+//                                            String oldSlug = StringArgumentType.getString(ctx, "old");
+//                                            String newSlug = StringArgumentType.getString(ctx, "new");
+//
+//                                            //Ensure the new name doesn't already exist
+//                                            ServerShipWorldCore shipObjectWorld = VSGameUtilsKt.getShipObjectWorld(ctx.getSource().getServer());
+//                                            for (ServerShip ship : shipObjectWorld.getAllShips()) {
+//                                                if (ship != null && ship.getSlug() != null && ship.getSlug().equalsIgnoreCase(newSlug)) {
+//                                                    ctx.getSource().sendSystemMessage(
+//                                                            Component.literal("Cannot rename to " + newSlug + " because it already exists."));
+//                                                    return 0;
+//                                                }
+//                                            }
+//
+//                                            return executeParsedCommandOP(originalSource2, "vs ship " + oldSlug + " rename " + newSlug, true);
+//                                        })))
+//                )
+//                .then(Commands.literal("recover")
+//                        .requires(source -> source.hasPermission(2))
+//                        .then(RequiredArgumentBuilder.<CommandSourceStack, String>argument("ship", StringArgumentType.word())
+//                                .suggests(shipSlugSuggestions(true))
+//                                .then(Commands.argument("changeDimension", BoolArgumentType.bool())
+//                                        // The 'executes' block when 'changeDimension' is provided
+//                                        .executes(ctx -> {
+//                                            String shipSlug = StringArgumentType.getString(ctx, "ship");
+//                                            boolean changeDimension = BoolArgumentType.getBool(ctx, "changeDimension");
+//                                            return recoverShip(ctx.getSource().getServer(), ctx.getSource().getPlayer(), shipSlug, changeDimension);
+//                                        })))
+//                )
+//                .then(Commands.literal("freeze")
+//                        .then(RequiredArgumentBuilder.<CommandSourceStack, String>argument("ship", StringArgumentType.word())
+//                                .suggests(shipSlugSuggestions(false))//ShipArgument.Companion.ships()
+//                                .executes(ctx -> {
+//                                    String shipSlug = StringArgumentType.getString(ctx, "ship");
+//                                    return executeParsedCommandOP(ctx.getSource(), "vs set-static " + shipSlug + " true", true);
+//                                }))
+//                )
+//                .then(Commands.literal("unfreeze")
+//                        .then(RequiredArgumentBuilder.<CommandSourceStack, String>argument("ship", StringArgumentType.word())
+//                                .suggests(shipSlugSuggestions(false))//ShipArgument.Companion.ships()
+//                                .executes(ctx -> {
+//                                    String shipSlug = StringArgumentType.getString(ctx, "ship");
+//                                    return executeParsedCommandOP(ctx.getSource(), "vs set-static " + shipSlug + " false", true);
+//                                }))
+//                )
+//        );
+//    }
+//
+//    public static int recoverShip(MinecraftServer server, ServerPlayer player, String shipSlug, boolean teleportToDimension) {
+////        BlockHitResult rayTrace = (BlockHitResult) player.pick(5, 1.0F, false);
+//        CommandSourceStack source = player.createCommandSourceStack();
+//
+//        if (teleportToDimension) {
+//            shipToPlayerDimension(source, getShipBySlug(server, shipSlug));
+//        }
+//
+////        int teleportx = (int) rayTrace.getLocation().x;
+////        int teleporty = (int) Math.max(rayTrace.getLocation().y, player.getEyePosition().y);  //The ship cannot teleport below the player
+////        int teleportz = (int) rayTrace.getLocation().z;
+//
+//        int teleportx = (int) player.getEyePosition().x;
+//        int teleporty = (int) player.getEyePosition().y;
+//        int teleportz = (int) player.getEyePosition().z;
+//        return executeParsedCommandOP(source, "vs teleport " + shipSlug + " "
+//                + teleportx + " " + teleporty + " " + teleportz, false);
+//    }
+//
+//    private static SuggestionProvider<CommandSourceStack> shipSlugSuggestions(boolean allDimensions) {
+//        return (CommandContext<CommandSourceStack> context, SuggestionsBuilder builder) -> {
+//            List<String> suggestions = new ArrayList<>();
+//            try {
+//                ServerPlayer player = context.getSource().getPlayer();
+////                VSCommandSource vsContext = (VSCommandSource) context;
+////                QueryableShipData<LoadedShip> allShips = vsContext.getShipWorld().getLoadedShips();
+//                ServerShipWorldCore shipObjectWorld = VSGameUtilsKt.getShipObjectWorld(context.getSource().getServer());
+//
+//                ResourceKey<Level> dimension = player.level().dimension();
+//                String playerDimension = dimension.location().toString();
+//                int chunkX = player.blockPosition().getX() >> 4;
+//                int chunkZ = player.blockPosition().getZ() >> 4;
+//
+//                QueryableShipData<ServerShip> allShips = shipObjectWorld.getAllShips();
+//                for (ServerShip ship : allShips) {
+//                    //Only add suggestions from the same dimension
+//                    if (allDimensions || ship.getChunkClaimDimension().endsWith(playerDimension)) {
+//                        suggestions.add(ship.getSlug());
+//                    }
+//                }
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//            return SharedSuggestionProvider.suggest(suggestions, builder);
+//        };
+//    }
+//
+//
+//    private static void shipToPlayerDimension(CommandSourceStack cc, ServerShip ship) {
+//        ServerShipWorldCore shipObjectWorld = VSGameUtilsKt.getShipObjectWorld(cc.getServer());
+//        ServerPlayer player = cc.getPlayer();
+//        ResourceKey<Level> dimension = player.level().dimension();
+//        String playerDimension = dimension.location().toString();
+//        int playerChunkX = player.blockPosition().getX() >> 4;
+//        int playerChunkZ = player.blockPosition().getZ() >> 4;
+//        System.out.println("Player Chunk X: " + playerChunkX + " Chunk Z: " + playerChunkZ);
+//        System.out.println("Player Dimension: " + playerDimension);
+//
+//        System.out.println("Sending ship " + ship.getSlug() + " to " + playerDimension);
+//        ship.setChunkClaimDimension("minecraft:dimension:" + playerDimension);
+//        System.out.println("Ship dimension: " + ship.getChunkClaimDimension());
+//    }
+//
+//    public static ServerShip getShipBySlug(MinecraftServer server, String slug) {
+//        ServerShipWorldCore shipObjectWorld = VSGameUtilsKt.getShipObjectWorld(server);
+//        for (ServerShip ship : shipObjectWorld.getAllShips()) {
+//            if (ship.getSlug() != null && ship.getSlug().equals(slug)) {
+//                return ship;
+//            }
+//        }
+//        return null;
+//    }
+//
+//    private static void shipToPlayerDimension(CommandContext<CommandSourceStack> cc) {
+//        ServerShipWorldCore shipObjectWorld = VSGameUtilsKt.getShipObjectWorld(cc.getSource().getServer());
+//        cc.getSource().sendSystemMessage(Component.literal("There are " + shipObjectWorld.getAllShips().size() + " total ships in the world."));
+//
+//        /**
+//         * Player information
+//         */
+//        ServerPlayer player = cc.getSource().getPlayer();
+//        ResourceKey<Level> dimension = player.level().dimension();
+//        String playerDimension = dimension.location().toString();
+//        int playerChunkX = player.blockPosition().getX() >> 4;
+//        int playerChunkZ = player.blockPosition().getZ() >> 4;
+//        System.out.println("Player Chunk X: " + playerChunkX + " Chunk Z: " + playerChunkZ);
+//        System.out.println("Player Dimension: " + playerDimension);
+//
+//        /**
+//         * Individual ship counters
+//         */
+//        AtomicInteger masslessShips = new AtomicInteger(0);
+//        AtomicInteger shipsInThisDimension = new AtomicInteger(0);
+//        AtomicInteger shipsWithinProximity = new AtomicInteger(0);
+//
+//
+//        for (ServerShip ship : shipObjectWorld.getAllShips()) {
+//            System.out.println("Ship " + ship.getSlug() + " is in dimension " + ship.getChunkClaimDimension());
+//            if (ship.getInertiaData().getMass() < DELETE_MASSLESS_THRESHOLD) {
+//                masslessShips.incrementAndGet();
+//            }
+////            ship.setChunkClaimDimension(playerDimension);
+//            if (ship.getChunkClaimDimension().endsWith(playerDimension)) {//Ship chunk claim dimension looks like this  minecraft:dimension:minecraft:overworld
+//                shipsInThisDimension.incrementAndGet();
+//                if (Math.abs(ship.getChunkClaim().getXMiddle() - playerChunkX) < PROXIMITY_RADIUS
+//                        && Math.abs(ship.getChunkClaim().getZMiddle() - playerChunkZ) < PROXIMITY_RADIUS) {
+//                    shipsWithinProximity.incrementAndGet(); //shipsWithinProximity
+//                }
+//            }
+//        }
+//        cc.getSource().sendSystemMessage(Component.literal("(" + masslessShips.get() + " massless ships)"));
+//        cc.getSource().sendSystemMessage(Component.literal("(" + shipsInThisDimension.get() + " ships in this dimension)"));
+////        cc.getSource().sendSystemMessage(Component.literal("(" + shipsWithinProximity.get() + " ships within " + PROXIMITY_RADIUS + " chunk proximity)"));
+//    }
 
 //    int getThisShipCommand(CommandContext<CommandSourceStack> ctx) {
 //        try {
@@ -373,7 +403,8 @@ public class ModCommands {
 //
 //
 //        //Get the one closest to the player
-////        org.valkyrienskies.core.apigame.world.properties.DimensionId dimensionId = vsContext.getDimensionId();
+
+    /// /        org.valkyrienskies.core.apigame.world.properties.DimensionId dimensionId = vsContext.getDimensionId();
 //        QueryableShipData<LoadedServerShip> loadedShips = vsContext.getLoadedShips();
 //        System.out.println("Loaded ships: " + loadedShips.size());
 //        Ship pickedShip = null;
@@ -426,26 +457,25 @@ public class ModCommands {
 //        );
 //        return 0;
 //    }
-
-    private static int vsDeleteMasslessShips(CommandContext<CommandSourceStack> cc) {
-        ServerShipWorldCore shipObjectWorld = VSGameUtilsKt.getShipObjectWorld(cc.getSource().getServer());
-
-        ArrayList<ServerShip> shipsToDelete = new ArrayList<>();
-
-        shipObjectWorld.getAllShips().stream().filter((s) -> {
-            //Delete ships that have a low / nonexistent mass
-            return s.getInertiaData().getMass() < DELETE_MASSLESS_THRESHOLD;
-        }).forEach((ship) -> {
-            System.out.println("Listing Ship: " + ship.toString());
-            shipsToDelete.add(ship);
-        });
-
-        cc.getSource().sendSystemMessage(Component.literal("Listed " + shipsToDelete.size() + " massless ships."));
-
-        shipsToDelete.forEach(shipObjectWorld::deleteShip);
-
-        cc.getSource().sendSystemMessage(Component.literal("Deleted massless ships."));
-
-        return 0;
-    }
+//    private static int vsDeleteMasslessShips(CommandContext<CommandSourceStack> cc) {
+//        ServerShipWorldCore shipObjectWorld = VSGameUtilsKt.getShipObjectWorld(cc.getSource().getServer());
+//
+//        ArrayList<ServerShip> shipsToDelete = new ArrayList<>();
+//
+//        shipObjectWorld.getAllShips().stream().filter((s) -> {
+//            //Delete ships that have a low / nonexistent mass
+//            return s.getInertiaData().getMass() < DELETE_MASSLESS_THRESHOLD;
+//        }).forEach((ship) -> {
+//            System.out.println("Listing Ship: " + ship.toString());
+//            shipsToDelete.add(ship);
+//        });
+//
+//        cc.getSource().sendSystemMessage(Component.literal("Listed " + shipsToDelete.size() + " massless ships."));
+//
+//        shipsToDelete.forEach(shipObjectWorld::deleteShip);
+//
+//        cc.getSource().sendSystemMessage(Component.literal("Deleted massless ships."));
+//
+//        return 0;
+//    }
 }
