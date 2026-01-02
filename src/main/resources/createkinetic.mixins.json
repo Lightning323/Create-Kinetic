@@ -1,7 +1,7 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "org.zipcoder.createkinetic.mixin",
+  "package": "com.lightning323.createkinetic.mixin",
   "compatibilityLevel": "JAVA_8",
   "refmap": "createkinetic.refmap.json",
   "mixins": [

@@ -1,7 +1,5 @@
-package org.zipcoder.createkinetic;
+package com.lightning323.createkinetic;
 
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.storage.loot.*;
 import net.minecraft.world.level.storage.loot.entries.EmptyLootItem;
 import net.minecraft.world.level.storage.loot.entries.LootItem;

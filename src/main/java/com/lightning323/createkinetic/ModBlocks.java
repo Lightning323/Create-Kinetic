@@ -1,16 +1,14 @@
-package org.zipcoder.createkinetic;
+package com.lightning323.createkinetic;
 
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
-import static org.zipcoder.createkinetic.Createkinetic.MODID;
-import static org.zipcoder.createkinetic.ModItems.ITEMS;
+import static com.lightning323.createkinetic.Createkinetic.MODID;
+import static com.lightning323.createkinetic.ModItems.ITEMS;
 
 public class ModBlocks {
     public static RegistryObject<Block> registerBlockItem(String id, Block block) {

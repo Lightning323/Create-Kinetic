@@ -1,4 +1,4 @@
-package org.zipcoder.createkinetic.utils;
+package com.lightning323.createkinetic.utils;
 
 import com.mojang.brigadier.ParseResults;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;

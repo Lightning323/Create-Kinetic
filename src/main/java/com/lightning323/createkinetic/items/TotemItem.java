@@ -1,4 +1,4 @@
-package org.zipcoder.createkinetic.items;
+package com.lightning323.createkinetic.items;
 
 
 import net.minecraft.server.level.ServerPlayer;
@@ -11,8 +11,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.Level;
-import org.zipcoder.createkinetic.network.CustomTotemPacket;
-import org.zipcoder.createkinetic.network.NetworkHandler;
+import com.lightning323.createkinetic.network.CustomTotemPacket;
+import com.lightning323.createkinetic.network.NetworkHandler;
 
 import java.util.function.BiPredicate;
 

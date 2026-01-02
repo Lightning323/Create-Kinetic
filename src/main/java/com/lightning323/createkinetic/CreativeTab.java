@@ -1,16 +1,14 @@
-package org.zipcoder.createkinetic;
+package com.lightning323.createkinetic;
 
 import net.minecraft.core.registries.Registries;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.RegistryObject;
 
-import static org.zipcoder.createkinetic.Createkinetic.MODID;
-import static org.zipcoder.createkinetic.ModItems.FREEZE_SHIP_TOTEM;
-import static org.zipcoder.createkinetic.ModItems.SHIP_TOTEM;
+import static com.lightning323.createkinetic.Createkinetic.MODID;
+import static com.lightning323.createkinetic.ModItems.FREEZE_SHIP_TOTEM;
+import static com.lightning323.createkinetic.ModItems.SHIP_TOTEM;
 
 public class CreativeTab {
     // Create a Deferred Register to hold CreativeModeTabs which will all be registered under the "createkinetic" namespace

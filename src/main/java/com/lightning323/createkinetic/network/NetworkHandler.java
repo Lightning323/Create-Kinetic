@@ -1,4 +1,4 @@
-package org.zipcoder.createkinetic.network;
+package com.lightning323.createkinetic.network;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.network.NetworkRegistry;
@@ -6,7 +6,7 @@ import net.minecraftforge.network.simple.SimpleChannel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkDirection;
 
-import static org.zipcoder.createkinetic.Createkinetic.MODID;
+import static com.lightning323.createkinetic.Createkinetic.MODID;
 
 public class NetworkHandler {
 
