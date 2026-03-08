@@ -1,4 +1,4 @@
-package com.lightning323.createkinetic;
+package com.lightning323.createkinetic.registries;
 
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -8,9 +8,9 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 import static com.lightning323.createkinetic.Createkinetic.MODID;
-import static com.lightning323.createkinetic.ModItems.ITEMS;
+import static com.lightning323.createkinetic.registries.ItemRegistry.ITEMS;
 
-public class ModBlocks {
+public class BlockRegistry {
     public static RegistryObject<Block> registerBlockItem(String id, Block block) {
         RegistryObject<Block> blockReg = BLOCKS.register(id, () -> block);
         ITEMS.register(id, () -> new BlockItem(blockReg.get(), new Item.Properties()));

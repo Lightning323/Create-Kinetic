@@ -1,4 +1,4 @@
-package com.lightning323.createkinetic.utils;
+package com.lightning323.createkinetic.commands;
 
 import com.mojang.brigadier.ParseResults;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;

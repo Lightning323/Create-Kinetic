@@ -1,5 +1,6 @@
-package com.lightning323.createkinetic;
+package com.lightning323.createkinetic.commands;
 
+import com.lightning323.createkinetic.registries.ItemRegistry;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.ParseResults;
@@ -239,8 +240,8 @@ public class ModCommands {
         ItemStack item = player.getMainHandItem(); // or getOffhandItem()
 
         // Check if the item is a Totem
-        if (item.getItem() != ModItems.SHIP_TOTEM.get() &&
-                item.getItem() != ModItems.FREEZE_SHIP_TOTEM.get()) {
+        if (item.getItem() != ItemRegistry.SHIP_TOTEM.get() &&
+                item.getItem() != ItemRegistry.FREEZE_SHIP_TOTEM.get()) {
             messages.accept(Component.literal("You must be holding a Ship Totem!"));
             return 0;
         }

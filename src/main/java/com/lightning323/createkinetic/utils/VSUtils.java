@@ -18,7 +18,7 @@ import org.valkyrienskies.core.api.ships.ServerShip;
 import org.valkyrienskies.core.api.ships.Ship;
 import org.valkyrienskies.core.internal.world.VsiServerShipWorld;
 import org.valkyrienskies.mod.common.VSGameUtilsKt;
-import com.lightning323.createkinetic.ModCommands;
+import com.lightning323.createkinetic.commands.ModCommands;
 
 import java.util.ArrayList;
 import java.util.List;

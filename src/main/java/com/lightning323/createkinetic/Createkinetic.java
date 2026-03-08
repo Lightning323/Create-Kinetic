@@ -1,5 +1,6 @@
 package com.lightning323.createkinetic;
 
+import com.lightning323.createkinetic.registries.CreativeTabRegistry;
 import com.mojang.logging.LogUtils;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -15,9 +16,9 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
 import com.lightning323.createkinetic.network.NetworkHandler;
 
-import static com.lightning323.createkinetic.CreativeTab.CREATIVE_MODE_TABS;
-import static com.lightning323.createkinetic.ModBlocks.BLOCKS;
-import static com.lightning323.createkinetic.ModItems.ITEMS;
+import static com.lightning323.createkinetic.registries.CreativeTabRegistry.CREATIVE_MODE_TABS;
+import static com.lightning323.createkinetic.registries.BlockRegistry.BLOCKS;
+import static com.lightning323.createkinetic.registries.ItemRegistry.ITEMS;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(Createkinetic.MODID)
@@ -45,7 +46,7 @@ public class Createkinetic {
         MinecraftForge.EVENT_BUS.register(this);
 
         // Register the item to a creative tab
-        modEventBus.addListener(CreativeTab::addCreative);
+        modEventBus.addListener(CreativeTabRegistry::addCreative);
 
         // Register our mod's ForgeConfigSpec so that Forge can create and load the config file for us
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);

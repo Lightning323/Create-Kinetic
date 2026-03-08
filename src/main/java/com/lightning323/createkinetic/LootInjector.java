@@ -1,5 +1,6 @@
 package com.lightning323.createkinetic;
 
+import com.lightning323.createkinetic.registries.ItemRegistry;
 import net.minecraft.world.level.storage.loot.*;
 import net.minecraft.world.level.storage.loot.entries.EmptyLootItem;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
@@ -31,8 +32,8 @@ public class LootInjector {
 //            System.out.println("Adding totem loot to " + event.getName().getPath());
             // Build a loot pool
             LootPool pool = LootPool.lootPool()
-                    .add(LootItem.lootTableItem(ModItems.SHIP_TOTEM.get()).setWeight(shipTotemChance))//X% change of ship totem
-                    .add(LootItem.lootTableItem(ModItems.FREEZE_SHIP_TOTEM.get()).setWeight(freezeTotemChance))//Y% change of freeze totem
+                    .add(LootItem.lootTableItem(ItemRegistry.SHIP_TOTEM.get()).setWeight(shipTotemChance))//X% change of ship totem
+                    .add(LootItem.lootTableItem(ItemRegistry.FREEZE_SHIP_TOTEM.get()).setWeight(freezeTotemChance))//Y% change of freeze totem
                     .add(EmptyLootItem.emptyItem().setWeight(emptyChance)) // chance for nothing
                             .setRolls(ConstantValue.exactly(1)) // roll once per chest
                             .build();
