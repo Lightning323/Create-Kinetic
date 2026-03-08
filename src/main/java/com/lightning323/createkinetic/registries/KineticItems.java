@@ -2,6 +2,7 @@ package com.lightning323.createkinetic.registries;
 
 import com.lightning323.createkinetic.blocks.BallastBlock;
 import com.lightning323.createkinetic.blocks.BuoyBlock;
+import com.lightning323.createkinetic.blocks.sail.SailPulley;
 import com.lightning323.createkinetic.items.ShipTotemItem;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.content.contraptions.pulley.PulleyBlock;
@@ -23,7 +24,7 @@ import static com.simibubi.create.foundation.data.TagGen.axeOrPickaxe;
 public class KineticItems {
 
 
-    public static final BlockEntry<PulleyBlock> ROPE_PULLEY = REGISTRATE.block("rope_pulley", PulleyBlock::new)
+    public static final BlockEntry<SailPulley> ROPE_PULLEY = REGISTRATE.block("rope_pulley", SailPulley::new)
             .initialProperties(SharedProperties::stone)
             .properties(p -> p.mapColor(MapColor.PODZOL))
             .properties(p -> p.noOcclusion())
