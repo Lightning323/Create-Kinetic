@@ -2,15 +2,18 @@ package com.lightning323.createkinetic.registries;
 
 import com.lightning323.createkinetic.blocks.BallastBlock;
 import com.lightning323.createkinetic.blocks.BuoyBlock;
+import com.lightning323.createkinetic.items.ShipTotemItem;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.util.entry.BlockEntry;
+import com.tterrag.registrate.util.entry.ItemEntry;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraftforge.eventbus.api.IEventBus;
 
 import static com.lightning323.createkinetic.Createkinetic.MOD_ID;
 
-public class BlockRegistry {
+public class AllItems {
     public static final CreateRegistrate REGISTRATE = CreateRegistrate.create(MOD_ID);
 
 //    public static final BlockEntry<PulleyBlock> ROPE_PULLEY = REGISTRATE.block("rope_pulley", PulleyBlock::new)
@@ -25,6 +28,15 @@ public class BlockRegistry {
 //            .transform(customItemModel())
 //            .register();
 
+    public static final ItemEntry<ShipTotemItem> SHIP_TOTEM = REGISTRATE.item("ship_totem",
+                    p -> new ShipTotemItem(false))
+            .properties(p -> p.rarity(Rarity.EPIC).stacksTo(1))
+            .register();
+
+    public static final ItemEntry<ShipTotemItem> FREEZE_SHIP_TOTEM = REGISTRATE.item("freeze_ship_totem",
+                    p -> new ShipTotemItem(true))
+            .properties(p -> p.rarity(Rarity.EPIC).stacksTo(1))
+            .register();
 
     private static final BlockBehaviour.Properties BUOY_BLOCK_PROPERTIES =
             BlockBehaviour.Properties.copy(Blocks.WHITE_WOOL).explosionResistance(0.0f);

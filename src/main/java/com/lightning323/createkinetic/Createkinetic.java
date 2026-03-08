@@ -1,9 +1,8 @@
 package com.lightning323.createkinetic;
 
 import com.lightning323.createkinetic.registries.BlockEntityRegistry;
-import com.lightning323.createkinetic.registries.BlockRegistry;
+import com.lightning323.createkinetic.registries.AllItems;
 import com.lightning323.createkinetic.registries.CreativeTabRegistry;
-import com.lightning323.createkinetic.registries.ItemRegistry;
 import com.mojang.logging.LogUtils;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.api.distmarker.Dist;
@@ -37,9 +36,7 @@ public class Createkinetic {
         modEventBus.addListener(CreativeTabRegistry::addCreative);
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, KineticConfig.SPEC);
-
-        ItemRegistry.register(modEventBus);
-        BlockRegistry.register(modEventBus);
+        AllItems.register(modEventBus);
         BlockEntityRegistry.register(modEventBus);
         CREATIVE_MODE_TABS.register(modEventBus);
         MinecraftForge.EVENT_BUS.register(this);

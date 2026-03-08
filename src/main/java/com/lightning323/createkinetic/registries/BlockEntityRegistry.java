@@ -1,11 +1,6 @@
 package com.lightning323.createkinetic.registries;
 
-import com.simibubi.create.content.contraptions.pulley.PulleyBlockEntity;
-import com.simibubi.create.content.contraptions.pulley.PulleyRenderer;
-import com.tterrag.registrate.util.entry.BlockEntityEntry;
 import net.minecraftforge.eventbus.api.IEventBus;
-
-import static com.lightning323.createkinetic.registries.BlockRegistry.REGISTRATE;
 
 public class BlockEntityRegistry {
 //    public static final BlockEntityEntry<PulleyBlockEntity> ROPE_PULLEY = REGISTRATE
