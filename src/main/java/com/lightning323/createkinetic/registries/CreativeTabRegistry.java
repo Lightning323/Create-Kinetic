@@ -20,9 +20,13 @@ public class CreativeTabRegistry {
                     .title(Component.translatable("itemGroup." + MOD_ID + ".tab"))
                     .icon(() -> SHIP_TOTEM.get().getDefaultInstance())
                     .displayItems((parameters, output) -> {
+                        //Item registry
                         ITEMS.getEntries().forEach((e)->{
                             output.accept(e.get());
                         });
+                        //Registrate
+                        BlockRegistry.REGISTRATE.getAll(Registries.ITEM)
+                                .forEach(item -> output.accept(item.get()));
                     }).build());
 
     //For vanilla tabs

@@ -1,6 +1,0 @@
-{
-	"parent": "vs_sails:block/redstone_helm_block_base",
-	"textures": {
-		"2": "vs_sails:block/redstone_helm_block_left"
-	}
-}

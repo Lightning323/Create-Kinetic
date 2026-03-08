@@ -1,15 +1,13 @@
 package com.lightning323.createkinetic;
 
-import com.lightning323.createkinetic.datagen.ModBlockStateProvider;
+import com.lightning323.createkinetic.registries.BlockEntityRegistry;
 import com.lightning323.createkinetic.registries.BlockRegistry;
 import com.lightning323.createkinetic.registries.CreativeTabRegistry;
 import com.lightning323.createkinetic.registries.ItemRegistry;
 import com.mojang.logging.LogUtils;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.PackOutput;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -24,8 +22,6 @@ import org.slf4j.Logger;
 import com.lightning323.createkinetic.network.NetworkHandler;
 
 import static com.lightning323.createkinetic.registries.CreativeTabRegistry.CREATIVE_MODE_TABS;
-import static com.lightning323.createkinetic.registries.BlockRegistry.BLOCKS;
-import static com.lightning323.createkinetic.registries.ItemRegistry.ITEMS;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(Createkinetic.MOD_ID)
@@ -44,16 +40,14 @@ public class Createkinetic {
 
         ItemRegistry.register(modEventBus);
         BlockRegistry.register(modEventBus);
+        BlockEntityRegistry.register(modEventBus);
         CREATIVE_MODE_TABS.register(modEventBus);
         MinecraftForge.EVENT_BUS.register(this);
     }
 
     //Datagen event
     public void gatherData(GatherDataEvent event) {
-        LOGGER.info("Datagen started!");
         DataGenerator generator = event.getGenerator();
-        PackOutput output = generator.getPackOutput();
-        ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
