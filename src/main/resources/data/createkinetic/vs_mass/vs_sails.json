@@ -1,0 +1,322 @@
+[
+  {
+    "block": "createkinetic:helm_block",
+    "mass": 480
+  },
+  {
+    "block": "createkinetic:helm_wheel",
+    "mass": 240
+  },
+  {
+    "block": "createkinetic:redstone_helm_block",
+    "mass": 480
+  },
+  {
+    "block": "createkinetic:oak_helm",
+    "mass": 480
+  },
+  {
+    "block": "createkinetic:spruce_helm",
+    "mass": 480
+  },
+  {
+    "block": "createkinetic:birch_helm",
+    "mass": 480
+  },
+  {
+    "block": "createkinetic:jungle_helm",
+    "mass": 480
+  },
+  {
+    "block": "createkinetic:dark_oak_helm",
+    "mass": 480
+  },
+  {
+    "block": "createkinetic:acacia_helm",
+    "mass": 480
+  },
+  {
+    "block": "createkinetic:mangrove_helm",
+    "mass": 480
+  },
+  {
+    "block": "createkinetic:cherry_helm",
+    "mass": 480
+  },
+  {
+    "block": "createkinetic:crimson_helm",
+    "mass": 480
+  },
+  {
+    "block": "createkinetic:warped_helm",
+    "mass": 480
+  },
+  {
+    "block": "createkinetic:bamboo_helm",
+    "mass": 480
+  },
+  {
+    "block": "createkinetic:redstone_helm_wheel",
+    "mass": 240
+  },
+  {
+    "block": "createkinetic:oak_helm_wheel",
+    "mass": 240
+  },
+  {
+    "block": "createkinetic:spruce_helm_wheel",
+    "mass": 240
+  },
+  {
+    "block": "createkinetic:birch_helm_wheel",
+    "mass": 240
+  },
+  {
+    "block": "createkinetic:jungle_helm_wheel",
+    "mass": 240
+  },
+  {
+    "block": "createkinetic:dark_oak_helm_wheel",
+    "mass": 240
+  },
+  {
+    "block": "createkinetic:acacia_helm_wheel",
+    "mass": 240
+  },
+  {
+    "block": "createkinetic:mangrove_helm_wheel",
+    "mass": 240
+  },
+  {
+    "block": "createkinetic:cherry_helm_wheel",
+    "mass": 240
+  },
+  {
+    "block": "createkinetic:crimson_helm_wheel",
+    "mass": 240
+  },
+  {
+    "block": "createkinetic:warped_helm_wheel",
+    "mass": 240
+  },
+  {
+    "block": "createkinetic:bamboo_helm_wheel",
+    "mass": 240
+  },
+  {
+    "block": "createkinetic:sail_block",
+    "mass": 0.01
+  },
+  {
+    "block": "createkinetic:white_sail",
+    "mass": 0.01
+  },
+  {
+    "block": "createkinetic:light_gray_sail",
+    "mass": 0.01
+  },
+  {
+    "block": "createkinetic:gray_sail",
+    "mass": 0.01
+  },
+  {
+    "block": "createkinetic:black_sail",
+    "mass": 0.01
+  },
+  {
+    "block": "createkinetic:brown_sail",
+    "mass": 0.01
+  },
+  {
+    "block": "createkinetic:red_sail",
+    "mass": 0.01
+  },
+  {
+    "block": "createkinetic:orange_sail",
+    "mass": 0.01
+  },
+  {
+    "block": "createkinetic:yellow_sail",
+    "mass": 0.01
+  },
+  {
+    "block": "createkinetic:lime_sail",
+    "mass": 0.01
+  },
+  {
+    "block": "createkinetic:green_sail",
+    "mass": 0.01
+  },
+  {
+    "block": "createkinetic:cyan_sail",
+    "mass": 0.01
+  },
+  {
+    "block": "createkinetic:light_blue_sail",
+    "mass": 0.01
+  },
+  {
+    "block": "createkinetic:blue_sail",
+    "mass": 0.01
+  },
+  {
+    "block": "createkinetic:purple_sail",
+    "mass": 0.01
+  },
+  {
+    "block": "createkinetic:magenta_sail",
+    "mass": 0.01
+  },
+  {
+    "block": "createkinetic:pink_sail",
+    "mass": 0.01
+  },
+  {
+    "block": "createkinetic:magma_sail_block",
+    "mass": 0.05
+  },
+  {
+    "block": "createkinetic:white_magma_sail",
+    "mass": 0.05
+  },
+  {
+    "block": "createkinetic:light_gray_magma_sail",
+    "mass": 0.05
+  },
+  {
+    "block": "createkinetic:gray_magma_sail",
+    "mass": 0.05
+  },
+  {
+    "block": "createkinetic:black_magma_sail",
+    "mass": 0.05
+  },
+  {
+    "block": "createkinetic:brown_magma_sail",
+    "mass": 0.05
+  },
+  {
+    "block": "createkinetic:red_magma_sail",
+    "mass": 0.05
+  },
+  {
+    "block": "createkinetic:orange_magma_sail",
+    "mass": 0.05
+  },
+  {
+    "block": "createkinetic:yellow_magma_sail",
+    "mass": 0.05
+  },
+  {
+    "block": "createkinetic:lime_magma_sail",
+    "mass": 0.05
+  },
+  {
+    "block": "createkinetic:green_magma_sail",
+    "mass": 0.05
+  },
+  {
+    "block": "createkinetic:cyan_magma_sail",
+    "mass": 0.05
+  },
+  {
+    "block": "createkinetic:light_blue_magma_sail",
+    "mass": 0.05
+  },
+  {
+    "block": "createkinetic:blue_magma_sail",
+    "mass": 0.05
+  },
+  {
+    "block": "createkinetic:purple_magma_sail",
+    "mass": 0.05
+  },
+  {
+    "block": "createkinetic:magenta_magma_sail",
+    "mass": 0.05
+  },
+  {
+    "block": "createkinetic:pink_magma_sail",
+    "mass": 0.05
+  },
+  {
+    "block": "createkinetic:rigging_block",
+    "mass": 10.0
+  },
+  {
+    "block": "createkinetic:ballast_block",
+    "mass": 20000.0
+  },
+  {
+    "block": "createkinetic:buoy_block",
+    "mass": 0.1
+  },
+  {
+    "block": "createkinetic:white_buoy",
+    "mass": 0.1
+  },
+  {
+    "block": "createkinetic:light_gray_buoy",
+    "mass": 0.1
+  },
+  {
+    "block": "createkinetic:gray_buoy",
+    "mass": 0.1
+  },
+  {
+    "block": "createkinetic:black_buoy",
+    "mass": 0.1
+  },
+  {
+    "block": "createkinetic:brown_buoy",
+    "mass": 0.1
+  },
+  {
+    "block": "createkinetic:red_buoy",
+    "mass": 0.1
+  },
+  {
+    "block": "createkinetic:orange_buoy",
+    "mass": 0.1
+  },
+  {
+    "block": "createkinetic:yellow_buoy",
+    "mass": 0.1
+  },
+  {
+    "block": "createkinetic:lime_buoy",
+    "mass": 0.1
+  },
+  {
+    "block": "createkinetic:green_buoy",
+    "mass": 0.1
+  },
+  {
+    "block": "createkinetic:cyan_buoy",
+    "mass": 0.1
+  },
+  {
+    "block": "createkinetic:light_blue_buoy",
+    "mass": 0.1
+  },
+  {
+    "block": "createkinetic:blue_buoy",
+    "mass": 0.1
+  },
+  {
+    "block": "createkinetic:purple_buoy",
+    "mass": 0.1
+  },
+  {
+    "block": "createkinetic:magenta_buoy",
+    "mass": 0.1
+  },
+  {
+    "block": "createkinetic:pink_buoy",
+    "mass": 0.1
+  },
+  {
+    "block": "createkinetic:rope_block",
+    "mass": 0.1
+  }
+]

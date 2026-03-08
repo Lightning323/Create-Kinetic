@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "createkinetic:block/buoys/buoy_top",
+    "side": "createkinetic:block/buoys/buoy_side"
+  }
+}

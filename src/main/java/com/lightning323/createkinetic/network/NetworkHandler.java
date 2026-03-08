@@ -6,7 +6,7 @@ import net.minecraftforge.network.simple.SimpleChannel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkDirection;
 
-import static com.lightning323.createkinetic.Createkinetic.MODID;
+import static com.lightning323.createkinetic.Createkinetic.MOD_ID;
 
 public class NetworkHandler {
 
@@ -18,7 +18,7 @@ public class NetworkHandler {
     }
 
     public static void registerMessages() {
-        CHANNEL_INSTANCE = NetworkRegistry.newSimpleChannel(new ResourceLocation(MODID, MODID), () -> "1.0", s -> true, s -> true);
+        CHANNEL_INSTANCE = NetworkRegistry.newSimpleChannel(new ResourceLocation(MOD_ID, MOD_ID), () -> "1.0", s -> true, s -> true);
 
         CHANNEL_INSTANCE.messageBuilder(CustomTotemPacket.class, nextID())
                 .encoder(CustomTotemPacket::encode)

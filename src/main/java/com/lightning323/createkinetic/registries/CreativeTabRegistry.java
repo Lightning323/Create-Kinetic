@@ -8,21 +8,21 @@ import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 
-import static com.lightning323.createkinetic.Createkinetic.MODID;
-import static com.lightning323.createkinetic.registries.ItemRegistry.FREEZE_SHIP_TOTEM;
-import static com.lightning323.createkinetic.registries.ItemRegistry.SHIP_TOTEM;
+import static com.lightning323.createkinetic.Createkinetic.MOD_ID;
+import static com.lightning323.createkinetic.registries.ItemRegistry.*;
 
 public class CreativeTabRegistry {
     // Create a Deferred Register to hold CreativeModeTabs which will all be registered under the "createkinetic" namespace
-    public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
+    public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MOD_ID);
 
     public static final RegistryObject<CreativeModeTab> CREATIVE_TAB = CREATIVE_MODE_TABS.register("createkinetic_tab",
             () -> CreativeModeTab.builder().withTabsBefore(CreativeModeTabs.COMBAT)
-                    .title(Component.translatable("itemGroup." + MODID + ".tab"))
+                    .title(Component.translatable("itemGroup." + MOD_ID + ".tab"))
                     .icon(() -> SHIP_TOTEM.get().getDefaultInstance())
                     .displayItems((parameters, output) -> {
-                        output.accept(SHIP_TOTEM.get());
-                        output.accept(FREEZE_SHIP_TOTEM.get());
+                        ITEMS.getEntries().forEach((e)->{
+                            output.accept(e.get());
+                        });
                     }).build());
 
     //For vanilla tabs

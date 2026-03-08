@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "createkinetic:block/buoys/magenta_buoy"
+    }
+  }
+}
