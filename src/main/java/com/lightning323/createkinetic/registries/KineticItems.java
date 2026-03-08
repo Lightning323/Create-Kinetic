@@ -3,30 +3,37 @@ package com.lightning323.createkinetic.registries;
 import com.lightning323.createkinetic.blocks.BallastBlock;
 import com.lightning323.createkinetic.blocks.BuoyBlock;
 import com.lightning323.createkinetic.items.ShipTotemItem;
-import com.simibubi.create.foundation.data.CreateRegistrate;
+import com.simibubi.create.AllTags;
+import com.simibubi.create.content.contraptions.pulley.PulleyBlock;
+import com.simibubi.create.foundation.data.BlockStateGen;
+import com.simibubi.create.foundation.data.SharedProperties;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.entry.ItemEntry;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.eventbus.api.IEventBus;
 
-import static com.lightning323.createkinetic.Createkinetic.MOD_ID;
+import static com.lightning323.createkinetic.Createkinetic.REGISTRATE;
+import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
+import static com.simibubi.create.foundation.data.TagGen.axeOrPickaxe;
 
-public class AllItems {
-    public static final CreateRegistrate REGISTRATE = CreateRegistrate.create(MOD_ID);
+public class KineticItems {
 
-//    public static final BlockEntry<PulleyBlock> ROPE_PULLEY = REGISTRATE.block("rope_pulley", PulleyBlock::new)
-//            .initialProperties(SharedProperties::stone)
-//            .properties(p -> p.mapColor(MapColor.PODZOL))
-//            .properties(p -> p.noOcclusion())
-//            .addLayer(() -> RenderType::cutoutMipped)
-//            .transform(axeOrPickaxe())
-//            .tag(AllTags.AllBlockTags.SAFE_NBT.tag)
-//            .blockstate(BlockStateGen.horizontalAxisBlockProvider(true))
-//            .item()
-//            .transform(customItemModel())
-//            .register();
+
+    public static final BlockEntry<PulleyBlock> ROPE_PULLEY = REGISTRATE.block("rope_pulley", PulleyBlock::new)
+            .initialProperties(SharedProperties::stone)
+            .properties(p -> p.mapColor(MapColor.PODZOL))
+            .properties(p -> p.noOcclusion())
+            .addLayer(() -> RenderType::cutoutMipped)
+            .transform(axeOrPickaxe())
+            .tag(AllTags.AllBlockTags.SAFE_NBT.tag)
+            .blockstate(BlockStateGen.horizontalAxisBlockProvider(true))
+            .item()
+            .transform(customItemModel())
+            .register();
 
     public static final ItemEntry<ShipTotemItem> SHIP_TOTEM = REGISTRATE.item("ship_totem",
                     p -> new ShipTotemItem(false))
@@ -85,8 +92,7 @@ public class AllItems {
     public static final BlockEntry<BuoyBlock> PINK_BUOY = registerBuoy("pink_buoy", "Pink Buoy");
 
 
-    public static void register(IEventBus modEventBus) {
-        REGISTRATE.registerEventListeners(modEventBus); //This registers datagen for us
+    public static void register() {
     }
 }
 

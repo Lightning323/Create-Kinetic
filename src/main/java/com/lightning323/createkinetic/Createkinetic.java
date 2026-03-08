@@ -1,9 +1,10 @@
 package com.lightning323.createkinetic;
 
-import com.lightning323.createkinetic.registries.BlockEntityRegistry;
-import com.lightning323.createkinetic.registries.AllItems;
-import com.lightning323.createkinetic.registries.CreativeTabRegistry;
+import com.lightning323.createkinetic.registries.KineticBlockEntities;
+import com.lightning323.createkinetic.registries.KineticItems;
+import com.lightning323.createkinetic.registries.KineticCreativeTabs;
 import com.mojang.logging.LogUtils;
+import com.simibubi.create.foundation.data.CreateRegistrate;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -20,24 +21,27 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
 import com.lightning323.createkinetic.network.NetworkHandler;
 
-import static com.lightning323.createkinetic.registries.CreativeTabRegistry.CREATIVE_MODE_TABS;
+import static com.lightning323.createkinetic.registries.KineticCreativeTabs.CREATIVE_MODE_TABS;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(Createkinetic.MOD_ID)
 public class Createkinetic {
     public static final String MOD_ID = "createkinetic";
     private static final Logger LOGGER = LogUtils.getLogger();
+    public static final CreateRegistrate REGISTRATE = CreateRegistrate.create(MOD_ID);
 
     public Createkinetic() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::gatherData);
-        modEventBus.addListener(CreativeTabRegistry::addCreative);
+        modEventBus.addListener(KineticCreativeTabs::addCreative);
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, KineticConfig.SPEC);
-        AllItems.register(modEventBus);
-        BlockEntityRegistry.register(modEventBus);
+        REGISTRATE.registerEventListeners(modEventBus);
+
+        KineticItems.register();
+        KineticBlockEntities.register();
         CREATIVE_MODE_TABS.register(modEventBus);
         MinecraftForge.EVENT_BUS.register(this);
     }

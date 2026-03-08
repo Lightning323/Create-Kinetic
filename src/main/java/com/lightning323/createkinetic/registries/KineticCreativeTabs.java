@@ -9,18 +9,19 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 
 import static com.lightning323.createkinetic.Createkinetic.MOD_ID;
+import static com.lightning323.createkinetic.Createkinetic.REGISTRATE;
 
-public class CreativeTabRegistry {
+public class KineticCreativeTabs {
     // Create a Deferred Register to hold CreativeModeTabs which will all be registered under the "createkinetic" namespace
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MOD_ID);
 
     public static final RegistryObject<CreativeModeTab> CREATIVE_TAB = CREATIVE_MODE_TABS.register("createkinetic_tab",
             () -> CreativeModeTab.builder().withTabsBefore(CreativeModeTabs.COMBAT)
                     .title(Component.translatable("itemGroup." + MOD_ID + ".tab"))
-                    .icon(() -> AllItems.SHIP_TOTEM.get().getDefaultInstance())
+                    .icon(() -> KineticItems.SHIP_TOTEM.get().getDefaultInstance())
                     .displayItems((parameters, output) -> {
                         //Registrate
-                        AllItems.REGISTRATE.getAll(Registries.ITEM)
+                        REGISTRATE.getAll(Registries.ITEM)
                                 .forEach(item -> output.accept(item.get()));
                     }).build());
 
