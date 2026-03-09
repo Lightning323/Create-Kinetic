@@ -1,7 +1,7 @@
 package com.lightning323.createkinetic.blocks.sail;
 
 
-import com.simibubi.create.AllPartialModels;
+import com.lightning323.createkinetic.registries.KineticPartialModels;
 import com.simibubi.create.AllSpriteShifts;
 import com.simibubi.create.content.contraptions.pulley.AbstractPulleyVisual;
 import com.simibubi.create.content.processing.burner.ScrollInstance;
@@ -20,27 +20,27 @@ public class SailVisual extends AbstractPulleyVisual<SailBlockEntity> {
 
 	@Override
 	protected Instancer<TransformedInstance> getRopeModel() {
-		return instancerProvider().instancer(InstanceTypes.TRANSFORMED, Models.partial(AllPartialModels.ROPE));
+		return instancerProvider().instancer(InstanceTypes.TRANSFORMED, Models.partial(KineticPartialModels.ROPE));
 	}
 
 	@Override
 	protected Instancer<TransformedInstance> getMagnetModel() {
-		return instancerProvider().instancer(InstanceTypes.TRANSFORMED, Models.partial(AllPartialModels.PULLEY_MAGNET));
+		return instancerProvider().instancer(InstanceTypes.TRANSFORMED, Models.partial(KineticPartialModels.PULLEY_MAGNET));
 	}
 
 	@Override
 	protected Instancer<TransformedInstance> getHalfMagnetModel() {
-		return instancerProvider().instancer(InstanceTypes.TRANSFORMED, Models.partial(AllPartialModels.ROPE_HALF_MAGNET));
+		return instancerProvider().instancer(InstanceTypes.TRANSFORMED, Models.partial(KineticPartialModels.ROPE_HALF_MAGNET));
 	}
 
 	@Override
 	protected Instancer<ScrollInstance> getCoilModel() {
-		return instancerProvider().instancer(AllInstanceTypes.SCROLLING, Models.partial(AllPartialModels.ROPE_COIL));
+		return instancerProvider().instancer(AllInstanceTypes.SCROLLING, Models.partial(KineticPartialModels.ROPE_COIL));
 	}
 
 	@Override
 	protected Instancer<TransformedInstance> getHalfRopeModel() {
-		return instancerProvider().instancer(InstanceTypes.TRANSFORMED, Models.partial(AllPartialModels.ROPE_HALF));
+		return instancerProvider().instancer(InstanceTypes.TRANSFORMED, Models.partial(KineticPartialModels.ROPE_HALF));
 	}
 
 	@Override

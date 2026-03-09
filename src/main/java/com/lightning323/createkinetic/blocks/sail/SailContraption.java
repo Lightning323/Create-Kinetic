@@ -1,6 +1,6 @@
 package com.lightning323.createkinetic.blocks.sail;
 
-import com.simibubi.create.AllContraptionTypes;
+import com.lightning323.createkinetic.registries.KineticContraptions;
 import com.simibubi.create.api.contraption.ContraptionType;
 import com.simibubi.create.content.contraptions.AssemblyException;
 import com.simibubi.create.content.contraptions.TranslatingContraption;
@@ -16,7 +16,7 @@ public class SailContraption extends TranslatingContraption {
 
 	@Override
 	public ContraptionType getType() {
-		return AllContraptionTypes.PULLEY.value();
+		return KineticContraptions.SAIL.value();
 	}
 
 	public SailContraption() {}

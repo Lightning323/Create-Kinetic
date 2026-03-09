@@ -1,9 +1,8 @@
 package com.lightning323.createkinetic;
 
-import com.lightning323.createkinetic.registries.KineticBlockEntities;
-import com.lightning323.createkinetic.registries.KineticItems;
-import com.lightning323.createkinetic.registries.KineticCreativeTabs;
+import com.lightning323.createkinetic.registries.*;
 import com.mojang.logging.LogUtils;
+import com.simibubi.create.Create;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.api.distmarker.Dist;
@@ -18,6 +17,7 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.RegisterEvent;
 import org.slf4j.Logger;
 import com.lightning323.createkinetic.network.NetworkHandler;
 
@@ -36,14 +36,22 @@ public class Createkinetic {
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::gatherData);
         modEventBus.addListener(KineticCreativeTabs::addCreative);
+        modEventBus.addListener(this::onRegister);
+
+        KineticItems.register();
+        KineticBlockEntities.register();
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, KineticConfig.SPEC);
         REGISTRATE.registerEventListeners(modEventBus);
 
-        KineticItems.register();
-        KineticBlockEntities.register();
+
         CREATIVE_MODE_TABS.register(modEventBus);
         MinecraftForge.EVENT_BUS.register(this);
+    }
+
+    public void onRegister(final RegisterEvent event){
+        KineticPartialModels.init();
+        KineticContraptions.init();
     }
 
     //Datagen event

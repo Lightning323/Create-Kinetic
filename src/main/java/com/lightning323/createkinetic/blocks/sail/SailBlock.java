@@ -2,6 +2,7 @@ package com.lightning323.createkinetic.blocks.sail;
 
 import com.lightning323.createkinetic.registries.KineticBlockEntities;
 import com.lightning323.createkinetic.registries.KineticItems;
+import com.lightning323.createkinetic.registries.KineticShapes;
 import com.simibubi.create.AllShapes;
 import com.simibubi.create.content.kinetics.base.HorizontalAxisKineticBlock;
 import com.simibubi.create.foundation.block.IBE;
@@ -171,7 +172,7 @@ public class SailBlock extends HorizontalAxisKineticBlock implements IBE<SailBlo
 
         @Override
         public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
-            return AllShapes.FOUR_VOXEL_POLE.get(Direction.UP);
+            return KineticShapes.SAIL_CLOTH.get(Direction.UP);
         }
     }
 

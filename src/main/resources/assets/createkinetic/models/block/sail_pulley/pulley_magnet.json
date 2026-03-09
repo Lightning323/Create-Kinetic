@@ -1,4 +1,5 @@
 {
+	"format_version": "1.21.11",
 	"credit": "Made with Blockbench",
 	"parent": "block/block",
 	"textures": {
@@ -9,8 +10,8 @@
 	"elements": [
 		{
 			"name": "rope",
-			"from": [5.95, 2, 5.95],
-			"to": [10.05, 16, 10.05],
+			"from": [-0.05, 2, 6.95],
+			"to": [16.05, 16, 9.05],
 			"rotation": {"angle": 0, "axis": "y", "origin": [7.75, 0, 8]},
 			"faces": {
 				"north": {"uv": [12, 0, 16, 14], "texture": "#6"},
@@ -22,8 +23,8 @@
 		},
 		{
 			"name": "magnet",
-			"from": [4.95, 2, 4.95],
-			"to": [11.05, 4, 11.05],
+			"from": [-0.05, 2, 4.95],
+			"to": [16.05, 4, 11.05],
 			"rotation": {"angle": 0, "axis": "y", "origin": [8, 22, 8]},
 			"faces": {
 				"north": {"uv": [10, 12, 16, 14], "texture": "#6"},
@@ -34,8 +35,8 @@
 			}
 		},
 		{
-			"from": [3, -3, 3],
-			"to": [13, 2, 13],
+			"from": [0, -3, 3],
+			"to": [16, 2, 13],
 			"faces": {
 				"north": {"uv": [0, 10, 10, 15], "texture": "#6"},
 				"east": {"uv": [0, 10, 10, 15], "texture": "#6"},
