@@ -2,7 +2,7 @@ package com.lightning323.createkinetic.registries;
 
 import com.lightning323.createkinetic.blocks.BallastBlock;
 import com.lightning323.createkinetic.blocks.BuoyBlock;
-import com.lightning323.createkinetic.blocks.sail.SailPulley;
+import com.lightning323.createkinetic.blocks.sail.SailBlock;
 import com.lightning323.createkinetic.items.ShipTotemItem;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.content.contraptions.pulley.PulleyBlock;
@@ -11,11 +11,12 @@ import com.simibubi.create.foundation.data.SharedProperties;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
-import net.minecraftforge.eventbus.api.IEventBus;
 
 import static com.lightning323.createkinetic.Createkinetic.REGISTRATE;
 import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
@@ -24,7 +25,7 @@ import static com.simibubi.create.foundation.data.TagGen.axeOrPickaxe;
 public class KineticItems {
 
 
-    public static final BlockEntry<SailPulley> ROPE_PULLEY = REGISTRATE.block("rope_pulley", SailPulley::new)
+    public static final BlockEntry<SailBlock> SAIL = REGISTRATE.block("sail_pulley", SailBlock::new)
             .initialProperties(SharedProperties::stone)
             .properties(p -> p.mapColor(MapColor.PODZOL))
             .properties(p -> p.noOcclusion())
@@ -35,6 +36,24 @@ public class KineticItems {
             .item()
             .transform(customItemModel())
             .register();
+
+    public static final BlockEntry<SailBlock.RopeBlock> ROPE = REGISTRATE.block("rope", SailBlock.RopeBlock::new)
+            .properties(p -> p.sound(SoundType.WOOL)
+                    .mapColor(MapColor.COLOR_BROWN))
+            .tag(AllTags.AllBlockTags.BRITTLE.tag)
+            .tag(BlockTags.CLIMBABLE)
+            .blockstate((c, p) -> p.simpleBlock(c.get(), p.models()
+                    .getExistingFile(p.modLoc("block/sail_pulley/" + c.getName()))))
+            .register();
+
+    public static final BlockEntry<PulleyBlock.MagnetBlock> PULLEY_MAGNET =
+            REGISTRATE.block("pulley_magnet", PulleyBlock.MagnetBlock::new)
+                    .initialProperties(SharedProperties::stone)
+                    .tag(AllTags.AllBlockTags.BRITTLE.tag)
+                    .tag(BlockTags.CLIMBABLE)
+                    .blockstate((c, p) -> p.simpleBlock(c.get(), p.models()
+                            .getExistingFile(p.modLoc("block/sail_pulley/" + c.getName()))))
+                    .register();
 
     public static final ItemEntry<ShipTotemItem> SHIP_TOTEM = REGISTRATE.item("ship_totem",
                     p -> new ShipTotemItem(false))
