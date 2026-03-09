@@ -1,5 +1,6 @@
 package com.lightning323.createkinetic.blocks.sail;
 
+import com.lightning323.createkinetic.Createkinetic;
 import com.lightning323.createkinetic.registries.KineticItems;
 import com.simibubi.create.api.contraption.BlockMovementChecks;
 import com.simibubi.create.content.contraptions.AbstractContraptionEntity;
@@ -59,12 +60,12 @@ public class SailBlockEntity extends LinearActuatorBlockEntity implements Thresh
         }
         return super.createRenderBoundingBox().expandTowards(0, expandY, 0);
     }
-
-    @Override
-    public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
-        super.addBehaviours(behaviours);
-        registerAwardables(behaviours, AllAdvancements.PULLEY_MAXED);
-    }
+//
+//    @Override
+//    public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
+//        super.addBehaviours(behaviours);
+//        registerAwardables(behaviours, AllAdvancements.PULLEY_MAXED);
+//    }
 
     @Override
     public void tick() {
@@ -114,6 +115,7 @@ public class SailBlockEntity extends LinearActuatorBlockEntity implements Thresh
             ++i;
         }
         offset = i - 1;
+        setSailsUsed(i - 1);
         if (offset >= getExtensionRange() && getSpeed() > 0)
             return;
         if (offset <= 0 && getSpeed() < 0)
@@ -177,6 +179,11 @@ public class SailBlockEntity extends LinearActuatorBlockEntity implements Thresh
             level.setBlock(offset, oldState.getFluidState()
                     .createLegacyBlock(), 66);
         }
+        setSailsUsed(0);
+    }
+
+    private void setSailsUsed(int i) {
+        Createkinetic.LOGGER.info("Sails used: {}",i);
     }
 
     @Override

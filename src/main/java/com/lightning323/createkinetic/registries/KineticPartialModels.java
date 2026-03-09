@@ -7,7 +7,7 @@ import static com.lightning323.createkinetic.Createkinetic.MOD_ID;
 
 public class KineticPartialModels {
     public static final PartialModel
-            ROPE_COIL = block("sail_pulley/rope_coil"),
+            SAIL_COIL = block("sail_pulley/sail_coil"),
             ROPE_HALF = block("sail_pulley/rope_half"),
             ROPE_HALF_MAGNET = block("sail_pulley/rope_half_magnet"),
             ROPE = block("sail_pulley/rope"),

@@ -2,7 +2,7 @@ package com.lightning323.createkinetic.blocks.sail;
 
 
 import com.lightning323.createkinetic.registries.KineticPartialModels;
-import com.simibubi.create.AllSpriteShifts;
+import com.lightning323.createkinetic.registries.KineticSpriteShifts;
 import com.simibubi.create.content.contraptions.pulley.AbstractPulleyVisual;
 import com.simibubi.create.content.processing.burner.ScrollInstance;
 import com.simibubi.create.foundation.render.AllInstanceTypes;
@@ -35,7 +35,7 @@ public class SailVisual extends AbstractPulleyVisual<SailBlockEntity> {
 
 	@Override
 	protected Instancer<ScrollInstance> getCoilModel() {
-		return instancerProvider().instancer(AllInstanceTypes.SCROLLING, Models.partial(KineticPartialModels.ROPE_COIL));
+		return instancerProvider().instancer(AllInstanceTypes.SCROLLING, Models.partial(KineticPartialModels.SAIL_COIL));
 	}
 
 	@Override
@@ -55,7 +55,7 @@ public class SailVisual extends AbstractPulleyVisual<SailBlockEntity> {
 
 	@Override
 	protected SpriteShiftEntry getCoilAnimation() {
-		return AllSpriteShifts.ROPE_PULLEY_COIL;
+		return KineticSpriteShifts.SAIL_COIL;
 	}
 
 }

@@ -27,7 +27,7 @@ import static com.lightning323.createkinetic.registries.KineticCreativeTabs.CREA
 @Mod(Createkinetic.MOD_ID)
 public class Createkinetic {
     public static final String MOD_ID = "createkinetic";
-    private static final Logger LOGGER = LogUtils.getLogger();
+    public static final Logger LOGGER = LogUtils.getLogger();
     public static final CreateRegistrate REGISTRATE = CreateRegistrate.create(MOD_ID);
 
     public Createkinetic() {
@@ -52,6 +52,7 @@ public class Createkinetic {
     public void onRegister(final RegisterEvent event){
         KineticPartialModels.init();
         KineticContraptions.init();
+        KineticSpriteShifts.init();
     }
 
     //Datagen event

@@ -2,8 +2,7 @@ package com.lightning323.createkinetic.blocks.sail;
 
 import com.lightning323.createkinetic.registries.KineticItems;
 import com.lightning323.createkinetic.registries.KineticPartialModels;
-import com.simibubi.create.AllPartialModels;
-import com.simibubi.create.AllSpriteShifts;
+import com.lightning323.createkinetic.registries.KineticSpriteShifts;
 import com.simibubi.create.content.contraptions.AbstractContraptionEntity;
 import com.simibubi.create.content.contraptions.pulley.AbstractPulleyRenderer;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
@@ -28,7 +27,7 @@ public class SailRenderer extends AbstractPulleyRenderer<SailBlockEntity> {
 
 	@Override
 	protected PartialModel getCoil() {
-		return AllPartialModels.ROPE_COIL;
+		return KineticPartialModels.SAIL_COIL;
 	}
 
 	@Override
@@ -57,7 +56,7 @@ public class SailRenderer extends AbstractPulleyRenderer<SailBlockEntity> {
 
 	@Override
 	protected SpriteShiftEntry getCoilShift() {
-		return AllSpriteShifts.ROPE_PULLEY_COIL;
+		return KineticSpriteShifts.SAIL_COIL;
 	}
 
 	public static float getBlockEntityOffset(float partialTicks, SailBlockEntity blockEntity) {
