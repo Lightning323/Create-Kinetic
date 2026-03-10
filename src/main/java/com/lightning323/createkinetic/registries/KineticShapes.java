@@ -11,9 +11,11 @@ public class KineticShapes {
 
     // Independent Shapers
     public static final VoxelShaper
+            //Z=up/down
+            //X is front/back
             SAIL_CLOTH = shape(7, 0, 0, 9, 16, 16).forAxis(),
-            SAIL_MAGNET = shape(0, 6, 10, 16, 10, 16)
-                    .add(shape(7, 6, 2, 9, 10, 16).build())
+            SAIL_MAGNET = shape(3, 0, 8, 13, 16, 16)//bar
+                    .add(shape(7, 0, 2, 9, 16, 16).build())//cloth
                     .forAxis();
 
     private static AllShapes.Builder shape(VoxelShape shape) {
