@@ -1,4 +1,4 @@
-package com.lightning323.createkinetic;
+package com.lightning323.createkinetic.events;
 
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.SubscribeEvent;

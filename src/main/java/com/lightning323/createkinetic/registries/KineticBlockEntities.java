@@ -1,8 +1,8 @@
 package com.lightning323.createkinetic.registries;
 
-import com.lightning323.createkinetic.blocks.sail.SailBlockEntity;
-import com.lightning323.createkinetic.blocks.sail.SailRenderer;
-import com.lightning323.createkinetic.blocks.sail.SailVisual;
+import com.lightning323.createkinetic.blocks.sailPulley.SailBlockEntity;
+import com.lightning323.createkinetic.blocks.sailPulley.SailRenderer;
+import com.lightning323.createkinetic.blocks.sailPulley.SailVisual;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
 
 import static com.lightning323.createkinetic.Createkinetic.REGISTRATE;
@@ -16,7 +16,7 @@ public class KineticBlockEntities {
     public static final BlockEntityEntry<SailBlockEntity> SAIL = REGISTRATE
             .blockEntity("sail_pulley", SailBlockEntity::new)
             .visual(() -> SailVisual::new, false)
-            .validBlocks(KineticItems.SAIL)
+            .validBlocks(KineticItems.SAIL_PULLEY)
             .renderer(() -> SailRenderer::new)
             .register();
 

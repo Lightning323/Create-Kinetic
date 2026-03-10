@@ -1,4 +1,4 @@
-package com.lightning323.createkinetic.blocks.sail;
+package com.lightning323.createkinetic.blocks.sailPulley;
 
 import com.lightning323.createkinetic.Createkinetic;
 import com.lightning323.createkinetic.registries.KineticItems;
@@ -101,7 +101,7 @@ public class SailBlockEntity extends LinearActuatorBlockEntity implements Thresh
     @Override
     protected void assemble() throws AssemblyException {
         if (!(level.getBlockState(worldPosition)
-                .getBlock() instanceof SailBlock))
+                .getBlock() instanceof SailPulleyBlock))
             return;
         if (speed == 0 && mirrorParent == null)
             return;
@@ -190,7 +190,7 @@ public class SailBlockEntity extends LinearActuatorBlockEntity implements Thresh
 
         if (!getLevel().isClientSide) {
             Createkinetic.LOGGER.debug("UPDATING SAIL COUNT");
-            KineticShipControl shipController = VSUtils.getShipController(getLevel(), getBlockPos());
+            KineticShipControl shipController = VSUtils.getOrCreateShipController(getLevel(), getBlockPos());
             if (shipController != null) {
                 shipController.numSquareSails += delta;
             }

@@ -2,7 +2,7 @@ package com.lightning323.createkinetic.registries;
 
 import com.lightning323.createkinetic.blocks.BallastBlock;
 import com.lightning323.createkinetic.blocks.BuoyBlock;
-import com.lightning323.createkinetic.blocks.sail.SailBlock;
+import com.lightning323.createkinetic.blocks.sailPulley.SailPulleyBlock;
 import com.lightning323.createkinetic.items.ShipTotemItem;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.content.contraptions.pulley.PulleyBlock;
@@ -25,7 +25,8 @@ import static com.simibubi.create.foundation.data.TagGen.axeOrPickaxe;
 public class KineticItems {
 
 
-    public static final BlockEntry<SailBlock> SAIL = REGISTRATE.block("sail_pulley", SailBlock::new)
+
+    public static final BlockEntry<SailPulleyBlock> SAIL_PULLEY = REGISTRATE.block("sail_pulley", SailPulleyBlock::new)
             .initialProperties(SharedProperties::stone)
             .properties(p -> p.mapColor(MapColor.PODZOL))
             .properties(p -> p.noOcclusion())
@@ -37,7 +38,7 @@ public class KineticItems {
             .transform(customItemModel())
             .register();
 
-    public static final BlockEntry<SailBlock.RopeBlock> ROPE = REGISTRATE.block("rope", SailBlock.RopeBlock::new)
+    public static final BlockEntry<SailPulleyBlock.RopeBlock> ROPE = REGISTRATE.block("rope", SailPulleyBlock.RopeBlock::new)
             .properties(p -> p.sound(SoundType.WOOL)
                     .mapColor(MapColor.COLOR_BROWN))
             .tag(AllTags.AllBlockTags.BRITTLE.tag)

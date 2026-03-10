@@ -37,7 +37,7 @@ public class VSUtils {
                 + teleportx + " " + teleporty + " " + teleportz, false);
     }
 
-    public static KineticShipControl getShipController(Level world, BlockPos pos) {
+    public static KineticShipControl getOrCreateShipController(Level world, BlockPos pos) {
         if (VSGameUtilsKt.isBlockInShipyard(world, pos)) {
             ServerShip ship = VSGameUtilsKt.getShipObjectManagingPos((ServerLevel) world, pos);
             if (ship != null) {

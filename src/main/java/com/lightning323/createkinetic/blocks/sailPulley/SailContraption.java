@@ -1,4 +1,4 @@
-package com.lightning323.createkinetic.blocks.sail;
+package com.lightning323.createkinetic.blocks.sailPulley;
 
 import com.lightning323.createkinetic.registries.KineticContraptions;
 import com.simibubi.create.api.contraption.ContraptionType;
@@ -7,8 +7,6 @@ import com.simibubi.create.content.contraptions.TranslatingContraption;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
-
-import static org.yaml.snakeyaml.nodes.NodeId.anchor;
 
 public class SailContraption extends TranslatingContraption {
 

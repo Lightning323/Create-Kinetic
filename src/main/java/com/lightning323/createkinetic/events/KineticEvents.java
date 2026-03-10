@@ -1,8 +1,12 @@
-package com.lightning323.createkinetic;
+package com.lightning323.createkinetic.events;
 
 import com.lightning323.createkinetic.ship.KineticShipControl;
+import com.lightning323.createkinetic.utils.VSUtils;
+import com.simibubi.create.content.contraptions.bearing.SailBlock;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.valkyrienskies.mod.common.VSGameUtilsKt;
@@ -10,7 +14,33 @@ import org.valkyrienskies.mod.common.VSGameUtilsKt;
 import static com.lightning323.createkinetic.Createkinetic.MOD_ID;
 
 @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
-public class WorldTickEvent {
+public class KineticEvents {
+
+    @SubscribeEvent
+    public static void onBlockPlaced(BlockEvent.EntityPlaceEvent event) {
+        BlockState state = event.getPlacedBlock();
+        /**
+         * Windmill sails act as sails for our ship
+         */
+        if (state.getBlock() instanceof SailBlock) {
+            KineticShipControl shipController = VSUtils.getOrCreateShipController(event.getEntity().level(), event.getPos());
+            if (shipController != null) {
+                shipController.numFnASails++;
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onBlockBroken(BlockEvent.BreakEvent event) {
+        BlockState state = event.getState();
+
+        if (state.getBlock() instanceof SailBlock) {
+            KineticShipControl shipController = VSUtils.getOrCreateShipController(event.getPlayer().level(), event.getPos());
+            if (shipController != null) {
+                shipController.numFnASails--;
+            }
+        }
+    }
 
     private static int tickCount = 0;
     private static final int refreshRate = 4;

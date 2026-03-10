@@ -1,11 +1,9 @@
 package com.lightning323.createkinetic.registries;
 
-import com.lightning323.createkinetic.blocks.sail.SailContraption;
-import com.simibubi.create.Create;
+import com.lightning323.createkinetic.blocks.sailPulley.SailContraption;
 import com.simibubi.create.api.contraption.ContraptionType;
 import com.simibubi.create.api.registry.CreateBuiltInRegistries;
 import com.simibubi.create.content.contraptions.Contraption;
-import com.simibubi.create.content.contraptions.piston.PistonContraption;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;

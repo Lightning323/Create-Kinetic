@@ -1,4 +1,4 @@
-package com.lightning323.createkinetic.blocks.sail;
+package com.lightning323.createkinetic.blocks.sailPulley;
 
 import com.lightning323.createkinetic.registries.KineticBlockEntities;
 import com.lightning323.createkinetic.registries.KineticItems;
@@ -32,10 +32,10 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class SailBlock extends HorizontalAxisKineticBlock implements IBE<SailBlockEntity> {
+public class SailPulleyBlock extends HorizontalAxisKineticBlock implements IBE<SailBlockEntity> {
 
 
-    public SailBlock(Properties properties) {
+    public SailPulleyBlock(Properties properties) {
         super(properties);
     }
 
@@ -68,7 +68,7 @@ public class SailBlock extends HorizontalAxisKineticBlock implements IBE<SailBlo
             return;
 
         BlockState below = worldIn.getBlockState(pos.below());
-        if (below.getBlock() instanceof SailBlock.RopeBlockBase)
+        if (below.getBlock() instanceof SailPulleyBlock.RopeBlockBase)
             worldIn.destroyBlock(pos.below(), true);
     }
 
@@ -116,7 +116,7 @@ public class SailBlock extends HorizontalAxisKineticBlock implements IBE<SailBlo
         @Override
         public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter world, BlockPos pos,
                                            Player player) {
-            return KineticItems.SAIL.asStack();
+            return KineticItems.SAIL_PULLEY.asStack();
         }
 
         @Override
@@ -126,9 +126,9 @@ public class SailBlock extends HorizontalAxisKineticBlock implements IBE<SailBlo
                 if (!worldIn.isClientSide) {
                     BlockState above = worldIn.getBlockState(pos.above());
                     BlockState below = worldIn.getBlockState(pos.below());
-                    if (above.getBlock() instanceof SailBlock.RopeBlockBase)
+                    if (above.getBlock() instanceof SailPulleyBlock.RopeBlockBase)
                         worldIn.destroyBlock(pos.above(), true);
-                    if (below.getBlock() instanceof SailBlock.RopeBlockBase)
+                    if (below.getBlock() instanceof SailPulleyBlock.RopeBlockBase)
                         worldIn.destroyBlock(pos.below(), true);
                 }
             }
@@ -165,7 +165,7 @@ public class SailBlock extends HorizontalAxisKineticBlock implements IBE<SailBlo
 
     }
 
-    public static class MagnetBlock extends SailBlock.RopeBlockBase {
+    public static class MagnetBlock extends SailPulleyBlock.RopeBlockBase {
 
         public MagnetBlock(Properties properties) {
             super(properties);
@@ -178,7 +178,7 @@ public class SailBlock extends HorizontalAxisKineticBlock implements IBE<SailBlo
 
     }
 
-    public static class RopeBlock extends SailBlock.RopeBlockBase {
+    public static class RopeBlock extends SailPulleyBlock.RopeBlockBase {
 
         public RopeBlock(Properties properties) {
             super(properties);

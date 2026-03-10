@@ -1,4 +1,4 @@
-package com.lightning323.createkinetic.blocks.sail;
+package com.lightning323.createkinetic.blocks.sailPulley;
 
 
 import com.lightning323.createkinetic.registries.KineticPartialModels;

@@ -1,4 +1,4 @@
-package com.lightning323.createkinetic.blocks.sail;
+package com.lightning323.createkinetic.blocks.sailPulley;
 
 import com.lightning323.createkinetic.registries.KineticItems;
 import com.lightning323.createkinetic.registries.KineticPartialModels;
@@ -22,7 +22,7 @@ public class SailRenderer extends AbstractPulleyRenderer<SailBlockEntity> {
 	@Override
 	protected Axis getShaftAxis(SailBlockEntity be) {
 		return be.getBlockState()
-			.getValue(SailBlock.HORIZONTAL_AXIS);
+			.getValue(SailPulleyBlock.HORIZONTAL_AXIS);
 	}
 
 	@Override
