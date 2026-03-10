@@ -1,6 +1,9 @@
 package com.lightning323.createkinetic.blocks.sailPulley;
 
+import com.lightning323.createkinetic.Createkinetic;
 import com.lightning323.createkinetic.registries.KineticItems;
+import com.lightning323.createkinetic.ship.KineticShipControl;
+import com.lightning323.createkinetic.utils.VSUtils;
 import com.simibubi.create.api.contraption.BlockMovementChecks;
 import com.simibubi.create.content.contraptions.AbstractContraptionEntity;
 import com.simibubi.create.content.contraptions.AssemblyException;
@@ -36,6 +39,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SailBlockEntity extends LinearActuatorBlockEntity implements ThresholdSwitchObservable {
+
+
+    @Override
+    public void onLoad() {
+        super.onLoad();
+        if (level.isClientSide) return;
+        KineticShipControl shipController = VSUtils.getOrCreateShipController(level, getBlockPos());
+        if (shipController != null) {
+            shipController.sailPulleys.add(getBlockPos().asLong());
+        }
+    }
+
+    @Override
+    public void remove() {
+        super.remove();
+        if (level.isClientSide) return;
+        KineticShipControl shipController = VSUtils.getOrCreateShipController(level, getBlockPos());
+        if (shipController != null) {
+            shipController.sailPulleys.remove(getBlockPos().asLong());
+            totalSails = 0;
+            shipController.updateSailCount();
+        }
+    }
 
     protected int initialOffset;
     private float prevAnimatedOffset;
@@ -113,7 +139,6 @@ public class SailBlockEntity extends LinearActuatorBlockEntity implements Thresh
             ++i;
         }
         offset = i - 1;
-        setTotalSails((int) offset);
         if (offset >= getExtensionRange() && getSpeed() > 0)
             return;
         if (offset <= 0 && getSpeed() < 0)
@@ -179,20 +204,6 @@ public class SailBlockEntity extends LinearActuatorBlockEntity implements Thresh
         }
     }
 
-    private void setTotalSails(int total) {
-        int old = this.totalSails;
-        this.totalSails = total;
-        int delta = this.totalSails - old;
-//        Createkinetic.LOGGER.debug("Sails on for {}: {} (offset={})", getBlockPos(), getTotalSails(), offset);
-
-//        if (!getLevel().isClientSide) {
-//            Createkinetic.LOGGER.debug("UPDATING SAIL COUNT");
-//            KineticShipControl shipController = VSUtils.getOrCreateShipController(getLevel(), getBlockPos());
-//            if (shipController != null) {
-//                shipController.numSquareSails += delta;
-//            }
-//        }
-    }
 
     public int getTotalSails() {
         return totalSails;
@@ -228,6 +239,7 @@ public class SailBlockEntity extends LinearActuatorBlockEntity implements Thresh
                 }
 
                 boolean[] waterlog = new boolean[(int) offset];
+                int actuallyPlacedSails = 0;
 
                 for (boolean destroyPass : Iterate.trueAndFalse) {
                     for (int i = 1; i <= ((int) offset) - 1; i++) {
@@ -245,14 +257,22 @@ public class SailBlockEntity extends LinearActuatorBlockEntity implements Thresh
                             continue;
                         }
 
-                        level.setBlock(worldPosition.below(i), KineticItems.PULLEY_SAIL_CLOTH.getDefaultState()
+                        BlockPos sailPos = worldPosition.below(i);
+                        boolean success = level.setBlock(sailPos, KineticItems.PULLEY_SAIL_CLOTH.getDefaultState()
                                         .setValue(BlockStateProperties.WATERLOGGED, waterlog[i]) //Waterlogged property
                                         .setValue(BlockStateProperties.HORIZONTAL_AXIS, //Horizontal axis property
                                                 this.getBlockState().getValue(BlockStateProperties.HORIZONTAL_AXIS))
                                 , 66);
-
-
+                        if (success) actuallyPlacedSails++;
                     }
+                }
+
+
+                this.totalSails = (int) offset;//actuallyPlacedSails;
+//                Createkinetic.LOGGER.info("Total sails: " + totalSails + " Offset: " + offset);
+                KineticShipControl shipController = VSUtils.getOrCreateShipController(getLevel(), getBlockPos());
+                if (shipController != null) {
+                    shipController.updateSailCount();
                 }
 
             }
@@ -320,7 +340,7 @@ public class SailBlockEntity extends LinearActuatorBlockEntity implements Thresh
         mirrorChildren = null;
 
         if (compound.contains("TotalSails")) {
-            setTotalSails(compound.getInt("TotalSails"));
+            this.totalSails = compound.getInt("TotalSails");
         }
 
         if (compound.contains("MirrorParent")) {
@@ -378,7 +398,7 @@ public class SailBlockEntity extends LinearActuatorBlockEntity implements Thresh
             if (!(level.getBlockEntity(blockPos) instanceof SailBlockEntity pbe))
                 continue;
             pbe.offset = offset;
-            setTotalSails((int) offset);
+            this.totalSails = (int) offset;
             pbe.disassemble();
             pbe.mirrorParent = null;
             pbe.notifyUpdate();

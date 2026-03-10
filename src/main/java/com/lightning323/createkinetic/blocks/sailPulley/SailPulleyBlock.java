@@ -1,8 +1,11 @@
 package com.lightning323.createkinetic.blocks.sailPulley;
 
+import com.lightning323.createkinetic.Createkinetic;
 import com.lightning323.createkinetic.registries.KineticBlockEntities;
 import com.lightning323.createkinetic.registries.KineticItems;
 import com.lightning323.createkinetic.registries.KineticShapes;
+import com.lightning323.createkinetic.ship.KineticShipControl;
+import com.lightning323.createkinetic.utils.VSUtils;
 import com.simibubi.create.AllShapes;
 import com.simibubi.create.content.kinetics.base.HorizontalAxisKineticBlock;
 import com.simibubi.create.foundation.block.IBE;
@@ -108,6 +111,7 @@ public class SailPulleyBlock extends HorizontalAxisKineticBlock implements IBE<S
             return false;
         }
 
+
         @Override
         public PushReaction getPistonPushReaction(BlockState state) {
             return PushReaction.BLOCK;
@@ -121,6 +125,13 @@ public class SailPulleyBlock extends HorizontalAxisKineticBlock implements IBE<S
 
         @Override
         public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+            KineticShipControl shipController = VSUtils.getOrCreateShipController(worldIn, pos);
+            if (shipController != null) {
+                shipController.numSquareSails--;
+                shipController.countSails();
+            }
+
+
             if (!isMoving && (!state.hasProperty(BlockStateProperties.WATERLOGGED) || !newState.hasProperty(BlockStateProperties.WATERLOGGED) || state.getValue(BlockStateProperties.WATERLOGGED) == newState.getValue(BlockStateProperties.WATERLOGGED))) {
                 onRopeBroken(worldIn, pos.above());
                 if (!worldIn.isClientSide) {

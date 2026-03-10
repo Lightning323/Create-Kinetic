@@ -9,6 +9,7 @@ public class ShipUtils {
         KineticShipControl shipController = VSUtils.getOrCreateShipController(level,pos);
         if (shipController != null) {
             shipController.blockSails++;
+            shipController.updateSailCount();
         }
     }
 
@@ -16,6 +17,7 @@ public class ShipUtils {
         KineticShipControl shipController = VSUtils.getOrCreateShipController(level,pos);
         if (shipController != null) {
             shipController.blockSails--;
+            shipController.updateSailCount();
         }
     }
 }
