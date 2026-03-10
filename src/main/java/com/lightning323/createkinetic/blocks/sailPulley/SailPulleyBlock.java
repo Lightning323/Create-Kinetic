@@ -68,7 +68,7 @@ public class SailPulleyBlock extends HorizontalAxisKineticBlock implements IBE<S
             return;
 
         BlockState below = worldIn.getBlockState(pos.below());
-        if (below.getBlock() instanceof SailPulleyBlock.RopeBlockBase)
+        if (below.getBlock() instanceof SailBlockBase)
             worldIn.destroyBlock(pos.below(), true);
     }
 
@@ -96,9 +96,9 @@ public class SailPulleyBlock extends HorizontalAxisKineticBlock implements IBE<S
         return KineticBlockEntities.SAIL.get();
     }
 
-    private static class RopeBlockBase extends Block implements SimpleWaterloggedBlock {
+    private static class SailBlockBase extends Block implements SimpleWaterloggedBlock {
 
-        public RopeBlockBase(Properties properties) {
+        public SailBlockBase(Properties properties) {
             super(properties);
             registerDefaultState(super.defaultBlockState().setValue(BlockStateProperties.WATERLOGGED, false));
         }
@@ -126,9 +126,9 @@ public class SailPulleyBlock extends HorizontalAxisKineticBlock implements IBE<S
                 if (!worldIn.isClientSide) {
                     BlockState above = worldIn.getBlockState(pos.above());
                     BlockState below = worldIn.getBlockState(pos.below());
-                    if (above.getBlock() instanceof SailPulleyBlock.RopeBlockBase)
+                    if (above.getBlock() instanceof SailBlockBase)
                         worldIn.destroyBlock(pos.above(), true);
-                    if (below.getBlock() instanceof SailPulleyBlock.RopeBlockBase)
+                    if (below.getBlock() instanceof SailBlockBase)
                         worldIn.destroyBlock(pos.below(), true);
                 }
             }
@@ -145,7 +145,8 @@ public class SailPulleyBlock extends HorizontalAxisKineticBlock implements IBE<S
 
         @Override
         protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-            builder.add(BlockStateProperties.WATERLOGGED);
+            // This allows the block to actually hold the AXIS and WATERLOGGED values
+            builder.add(BlockStateProperties.HORIZONTAL_AXIS, BlockStateProperties.WATERLOGGED);
             super.createBlockStateDefinition(builder);
         }
 
@@ -159,13 +160,16 @@ public class SailPulleyBlock extends HorizontalAxisKineticBlock implements IBE<S
 
         @Override
         public BlockState getStateForPlacement(BlockPlaceContext context) {
-            FluidState FluidState = context.getLevel().getFluidState(context.getClickedPos());
-            return super.getStateForPlacement(context).setValue(BlockStateProperties.WATERLOGGED, Boolean.valueOf(FluidState.getType() == Fluids.WATER));
+            FluidState fluidState = context.getLevel().getFluidState(context.getClickedPos());
+            return super.getStateForPlacement(context)
+                    .setValue(BlockStateProperties.WATERLOGGED, fluidState.getType() == Fluids.WATER)
+                    // Add a default axis so it doesn't break when placed manually
+                    .setValue(BlockStateProperties.HORIZONTAL_AXIS, context.getHorizontalDirection().getAxis());
         }
 
     }
 
-    public static class MagnetBlock extends SailPulleyBlock.RopeBlockBase {
+    public static class MagnetBlock extends SailBlockBase {
 
         public MagnetBlock(Properties properties) {
             super(properties);
@@ -173,20 +177,22 @@ public class SailPulleyBlock extends HorizontalAxisKineticBlock implements IBE<S
 
         @Override
         public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
-            return AllShapes.PULLEY_MAGNET;
+            Direction.Axis axis = state.getValue(BlockStateProperties.HORIZONTAL_AXIS);
+            return KineticShapes.SAIL_MAGNET.get(axis);
         }
 
     }
 
-    public static class RopeBlock extends SailPulleyBlock.RopeBlockBase {
+    public static class SailBlock extends SailBlockBase {
 
-        public RopeBlock(Properties properties) {
+        public SailBlock(Properties properties) {
             super(properties);
         }
 
         @Override
         public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
-            return KineticShapes.SAIL_CLOTH.get(Direction.UP);
+            Direction.Axis axis = state.getValue(BlockStateProperties.HORIZONTAL_AXIS);
+            return KineticShapes.SAIL_CLOTH.get(axis);
         }
     }
 

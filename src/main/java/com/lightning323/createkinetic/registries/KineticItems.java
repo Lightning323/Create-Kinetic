@@ -5,17 +5,18 @@ import com.lightning323.createkinetic.blocks.BuoyBlock;
 import com.lightning323.createkinetic.blocks.sailPulley.SailPulleyBlock;
 import com.lightning323.createkinetic.items.ShipTotemItem;
 import com.simibubi.create.AllTags;
-import com.simibubi.create.content.contraptions.pulley.PulleyBlock;
 import com.simibubi.create.foundation.data.BlockStateGen;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.MapColor;
 
 import static com.lightning323.createkinetic.Createkinetic.REGISTRATE;
@@ -38,22 +39,43 @@ public class KineticItems {
             .transform(customItemModel())
             .register();
 
-    public static final BlockEntry<SailPulleyBlock.RopeBlock> ROPE = REGISTRATE.block("rope", SailPulleyBlock.RopeBlock::new)
+    public static final BlockEntry<SailPulleyBlock.SailBlock> PULLEY_SAIL_CLOTH = REGISTRATE.block("rope", SailPulleyBlock.SailBlock::new)
             .properties(p -> p.sound(SoundType.WOOL)
                     .mapColor(MapColor.COLOR_BROWN))
             .tag(AllTags.AllBlockTags.BRITTLE.tag)
             .tag(BlockTags.CLIMBABLE)
-            .blockstate((c, p) -> p.simpleBlock(c.get(), p.models()
-                    .getExistingFile(p.modLoc("block/sail_pulley/" + c.getName()))))
+            .blockstate((c, p) -> p.getVariantBuilder(c.get())
+                    .partialState().with(BlockStateProperties.HORIZONTAL_AXIS, Direction.Axis.X)
+                    .modelForState()
+                    .modelFile(p.models().getExistingFile(p.modLoc("block/sail_pulley/" + c.getName())))
+                    .addModel()
+
+                    // For Axis Z (Rotate 90 degrees)
+                    .partialState().with(BlockStateProperties.HORIZONTAL_AXIS, Direction.Axis.Z)
+                    .modelForState()
+                    .modelFile(p.models().getExistingFile(p.modLoc("block/sail_pulley/" + c.getName())))
+                    .rotationY(90) // This performs the 90-degree turn for the X axis
+                    .addModel()
+            )
             .register();
 
-    public static final BlockEntry<PulleyBlock.MagnetBlock> PULLEY_MAGNET =
-            REGISTRATE.block("pulley_magnet", PulleyBlock.MagnetBlock::new)
+    public static final BlockEntry<SailPulleyBlock.MagnetBlock> PULLEY_SAIL_MAGNET =
+            REGISTRATE.block("pulley_magnet", SailPulleyBlock.MagnetBlock::new)
                     .initialProperties(SharedProperties::stone)
                     .tag(AllTags.AllBlockTags.BRITTLE.tag)
                     .tag(BlockTags.CLIMBABLE)
-                    .blockstate((c, p) -> p.simpleBlock(c.get(), p.models()
-                            .getExistingFile(p.modLoc("block/sail_pulley/" + c.getName()))))
+                    .blockstate((c, p) -> p.getVariantBuilder(c.get())
+                            .partialState().with(BlockStateProperties.HORIZONTAL_AXIS, Direction.Axis.X)
+                            .modelForState()
+                            .modelFile(p.models().getExistingFile(p.modLoc("block/sail_pulley/" + c.getName())))
+                            .addModel()
+
+                            .partialState().with(BlockStateProperties.HORIZONTAL_AXIS, Direction.Axis.Z)
+                            .modelForState()
+                            .modelFile(p.models().getExistingFile(p.modLoc("block/sail_pulley/" + c.getName())))
+                            .rotationY(90) // This performs the 90-degree turn for the X axis
+                            .addModel()
+                    )
                     .register();
 
     public static final ItemEntry<ShipTotemItem> SHIP_TOTEM = REGISTRATE.item("ship_totem",

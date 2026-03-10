@@ -9,8 +9,8 @@ import static com.lightning323.createkinetic.Createkinetic.MOD_ID;
 
 public class KineticSpriteShifts {
     public static final SpriteShiftEntry
-            SAIL_COIL = getCreate("block/rope_pulley_coil", "block/rope_pulley_coil_scroll"),
-            SAIL_COI2 = get("block/sail_coil.png", "block/sail_coil_scroll.png");
+//            SAIL_COIL = getCreate("block/rope_pulley_coil", "block/rope_pulley_coil_scroll"),
+            SAIL_COIL = get("block/sail_coil", "block/sail_coil_scroll");
 
     private static SpriteShiftEntry getCreate(String originalLocation, String targetLocation) {
         return SpriteShifter.get(Create.asResource(originalLocation), Create.asResource(targetLocation));

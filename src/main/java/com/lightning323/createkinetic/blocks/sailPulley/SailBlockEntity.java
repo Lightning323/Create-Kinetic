@@ -1,9 +1,6 @@
 package com.lightning323.createkinetic.blocks.sailPulley;
 
-import com.lightning323.createkinetic.Createkinetic;
 import com.lightning323.createkinetic.registries.KineticItems;
-import com.lightning323.createkinetic.ship.KineticShipControl;
-import com.lightning323.createkinetic.utils.VSUtils;
 import com.simibubi.create.api.contraption.BlockMovementChecks;
 import com.simibubi.create.content.contraptions.AbstractContraptionEntity;
 import com.simibubi.create.content.contraptions.AssemblyException;
@@ -110,7 +107,7 @@ public class SailBlockEntity extends LinearActuatorBlockEntity implements Thresh
         while (i <= maxLength) {
             BlockPos ropePos = worldPosition.below(i);
             BlockState ropeState = level.getBlockState(ropePos);
-            if (!KineticItems.ROPE.has(ropeState) && !KineticItems.PULLEY_MAGNET.has(ropeState)) {
+            if (!KineticItems.PULLEY_SAIL_CLOTH.has(ropeState) && !KineticItems.PULLEY_SAIL_MAGNET.has(ropeState)) {
                 break;
             }
             ++i;
@@ -221,10 +218,12 @@ public class SailBlockEntity extends LinearActuatorBlockEntity implements Thresh
                         level.destroyBlock(magnetPos, level.getBlockState(magnetPos)
                                 .getCollisionShape(level, magnetPos)
                                 .isEmpty());
-                        level.setBlock(magnetPos, KineticItems.PULLEY_MAGNET.getDefaultState()
-                                        .setValue(BlockStateProperties.WATERLOGGED,
-                                                Boolean.valueOf(ifluidstate.getType() == Fluids.WATER)),
-                                66);
+                        level.setBlock(magnetPos, KineticItems.PULLEY_SAIL_MAGNET.getDefaultState()
+                                        .setValue(BlockStateProperties.WATERLOGGED, //Waterlogged property
+                                                Boolean.valueOf(ifluidstate.getType() == Fluids.WATER))
+                                        .setValue(BlockStateProperties.HORIZONTAL_AXIS, //Horizontal axis property
+                                                this.getBlockState().getValue(BlockStateProperties.HORIZONTAL_AXIS))
+                                , 66);
                     }
                 }
 
@@ -246,8 +245,13 @@ public class SailBlockEntity extends LinearActuatorBlockEntity implements Thresh
                             continue;
                         }
 
-                        level.setBlock(worldPosition.below(i), KineticItems.ROPE.getDefaultState()
-                                .setValue(BlockStateProperties.WATERLOGGED, waterlog[i]), 66);
+                        level.setBlock(worldPosition.below(i), KineticItems.PULLEY_SAIL_CLOTH.getDefaultState()
+                                        .setValue(BlockStateProperties.WATERLOGGED, waterlog[i]) //Waterlogged property
+                                        .setValue(BlockStateProperties.HORIZONTAL_AXIS, //Horizontal axis property
+                                                this.getBlockState().getValue(BlockStateProperties.HORIZONTAL_AXIS))
+                                , 66);
+
+
                     }
                 }
 
