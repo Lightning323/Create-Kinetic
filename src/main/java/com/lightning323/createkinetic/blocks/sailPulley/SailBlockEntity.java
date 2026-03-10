@@ -186,15 +186,15 @@ public class SailBlockEntity extends LinearActuatorBlockEntity implements Thresh
         int old = this.totalSails;
         this.totalSails = total;
         int delta = this.totalSails - old;
-        Createkinetic.LOGGER.debug("Sails on for {}: {} (offset={})", getBlockPos(), getTotalSails(), offset);
+//        Createkinetic.LOGGER.debug("Sails on for {}: {} (offset={})", getBlockPos(), getTotalSails(), offset);
 
-        if (!getLevel().isClientSide) {
-            Createkinetic.LOGGER.debug("UPDATING SAIL COUNT");
-            KineticShipControl shipController = VSUtils.getOrCreateShipController(getLevel(), getBlockPos());
-            if (shipController != null) {
-                shipController.numSquareSails += delta;
-            }
-        }
+//        if (!getLevel().isClientSide) {
+//            Createkinetic.LOGGER.debug("UPDATING SAIL COUNT");
+//            KineticShipControl shipController = VSUtils.getOrCreateShipController(getLevel(), getBlockPos());
+//            if (shipController != null) {
+//                shipController.numSquareSails += delta;
+//            }
+//        }
     }
 
     public int getTotalSails() {
@@ -299,7 +299,8 @@ public class SailBlockEntity extends LinearActuatorBlockEntity implements Thresh
             return;
 
         disassemble();
-        assembleNextTick = true;
+        //We want to disable this, so when we hit a block in our sail, (and we dont have a contraption) We stop instead of keep going
+//        assembleNextTick = true;
     }
 
     int totalSails = 0;
