@@ -1,11 +1,8 @@
 package com.lightning323.createkinetic.blocks.sail;
 
-import com.lightning323.createkinetic.Createkinetic;
 import com.lightning323.createkinetic.registries.KineticBlockEntities;
 import com.lightning323.createkinetic.registries.KineticItems;
 import com.lightning323.createkinetic.registries.KineticShapes;
-import com.lightning323.createkinetic.ship.SailsShipControl;
-import com.lightning323.createkinetic.utils.VSUtils;
 import com.simibubi.create.AllShapes;
 import com.simibubi.create.content.kinetics.base.HorizontalAxisKineticBlock;
 import com.simibubi.create.foundation.block.IBE;

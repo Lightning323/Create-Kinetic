@@ -1,13 +1,11 @@
 package com.lightning323.createkinetic.ship;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import static com.lightning323.createkinetic.Createkinetic.LOGGER;
 
 import com.lightning323.createkinetic.KineticConfig;
-import com.lightning323.createkinetic.blocks.sail.SailBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.core.Direction;
@@ -15,24 +13,29 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.joml.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.valkyrienskies.core.api.ships.*;
 import org.valkyrienskies.core.api.world.PhysLevel;
 import org.valkyrienskies.core.impl.game.ships.PhysShipImpl;
 
 import static java.lang.Math.*;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-//ava.lang.IllegalArgumentException: setAttachment: attempted to set attachment for class com.lightning323.createkinetic.ship.SailsShipControl (key = com.lightning323.createkinetic.ship.SailsShipControl). Cannot set this attachment because we tried to deserialize it earlier, and the deserialization faile
-//means you have a field in your SailsShipControl class that contains a Minecraft BlockState Property or an ImmutableMap. Jackson (the library VS2 uses for JSON) has no idea how to turn complex Minecraft objects into text and back again.
-public final class SailsShipControl implements ShipPhysicsListener, ServerTickListener {
 
-    //Ship Control MUST be serializable and deserializable with Jackson JSON
+public final class KineticShipControl implements ShipPhysicsListener, ServerTickListener {
+
+    /**
+     * Ship Control MUST be serializable and deserializable with Jackson JSON, otherwise, this will happen, when it tries to load ship control:
+     * <p>
+     * `Java.lang.IllegalArgumentException: setAttachment: attempted to set attachment for class com.lightning323.createkinetic.ship.SailsShipControl
+     * (key = com.lightning323.createkinetic.ship.SailsShipControl). Cannot set this attachment because we tried to deserialize it earlier,
+     * and the deserialization failed`
+     * <p>
+     * This means you have a field in your SailsShipControl class that contains a Minecraft BlockState Property or an ImmutableMap.
+     * Jackson (the library VS2 uses for JSON) has no idea how to turn complex Minecraft objects into text and back again.
+     */
+
     private ConcurrentLinkedQueue<Vector3dc> invForces = new ConcurrentLinkedQueue<Vector3dc>();
     private ConcurrentLinkedQueue<Vector3dc> rotForces = new ConcurrentLinkedQueue<Vector3dc>();
     private ConcurrentLinkedQueue<ForceAtPos> invPosForces = new ConcurrentLinkedQueue<ForceAtPos>();
@@ -44,17 +47,6 @@ public final class SailsShipControl implements ShipPhysicsListener, ServerTickLi
     public double rudderMod = 0;
     public int numFnASails = 0;
     public int numSquareSails = 0;
-
-
-    public void updateSailCount() {
-        numFnASails = 20;
-        numSquareSails = 20;
-//        sailBlocks.forEach((s) -> {
-//            if (s != null & !s.isRemoved())
-//                numSails += s.getTotalSails();
-//        });
-        LOGGER.info("UPDATE SAIL COUNT {} {}", numFnASails, numSquareSails);
-    }
 
 
     public int numBallast = 0;
@@ -80,12 +72,12 @@ public final class SailsShipControl implements ShipPhysicsListener, ServerTickLi
 
 
     @JsonIgnore
-    public static SailsShipControl getOrCreate(LoadedServerShip ship, Level world) {
+    public static KineticShipControl getOrCreate(LoadedServerShip ship, Level world) {
         if (ship != null) {
-            if (ship.getAttachment(SailsShipControl.class) == null) {
-                ship.setAttachment(SailsShipControl.class, new SailsShipControl());
+            if (ship.getAttachment(KineticShipControl.class) == null) {
+                ship.setAttachment(KineticShipControl.class, new KineticShipControl());
             }
-            SailsShipControl controller = ship.getAttachment(SailsShipControl.class);
+            KineticShipControl controller = ship.getAttachment(KineticShipControl.class);
             assert controller != null;
             if (world != null) {
                 controller.world = world;
@@ -128,7 +120,10 @@ public final class SailsShipControl implements ShipPhysicsListener, ServerTickLi
     @Override
     public void physTick(@NotNull PhysShip physShip, @NotNull PhysLevel physLevel) {
 //        Createkinetic.LOGGER.debug("PHYS TICK");
-        updateSailCount();
+
+        if (numSquareSails < 0) numSquareSails = 0;
+        if (numFnASails < 0) numFnASails = 0;
+        LOGGER.info("SAIL COUNT {} {}", numFnASails, numSquareSails);
         PhysShipImpl physShip1 = (PhysShipImpl) physShip;
 
         physShip1.setDoFluidDrag(true);
@@ -346,7 +341,7 @@ public final class SailsShipControl implements ShipPhysicsListener, ServerTickLi
 
     private void deleteIfEmpty() { //fixme add call for this
         if (numBallast <= 0 && numFnASails <= 0 && numSquareSails <= 0 && numMagicBallast <= 0 && numBuoys <= 0 && numHelms == 0) {
-            ship.removeAttachment(SailsShipControl.class);
+            ship.removeAttachment(KineticShipControl.class);
         }
     }
 

@@ -1,6 +1,6 @@
 package com.lightning323.createkinetic;
 
-import com.lightning323.createkinetic.ship.SailsShipControl;
+import com.lightning323.createkinetic.ship.KineticShipControl;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -32,7 +32,7 @@ public class WorldTickEvent {
     private static void kineticWorldTick(ServerLevel world) {
         VSGameUtilsKt.getShipObjectWorld(world).getLoadedShips().forEach(ship -> {
             if (ship != null) {
-                SailsShipControl controller = ship.getAttachment(SailsShipControl.class);
+                KineticShipControl controller = ship.getAttachment(KineticShipControl.class);
                 if (controller != null) {
                     controller.world = world;
                 }

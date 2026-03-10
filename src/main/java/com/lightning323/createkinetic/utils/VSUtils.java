@@ -1,6 +1,6 @@
 package com.lightning323.createkinetic.utils;
 
-import com.lightning323.createkinetic.ship.SailsShipControl;
+import com.lightning323.createkinetic.ship.KineticShipControl;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
@@ -37,16 +37,16 @@ public class VSUtils {
                 + teleportx + " " + teleporty + " " + teleportz, false);
     }
 
-    public static SailsShipControl getShipController(Level world, BlockPos pos) {
+    public static KineticShipControl getShipController(Level world, BlockPos pos) {
         if (VSGameUtilsKt.isBlockInShipyard(world, pos)) {
             ServerShip ship = VSGameUtilsKt.getShipObjectManagingPos((ServerLevel) world, pos);
             if (ship != null) {
-                SailsShipControl controller = SailsShipControl.getOrCreate((LoadedServerShip) ship, world);
+                KineticShipControl controller = KineticShipControl.getOrCreate((LoadedServerShip) ship, world);
                 return controller;
             } else { //ship is being loaded from template
                 ship = VSGameUtilsKt.getShipManagingPos((ServerLevel) world, pos);
                 if (ship instanceof LoadedServerShip) {
-                    SailsShipControl controller = SailsShipControl.getOrCreate((LoadedServerShip) ship, world);
+                    KineticShipControl controller = KineticShipControl.getOrCreate((LoadedServerShip) ship, world);
                     return controller;
                 }
             }

@@ -2,7 +2,8 @@ package com.lightning323.createkinetic.blocks.sail;
 
 import com.lightning323.createkinetic.Createkinetic;
 import com.lightning323.createkinetic.registries.KineticItems;
-import com.lightning323.createkinetic.ship.SailsShipControl;
+import com.lightning323.createkinetic.ship.KineticShipControl;
+import com.lightning323.createkinetic.utils.VSUtils;
 import com.simibubi.create.api.contraption.BlockMovementChecks;
 import com.simibubi.create.content.contraptions.AbstractContraptionEntity;
 import com.simibubi.create.content.contraptions.AssemblyException;
@@ -23,9 +24,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -33,9 +32,6 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import org.valkyrienskies.core.api.ships.LoadedServerShip;
-import org.valkyrienskies.core.api.ships.ServerShip;
-import org.valkyrienskies.mod.common.VSGameUtilsKt;
 
 import javax.annotation.Nullable;
 import java.lang.ref.WeakReference;
@@ -186,9 +182,19 @@ public class SailBlockEntity extends LinearActuatorBlockEntity implements Thresh
         }
     }
 
-    private void setTotalSails(int i) {
-        this.totalSails=i;
+    private void setTotalSails(int total) {
+        int old = this.totalSails;
+        this.totalSails = total;
+        int delta = this.totalSails - old;
         Createkinetic.LOGGER.debug("Sails on for {}: {} (offset={})", getBlockPos(), getTotalSails(), offset);
+
+        if (!getLevel().isClientSide) {
+            Createkinetic.LOGGER.debug("UPDATING SAIL COUNT");
+            KineticShipControl shipController = VSUtils.getShipController(getLevel(), getBlockPos());
+            if (shipController != null) {
+                shipController.numSquareSails += delta;
+            }
+        }
     }
 
     public int getTotalSails() {
@@ -309,7 +315,7 @@ public class SailBlockEntity extends LinearActuatorBlockEntity implements Thresh
         mirrorChildren = null;
 
         if (compound.contains("TotalSails")) {
-            totalSails = compound.getInt("TotalSails");
+            setTotalSails(compound.getInt("TotalSails"));
         }
 
         if (compound.contains("MirrorParent")) {
