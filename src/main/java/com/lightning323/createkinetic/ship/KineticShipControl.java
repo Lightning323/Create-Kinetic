@@ -74,7 +74,7 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
 
     public int blockSails = 0;
 
-    public double rudderMod = 0;
+    //These values are calculated from sailPulleys and blockSails and should be read only
     public int numFnASails = 0;
     public int numSquareSails = 0;
 

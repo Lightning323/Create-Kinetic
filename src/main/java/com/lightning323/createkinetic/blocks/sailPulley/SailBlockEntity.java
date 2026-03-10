@@ -219,6 +219,8 @@ public class SailBlockEntity extends LinearActuatorBlockEntity implements Thresh
             resetContraptionToOffset();
 
         if (!level.isClientSide) {
+            int actuallyPlacedSails = 0;
+
             if (shouldCreateRopes()) {
                 if (offset > 0) {
                     BlockPos magnetPos = worldPosition.below((int) offset);
@@ -229,17 +231,18 @@ public class SailBlockEntity extends LinearActuatorBlockEntity implements Thresh
                         level.destroyBlock(magnetPos, level.getBlockState(magnetPos)
                                 .getCollisionShape(level, magnetPos)
                                 .isEmpty());
-                        level.setBlock(magnetPos, KineticItems.PULLEY_SAIL_MAGNET.getDefaultState()
+                        boolean success = level.setBlock(magnetPos, KineticItems.PULLEY_SAIL_MAGNET.getDefaultState()
                                         .setValue(BlockStateProperties.WATERLOGGED, //Waterlogged property
                                                 Boolean.valueOf(ifluidstate.getType() == Fluids.WATER))
                                         .setValue(BlockStateProperties.HORIZONTAL_AXIS, //Horizontal axis property
                                                 this.getBlockState().getValue(BlockStateProperties.HORIZONTAL_AXIS))
                                 , 66);
+                        if (success) actuallyPlacedSails++;
                     }
                 }
 
                 boolean[] waterlog = new boolean[(int) offset];
-                int actuallyPlacedSails = 0;
+
 
                 for (boolean destroyPass : Iterate.trueAndFalse) {
                     for (int i = 1; i <= ((int) offset) - 1; i++) {
@@ -266,15 +269,13 @@ public class SailBlockEntity extends LinearActuatorBlockEntity implements Thresh
                         if (success) actuallyPlacedSails++;
                     }
                 }
+            }
 
-
-                this.totalSails = (int) offset;//actuallyPlacedSails;
+            this.totalSails = (int) actuallyPlacedSails;
 //                Createkinetic.LOGGER.info("Total sails: " + totalSails + " Offset: " + offset);
-                KineticShipControl shipController = VSUtils.getOrCreateShipController(getLevel(), getBlockPos());
-                if (shipController != null) {
-                    shipController.updateSailCount();
-                }
-
+            KineticShipControl shipController = VSUtils.getOrCreateShipController(getLevel(), getBlockPos());
+            if (shipController != null) {
+                shipController.updateSailCount();
             }
 
             if (movedContraption != null && mirrorParent == null)
