@@ -1,7 +1,8 @@
 package com.lightning323.createkinetic.events;
 
+import com.lightning323.createkinetic.blocks.sailPulley.SailPulleyBlock;
 import com.lightning323.createkinetic.ship.KineticShipControl;
-import com.lightning323.createkinetic.utils.VSUtils;
+import com.lightning323.createkinetic.ship.ShipUtils;
 import com.simibubi.create.content.contraptions.bearing.SailBlock;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.state.BlockState;
@@ -22,11 +23,10 @@ public class KineticEvents {
         /**
          * Windmill sails act as sails for our ship
          */
-        if (state.getBlock() instanceof SailBlock) {
-            KineticShipControl shipController = VSUtils.getOrCreateShipController(event.getEntity().level(), event.getPos());
-            if (shipController != null) {
-                shipController.numFnASails++;
-            }
+        if (
+                state.getBlock() instanceof SailBlock
+        ) {
+            ShipUtils.addSail(event.getEntity().level(), event.getPos());
         }
     }
 
@@ -34,11 +34,10 @@ public class KineticEvents {
     public static void onBlockBroken(BlockEvent.BreakEvent event) {
         BlockState state = event.getState();
 
-        if (state.getBlock() instanceof SailBlock) {
-            KineticShipControl shipController = VSUtils.getOrCreateShipController(event.getPlayer().level(), event.getPos());
-            if (shipController != null) {
-                shipController.numFnASails--;
-            }
+        if (
+                state.getBlock() instanceof SailBlock
+        ) {
+            ShipUtils.removeSail(event.getPlayer().level(), event.getPos());
         }
     }
 
