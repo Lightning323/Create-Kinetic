@@ -272,7 +272,7 @@ public class SailBlockEntity extends LinearActuatorBlockEntity implements Thresh
             }
 
             this.totalSails = (int) actuallyPlacedSails;
-//                Createkinetic.LOGGER.info("Total sails: " + totalSails + " Offset: " + offset);
+//            Createkinetic.LOGGER.info("Total sails: " + totalSails + " Offset: " + offset);
             KineticShipControl shipController = VSUtils.getOrCreateShipController(getLevel(), getBlockPos());
             if (shipController != null) {
                 shipController.updateSailCount();
