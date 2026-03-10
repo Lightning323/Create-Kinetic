@@ -1,13 +1,17 @@
 package com.lightning323.createkinetic;
 
 import com.lightning323.createkinetic.registries.*;
+import com.lightning323.createkinetic.ship.SailsShipControl;
 import com.mojang.logging.LogUtils;
 import com.simibubi.create.Create;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.data.event.GatherDataEvent;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -18,8 +22,14 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.RegisterEvent;
+import org.joml.Vector3dc;
 import org.slf4j.Logger;
 import com.lightning323.createkinetic.network.NetworkHandler;
+import org.slf4j.LoggerFactory;
+import org.valkyrienskies.core.api.ships.LoadedServerShip;
+import org.valkyrienskies.mod.api.ValkyrienSkies;
+import org.valkyrienskies.mod.common.VSGameUtilsKt;
+import org.valkyrienskies.mod.common.util.IEntityDraggingInformationProvider;
 
 import static com.lightning323.createkinetic.registries.KineticCreativeTabs.CREATIVE_MODE_TABS;
 
@@ -27,7 +37,7 @@ import static com.lightning323.createkinetic.registries.KineticCreativeTabs.CREA
 @Mod(Createkinetic.MOD_ID)
 public class Createkinetic {
     public static final String MOD_ID = "createkinetic";
-    public static final Logger LOGGER = LogUtils.getLogger();
+    public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
     public static final CreateRegistrate REGISTRATE = CreateRegistrate.create(MOD_ID);
 
     public Createkinetic() {
@@ -41,6 +51,14 @@ public class Createkinetic {
         KineticItems.register();
         KineticBlockEntities.register();
 
+        //Register ship control
+        ValkyrienSkies.api().registerAttachment(ValkyrienSkies.api()
+                .newAttachmentRegistrationBuilder(SailsShipControl.class).build()
+        );
+        ValkyrienSkies.api().getShipLoadEvent().on(ship -> {
+            SailsShipControl.getOrCreate(ship.getShip(), null);
+        });
+
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, KineticConfig.SPEC);
         REGISTRATE.registerEventListeners(modEventBus);
 
@@ -49,7 +67,7 @@ public class Createkinetic {
         MinecraftForge.EVENT_BUS.register(this);
     }
 
-    public void onRegister(final RegisterEvent event){
+    public void onRegister(final RegisterEvent event) {
         KineticPartialModels.init();
         KineticContraptions.init();
         KineticSpriteShifts.init();
@@ -66,14 +84,5 @@ public class Createkinetic {
 
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
-    }
-
-    // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
-    @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-    public static class ClientModEvents {
-
-        @SubscribeEvent
-        public static void onClientSetup(FMLClientSetupEvent event) {
-        }
     }
 }

@@ -3,7 +3,11 @@ package com.lightning323.createkinetic.ship;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import static com.lightning323.createkinetic.Createkinetic.LOGGER;
+
 import com.lightning323.createkinetic.KineticConfig;
+import com.lightning323.createkinetic.blocks.sail.SailBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.core.Direction;
@@ -19,15 +23,16 @@ import org.valkyrienskies.core.impl.game.ships.PhysShipImpl;
 
 import static java.lang.Math.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-
+//ava.lang.IllegalArgumentException: setAttachment: attempted to set attachment for class com.lightning323.createkinetic.ship.SailsShipControl (key = com.lightning323.createkinetic.ship.SailsShipControl). Cannot set this attachment because we tried to deserialize it earlier, and the deserialization faile
+//means you have a field in your SailsShipControl class that contains a Minecraft BlockState Property or an ImmutableMap. Jackson (the library VS2 uses for JSON) has no idea how to turn complex Minecraft objects into text and back again.
 public final class SailsShipControl implements ShipPhysicsListener, ServerTickListener {
 
-    @JsonIgnore
-    public static final Logger LOGGER = LoggerFactory.getLogger("ship_control");
-
+    //Ship Control MUST be serializable and deserializable with Jackson JSON
     private ConcurrentLinkedQueue<Vector3dc> invForces = new ConcurrentLinkedQueue<Vector3dc>();
     private ConcurrentLinkedQueue<Vector3dc> rotForces = new ConcurrentLinkedQueue<Vector3dc>();
     private ConcurrentLinkedQueue<ForceAtPos> invPosForces = new ConcurrentLinkedQueue<ForceAtPos>();
@@ -35,10 +40,23 @@ public final class SailsShipControl implements ShipPhysicsListener, ServerTickLi
     private ConcurrentLinkedQueue<Double> buoyForces = new ConcurrentLinkedQueue<Double>();
     private ConcurrentLinkedQueue<Double> rotTorques = new ConcurrentLinkedQueue<Double>();
 
+
     public double rudderMod = 0;
-    public int numSails = 0;
     public int numFnASails = 0;
     public int numSquareSails = 0;
+
+
+    public void updateSailCount() {
+        numFnASails = 20;
+        numSquareSails = 20;
+//        sailBlocks.forEach((s) -> {
+//            if (s != null & !s.isRemoved())
+//                numSails += s.getTotalSails();
+//        });
+        LOGGER.info("UPDATE SAIL COUNT {} {}", numFnASails, numSquareSails);
+    }
+
+
     public int numBallast = 0;
     public int numMagicBallast = 0;
     public int numBuoys = 0;
@@ -68,7 +86,6 @@ public final class SailsShipControl implements ShipPhysicsListener, ServerTickLi
                 ship.setAttachment(SailsShipControl.class, new SailsShipControl());
             }
             SailsShipControl controller = ship.getAttachment(SailsShipControl.class);
-            //controller.ship = ship;
             assert controller != null;
             if (world != null) {
                 controller.world = world;
@@ -108,13 +125,10 @@ public final class SailsShipControl implements ShipPhysicsListener, ServerTickLi
         }
     }
 
-    public static SailsShipControl getOrCreate(LoadedServerShip ship) {
-        return getOrCreate(ship, null);
-    }
-
     @Override
     public void physTick(@NotNull PhysShip physShip, @NotNull PhysLevel physLevel) {
-        //LOGGER.info("forces applied");
+//        Createkinetic.LOGGER.debug("PHYS TICK");
+        updateSailCount();
         PhysShipImpl physShip1 = (PhysShipImpl) physShip;
 
         physShip1.setDoFluidDrag(true);
@@ -149,21 +163,21 @@ public final class SailsShipControl implements ShipPhysicsListener, ServerTickLi
 //        }
 
         //KEEL BEHAVIOR
-            Vector3dc linearVelocity = physShip1.getVelocity();
+        Vector3dc linearVelocity = physShip1.getVelocity();
 
-            Vector3d acceleration = linearVelocity.negate(new Vector3d());
-            Vector3d force = acceleration.mul(physShip1.getMass());
+        Vector3d acceleration = linearVelocity.negate(new Vector3d());
+        Vector3d force = acceleration.mul(physShip1.getMass());
 
-            force = physShip1.getTransform().getWorldToShip().transformDirection(force);
+        force = physShip1.getTransform().getWorldToShip().transformDirection(force);
 
-            Vector3d keelForce; //todo perhaps make this based on length/width ratio?
-            if (shipDirection == Direction.NORTH || shipDirection == Direction.SOUTH) {
-                keelForce = new Vector3d(force.x()*KineticConfig.keelStrength,0,0);
-            } else {
-                keelForce = new Vector3d(0,0,force.z()*4);
-            }
+        Vector3d keelForce; //todo perhaps make this based on length/width ratio?
+        if (shipDirection == Direction.NORTH || shipDirection == Direction.SOUTH) {
+            keelForce = new Vector3d(force.x() * KineticConfig.keelStrength, 0, 0);
+        } else {
+            keelForce = new Vector3d(0, 0, force.z() * 4);
+        }
 
-            if (numHelms > 0) physShip.applyRotDependentForce(keelForce);
+        if (numHelms > 0) physShip.applyRotDependentForce(keelForce);
 
         if (numMagicBallast > 0) {
             Vector3d shipUp = new Vector3d(0.0, 1.0, 0.0);
@@ -172,7 +186,7 @@ public final class SailsShipControl implements ShipPhysicsListener, ServerTickLi
             physShip1.getTransform().getShipToWorldRotation().transform(shipUp);
 
             double angleBetween = shipUp.angle(worldUp);
-            Vector3d idealAngularAcceleration = new Vector3d(0,0,0);
+            Vector3d idealAngularAcceleration = new Vector3d(0, 0, 0);
 
             if (angleBetween > 0.01) {
                 Vector3d stabilizationRotationAxisNormalized = shipUp.cross(worldUp, new Vector3d()).normalize();
@@ -200,18 +214,24 @@ public final class SailsShipControl implements ShipPhysicsListener, ServerTickLi
         }
 
         //sail force implementation
-        if (numSails > 0) {
+        if (numSquareSails > 0 || numFnASails > 0) {
             Vector3d sailForce = new Vector3d(
                     shipDirection.getNormal().getX(), shipDirection.getNormal().getY(), shipDirection.getNormal().getZ()
             );
 
-            if (KineticConfig.enableWind) {
-                Vector3dc shipPos = physShip1.getTransform().getPositionInWorld();
-                Vec3 shipPos2 = new Vec3(shipPos.x(), shipPos.y(), shipPos.z());
-                BlockPos shipPos3 = new BlockPos((int)shipPos.x(), (int)shipPos.y(), (int)shipPos.z());
-                double windDirection = getWindDirection(world, shipPos2); //in degrees
-                double windStrength = getWindStrength(world, shipPos3); // -1.0 -- 1.0
+            if (KineticConfig.enableWind || true) {
+                Vector3dc worldShipPos = physShip1.getTransform().getPositionInWorld();
+                //Get the position of our ship
+                Vec3 shipPosVec = new Vec3(worldShipPos.x(), worldShipPos.y(), worldShipPos.z());
+                BlockPos shipPosBlockPos = new BlockPos((int) worldShipPos.x(), (int) worldShipPos.y(), (int) worldShipPos.z());
+
+                //Get the wind parameters
+                double windDirection = ServerWindManager.getWindDirection(world, shipPosVec); //in degrees
+                double windStrength = ServerWindManager.getWindStrength(world, shipPosBlockPos); // -1.0 -- 1.0
+
+                //Get the Y angle of our ship in radians
                 double shipAngle = getShipYaw(physShip1.getTransform().getShipToWorldRotation()); //in radians
+
                 double windAngle;
                 double squareAngleBetween;
                 double fnaAngleBetween;
@@ -222,103 +242,41 @@ public final class SailsShipControl implements ShipPhysicsListener, ServerTickLi
                     windAngle = windDirection + 270 % 360;
                 }
                 if (shipDirection == Direction.WEST) {
-                    windAngle = (windAngle-90) % 360;
+                    windAngle = (windAngle - 90) % 360;
                 } else if (shipDirection == Direction.NORTH) {
-                    windAngle = (windAngle+180) % 360;
+                    windAngle = (windAngle + 180) % 360;
                 } else if (shipDirection == Direction.EAST) {
-                    windAngle = (windAngle+90) % 360;
+                    windAngle = (windAngle + 90) % 360;
                 }
 
                 windAngle = toRadians(windAngle);
-                squareAngleBetween = abs(min(abs(shipAngle-windAngle), 2*PI - abs(shipAngle-windAngle)));
-                double fnaAngle1 = abs(shipAngle+PI/2-windAngle);
-                double fnaAngle2 = abs(shipAngle-PI/2-windAngle);
-                fnaAngleBetween = abs(min(min(fnaAngle1, 2*PI - fnaAngle1), min(fnaAngle2, 2*PI - fnaAngle2)));
-                if (squareAngleBetween > PI/2) {
+                squareAngleBetween = abs(min(abs(shipAngle - windAngle), 2 * PI - abs(shipAngle - windAngle)));
+                double fnaAngle1 = abs(shipAngle + PI / 2 - windAngle);
+                double fnaAngle2 = abs(shipAngle - PI / 2 - windAngle);
+                fnaAngleBetween = abs(min(min(fnaAngle1, 2 * PI - fnaAngle1), min(fnaAngle2, 2 * PI - fnaAngle2)));
+                if (squareAngleBetween > PI / 2) {
                     fnaAngleBetween *= 2;
                 }
 
-                //LOGGER.info(" wa: "+Math.toDegrees(windAngle)+" sa: "+Math.toDegrees(shipAngle)+" s-w: "+(shipAngle-windAngle));
-                //LOGGER.info("sab:"+toDegrees(squareAngleBetween)+" fab:"+toDegrees(fnaAngleBetween));
-                //DecimalFormat f = new DecimalFormat("000.000");
-                //message = Component.literal("ship: "+f.format(toDegrees(shipAngle))+" wind: "+f.format(toDegrees(windAngle))+" sAngle: "+f.format(toDegrees(squareAngleBetween))+" fAngle: "+f.format(toDegrees(fnaAngleBetween)));
-                //double shipw = physShip1.getTransform().getShipToWorldRotation().w();
-                //double shipx = physShip1.getTransform().getShipToWorldRotation().x();
-                //double shipy = physShip1.getTransform().getShipToWorldRotation().y();
-                //double shipz = physShip1.getTransform().getShipToWorldRotation().z();
-                //message = Component.literal("w: "+f.format(shipw)+" x: "+f.format(shipx)+" y: "+f.format(shipy)+" z: "+f.format(shipz));
+                //Square sails are hung from a horizontal "yard" perpendicular to the mast.
+                double squareWindModifier = numSquareSails / calculateWindAngleModifier(squareAngleBetween, PI - KineticConfig.noSailZone);
 
-                //message = Component.literal("angle: "+toDegrees(getShipYaw(physShip1.getTransform().getShipToWorldRotation())));
+                //Fore-and-aft sails (like Jibs, Staysails, or Bermuda rigs) are aligned with the centerline of the ship (front-to-back).
+                double fnAWindModifier = numFnASails / calculateWindAngleModifier(fnaAngleBetween, PI - KineticConfig.noSailZone);
 
-                //message = Component.literal("WindSpeed: "+windStrength+" WindDirection: "+windDirection);
+                double mul = -(squareWindModifier + fnAWindModifier) * KineticConfig.sailSpeed * (windStrength * windStrength);
+//                LOGGER.info("Sail speed = {}", mul);
+                sailForce.mul(mul);
 
-                double squareWindModifier = numSquareSails/calculateWindAngleModifier(squareAngleBetween, PI-KineticConfig.noSailZone);
-                double fnAWindModifier = numFnASails/calculateWindAngleModifier(fnaAngleBetween, PI-KineticConfig.noSailZone);
-
-                //LOGGER.info("sqm:"+squareWindModifier+" fwm:"+fnAWindModifier);
-
-                sailForce.mul(-(squareWindModifier+fnAWindModifier)*KineticConfig.sailSpeed*(windStrength*windStrength));
-            } else {
-                sailForce.mul(-(numSquareSails+numFnASails)*KineticConfig.sailSpeed);
+//                LOGGER.info("sailforce=" + sailForce.toString() + " shipdir=" + shipDirection.toString());
+                physShip1.applyRotDependentForce(sailForce);
             }
-
-            //LOGGER.info("vel:" + physShip1.getPoseVel().getVel());
-            if (sailForce.x > 0) {
-                sailForce.x -= rudderMod;
-            } else if (sailForce.x < 0) {
-                sailForce.x += rudderMod;
-            }
-
-//            //LOGGER.info("sailforce="+sailForce.toString()+" shipdir="+shipDirection.toString());
-            physShip1.applyRotDependentForce(sailForce);
-
-            //LOGGER.info("noentity foce applied");
-        } else if (numSails < 0) {
-            numSails = 0;
-            LOGGER.info("forced numSails = 0");
         }
-        if (numSquareSails < 0) {
-            numSquareSails = 0;
-            LOGGER.info("forced numSquareSails = 0");
-        }
-        if (numFnASails < 0) {
-            numFnASails = 0;
-            LOGGER.info("forced numFnASails = 0");
-        }
-        if (numBallast < 0) {
-            numBallast = 0;
-            LOGGER.info("forced numBallast = 0");
-        }
-        if (numMagicBallast < 0) {
-            numMagicBallast = 0;
-            LOGGER.info("forced numMagicBallast = 0");
-        }
-        if (numBuoys < 0) {
-            numBuoys = 0;
-            LOGGER.info("forced numBuoys = 0");
-        }
-        if (numHelms < 0) {
-            numHelms = 0;
-            LOGGER.info("forced numHelms = 0");
-        }
-
-//        if (toBeStaticUpdated) {
-//            physShip1.setStatic(toBeStatic);
-//            toBeStaticUpdated = false;
-//        }
         waterAmount = physShip1.getLiquidOverlap();
-
     }
 
-    private double getWindStrength(Level world, BlockPos shipPos3) {
-        return 0.5;//TODO: Add
-    }
 
-    private double getWindDirection(Level world, Vec3 shipPos2) {
-        return 45;//TODO: add
-    }
-
-    public void applyInvariantForce (Vector3dc force) {
+    public void applyInvariantForce(Vector3dc force) {
         //LOGGER.info("inv force requested");
         invForces.add(force);
     }
@@ -349,9 +307,9 @@ public final class SailsShipControl implements ShipPhysicsListener, ServerTickLi
 
     private double calculateWindAngleModifier(double windAngle, double noSail) {
         if (KineticConfig.forgivingSails) {
-            return pow(2, windAngle/noSail) + pow(2, -windAngle/noSail);
+            return pow(2, windAngle / noSail) + pow(2, -windAngle / noSail);
         }
-        return pow(2, pow(windAngle, 2)/noSail) + pow(2, -pow(windAngle, 2)/noSail);
+        return pow(2, pow(windAngle, 2) / noSail) + pow(2, -pow(windAngle, 2) / noSail);
     }
 
     public static double getShipYaw(Quaterniondc shipRotation) {
@@ -372,7 +330,7 @@ public final class SailsShipControl implements ShipPhysicsListener, ServerTickLi
             yaw = atan2(worldForwardDirection.x, -worldForwardDirection.z);
         }
         if (yaw < 0) {
-            yaw = 2*PI + yaw;
+            yaw = 2 * PI + yaw;
         }
 
         return yaw;
@@ -382,49 +340,19 @@ public final class SailsShipControl implements ShipPhysicsListener, ServerTickLi
         buoyForces.add(buoyancy);
     }
 
-//    public void convertToShipDirection(double force) {
-//
-//    }
-
-//    //fixme ship is always null
-//    public double getShipWidth() {
-//        if (shipDirection == Direction.NORTH || shipDirection == Direction.SOUTH) { //fixme change to && with != for perf
-//            return ship.getShipAABB().maxX() - ship.getShipAABB().minX();
-//        } else {
-//            return ship.getShipAABB().maxZ() - ship.getShipAABB().minZ();
-//        }
-//    }
-//
-//    //fixme ship is always null
-//    public double getShipLength() {
-//        if (shipDirection == Direction.NORTH || shipDirection == Direction.SOUTH) {
-//            return ship.getShipAABB().maxZ() - ship.getShipAABB().minZ();
-//        } else {
-//            return ship.getShipAABB().maxX() - ship.getShipAABB().minX();
-//        }
-//    }
-
-//    public void setStatic(boolean b) {
-//        toBeStatic = b;
-//        toBeStaticUpdated = true;
-//    }
-
-    public int getNumSails() {
-        return numSails;
-    }
     public int getNumBallast() {
         return numBallast;
     }
 
     private void deleteIfEmpty() { //fixme add call for this
-        if (numBallast <= 0 && numSails <= 0 && numMagicBallast <= 0 && numBuoys <= 0 && numHelms == 0) {
+        if (numBallast <= 0 && numFnASails <= 0 && numSquareSails <= 0 && numMagicBallast <= 0 && numBuoys <= 0 && numHelms == 0) {
             ship.removeAttachment(SailsShipControl.class);
         }
     }
 
     @Override
     public void onServerTick() {
-
+//        Createkinetic.LOGGER.debug("SERVER TICK");
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)

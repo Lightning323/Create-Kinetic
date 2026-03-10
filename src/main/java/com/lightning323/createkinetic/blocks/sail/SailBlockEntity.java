@@ -2,6 +2,7 @@ package com.lightning323.createkinetic.blocks.sail;
 
 import com.lightning323.createkinetic.Createkinetic;
 import com.lightning323.createkinetic.registries.KineticItems;
+import com.lightning323.createkinetic.ship.SailsShipControl;
 import com.simibubi.create.api.contraption.BlockMovementChecks;
 import com.simibubi.create.content.contraptions.AbstractContraptionEntity;
 import com.simibubi.create.content.contraptions.AssemblyException;
@@ -10,7 +11,6 @@ import com.simibubi.create.content.contraptions.ControlledContraptionEntity;
 import com.simibubi.create.content.contraptions.piston.LinearActuatorBlockEntity;
 import com.simibubi.create.content.redstone.thresholdSwitch.ThresholdSwitchObservable;
 import com.simibubi.create.foundation.advancement.AllAdvancements;
-import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.CenteredSideValueBoxTransform;
 import com.simibubi.create.foundation.blockEntity.behaviour.ValueBoxTransform;
 import com.simibubi.create.foundation.utility.CreateLang;
@@ -23,7 +23,9 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -31,6 +33,9 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import org.valkyrienskies.core.api.ships.LoadedServerShip;
+import org.valkyrienskies.core.api.ships.ServerShip;
+import org.valkyrienskies.mod.common.VSGameUtilsKt;
 
 import javax.annotation.Nullable;
 import java.lang.ref.WeakReference;
@@ -115,7 +120,7 @@ public class SailBlockEntity extends LinearActuatorBlockEntity implements Thresh
             ++i;
         }
         offset = i - 1;
-        setSailsUsed(i - 1);
+        setTotalSails((int) offset);
         if (offset >= getExtensionRange() && getSpeed() > 0)
             return;
         if (offset <= 0 && getSpeed() < 0)
@@ -179,12 +184,17 @@ public class SailBlockEntity extends LinearActuatorBlockEntity implements Thresh
             level.setBlock(offset, oldState.getFluidState()
                     .createLegacyBlock(), 66);
         }
-        setSailsUsed(0);
     }
 
-    private void setSailsUsed(int i) {
-        Createkinetic.LOGGER.info("Sails used: {}",i);
+    private void setTotalSails(int i) {
+        this.totalSails=i;
+        Createkinetic.LOGGER.debug("Sails on for {}: {} (offset={})", getBlockPos(), getTotalSails(), offset);
     }
+
+    public int getTotalSails() {
+        return totalSails;
+    }
+
 
     @Override
     public void disassemble() {
@@ -286,6 +296,8 @@ public class SailBlockEntity extends LinearActuatorBlockEntity implements Thresh
         assembleNextTick = true;
     }
 
+    int totalSails = 0;
+
     @Override
     protected void read(CompoundTag compound, boolean clientPacket) {
         initialOffset = compound.getInt("InitialOffset");
@@ -295,6 +307,10 @@ public class SailBlockEntity extends LinearActuatorBlockEntity implements Thresh
         BlockPos prevMirrorParent = mirrorParent;
         mirrorParent = null;
         mirrorChildren = null;
+
+        if (compound.contains("TotalSails")) {
+            totalSails = compound.getInt("TotalSails");
+        }
 
         if (compound.contains("MirrorParent")) {
             mirrorParent = NbtUtils.readBlockPos(compound.getCompound("MirrorParent"));
@@ -315,6 +331,8 @@ public class SailBlockEntity extends LinearActuatorBlockEntity implements Thresh
     public void write(CompoundTag compound, boolean clientPacket) {
         compound.putInt("InitialOffset", initialOffset);
         super.write(compound, clientPacket);
+
+        compound.putInt("TotalSails", totalSails);
 
         if (mirrorParent != null)
             compound.put("MirrorParent", NbtUtils.writeBlockPos(mirrorParent));
@@ -349,6 +367,7 @@ public class SailBlockEntity extends LinearActuatorBlockEntity implements Thresh
             if (!(level.getBlockEntity(blockPos) instanceof SailBlockEntity pbe))
                 continue;
             pbe.offset = offset;
+            setTotalSails((int) offset);
             pbe.disassemble();
             pbe.mirrorParent = null;
             pbe.notifyUpdate();
@@ -386,9 +405,6 @@ public class SailBlockEntity extends LinearActuatorBlockEntity implements Thresh
         return super.getInterpolatedOffset(moving ? partialTicks : 0.5f);
     }
 
-    public void animateOffset(float forcedOffset) {
-        offset = forcedOffset;
-    }
 
     public BlockPos getMirrorParent() {
         return mirrorParent;
@@ -415,5 +431,4 @@ public class SailBlockEntity extends LinearActuatorBlockEntity implements Thresh
     public MutableComponent format(int value) {
         return CreateLang.translateDirect("gui.threshold_switch.pulley_y_level", value);
     }
-
 }

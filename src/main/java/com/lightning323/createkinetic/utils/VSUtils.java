@@ -1,13 +1,16 @@
 package com.lightning323.createkinetic.utils;
 
+import com.lightning323.createkinetic.ship.SailsShipControl;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.SharedSuggestionProvider;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
@@ -32,6 +35,23 @@ public class VSUtils {
         int teleportz = (int) player.getEyePosition().z;
         return ModCommands.executeParsedCommandOP(source, "vs teleport " + shipSlug + " "
                 + teleportx + " " + teleporty + " " + teleportz, false);
+    }
+
+    public static SailsShipControl getShipController(Level world, BlockPos pos) {
+        if (VSGameUtilsKt.isBlockInShipyard(world, pos)) {
+            ServerShip ship = VSGameUtilsKt.getShipObjectManagingPos((ServerLevel) world, pos);
+            if (ship != null) {
+                SailsShipControl controller = SailsShipControl.getOrCreate((LoadedServerShip) ship, world);
+                return controller;
+            } else { //ship is being loaded from template
+                ship = VSGameUtilsKt.getShipManagingPos((ServerLevel) world, pos);
+                if (ship instanceof LoadedServerShip) {
+                    SailsShipControl controller = SailsShipControl.getOrCreate((LoadedServerShip) ship, world);
+                    return controller;
+                }
+            }
+        }
+        return null;
     }
 
     public static SuggestionProvider<CommandSourceStack> shipSlugSuggestions(boolean allDimensions, int maxDistance) {

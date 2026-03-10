@@ -1,8 +1,11 @@
 package com.lightning323.createkinetic.blocks.sail;
 
+import com.lightning323.createkinetic.Createkinetic;
 import com.lightning323.createkinetic.registries.KineticBlockEntities;
 import com.lightning323.createkinetic.registries.KineticItems;
 import com.lightning323.createkinetic.registries.KineticShapes;
+import com.lightning323.createkinetic.ship.SailsShipControl;
+import com.lightning323.createkinetic.utils.VSUtils;
 import com.simibubi.create.AllShapes;
 import com.simibubi.create.content.kinetics.base.HorizontalAxisKineticBlock;
 import com.simibubi.create.foundation.block.IBE;
@@ -34,6 +37,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class SailBlock extends HorizontalAxisKineticBlock implements IBE<SailBlockEntity> {
 
+
     public SailBlock(Properties properties) {
         super(properties);
     }
@@ -46,6 +50,18 @@ public class SailBlock extends HorizontalAxisKineticBlock implements IBE<SailBlo
         }
     }
 
+//    @SuppressWarnings("deprecation")
+//    public void onPlace(BlockState state, Level world, BlockPos pos, BlockState oldState, boolean notify) {
+//        if (world.isClientSide) return;
+//
+//        SailsShipControl shipController = VSUtils.getShipController(world, pos);
+//        if (shipController != null) {
+//            Createkinetic.LOGGER.info("PLACED SAIL BLOCK HERE");
+//            SailBlockEntity be = (SailBlockEntity) world.getBlockEntity(pos);
+//            if (be != null) shipController.sailBlocks.add(be);
+//        }
+//    }
+
     @Override
     public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
         super.onRemove(state, worldIn, pos, newState, isMoving);
@@ -53,6 +69,7 @@ public class SailBlock extends HorizontalAxisKineticBlock implements IBE<SailBlo
             return;
         if (worldIn.isClientSide)
             return;
+
         BlockState below = worldIn.getBlockState(pos.below());
         if (below.getBlock() instanceof SailBlock.RopeBlockBase)
             worldIn.destroyBlock(pos.below(), true);
