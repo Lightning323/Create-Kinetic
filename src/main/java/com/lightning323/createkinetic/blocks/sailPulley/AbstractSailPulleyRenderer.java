@@ -1,5 +1,6 @@
 package com.lightning323.createkinetic.blocks.sailPulley;
 
+import com.lightning323.createkinetic.sprite.KineticSpriteShiftEntry;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
 
@@ -55,9 +56,9 @@ public abstract class AbstractSailPulleyRenderer<T extends KineticBlockEntity> e
 		boolean running = isRunning(be);
 
 		VertexConsumer vb = buffer.getBuffer(RenderType.solid());
-		scrollCoil(getRotatedCoil(be), getCoilShift(), offset, 1)
-			.light(light)
-			.renderInto(ms, vb);
+//		scrollCoil(getRotatedCoil(be), getCoilShift(), offset, 1)
+//			.light(light)
+//			.renderInto(ms, vb);
 
 		Level world = be.getLevel();
 		BlockState blockState = be.getBlockState();
@@ -95,7 +96,7 @@ public abstract class AbstractSailPulleyRenderer<T extends KineticBlockEntity> e
 
 	protected abstract PartialModel getCoil();
 
-	protected abstract SpriteShiftEntry getCoilShift();
+	protected abstract KineticSpriteShiftEntry getCoilShift();
 
 	protected abstract SuperByteBuffer renderRope(T be);
 

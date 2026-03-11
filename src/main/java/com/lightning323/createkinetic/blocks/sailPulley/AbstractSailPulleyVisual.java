@@ -1,5 +1,7 @@
 package com.lightning323.createkinetic.blocks.sailPulley;
 
+import com.lightning323.createkinetic.sprite.KineticScrollInstance;
+import com.lightning323.createkinetic.sprite.KineticSpriteShiftEntry;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import org.joml.Quaternionf;
 import org.joml.Quaternionfc;
@@ -56,10 +58,10 @@ public abstract class AbstractSailPulleyVisual<T extends KineticBlockEntity> ext
 		float blockStateAngle = AngleHelper.horizontalAngle(rotatingAbout);
 		Quaternionfc rotation = new Quaternionf().rotationY(Mth.DEG_TO_RAD * blockStateAngle);
 
-		coil = getCoilModel().createInstance()
-			.rotation(rotation)
-			.position(getVisualPosition())
-			.setSpriteShift(getCoilAnimation());
+		coil = ((KineticScrollInstance) getCoilModel().createInstance()
+				.rotation(rotation)
+				.position(getVisualPosition()))
+				.setSpriteShift2(getCoilAnimation());
 
 		coil.setChanged();
 
@@ -96,7 +98,7 @@ public abstract class AbstractSailPulleyVisual<T extends KineticBlockEntity> ext
 
 	protected abstract boolean isRunning();
 
-	protected abstract SpriteShiftEntry getCoilAnimation();
+	protected abstract KineticSpriteShiftEntry getCoilAnimation();
 
 	private Instancer<TransformedInstance> magnetInstancer() {
 		return offset > .25f ? getMagnetModel() : getHalfMagnetModel();
