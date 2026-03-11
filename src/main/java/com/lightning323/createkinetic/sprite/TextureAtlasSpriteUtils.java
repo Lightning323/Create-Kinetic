@@ -1,4 +1,4 @@
-package com.lightning323.createkinetic.blocks.experements;
+package com.lightning323.createkinetic.sprite;
 
 import net.minecraft.client.renderer.texture.SpriteContents;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
