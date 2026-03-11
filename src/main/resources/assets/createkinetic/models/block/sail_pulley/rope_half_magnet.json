@@ -4,8 +4,8 @@
 	"parent": "block/block",
 	"texture_size": [32, 32],
 	"textures": {
-		"6": "createkinetic:home/sampw/Documents/sail_magnet",
-		"particle": "createkinetic:home/sampw/Documents/sail_magnet"
+		"6": "createkinetic:block/sail_magnet",
+		"particle": "createkinetic:block/sail_magnet"
 	},
 	"elements": [
 		{
