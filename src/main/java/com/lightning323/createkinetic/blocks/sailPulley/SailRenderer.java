@@ -14,7 +14,7 @@ import net.minecraft.core.Direction.Axis;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class SailRenderer extends AbstractPulleyRenderer<SailBlockEntity> {
+public class SailRenderer extends AbstractSailPulleyRenderer<SailBlockEntity> {
 
     public SailRenderer(BlockEntityRendererProvider.Context context) {
         super(context, KineticPartialModels.ROPE_HALF, KineticPartialModels.ROPE_HALF_MAGNET);

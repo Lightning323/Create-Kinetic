@@ -4,6 +4,7 @@ import com.lightning323.createkinetic.registries.*;
 import com.lightning323.createkinetic.ship.KineticShipControl;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
@@ -69,6 +70,10 @@ public class Createkinetic {
 
     private void commonSetup(final FMLCommonSetupEvent event) {
         NetworkHandler.registerMessages();
+    }
+
+    public static ResourceLocation resource(String path) {
+        return ResourceLocation.fromNamespaceAndPath(MOD_ID, path);
     }
 
     @SubscribeEvent
