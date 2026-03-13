@@ -1,5 +1,6 @@
 package com.lightning323.createkinetic.blocks.sail;
 
+import com.lightning323.createkinetic.Createkinetic;
 import com.lightning323.createkinetic.registries.KineticItems;
 import com.lightning323.createkinetic.ship.KineticShipControl;
 import com.lightning323.createkinetic.utils.VSUtils;
@@ -35,6 +36,9 @@ import net.minecraft.world.phys.AABB;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.lightning323.createkinetic.blocks.sail.sailPulley.SailPulleyBlockEntity.addSail;
+import static com.lightning323.createkinetic.blocks.sail.sailPulley.SailPulleyBlockEntity.removeSail;
 
 public class SailBlockEntity extends KineticBlockEntity implements IDisplayAssemblyExceptions, ThresholdSwitchObservable {
 
@@ -244,27 +248,15 @@ public class SailBlockEntity extends KineticBlockEntity implements IDisplayAssem
     @Override
     public void onLoad() {
         super.onLoad();
-        if (level.isClientSide) return;
-        KineticShipControl shipController = VSUtils.getOrCreateShipController(level, getBlockPos());
-        if (shipController != null) {
-            shipController.sailPulleys.add(getBlockPos().asLong());
-        }
+        addSail(getLevel(),getBlockPos());
     }
 
     @Override
     public void remove() {
-        this.remove = true;
-        if (!level.isClientSide)
-            disassemble();
         super.remove();
-        if (level.isClientSide) return;
-        KineticShipControl shipController = VSUtils.getOrCreateShipController(level, getBlockPos());
-        if (shipController != null) {
-            shipController.sailPulleys.remove(getBlockPos().asLong());
-            totalSails = 0;
-            shipController.updateSailCount();
-        }
+        removeSail(getLevel(),getBlockPos());
     }
+
 
     protected int initialOffset;
     private float prevAnimatedOffset;
@@ -443,9 +435,9 @@ public class SailBlockEntity extends KineticBlockEntity implements IDisplayAssem
             }
 
             this.totalSails = (int) actuallyPlacedSails;
-//            Createkinetic.LOGGER.info("Total sails: " + totalSails + " Offset: " + offset);
             KineticShipControl shipController = VSUtils.getOrCreateShipController(getLevel(), getBlockPos());
             if (shipController != null) {
+                Createkinetic.LOGGER.debug("Total sails: " + totalSails + " Offset: " + offset);
                 shipController.updateSailCount();
             }
 
