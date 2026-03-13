@@ -1,10 +1,9 @@
-package com.lightning323.createkinetic.blocks.sailPulley;
+package com.lightning323.createkinetic.blocks.sail.sailPulley;
 
 import com.lightning323.createkinetic.registries.KineticItems;
 import com.lightning323.createkinetic.registries.KineticPartialModels;
 import com.lightning323.createkinetic.registries.KineticSpriteShifts;
 import com.simibubi.create.content.contraptions.AbstractContraptionEntity;
-import com.simibubi.create.content.contraptions.pulley.AbstractPulleyRenderer;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import net.createmod.catnip.render.CachedBuffers;
 import net.createmod.catnip.render.SpriteShiftEntry;
@@ -14,14 +13,14 @@ import net.minecraft.core.Direction.Axis;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class SailRenderer extends AbstractSailPulleyRenderer<SailBlockEntity> {
+public class SailPulleyRenderer extends AbstractSailPulleyRenderer<SailPulleyBlockEntity> {
 
-    public SailRenderer(BlockEntityRendererProvider.Context context) {
+    public SailPulleyRenderer(BlockEntityRendererProvider.Context context) {
         super(context, KineticPartialModels.ROPE_HALF, KineticPartialModels.ROPE_HALF_MAGNET);
     }
 
     @Override
-    protected Axis getShaftAxis(SailBlockEntity be) {
+    protected Axis getShaftAxis(SailPulleyBlockEntity be) {
         return be.getBlockState()
                 .getValue(SailPulleyBlock.HORIZONTAL_AXIS);
     }
@@ -32,7 +31,7 @@ public class SailRenderer extends AbstractSailPulleyRenderer<SailBlockEntity> {
     }
 
     @Override
-    protected SuperByteBuffer renderRope(SailBlockEntity be) {
+    protected SuperByteBuffer renderRope(SailPulleyBlockEntity be) {
         BlockState state = be.getBlockState();// Get the axis the pulley is placed on
         Axis axis = state.getValue(SailPulleyBlock.HORIZONTAL_AXIS);
 
@@ -44,7 +43,7 @@ public class SailRenderer extends AbstractSailPulleyRenderer<SailBlockEntity> {
     }
 
     @Override
-    protected SuperByteBuffer renderMagnet(SailBlockEntity be) {
+    protected SuperByteBuffer renderMagnet(SailPulleyBlockEntity be) {
         BlockState state = be.getBlockState();// Get the axis the pulley is placed on
         Axis axis = state.getValue(SailPulleyBlock.HORIZONTAL_AXIS);
 
@@ -56,16 +55,16 @@ public class SailRenderer extends AbstractSailPulleyRenderer<SailBlockEntity> {
     }
 
     @Override
-    protected float getOffset(SailBlockEntity be, float partialTicks) {
+    protected float getOffset(SailPulleyBlockEntity be, float partialTicks) {
         return getBlockEntityOffset(partialTicks, be);
     }
 
     @Override
-    protected boolean isRunning(SailBlockEntity be) {
+    protected boolean isRunning(SailPulleyBlockEntity be) {
         return isPulleyRunning(be);
     }
 
-    public static boolean isPulleyRunning(SailBlockEntity be) {
+    public static boolean isPulleyRunning(SailPulleyBlockEntity be) {
         return be.running || be.mirrorParent != null || be.isVirtual();
     }
 
@@ -74,12 +73,12 @@ public class SailRenderer extends AbstractSailPulleyRenderer<SailBlockEntity> {
         return KineticSpriteShifts.SAIL_COIL;
     }
 
-    public static float getBlockEntityOffset(float partialTicks, SailBlockEntity blockEntity) {
+    public static float getBlockEntityOffset(float partialTicks, SailPulleyBlockEntity blockEntity) {
         float offset = blockEntity.getInterpolatedOffset(partialTicks);
 
         AbstractContraptionEntity attachedContraption = blockEntity.getAttachedContraption();
         if (attachedContraption != null) {
-            SailContraption c = (SailContraption) attachedContraption.getContraption();
+            SailPulleyContraption c = (SailPulleyContraption) attachedContraption.getContraption();
             double entityPos = Mth.lerp(partialTicks, attachedContraption.yOld, attachedContraption.getY());
             offset = (float) -(entityPos - c.anchor.getY() - c.getInitialOffset());
         }

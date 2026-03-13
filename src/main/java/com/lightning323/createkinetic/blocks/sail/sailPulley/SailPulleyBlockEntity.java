@@ -1,6 +1,5 @@
-package com.lightning323.createkinetic.blocks.sailPulley;
+package com.lightning323.createkinetic.blocks.sail.sailPulley;
 
-import com.lightning323.createkinetic.Createkinetic;
 import com.lightning323.createkinetic.registries.KineticItems;
 import com.lightning323.createkinetic.ship.KineticShipControl;
 import com.lightning323.createkinetic.utils.VSUtils;
@@ -38,7 +37,7 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SailBlockEntity extends LinearActuatorBlockEntity implements ThresholdSwitchObservable {
+public class SailPulleyBlockEntity extends LinearActuatorBlockEntity implements ThresholdSwitchObservable {
 
 
     @Override
@@ -70,7 +69,7 @@ public class SailBlockEntity extends LinearActuatorBlockEntity implements Thresh
     protected List<BlockPos> mirrorChildren;
     public WeakReference<AbstractContraptionEntity> sharedMirrorContraption;
 
-    public SailBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+    public SailPulleyBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
     }
 
@@ -101,7 +100,7 @@ public class SailBlockEntity extends LinearActuatorBlockEntity implements Thresh
                     || !sharedMirrorContraption.get()
                     .isAlive()) {
                 sharedMirrorContraption = null;
-                if (level.getBlockEntity(mirrorParent) instanceof SailBlockEntity pte && pte.movedContraption != null)
+                if (level.getBlockEntity(mirrorParent) instanceof SailPulleyBlockEntity pte && pte.movedContraption != null)
                     sharedMirrorContraption = new WeakReference<>(pte.movedContraption);
             }
 
@@ -149,7 +148,7 @@ public class SailBlockEntity extends LinearActuatorBlockEntity implements Thresh
             needsContraption = false;
             BlockPos anchor = worldPosition.below(Mth.floor(offset + 1));
             initialOffset = Mth.floor(offset);
-            SailContraption contraption = new SailContraption(initialOffset);
+            SailPulleyContraption contraption = new SailPulleyContraption(initialOffset);
             boolean canAssembleStructure = contraption.assemble(level, anchor);
 
             if (canAssembleStructure) {
@@ -181,7 +180,7 @@ public class SailBlockEntity extends LinearActuatorBlockEntity implements Thresh
                         continue;
                     pos = pos.offset(anchor);
                     if (level.getBlockEntity(
-                            new BlockPos(pos.getX(), worldPosition.getY(), pos.getZ())) instanceof SailBlockEntity pbe)
+                            new BlockPos(pos.getX(), worldPosition.getY(), pos.getZ())) instanceof SailPulleyBlockEntity pbe)
                         pbe.startMirroringOther(worldPosition);
                 }
             }
@@ -298,7 +297,7 @@ public class SailBlockEntity extends LinearActuatorBlockEntity implements Thresh
 
     @Override
     protected Vec3 toPosition(float offset) {
-        if (movedContraption.getContraption() instanceof SailContraption contraption) {
+        if (movedContraption.getContraption() instanceof SailPulleyContraption contraption) {
             return Vec3.atLowerCornerOf(contraption.anchor)
                     .add(0, contraption.getInitialOffset() - offset, 0);
 
@@ -375,7 +374,7 @@ public class SailBlockEntity extends LinearActuatorBlockEntity implements Thresh
     public void startMirroringOther(BlockPos parent) {
         if (parent.equals(worldPosition))
             return;
-        if (!(level.getBlockEntity(parent) instanceof SailBlockEntity pbe))
+        if (!(level.getBlockEntity(parent) instanceof SailPulleyBlockEntity pbe))
             return;
         if (pbe.getType() != getType())
             return;
@@ -396,7 +395,7 @@ public class SailBlockEntity extends LinearActuatorBlockEntity implements Thresh
         if (mirrorChildren == null)
             return;
         for (BlockPos blockPos : mirrorChildren) {
-            if (!(level.getBlockEntity(blockPos) instanceof SailBlockEntity pbe))
+            if (!(level.getBlockEntity(blockPos) instanceof SailPulleyBlockEntity pbe))
                 continue;
             pbe.offset = offset;
             this.totalSails = (int) offset;

@@ -1,4 +1,4 @@
-package com.lightning323.createkinetic.blocks.sailPulley;
+package com.lightning323.createkinetic.blocks.sail.sailPulley;
 
 
 import com.lightning323.createkinetic.registries.KineticPartialModels;
@@ -12,8 +12,8 @@ import dev.engine_room.flywheel.lib.instance.TransformedInstance;
 import dev.engine_room.flywheel.lib.model.Models;
 import net.createmod.catnip.render.SpriteShiftEntry;
 
-public class SailVisual extends AbstractSailPulleyVisual<SailBlockEntity> {
-	public SailVisual(VisualizationContext context, SailBlockEntity blockEntity, float partialTick) {
+public class SailPulleyVisual extends AbstractSailPulleyVisual<SailPulleyBlockEntity> {
+	public SailPulleyVisual(VisualizationContext context, SailPulleyBlockEntity blockEntity, float partialTick) {
 		super(context, blockEntity, partialTick);
 	}
 
@@ -46,12 +46,12 @@ public class SailVisual extends AbstractSailPulleyVisual<SailBlockEntity> {
 
 	@Override
 	protected float getOffset(float pt) {
-		return SailRenderer.getBlockEntityOffset(pt, blockEntity);
+		return SailPulleyRenderer.getBlockEntityOffset(pt, blockEntity);
 	}
 
 	@Override
 	protected boolean isRunning() {
-		return SailRenderer.isPulleyRunning(blockEntity);
+		return SailPulleyRenderer.isPulleyRunning(blockEntity);
 	}
 
 	@Override

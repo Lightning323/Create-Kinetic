@@ -1,6 +1,5 @@
 package com.lightning323.createkinetic.events;
 
-import com.lightning323.createkinetic.blocks.sailPulley.SailPulleyBlock;
 import com.lightning323.createkinetic.ship.KineticShipControl;
 import com.lightning323.createkinetic.ship.ShipUtils;
 import com.simibubi.create.content.contraptions.bearing.SailBlock;

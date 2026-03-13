@@ -8,7 +8,7 @@ import static com.lightning323.createkinetic.Createkinetic.LOGGER;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.lightning323.createkinetic.Createkinetic;
 import com.lightning323.createkinetic.KineticConfig;
-import com.lightning323.createkinetic.blocks.sailPulley.SailBlockEntity;
+import com.lightning323.createkinetic.blocks.sail.sailPulley.SailPulleyBlockEntity;
 import it.unimi.dsi.fastutil.longs.LongIterator;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import it.unimi.dsi.fastutil.longs.LongSet;
@@ -107,7 +107,7 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
             // Ensure we check the level associated with the ship
             BlockEntity blockEntity = world.getBlockEntity(pos);
 
-            if (blockEntity == null || blockEntity.isRemoved() || !(blockEntity instanceof SailBlockEntity sbe)) {
+            if (blockEntity == null || blockEntity.isRemoved() || !(blockEntity instanceof SailPulleyBlockEntity sbe)) {
                 iterator.remove(); // Safely remove stale positions
                 continue;
             }

@@ -1,4 +1,4 @@
-package com.lightning323.createkinetic.blocks.sailPulley;
+package com.lightning323.createkinetic.blocks.sail.sailPulley;
 
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;

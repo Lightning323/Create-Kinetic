@@ -1,12 +1,10 @@
-package com.lightning323.createkinetic.blocks.sailPulley;
+package com.lightning323.createkinetic.blocks.sail.sailPulley;
 
-import com.lightning323.createkinetic.Createkinetic;
 import com.lightning323.createkinetic.registries.KineticBlockEntities;
 import com.lightning323.createkinetic.registries.KineticItems;
 import com.lightning323.createkinetic.registries.KineticShapes;
 import com.lightning323.createkinetic.ship.KineticShipControl;
 import com.lightning323.createkinetic.utils.VSUtils;
-import com.simibubi.create.AllShapes;
 import com.simibubi.create.content.kinetics.base.HorizontalAxisKineticBlock;
 import com.simibubi.create.foundation.block.IBE;
 import net.minecraft.core.BlockPos;
@@ -35,7 +33,7 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class SailPulleyBlock extends HorizontalAxisKineticBlock implements IBE<SailBlockEntity> {
+public class SailPulleyBlock extends HorizontalAxisKineticBlock implements IBE<SailPulleyBlockEntity> {
 
 
     public SailPulleyBlock(Properties properties) {
@@ -44,7 +42,7 @@ public class SailPulleyBlock extends HorizontalAxisKineticBlock implements IBE<S
 
     private static void onRopeBroken(Level world, BlockPos sailPos) {
         BlockEntity be = world.getBlockEntity(sailPos);
-        if (be instanceof SailBlockEntity sail) {
+        if (be instanceof SailPulleyBlockEntity sail) {
             sail.initialOffset = 0;
             sail.onLengthBroken();
         }
@@ -90,16 +88,16 @@ public class SailPulleyBlock extends HorizontalAxisKineticBlock implements IBE<S
     }
 
     @Override
-    public Class<SailBlockEntity> getBlockEntityClass() {
-        return SailBlockEntity.class;
+    public Class<SailPulleyBlockEntity> getBlockEntityClass() {
+        return SailPulleyBlockEntity.class;
     }
 
     @Override
-    public BlockEntityType<? extends SailBlockEntity> getBlockEntityType() {
-        return KineticBlockEntities.SAIL.get();
+    public BlockEntityType<? extends SailPulleyBlockEntity> getBlockEntityType() {
+        return KineticBlockEntities.SAIL_PULLEY.get();
     }
 
-    private static class SailBlockBase extends Block implements SimpleWaterloggedBlock {
+    public static class SailBlockBase extends Block implements SimpleWaterloggedBlock {
 
         public SailBlockBase(Properties properties) {
             super(properties);

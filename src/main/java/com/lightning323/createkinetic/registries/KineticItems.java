@@ -3,7 +3,7 @@ package com.lightning323.createkinetic.registries;
 import com.lightning323.createkinetic.blocks.AnchorBlock;
 import com.lightning323.createkinetic.blocks.BallastBlock;
 import com.lightning323.createkinetic.blocks.BuoyBlock;
-import com.lightning323.createkinetic.blocks.sailPulley.SailPulleyBlock;
+import com.lightning323.createkinetic.blocks.sail.sailPulley.SailPulleyBlock;
 import com.lightning323.createkinetic.items.ShipTotemItem;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.foundation.data.BlockStateGen;
@@ -16,7 +16,6 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.MapColor;
 
@@ -96,7 +95,7 @@ public class KineticItems {
             .initialProperties(() -> Blocks.IRON_BLOCK)
             .properties(p -> p.explosionResistance(0.0f))
             .blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(),
-                    prov.models().cubeAll(ctx.getName(), prov.modLoc("block/ballast_block"))))
+                    prov.models().cubeAll(ctx.getName(), prov.modLoc("block/anchor"))))
             .simpleItem()
             .register();
 
@@ -106,7 +105,7 @@ public class KineticItems {
             .blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(),
                     prov.models().cubeBottomTop(ctx.getName(),
                             prov.modLoc("block/ballast_side"),   // Side texture
-                            prov.modLoc("block/ballast_bottom"), // Bottom texture
+                            prov.modLoc("block/ballast_top"), // Bottom texture
                             prov.modLoc("block/ballast_top")     // Top texture
                     )))
             .simpleItem() // Automatically registers the BlockItem for you

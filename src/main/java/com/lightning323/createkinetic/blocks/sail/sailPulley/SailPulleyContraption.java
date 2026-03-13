@@ -1,4 +1,4 @@
-package com.lightning323.createkinetic.blocks.sailPulley;
+package com.lightning323.createkinetic.blocks.sail.sailPulley;
 
 import com.lightning323.createkinetic.registries.KineticContraptions;
 import com.simibubi.create.api.contraption.ContraptionType;
@@ -8,7 +8,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 
-public class SailContraption extends TranslatingContraption {
+public class SailPulleyContraption extends TranslatingContraption {
 
 	int initialOffset;
 
@@ -17,9 +17,9 @@ public class SailContraption extends TranslatingContraption {
 		return KineticContraptions.SAIL.value();
 	}
 
-	public SailContraption() {}
+	public SailPulleyContraption() {}
 
-	public SailContraption(int initialOffset) {
+	public SailPulleyContraption(int initialOffset) {
 		this.initialOffset = initialOffset;
 	}
 
