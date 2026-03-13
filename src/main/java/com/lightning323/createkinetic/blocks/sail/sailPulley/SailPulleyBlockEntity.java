@@ -95,7 +95,6 @@ public class SailPulleyBlockEntity extends LinearActuatorBlockEntity implements 
     public void tick() {
         float prevOffset = offset;
         super.tick();
-        Createkinetic.LOGGER.info("Tick {}",getSpeed());
 
         if (level.isClientSide() && mirrorParent != null)
             if (sharedMirrorContraption == null || sharedMirrorContraption.get() == null

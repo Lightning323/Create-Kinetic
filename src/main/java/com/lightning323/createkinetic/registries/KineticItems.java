@@ -28,7 +28,6 @@ import static com.simibubi.create.foundation.data.TagGen.axeOrPickaxe;
 public class KineticItems {
 
 
-
     public static final BlockEntry<SailBlock> RETRACTABLE_SAIL = REGISTRATE.block("retractable_sail", SailBlock::new)
             .initialProperties(SharedProperties::stone)
             .properties(p -> p.mapColor(MapColor.PODZOL))
@@ -40,6 +39,25 @@ public class KineticItems {
             .item()
             .transform(customItemModel())
             .register();
+
+    public static final BlockEntry<SailBlock.WeightBlock> PULLEY_SAIL_WEIGHT =
+            REGISTRATE.block("pulley_weight", SailBlock.WeightBlock::new)
+                    .initialProperties(SharedProperties::stone)
+                    .tag(AllTags.AllBlockTags.BRITTLE.tag)
+                    .tag(BlockTags.CLIMBABLE)
+                    .blockstate((c, p) -> p.getVariantBuilder(c.get())
+                            .partialState().with(BlockStateProperties.HORIZONTAL_AXIS, Direction.Axis.X)
+                            .modelForState()
+                            .modelFile(p.models().getExistingFile(p.modLoc("block/retractable_sail/" + c.getName())))
+                            .addModel()
+
+                            .partialState().with(BlockStateProperties.HORIZONTAL_AXIS, Direction.Axis.Z)
+                            .modelForState()
+                            .modelFile(p.models().getExistingFile(p.modLoc("block/retractable_sail/" + c.getName())))
+                            .rotationY(90) // This performs the 90-degree turn for the X axis
+                            .addModel()
+                    )
+                    .register();
 
     public static final BlockEntry<SailPulleyBlock> SAIL_PULLEY = REGISTRATE.block("sail_pulley", SailPulleyBlock::new)
             .initialProperties(SharedProperties::stone)

@@ -3,9 +3,11 @@ package com.lightning323.createkinetic.blocks.sail;
 import com.lightning323.createkinetic.blocks.sail.sailPulley.SailPulleyBlock;
 import com.lightning323.createkinetic.registries.KineticBlockEntities;
 import com.lightning323.createkinetic.registries.KineticItems;
+import com.lightning323.createkinetic.registries.KineticShapes;
 import com.simibubi.create.content.kinetics.base.HorizontalAxisKineticBlock;
 import com.simibubi.create.foundation.block.IBE;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -15,8 +17,11 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class SailBlock extends HorizontalAxisKineticBlock implements IBE<SailBlockEntity> {
 
@@ -76,6 +81,19 @@ public class SailBlock extends HorizontalAxisKineticBlock implements IBE<SailBlo
         return KineticBlockEntities.SAIL.get();
     }
 
+    public static class WeightBlock extends SailPulleyBlock.SailBlockBase {
+
+        public WeightBlock(Properties properties) {
+            super(properties);
+        }
+
+        @Override
+        public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+            Direction.Axis axis = state.getValue(BlockStateProperties.HORIZONTAL_AXIS);
+            return KineticShapes.SAIL_MAGNET.get(axis);
+        }
+
+    }
 
 
 }

@@ -27,12 +27,12 @@ public class SailVisual extends AbstractSailPulleyVisual<SailBlockEntity> {
 
 	@Override
 	protected Instancer<TransformedInstance> getMagnetModel() {
-		return instancerProvider().instancer(InstanceTypes.TRANSFORMED, Models.partial(KineticPartialModels.PULLEY_MAGNET));
+		return instancerProvider().instancer(InstanceTypes.TRANSFORMED, Models.partial(KineticPartialModels.PULLEY_WEIGHT));
 	}
 
 	@Override
 	protected Instancer<TransformedInstance> getHalfMagnetModel() {
-		return instancerProvider().instancer(InstanceTypes.TRANSFORMED, Models.partial(KineticPartialModels.ROPE_HALF_MAGNET));
+		return instancerProvider().instancer(InstanceTypes.TRANSFORMED, Models.partial(KineticPartialModels.ROPE_HALF_WEIGHT));
 	}
 
 	@Override

@@ -49,7 +49,7 @@ public class SailRenderer extends AbstractSailPulleyRenderer<SailBlockEntity> {
         BlockState state = be.getBlockState();// Get the axis the pulley is placed on
         Axis axis = state.getValue(SailPulleyBlock.HORIZONTAL_AXIS);
 
-        SuperByteBuffer buffer = CachedBuffers.block(KineticItems.PULLEY_SAIL_MAGNET.getDefaultState());
+        SuperByteBuffer buffer = CachedBuffers.block(KineticItems.PULLEY_SAIL_WEIGHT.getDefaultState());
         if (axis == Axis.Z) {
             buffer.rotateCentered((float) (Math.PI / 2), Axis.Y);
         }

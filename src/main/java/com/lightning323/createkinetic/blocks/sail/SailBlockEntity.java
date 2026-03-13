@@ -309,7 +309,7 @@ public class SailBlockEntity extends KineticBlockEntity implements IDisplayAssem
         while (i <= maxLength) {
             BlockPos ropePos = worldPosition.below(i);
             BlockState ropeState = level.getBlockState(ropePos);
-            if (!KineticItems.PULLEY_SAIL_CLOTH.has(ropeState) && !KineticItems.PULLEY_SAIL_MAGNET.has(ropeState)) {
+            if (!KineticItems.PULLEY_SAIL_CLOTH.has(ropeState) && !KineticItems.PULLEY_SAIL_WEIGHT.has(ropeState)) {
                 break;
             }
             ++i;
@@ -402,7 +402,7 @@ public class SailBlockEntity extends KineticBlockEntity implements IDisplayAssem
                         level.destroyBlock(magnetPos, level.getBlockState(magnetPos)
                                 .getCollisionShape(level, magnetPos)
                                 .isEmpty());
-                        boolean success = level.setBlock(magnetPos, KineticItems.PULLEY_SAIL_MAGNET.getDefaultState()
+                        boolean success = level.setBlock(magnetPos, KineticItems.PULLEY_SAIL_WEIGHT.getDefaultState()
                                         .setValue(BlockStateProperties.WATERLOGGED, //Waterlogged property
                                                 Boolean.valueOf(ifluidstate.getType() == Fluids.WATER))
                                         .setValue(BlockStateProperties.HORIZONTAL_AXIS, //Horizontal axis property

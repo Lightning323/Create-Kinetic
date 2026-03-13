@@ -11,7 +11,9 @@ public class KineticPartialModels {
             ROPE_HALF = block("sail_pulley/rope_half"),
             ROPE_HALF_MAGNET = block("sail_pulley/rope_half_magnet"),
             ROPE = block("sail_pulley/rope"),
-            PULLEY_MAGNET = block("sail_pulley/pulley_magnet");
+            PULLEY_MAGNET = block("sail_pulley/pulley_magnet"),
+            ROPE_HALF_WEIGHT = block("retractable_sail/rope_half_weight"),
+            PULLEY_WEIGHT = block("retractable_sail/pulley_weight");
 
     private static PartialModel block(String path) {
         return PartialModel.of(new ResourceLocation(MOD_ID, "block/" + path));
