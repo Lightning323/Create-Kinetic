@@ -104,7 +104,11 @@ public class KineticItems {
             .initialProperties(() -> Blocks.IRON_BLOCK) // Copy properties from here
             .properties(p -> p.explosionResistance(0.0f)) // Modify specific properties
             .blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(),
-                    prov.models().cubeAll(ctx.getName(), prov.modLoc("block/ballast_block"))))
+                    prov.models().cubeBottomTop(ctx.getName(),
+                            prov.modLoc("block/ballast_side"),   // Side texture
+                            prov.modLoc("block/ballast_bottom"), // Bottom texture
+                            prov.modLoc("block/ballast_top")     // Top texture
+                    )))
             .simpleItem() // Automatically registers the BlockItem for you
             .register();
 
