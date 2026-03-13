@@ -1,5 +1,6 @@
 package com.lightning323.createkinetic.blocks.sail.sailPulley;
 
+import com.lightning323.createkinetic.Createkinetic;
 import com.lightning323.createkinetic.registries.KineticItems;
 import com.lightning323.createkinetic.ship.KineticShipControl;
 import com.lightning323.createkinetic.utils.VSUtils;
@@ -94,6 +95,7 @@ public class SailPulleyBlockEntity extends LinearActuatorBlockEntity implements 
     public void tick() {
         float prevOffset = offset;
         super.tick();
+        Createkinetic.LOGGER.info("Tick {}",getSpeed());
 
         if (level.isClientSide() && mirrorParent != null)
             if (sharedMirrorContraption == null || sharedMirrorContraption.get() == null

@@ -3,6 +3,7 @@ package com.lightning323.createkinetic.registries;
 import com.lightning323.createkinetic.blocks.AnchorBlock;
 import com.lightning323.createkinetic.blocks.BallastBlock;
 import com.lightning323.createkinetic.blocks.BuoyBlock;
+import com.lightning323.createkinetic.blocks.sail.SailBlock;
 import com.lightning323.createkinetic.blocks.sail.sailPulley.SailPulleyBlock;
 import com.lightning323.createkinetic.items.ShipTotemItem;
 import com.simibubi.create.AllTags;
@@ -18,6 +19,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.MapColor;
+import net.minecraftforge.client.model.generators.ModelFile;
 
 import static com.lightning323.createkinetic.Createkinetic.REGISTRATE;
 import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
@@ -26,6 +28,18 @@ import static com.simibubi.create.foundation.data.TagGen.axeOrPickaxe;
 public class KineticItems {
 
 
+
+    public static final BlockEntry<SailBlock> RETRACTABLE_SAIL = REGISTRATE.block("retractable_sail", SailBlock::new)
+            .initialProperties(SharedProperties::stone)
+            .properties(p -> p.mapColor(MapColor.PODZOL))
+            .properties(p -> p.noOcclusion())
+            .addLayer(() -> RenderType::cutoutMipped)
+            .transform(axeOrPickaxe())
+            .tag(AllTags.AllBlockTags.SAFE_NBT.tag)
+            .blockstate(BlockStateGen.horizontalAxisBlockProvider(true))
+            .item()
+            .transform(customItemModel())
+            .register();
 
     public static final BlockEntry<SailPulleyBlock> SAIL_PULLEY = REGISTRATE.block("sail_pulley", SailPulleyBlock::new)
             .initialProperties(SharedProperties::stone)

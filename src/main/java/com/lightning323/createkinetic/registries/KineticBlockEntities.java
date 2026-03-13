@@ -1,5 +1,8 @@
 package com.lightning323.createkinetic.registries;
 
+import com.lightning323.createkinetic.blocks.sail.SailBlockEntity;
+import com.lightning323.createkinetic.blocks.sail.SailRenderer;
+import com.lightning323.createkinetic.blocks.sail.SailVisual;
 import com.lightning323.createkinetic.blocks.sail.sailPulley.SailPulleyBlockEntity;
 import com.lightning323.createkinetic.blocks.sail.sailPulley.SailPulleyRenderer;
 import com.lightning323.createkinetic.blocks.sail.sailPulley.SailPulleyVisual;
@@ -20,12 +23,12 @@ public class KineticBlockEntities {
             .renderer(() -> SailPulleyRenderer::new)
             .register();
 
-//    public static final BlockEntityEntry<SailBlockEntity> SAIL = REGISTRATE
-//            .blockEntity("sail", SailBlockEntity::new)
-//            .visual(() -> SailVisual::new, false)
-//            .validBlocks(KineticItems.SAIL_PULLEY)
-//            .renderer(() -> SailRenderer::new)
-//            .register();
+    public static final BlockEntityEntry<SailBlockEntity> SAIL = REGISTRATE
+            .blockEntity("sail", SailBlockEntity::new)
+            .visual(() -> SailVisual::new, false)
+            .validBlocks(KineticItems.RETRACTABLE_SAIL)
+            .renderer(() -> SailRenderer::new)
+            .register();
 
     public static void register() {
         // This just "wakes up" the class to ensure static fields are loaded
