@@ -6,6 +6,8 @@ import com.lightning323.createkinetic.blocks.BuoyBlock;
 import com.lightning323.createkinetic.blocks.sail.SailBlock;
 import com.lightning323.createkinetic.blocks.sail.sailPulley.SailPulleyBlock;
 import com.lightning323.createkinetic.items.ShipTotemItem;
+import com.simibubi.create.AllBlocks;
+import com.simibubi.create.AllItems;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.Create;
 import com.simibubi.create.foundation.data.BlockStateGen;
@@ -14,7 +16,11 @@ import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
+import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
@@ -40,6 +46,17 @@ public class KineticItems {
             .blockstate(BlockStateGen.horizontalAxisBlockProvider(true))
             .item()
             .transform(customItemModel())
+            .recipe((ctx, prov) -> {
+                ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, ctx.getEntry())
+                        .pattern(" P ")
+                        .pattern("SSS")
+                        .pattern("AAA")
+                        .define('S', AllBlocks.SAIL.get()) // Using Create's Sail block
+                        .define('P', AllBlocks.ANDESITE_CASING)
+                        .define('A', AllItems.ANDESITE_ALLOY.get())
+                        .unlockedBy("has_sail", prov.has(AllBlocks.SAIL.get()))
+                        .save(prov);
+            })
             .register();
 
     public static final BlockEntry<SailBlock.WeightBlock> PULLEY_SAIL_WEIGHT =
@@ -71,6 +88,17 @@ public class KineticItems {
             .blockstate(BlockStateGen.horizontalAxisBlockProvider(true))
             .item()
             .transform(customItemModel())
+            .recipe((ctx, prov) -> {
+                ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, ctx.getEntry())
+                        .pattern("P")
+                        .pattern("S")
+                        .pattern("A")
+                        .define('S', KineticItems.RETRACTABLE_SAIL.get()) // Using Create's Sail block
+                        .define('P', AllBlocks.BRASS_CASING)
+                        .define('A', AllItems.IRON_SHEET)
+                        .unlockedBy("has_sail", prov.has(AllBlocks.SAIL.get()))
+                        .save(prov);
+            })
             .register();
 
     public static final BlockEntry<SailPulleyBlock.SailBlock> PULLEY_SAIL_CLOTH = REGISTRATE.block("rope", SailPulleyBlock.SailBlock::new)
@@ -152,6 +180,17 @@ public class KineticItems {
             .model((ctx, prov) ->
                     prov.withExistingParent(ctx.getName(), prov.modLoc("block/anchor_off")))
             .build()
+            .recipe((ctx, prov) -> {
+                ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, ctx.getEntry())
+                        .pattern(" I ")
+                        .pattern("ICI")
+                        .pattern("IBI")
+                        .define('C', Items.CHAIN)
+                        .define('I', Items.IRON_INGOT)
+                        .define('B', Items.IRON_BLOCK)
+                        .unlockedBy("has_chain", prov.has(Items.CHAIN))
+                        .save(prov);
+            })
             .register();
 
     public static final BlockEntry<BallastBlock> BALLAST_BLOCK = REGISTRATE.block("ballast_block", BallastBlock::new)
@@ -164,22 +203,97 @@ public class KineticItems {
                             prov.modLoc("block/ballast_top")     // Top texture
                     )))
             .simpleItem() // Automatically registers the BlockItem for you
+            .recipe((ctx, prov) -> {
+                ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ctx.getEntry())
+                        .pattern(" I ")
+                        .pattern("ISI")
+                        .pattern(" I ")
+                        .define('I', AllBlocks.INDUSTRIAL_IRON_BLOCK)
+                        .define('S', Items.WATER_BUCKET)
+                        .unlockedBy("has_iron", prov.has(AllBlocks.INDUSTRIAL_IRON_BLOCK))
+                        // Use prov.getConsumer() to save the recipe
+                        .save(prov);
+            })
             .register();
 
 
     private static BlockEntry<BuoyBlock> registerBuoy(String name, String langName) {
+
+        final Item woolType;
+
+        switch (name) {
+            case "orange_buoy":
+                woolType = Items.ORANGE_WOOL;
+                break;
+            case "magenta_buoy":
+                woolType = Items.MAGENTA_WOOL;
+                break;
+            case "light_blue_buoy":
+                woolType = Items.LIGHT_BLUE_WOOL;
+                break;
+            case "yellow_buoy":
+                woolType = Items.YELLOW_WOOL;
+                break;
+            case "lime_buoy":
+                woolType = Items.LIME_WOOL;
+                break;
+            case "pink_buoy":
+                woolType = Items.PINK_WOOL;
+                break;
+            case "gray_buoy":
+                woolType = Items.GRAY_WOOL;
+                break;
+            case "light_gray_buoy":
+                woolType = Items.LIGHT_GRAY_WOOL;
+                break;
+            case "cyan_buoy":
+                woolType = Items.CYAN_WOOL;
+                break;
+            case "purple_buoy":
+                woolType = Items.PURPLE_WOOL;
+                break;
+            case "blue_buoy":
+                woolType = Items.BLUE_WOOL;
+                break;
+            case "brown_buoy":
+                woolType = Items.BROWN_WOOL;
+                break;
+            case "green_buoy":
+                woolType = Items.GREEN_WOOL;
+                break;
+            case "red_buoy":
+                woolType = Items.RED_WOOL;
+                break;
+            case "black_buoy":
+                woolType = Items.BLACK_WOOL;
+                break;
+            default:
+                woolType = Items.WHITE_WOOL;
+                break;
+        }
+
         return REGISTRATE.block(name, BuoyBlock::new)
                 .initialProperties(() -> Blocks.WHITE_WOOL)
                 .properties(p -> p.explosionResistance(0.0f))
                 .blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(),
-                        prov.models().cubeAll(ctx.getName(),prov.modLoc("block/buoy/" + name)
+                        prov.models().cubeAll(ctx.getName(), prov.modLoc("block/buoy/" + name)
                         )))
                 .lang(langName)
                 .simpleItem()
+                .recipe((ctx, prov) -> {
+                    ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, ctx.getEntry(), 4)
+                            .pattern(" W ")
+                            .pattern("WBW")
+                            .pattern(" W ")
+                            .define('W', woolType)
+                            .define('B', Items.BARREL)
+                            .unlockedBy("has_water", prov.has(Items.WATER_BUCKET))
+                            .save(prov);
+                })
                 .register();
     }
 
-//    public static final BlockEntry<BuoyBlock> BUOY_BLOCK = registerBuoy("buoy", "Buoy");
+    //    public static final BlockEntry<BuoyBlock> BUOY_BLOCK = registerBuoy("buoy", "Buoy");
     public static final BlockEntry<BuoyBlock> WHITE_BUOY = registerBuoy("white_buoy", "White Buoy");
     public static final BlockEntry<BuoyBlock> LIGHT_GRAY_BUOY = registerBuoy("light_gray_buoy", "Light Gray Buoy");
     public static final BlockEntry<BuoyBlock> GRAY_BUOY = registerBuoy("gray_buoy", "Gray Buoy");
