@@ -27,13 +27,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static com.lightning323.createkinetic.commands.KineticCommands.executeParsedCommandOP;
+
 public class VSUtils {
     public static int recoverShip(MinecraftServer server, ServerPlayer player, String shipSlug) {
         CommandSourceStack source = player.createCommandSourceStack();
         int teleportx = (int) player.getEyePosition().x;
         int teleporty = (int) player.getEyePosition().y;
         int teleportz = (int) player.getEyePosition().z;
-        return KineticCommands.executeParsedCommandOP(source, "vs teleport " + shipSlug + " "
+        return executeParsedCommandOP(source, "vs teleport " + shipSlug + " "
                 + teleportx + " " + teleporty + " " + teleportz, false);
     }
 
@@ -80,7 +82,7 @@ public class VSUtils {
         };
     }
 
-    public static ServerShip getShipBySlug(MinecraftServer server, String slug) {
+    public static ServerShip getShipBySlug(ServerLevel server, String slug) {
         VsiServerShipWorld shipObjectWorld = VSGameUtilsKt.getShipObjectWorld(server);
         for (ServerShip ship : shipObjectWorld.getLoadedShips()) {
             if (ship.getSlug() != null && ship.getSlug().equals(slug)) {
@@ -191,5 +193,7 @@ public class VSUtils {
         cc.getSource().sendSystemMessage(Component.literal("(" + shipsInThisDimension.get() + " ships in this dimension)"));
 //        cc.getSource().sendSystemMessage(Component.literal("(" + shipsWithinProximity.get() + " ships within " + PROXIMITY_RADIUS + " chunk proximity)"));
     }
+
+
 
 }

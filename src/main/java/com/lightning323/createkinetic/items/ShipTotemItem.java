@@ -8,8 +8,11 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.HoverEvent;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import org.valkyrienskies.core.api.ships.LoadedServerShip;
 import org.valkyrienskies.core.api.ships.Ship;
 import org.valkyrienskies.core.internal.world.VsiServerShipWorld;
 import org.valkyrienskies.mod.common.VSGameUtilsKt;
@@ -23,12 +26,14 @@ public class ShipTotemItem extends TotemItem {
     }
 
     private static boolean recoverShip(ServerPlayer player, ItemStack i, boolean freezeShip) {
+
         String shipSlug = i.getHoverName().getString();
         if (shipSlug.isBlank() || !i.hasCustomHoverName()) {
             VsiServerShipWorld shipObjectWorld = VSGameUtilsKt.getShipObjectWorld(player.getServer());
             Ship ship = VSUtils.getShipNearPlayer(shipObjectWorld, player);
             Createkinetic.LOGGER.debug("Found ship: {}", ship);
-            if (ship == null || KineticCommands.renameShipTotem(player, player::sendSystemMessage, ship.getSlug()) != 1) {
+            if (ship == null
+                    || KineticCommands.renameShipTotem(player, player::sendSystemMessage, ship) != 1) {
                 player.sendSystemMessage(Component.literal("You cant use it yet! Click the totem on an existing ship to rename it, or Rename the totem with ").append(
                         Component.literal("/ship totem <shipName>")
                                 .withStyle(style -> style
@@ -42,6 +47,7 @@ public class ShipTotemItem extends TotemItem {
         }
 
         CommandSourceStack source = player.createCommandSourceStack();
+        Level level = player.level();
         int exit = VSUtils.recoverShip(source.getServer(), player, shipSlug);
         if (exit == 0) {
             player.sendSystemMessage(Component.literal("Teleport failed!"));
@@ -50,9 +56,9 @@ public class ShipTotemItem extends TotemItem {
             player.sendSystemMessage(Component.literal("Teleport successful!"));
 
             if (freezeShip) {
-                executeParsedCommandOP(source, "vs set-static " + shipSlug + " true", false);
-                String command = "/ship unfreeze " + shipSlug;
+                KineticCommands.setShipStatic(source, shipSlug, true);
 
+                String command = "/ship unfreeze " + shipSlug;
                 player.sendSystemMessage(
                         Component.literal("Ship has been frozen. Use ")
                                 .append(

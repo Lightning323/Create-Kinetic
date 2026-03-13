@@ -1,6 +1,7 @@
 package com.lightning323.createkinetic.commands;
 
 import com.lightning323.createkinetic.items.ShipTotemItem;
+import com.lightning323.createkinetic.ship.KineticShipControl;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.ParseResults;
@@ -16,13 +17,16 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.HoverEvent;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import org.valkyrienskies.core.api.ships.LoadedServerShip;
 import org.valkyrienskies.core.api.ships.ServerShip;
 import org.valkyrienskies.core.api.ships.Ship;
 import org.valkyrienskies.core.internal.world.VsiServerShipWorld;
@@ -136,129 +140,169 @@ public class KineticCommands {
 
 
         dispatcher.register(Commands.literal("ship")
-                        .then(Commands.literal("totem")
-                                .then(RequiredArgumentBuilder.<CommandSourceStack, String>argument("name", StringArgumentType.word())
-                                        .suggests(VSUtils.shipSlugSuggestions(true, 50))//ShipArgument.Companion.ships()
+                .then(Commands.literal("totem")
+                        .then(RequiredArgumentBuilder.<CommandSourceStack, String>argument("name", StringArgumentType.word())
+                                .suggests(VSUtils.shipSlugSuggestions(true, 50))//ShipArgument.Companion.ships()
+                                .executes(ctx -> {
+                                    ServerPlayer player = ctx.getSource().getPlayerOrException();
+                                    String newName = StringArgumentType.getString(ctx, "name");
+                                    return renameShipTotem(player, (message) -> {
+                                        ctx.getSource().sendSystemMessage(message);
+                                    }, newName);
+                                })))
+                .then(Commands.literal("this")
+                        .executes(ctx -> {
+                            VsiServerShipWorld shipObjectWorld = VSGameUtilsKt.getShipObjectWorld(ctx.getSource().getServer());
+                            Ship ship = VSUtils.getShipNearPlayer(shipObjectWorld, ctx.getSource().getPlayerOrException());
+                            System.out.println("ship: " + ship);
+                            if (ship == null) {
+                                ctx.getSource().sendFailure(Component.literal("No ship found"));
+                                return 0;
+                            } else {
+                                ctx.getSource().sendSystemMessage(
+                                        Component.literal("Found ship: \"" + ship.getSlug() + "\"")
+                                                .withStyle(style -> style
+                                                        .withColor(ChatFormatting.AQUA)
+                                                        .withClickEvent(new ClickEvent(ClickEvent.Action.COPY_TO_CLIPBOARD, ship.getSlug() == null ? "" : ship.getSlug()))
+                                                        .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.literal("Click to copy ship name")))
+                                                )
+                                );
+                                return Command.SINGLE_SUCCESS;
+                            }
+                        })
+                )
+                .then(Commands.literal("rename")
+                        .then(RequiredArgumentBuilder.<CommandSourceStack, String>argument("old", StringArgumentType.word())
+                                .suggests(VSUtils.shipSlugSuggestions(false, RENAME_DISTANCE))//ShipArgument.Companion.ships()
+                                .then(argument("new", StringArgumentType.word()) // /neutron rename <old> <new>
                                         .executes(ctx -> {
-                                            ServerPlayer player = ctx.getSource().getPlayerOrException();
-                                            String newName = StringArgumentType.getString(ctx, "name");
-                                            return renameShipTotem(player, (message) -> {
-                                                ctx.getSource().sendSystemMessage(message);
-                                            }, newName);
-                                        })))
-                        .then(Commands.literal("this")
-                                        .executes(ctx -> {
+                                            String oldSlug = StringArgumentType.getString(ctx, "old");
+                                            String newSlug = StringArgumentType.getString(ctx, "new");
+
+                                            ServerShip foundShip = null;
+                                            Vec3 playerPos = ctx.getSource().getPlayer().getEyePosition();
                                             VsiServerShipWorld shipObjectWorld = VSGameUtilsKt.getShipObjectWorld(ctx.getSource().getServer());
-                                            Ship ship = VSUtils.getShipNearPlayer(shipObjectWorld, ctx.getSource().getPlayerOrException());
-                                            System.out.println("ship: " + ship);
-                                            if (ship == null) {
-                                                ctx.getSource().sendFailure(Component.literal("No ship found"));
+
+                                            for (ServerShip ship : shipObjectWorld.getAllShips()) {
+                                                if (ship != null && ship.getTransform().getPositionInWorld().distance(playerPos.x, playerPos.y, playerPos.z) < RENAME_DISTANCE && ship.getSlug() != null) {
+                                                    if (ship.getSlug().equals(oldSlug)) {
+                                                        foundShip = ship;
+                                                    } else if (ship.getSlug().equalsIgnoreCase(newSlug)) {
+                                                        ctx.getSource().sendSystemMessage(
+                                                                Component.literal("That ship name already exists!"));
+                                                        return 0;
+                                                    }
+                                                }
+                                            }
+                                            if (foundShip == null) {
+                                                ctx.getSource().sendFailure(Component.literal("No ship found nearby"));
                                                 return 0;
+                                            }
+                                            foundShip.setSlug(newSlug);
+
+                                            if (foundShip.getSlug().equals(newSlug)) {
+                                                ctx.getSource().sendSystemMessage(
+                                                        Component.literal("Renamed ship: \"" + oldSlug + "\" to \"" + newSlug + "\""));
+                                                return 1;
                                             } else {
                                                 ctx.getSource().sendSystemMessage(
-                                                        Component.literal("Found ship: \"" + ship.getSlug() + "\"")
-                                                                .withStyle(style -> style
-                                                                        .withColor(ChatFormatting.AQUA)
-                                                                        .withClickEvent(new ClickEvent(ClickEvent.Action.COPY_TO_CLIPBOARD, ship.getSlug() == null ? "" : ship.getSlug()))
-                                                                        .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.literal("Click to copy ship name")))
-                                                                )
-                                                );
-                                                return Command.SINGLE_SUCCESS;
+                                                        Component.literal("Failed to rename ship: \"" + oldSlug + "\" to \"" + newSlug + "\""));
+                                                return 0;
                                             }
-                                        })
-                        )
-                        .then(Commands.literal("rename")
-                                .then(RequiredArgumentBuilder.<CommandSourceStack, String>argument("old", StringArgumentType.word())
-                                        .suggests(VSUtils.shipSlugSuggestions(false, RENAME_DISTANCE))//ShipArgument.Companion.ships()
-                                        .then(argument("new", StringArgumentType.word()) // /neutron rename <old> <new>
-                                                .executes(ctx -> {
-                                                    String oldSlug = StringArgumentType.getString(ctx, "old");
-                                                    String newSlug = StringArgumentType.getString(ctx, "new");
-
-                                                    ServerShip foundShip = null;
-                                                    Vec3 playerPos = ctx.getSource().getPlayer().getEyePosition();
-                                                    VsiServerShipWorld shipObjectWorld = VSGameUtilsKt.getShipObjectWorld(ctx.getSource().getServer());
-
-                                                    for (ServerShip ship : shipObjectWorld.getAllShips()) {
-                                                        if (ship != null && ship.getTransform().getPositionInWorld().distance(playerPos.x, playerPos.y, playerPos.z) < RENAME_DISTANCE && ship.getSlug() != null) {
-                                                            if (ship.getSlug().equals(oldSlug)) {
-                                                                foundShip = ship;
-                                                            } else if (ship.getSlug().equalsIgnoreCase(newSlug)) {
-                                                                ctx.getSource().sendSystemMessage(
-                                                                        Component.literal("That ship name already exists!"));
-                                                                return 0;
-                                                            }
-                                                        }
-                                                    }
-                                                    if (foundShip == null) {
-                                                        ctx.getSource().sendFailure(Component.literal("No ship found nearby"));
-                                                        return 0;
-                                                    }
-                                                    foundShip.setSlug(newSlug);
-
-                                                    if (foundShip.getSlug().equals(newSlug)) {
-                                                        ctx.getSource().sendSystemMessage(
-                                                                Component.literal("Renamed ship: \"" + oldSlug + "\" to \"" + newSlug + "\""));
-                                                        return 1;
-                                                    } else {
-                                                        ctx.getSource().sendSystemMessage(
-                                                                Component.literal("Failed to rename ship: \"" + oldSlug + "\" to \"" + newSlug + "\""));
-                                                        return 0;
-                                                    }
-                                                })))
-                        )
-                        .then(Commands.literal("recover")
-                                .requires(source -> source.hasPermission(2))
-                                .then(RequiredArgumentBuilder.<CommandSourceStack, String>argument("ship", StringArgumentType.word())
-                                        .suggests(VSUtils.shipSlugSuggestions(true, -1))
-                                        .executes(ctx -> {
-                                            String shipSlug = StringArgumentType.getString(ctx, "ship");
-                                            return VSUtils.recoverShip(ctx.getSource().getServer(), ctx.getSource().getPlayer(), shipSlug);
-                                        }))
-                        )
-                        .then(Commands.literal("freeze")
-                                .then(RequiredArgumentBuilder.<CommandSourceStack, String>argument("ship", StringArgumentType.word())
-                                        .suggests(VSUtils.shipSlugSuggestions(false, 50))//ShipArgument.Companion.ships()
-                                        .executes(ctx -> {
-                                            String shipSlug = StringArgumentType.getString(ctx, "ship");
-                                            return executeParsedCommandOP(ctx.getSource(), "vs set-static " + shipSlug + " true", false);
-                                        }))
-                        )
-                        .then(Commands.literal("unfreeze")
-                                .then(RequiredArgumentBuilder.<CommandSourceStack, String>argument("ship", StringArgumentType.word())
-                                        .suggests(VSUtils.shipSlugSuggestions(false, 50))//ShipArgument.Companion.ships()
-                                        .executes(ctx -> {
-                                            String shipSlug = StringArgumentType.getString(ctx, "ship");
-                                            return executeParsedCommandOP(ctx.getSource(), "vs set-static " + shipSlug + " false", false);
-                                        }))
-                        )
+                                        })))
+                )
+                .then(Commands.literal("recover")
+                        .requires(source -> source.hasPermission(2))
+                        .then(RequiredArgumentBuilder.<CommandSourceStack, String>argument("ship", StringArgumentType.word())
+                                .suggests(VSUtils.shipSlugSuggestions(true, -1))
+                                .executes(ctx -> {
+                                    String shipSlug = StringArgumentType.getString(ctx, "ship");
+                                    return VSUtils.recoverShip(ctx.getSource().getServer(), ctx.getSource().getPlayer(), shipSlug);
+                                }))
+                )
+                .then(Commands.literal("freeze")
+                        .then(RequiredArgumentBuilder.<CommandSourceStack, String>argument("ship", StringArgumentType.word())
+                                .suggests(VSUtils.shipSlugSuggestions(false, 50))//ShipArgument.Companion.ships()
+                                .executes(ctx -> {
+                                    String shipSlug = StringArgumentType.getString(ctx, "ship");
+                                    return setShipStatic(ctx.getSource(), shipSlug, true) ? Command.SINGLE_SUCCESS : 1;
+                                }))
+                )
+                .then(Commands.literal("unfreeze")
+                        .then(RequiredArgumentBuilder.<CommandSourceStack, String>argument("ship", StringArgumentType.word())
+                                .suggests(VSUtils.shipSlugSuggestions(false, 50))//ShipArgument.Companion.ships()
+                                .executes(ctx -> {
+                                    String shipSlug = StringArgumentType.getString(ctx, "ship");
+                                    return setShipStatic(ctx.getSource(), shipSlug, false) ? Command.SINGLE_SUCCESS : 1;
+                                }))
+                )
         );
     }
 
-    public static int renameShipTotem(ServerPlayer player, Consumer<MutableComponent> messages, String newName) {
-        ItemStack item = player.getMainHandItem(); // or getOffhandItem()
+    private static boolean setShipStatic(ServerLevel level, LoadedServerShip ship, boolean isStatic) {
+        if (ship != null) {
+            KineticShipControl control = KineticShipControl.getOrCreate(ship, level);
+            if (control != null) {
+                control.setStatic(isStatic);
+                return true;
+            }
+        }
+        return false;
+    }
 
-        // Check if the item is a Totem
-        if (item.getItem() instanceof ShipTotemItem) {
+    public static boolean setShipStatic(CommandSourceStack source, String shipSlug, boolean isStatic) {
+        Level level = source.getPlayer().level();
+        if (level instanceof ServerLevel serverLevel) {
+            LoadedServerShip ship = (LoadedServerShip) VSUtils.getShipBySlug(serverLevel, shipSlug);
+            return setShipStatic(source, ship, isStatic);
+        }
+        return false;
+    }
+
+    public static boolean setShipStatic(CommandSourceStack source, Ship ship2, boolean isStatic) {
+        Level level = source.getPlayer().level();
+        if (level instanceof ServerLevel serverLevel) {
+            LoadedServerShip ship = (LoadedServerShip) ship2;
+            if (setShipStatic(serverLevel, ship, isStatic)) return true;
+        }
+        return executeParsedCommandOP(source, "vs set-static " + ship2.getSlug() + " true", false) == Command.SINGLE_SUCCESS;
+    }
+
+    public static int renameShipTotem(ServerPlayer player, Consumer<MutableComponent> messages, Ship ship) {
+        ItemStack stack = player.getMainHandItem();
+        ItemStack offhandStack = player.getOffhandItem();
+        if (!(stack.getItem() instanceof ShipTotemItem) && !(offhandStack.getItem() instanceof ShipTotemItem)) {
             messages.accept(Component.literal("You must be holding a Ship Totem!"));
             return 0;
         }
 
+        if (ship == null || ship.getSlug() == null) {
+            messages.accept(Component.literal("No ship with that name exists!"));
+            return 0;
+        }
+
+        stack.setHoverName(Component.literal(ship.getSlug()));
+        messages.accept(Component.literal("Totem renamed to: " + ship.getSlug()));
+        return 1;
+    }
+
+    public static int renameShipTotem(ServerPlayer player, Consumer<MutableComponent> messages, String newName) {
+        ItemStack stack = player.getMainHandItem();
+        ItemStack offhandStack = player.getOffhandItem();
+        if (!(stack.getItem() instanceof ShipTotemItem) && !(offhandStack.getItem() instanceof ShipTotemItem)) {
+            messages.accept(Component.literal("You must be holding a Ship Totem!"));
+            return 0;
+        }
 
         //Ensure the name actually exists
         VsiServerShipWorld shipObjectWorld = VSGameUtilsKt.getShipObjectWorld(player.getServer());
-        boolean found = false;
-        for (ServerShip ship : shipObjectWorld.getAllShips()) {
-            if (ship != null && ship.getSlug() != null && newName.equals(ship.getSlug())) {
-                found = true;
-                break;
-            }
-        }
+        boolean found = shipObjectWorld.getAllShips().stream().anyMatch(ship -> ship != null && ship.getSlug() != null && newName.equals(ship.getSlug()));
         if (!found) {
             messages.accept(Component.literal("No ship with that name exists!"));
             return 0;
         }
-        item.setHoverName(Component.literal(newName));
+
+        stack.setHoverName(Component.literal(newName));
         messages.accept(Component.literal("Totem renamed to: " + newName));
         return 1;
     }

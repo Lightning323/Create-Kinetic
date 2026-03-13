@@ -23,13 +23,11 @@ import org.joml.*;
 import org.valkyrienskies.core.api.ships.*;
 import org.valkyrienskies.core.api.world.PhysLevel;
 import org.valkyrienskies.core.impl.game.ships.PhysShipImpl;
-import org.valkyrienskies.mod.common.ValkyrienSkiesMod;
 
 import static java.lang.Math.*;
 
 import java.util.Objects;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.function.Consumer;
 
 
 public final class KineticShipControl implements ShipPhysicsListener, ServerTickListener {
@@ -53,7 +51,6 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
     private ConcurrentLinkedQueue<Double> rotTorques = new ConcurrentLinkedQueue<Double>();
 
 
-
 //    public static void deferUntilLoaded(ServerShip ship, Level level, Consumer<KineticShipControl> consumer) {
 //        if(ship instanceof LoadedServerShip) {
 //            consumer.accept(getOrCreate(ship, level));
@@ -68,6 +65,7 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
     // 1. Tell Jackson to ignore the complex object itself
     @JsonIgnore
     public LongSet sailPulleys = new LongOpenHashSet();
+
     // 2. The Getter (Serialization)
     @JsonProperty("pulleys")
     public long[] getJsonSailPulleys() {
@@ -85,6 +83,7 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
         }
     }
 
+    public boolean frozen = false;
     public int blockSails = 0;
 
     //These values are calculated from sailPulleys and blockSails and should be read only
@@ -193,6 +192,7 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
         PhysShipImpl physShip1 = (PhysShipImpl) physShip;
 
         physShip1.setDoFluidDrag(true);
+        physShip.setStatic(isAnchored());
 
         while (!invForces.isEmpty()) {
             physShip1.applyInvariantForce(Objects.requireNonNull(invForces.poll()));
@@ -337,6 +337,10 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
         waterAmount = physShip1.getLiquidOverlap();
     }
 
+    private boolean isAnchored() {
+        return anchorsActive > 0 || frozen;
+    }
+
 
     public void applyInvariantForce(Vector3dc force) {
         //LOGGER.info("inv force requested");
@@ -406,8 +410,12 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
         return numBallast;
     }
 
+    public boolean shouldDispose() {
+        return numBallast <= 0 && numFnASails <= 0 && numSquareSails <= 0 && numMagicBallast <= 0 && numBuoys <= 0 && numHelms == 0 && !frozen;
+    }
+
     private void deleteIfEmpty() { //fixme add call for this
-        if (numBallast <= 0 && numFnASails <= 0 && numSquareSails <= 0 && numMagicBallast <= 0 && numBuoys <= 0 && numHelms == 0) {
+        if (shouldDispose()) {
             ship.removeAttachment(KineticShipControl.class);
         }
     }
@@ -419,6 +427,10 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
 
     public void countSails() {
         Createkinetic.LOGGER.debug("SAIL COUNT Square: {}, FNA: {}", numSquareSails, numFnASails);
+    }
+
+    public void setStatic(boolean frozen) {
+        this.frozen = frozen;
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
