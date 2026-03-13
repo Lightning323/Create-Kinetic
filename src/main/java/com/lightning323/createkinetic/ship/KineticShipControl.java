@@ -23,11 +23,13 @@ import org.joml.*;
 import org.valkyrienskies.core.api.ships.*;
 import org.valkyrienskies.core.api.world.PhysLevel;
 import org.valkyrienskies.core.impl.game.ships.PhysShipImpl;
+import org.valkyrienskies.mod.common.ValkyrienSkiesMod;
 
 import static java.lang.Math.*;
 
 import java.util.Objects;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.function.Consumer;
 
 
 public final class KineticShipControl implements ShipPhysicsListener, ServerTickListener {
@@ -51,10 +53,21 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
     private ConcurrentLinkedQueue<Double> rotTorques = new ConcurrentLinkedQueue<Double>();
 
 
+
+//    public static void deferUntilLoaded(ServerShip ship, Level level, Consumer<KineticShipControl> consumer) {
+//        if(ship instanceof LoadedServerShip) {
+//            consumer.accept(getOrCreate(ship, level));
+//        } else {
+//            ValkyrienSkiesMod.vsCore.shipLoadEvent.once(
+//                    { event -> event.ship.id == ship.id },
+//                    {event -> consumer.accept(getOrCreate(event.ship))}
+//            );
+//        }
+//    }
+
     // 1. Tell Jackson to ignore the complex object itself
     @JsonIgnore
     public LongSet sailPulleys = new LongOpenHashSet();
-
     // 2. The Getter (Serialization)
     @JsonProperty("pulleys")
     public long[] getJsonSailPulleys() {
@@ -77,6 +90,10 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
     //These values are calculated from sailPulleys and blockSails and should be read only
     public int numFnASails = 0;
     public int numSquareSails = 0;
+
+    //Anchors
+    public int anchors = 0;
+    public int anchorsActive = 0;
 
     public void updateSailCount() {
         numSquareSails = blockSails;

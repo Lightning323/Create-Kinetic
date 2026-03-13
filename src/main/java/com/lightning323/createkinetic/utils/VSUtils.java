@@ -1,5 +1,6 @@
 package com.lightning323.createkinetic.utils;
 
+import com.lightning323.createkinetic.commands.KineticCommands;
 import com.lightning323.createkinetic.ship.KineticShipControl;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
@@ -21,7 +22,6 @@ import org.valkyrienskies.core.api.ships.ServerShip;
 import org.valkyrienskies.core.api.ships.Ship;
 import org.valkyrienskies.core.internal.world.VsiServerShipWorld;
 import org.valkyrienskies.mod.common.VSGameUtilsKt;
-import com.lightning323.createkinetic.commands.ModCommands;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,9 +33,10 @@ public class VSUtils {
         int teleportx = (int) player.getEyePosition().x;
         int teleporty = (int) player.getEyePosition().y;
         int teleportz = (int) player.getEyePosition().z;
-        return ModCommands.executeParsedCommandOP(source, "vs teleport " + shipSlug + " "
+        return KineticCommands.executeParsedCommandOP(source, "vs teleport " + shipSlug + " "
                 + teleportx + " " + teleporty + " " + teleportz, false);
     }
+
 
     public static KineticShipControl getOrCreateShipController(Level world, BlockPos pos) {
         if (VSGameUtilsKt.isBlockInShipyard(world, pos)) {

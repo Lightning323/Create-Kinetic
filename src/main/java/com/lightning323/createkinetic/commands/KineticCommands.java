@@ -45,7 +45,7 @@ import static net.minecraft.commands.Commands.argument;
 //https://github.com/ValkyrienSkies/Valkyrien-Skies-2/blob/42e49defd5f398f1b1e1a952d56a0a4407373e31/common/src/main/kotlin/org/valkyrienskies/mod/common/command/VSCommands.kt#L40
 //https://github.com/ValkyrienSkies/Valkyrien-Skies-2/blob/25db12ab7eff4d2813b7d1d8b0553e6e7f2e0fc3/common/src/main/kotlin/org/valkyrienskies/mod/common/command/VSCommands.kt#L263
 @Mod.EventBusSubscriber
-public class ModCommands {
+public class KineticCommands {
     static final int RENAME_DISTANCE = 20;
 
     public static int executeParsedCommandOP(CommandSourceStack originalSource, String command, boolean redirectOutput) {
@@ -149,7 +149,6 @@ public class ModCommands {
                         .then(Commands.literal("this")
                                         .executes(ctx -> {
                                             VsiServerShipWorld shipObjectWorld = VSGameUtilsKt.getShipObjectWorld(ctx.getSource().getServer());
-//                            return executeParsedCommandOP(ctx.getSource(), "vs get-ship", true);
                                             Ship ship = VSUtils.getShipNearPlayer(shipObjectWorld, ctx.getSource().getPlayerOrException());
                                             System.out.println("ship: " + ship);
                                             if (ship == null) {

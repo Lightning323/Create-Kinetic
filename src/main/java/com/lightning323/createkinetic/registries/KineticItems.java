@@ -1,5 +1,6 @@
 package com.lightning323.createkinetic.registries;
 
+import com.lightning323.createkinetic.blocks.AnchorBlock;
 import com.lightning323.createkinetic.blocks.BallastBlock;
 import com.lightning323.createkinetic.blocks.BuoyBlock;
 import com.lightning323.createkinetic.blocks.sailPulley.SailPulleyBlock;
@@ -88,10 +89,16 @@ public class KineticItems {
             .properties(p -> p.rarity(Rarity.EPIC).stacksTo(1))
             .register();
 
-    private static final BlockBehaviour.Properties BUOY_BLOCK_PROPERTIES =
-            BlockBehaviour.Properties.copy(Blocks.WHITE_WOOL).explosionResistance(0.0f);
 
     //public static final ensures blocks are registered AS SOON as it is accessed by the main mod class
+
+    public static final BlockEntry<AnchorBlock> ANCHOR = REGISTRATE.block("anchor", AnchorBlock::new)
+            .initialProperties(() -> Blocks.IRON_BLOCK)
+            .properties(p -> p.explosionResistance(0.0f))
+            .blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(),
+                    prov.models().cubeAll(ctx.getName(), prov.modLoc("block/ballast_block"))))
+            .simpleItem()
+            .register();
 
     public static final BlockEntry<BallastBlock> BALLAST_BLOCK = REGISTRATE.block("ballast_block", BallastBlock::new)
             .initialProperties(() -> Blocks.IRON_BLOCK) // Copy properties from here
@@ -100,6 +107,7 @@ public class KineticItems {
                     prov.models().cubeAll(ctx.getName(), prov.modLoc("block/ballast_block"))))
             .simpleItem() // Automatically registers the BlockItem for you
             .register();
+
 
     private static BlockEntry<BuoyBlock> registerBuoy(String name, String langName) {
         return REGISTRATE.block(name, BuoyBlock::new)

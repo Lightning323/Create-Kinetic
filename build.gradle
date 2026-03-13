@@ -14,10 +14,8 @@ plugins {
     id 'idea'
     id 'net.minecraftforge.gradle' version '[6.0.16,6.2)'
     //TRACKWORK
-    // Adds the Kotlin Gradle plugin
-    id 'org.jetbrains.kotlin.jvm' version '1.9.22'
-    // OPTIONAL Kotlin Serialization plugin
-    id 'org.jetbrains.kotlin.plugin.serialization' version '1.9.22'
+    id 'org.jetbrains.kotlin.jvm' version '2.1.0'
+    id 'org.jetbrains.kotlin.plugin.serialization' version '2.1.0'
 }
 
 apply plugin: 'org.spongepowered.mixin'
@@ -229,6 +227,11 @@ dependencies {
     implementation("org.valkyrienskies.core:api:${vs_core_version}")
     implementation("org.valkyrienskies.core:impl:${vs_core_version}")
     implementation("org.valkyrienskies.core:util:${vs_core_version}")
+
+
+//    implementation(platform("org.jetbrains.kotlin:kotlin-bom:2.1.0"))
+//    implementation("org.jetbrains.kotlin:kotlin-stdlib")
+
     //Kotlin for Forge. (Dependency of VS)
     implementation 'thedarkcolour:kotlinforforge:4.11.0'
 
@@ -295,4 +298,16 @@ tasks.named('jar', Jar).configure {
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
+}
+
+kotlin {
+    jvmToolchain(17)
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+    kotlinOptions {
+        jvmTarget = "17"
+        // This helps with Java Interop (like your Registrate calls)
+        freeCompilerArgs += ["-Xjvm-default=all"]
+    }
 }
