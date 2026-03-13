@@ -4,7 +4,8 @@
 	"parent": "block/block",
 	"texture_size": [32, 32],
 	"textures": {
-		"2": "createkinetic:block/sail_weight"
+		"2": "createkinetic:block/sail_weight",
+		"particle": "createkinetic:block/sail_weight"
 	},
 	"elements": [
 		{

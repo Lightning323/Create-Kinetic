@@ -7,6 +7,7 @@ import com.lightning323.createkinetic.blocks.sail.SailBlock;
 import com.lightning323.createkinetic.blocks.sail.sailPulley.SailPulleyBlock;
 import com.lightning323.createkinetic.items.ShipTotemItem;
 import com.simibubi.create.AllTags;
+import com.simibubi.create.Create;
 import com.simibubi.create.foundation.data.BlockStateGen;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.tterrag.registrate.util.entry.BlockEntry;
@@ -19,6 +20,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.MapColor;
+import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelFile;
 
 import static com.lightning323.createkinetic.Createkinetic.REGISTRATE;
@@ -126,9 +128,30 @@ public class KineticItems {
     public static final BlockEntry<AnchorBlock> ANCHOR = REGISTRATE.block("anchor", AnchorBlock::new)
             .initialProperties(() -> Blocks.IRON_BLOCK)
             .properties(p -> p.explosionResistance(0.0f))
-            .blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(),
-                    prov.models().cubeAll(ctx.getName(), prov.modLoc("block/anchor"))))
-            .simpleItem()
+            .blockstate((ctx, prov) -> {
+                // 1. Define the two base models
+                var modelOn = prov.models().getExistingFile(prov.modLoc("block/anchor_on"));
+                var modelOff = prov.models().getExistingFile(prov.modLoc("block/anchor_off"));
+
+                // 2. Map every state to a model and rotation
+                prov.getVariantBuilder(ctx.getEntry()).forAllStates(state -> {
+                    boolean powered = state.getValue(BlockStateProperties.POWERED);
+                    Direction facing = state.getValue(BlockStateProperties.HORIZONTAL_FACING);
+
+                    // Calculate Y rotation based on direction
+                    int yRot = (int) facing.toYRot();
+
+                    return ConfiguredModel.builder()
+                            .modelFile(powered ? modelOn : modelOff)
+                            .rotationY(yRot)
+                            .build();
+                });
+            })
+            // Replace .simpleItem() with this:
+            .item()
+            .model((ctx, prov) ->
+                    prov.withExistingParent(ctx.getName(), prov.modLoc("block/anchor_off")))
+            .build()
             .register();
 
     public static final BlockEntry<BallastBlock> BALLAST_BLOCK = REGISTRATE.block("ballast_block", BallastBlock::new)
@@ -149,17 +172,14 @@ public class KineticItems {
                 .initialProperties(() -> Blocks.WHITE_WOOL)
                 .properties(p -> p.explosionResistance(0.0f))
                 .blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(),
-                        prov.models().cubeBottomTop(ctx.getName(),
-                                prov.modLoc("block/buoys/" + name),   // Side texture
-                                prov.modLoc("block/buoys/" + name + "_top"), // Bottom texture
-                                prov.modLoc("block/buoys/" + name + "_top")     // Top texture
+                        prov.models().cubeAll(ctx.getName(),prov.modLoc("block/buoy/" + name)
                         )))
                 .lang(langName)
                 .simpleItem()
                 .register();
     }
 
-    public static final BlockEntry<BuoyBlock> BUOY_BLOCK = registerBuoy("buoy", "Buoy");
+//    public static final BlockEntry<BuoyBlock> BUOY_BLOCK = registerBuoy("buoy", "Buoy");
     public static final BlockEntry<BuoyBlock> WHITE_BUOY = registerBuoy("white_buoy", "White Buoy");
     public static final BlockEntry<BuoyBlock> LIGHT_GRAY_BUOY = registerBuoy("light_gray_buoy", "Light Gray Buoy");
     public static final BlockEntry<BuoyBlock> GRAY_BUOY = registerBuoy("gray_buoy", "Gray Buoy");

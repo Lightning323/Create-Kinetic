@@ -27,10 +27,8 @@ import org.valkyrienskies.mod.common.getShipManagingPos
 
 class AnchorBlock(properties: BlockBehaviour.Properties) : HorizontalDirectionalBlock(properties){
 
-    val ANCHOR_BOTTOM = KineticShapes.cuboid(2.0, 2.0, 14.0, 14.0, 4.0, 16.0)
-    val ANCHOR_ROD = KineticShapes.cuboid(7.0, 2.0, 14.0, 9.0, 24.0, 16.0)
 
-    val ANCHOR_SHAPE = KineticShapes.cuboid(7.0, 2.0, 14.0, 9.0, 24.0, 16.0)
+    val ANCHOR_SHAPE = KineticShapes.cuboid(2.0, -5.0, 2.0, 14.0, 24.0, 14.0)
 
     init {
         registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH))
@@ -55,7 +53,7 @@ class AnchorBlock(properties: BlockBehaviour.Properties) : HorizontalDirectional
         blockPos: BlockPos,
         collisionContext: CollisionContext
     ): VoxelShape {
-        return ANCHOR_SHAPE//[blockState.getValue(FACING)]
+        return ANCHOR_SHAPE;//[blockState.getValue(FACING)]
     }
 
     override fun neighborChanged(
