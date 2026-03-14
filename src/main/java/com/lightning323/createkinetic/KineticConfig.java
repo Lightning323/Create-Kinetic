@@ -50,6 +50,10 @@ public class KineticConfig {
             = BUILDER.comment("The maximum linear speed at any point on the ship caused by helm torque")
             .defineInRange("turn_speed", 3.0, 0.0, Double.MAX_VALUE);
 
+    private static final ForgeConfigSpec.BooleanValue WIND_PARTICLES
+            = BUILDER.comment("Should wind particles be enabled?")
+            .define("wind_particles", true);
+
     static final ForgeConfigSpec SPEC = BUILDER.build();
 
     public static boolean forgivingSails;
@@ -64,6 +68,7 @@ public class KineticConfig {
     public static double turnAcceleration;
     public static double maxSizeForTurnSpeedPenalty;
     public static double turnSpeed;
+    public static boolean windParticles;
 
     @SubscribeEvent
     static void onLoad(final ModConfigEvent event) {
@@ -78,6 +83,7 @@ public class KineticConfig {
         turnAcceleration = TURN_ACCELERATION.get();
         maxSizeForTurnSpeedPenalty = MAX_SIZE_FOR_TURN_SPEED_PENALTY.get();
         turnSpeed = TURN_SPEED.get();
+        windParticles = WIND_PARTICLES.get();
 
 //        magicNumberIntroduction = MAGIC_NUMBER_INTRODUCTION.get();
 //        items = ITEM_STRINGS.get().stream().map(itemName -> ForgeRegistries.ITEMS.getValue(new ResourceLocation(itemName))).collect(Collectors.toSet());

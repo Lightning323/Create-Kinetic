@@ -15,6 +15,7 @@ import it.unimi.dsi.fastutil.longs.LongSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -215,7 +216,7 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
     }
 
     @JsonIgnore
-    public static KineticShipControl getOrCreate(LoadedServerShip ship, Level world) {
+    public static KineticShipControl getOrCreate(LoadedServerShip ship, ServerLevel world) {
         if (ship != null) {
             if (ship.getAttachment(KineticShipControl.class) == null) {
                 ship.setAttachment(KineticShipControl.class, new KineticShipControl());
@@ -501,12 +502,6 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
         return numBallast <= 0 && numFnASails <= 0 && numSquareSails <= 0 && numMagicBallast <= 0 && numBuoys <= 0 && helms == 0 && !frozen;
     }
 
-    private void deleteIfEmpty() { //fixme add call for this
-        if (shouldDispose()) {
-            ship.removeAttachment(KineticShipControl.class);
-        }
-    }
-
     @SuppressWarnings("unchecked")
     private void applyPlayerControl(ControlData control, PhysShip physShip) {
         if (this.ship == null) return;
@@ -602,6 +597,15 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
 
     public void setStatic(boolean frozen) {
         this.frozen = frozen;
+    }
+
+    //TODO: Make a more efficient way with event handlers rather than ticking
+    public void periodicUpdate() {
+        updateShipBounds();
+        updateShipDirection();
+        if (shouldDispose()) {
+            ship.removeAttachment(KineticShipControl.class);
+        }
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)

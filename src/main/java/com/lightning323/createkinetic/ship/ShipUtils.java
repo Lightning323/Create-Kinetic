@@ -44,12 +44,12 @@ public class ShipUtils {
         if (VSGameUtilsKt.isBlockInShipyard(world, pos)) {
             ServerShip ship = VSGameUtilsKt.getShipObjectManagingPos((ServerLevel) world, pos);
             if (ship != null) {
-                KineticShipControl controller = KineticShipControl.getOrCreate((LoadedServerShip) ship, world);
+                KineticShipControl controller = KineticShipControl.getOrCreate((LoadedServerShip) ship, (ServerLevel)world);
                 return controller;
             } else { //ship is being loaded from template
                 ship = VSGameUtilsKt.getShipManagingPos((ServerLevel) world, pos);
                 if (ship instanceof LoadedServerShip) {
-                    KineticShipControl controller = KineticShipControl.getOrCreate((LoadedServerShip) ship, world);
+                    KineticShipControl controller = KineticShipControl.getOrCreate((LoadedServerShip) ship, (ServerLevel)world);
                     return controller;
                 }
             }
