@@ -133,7 +133,6 @@ class ShipHelmBlockEntity(
 
     @OptIn(VsBeta::class, GameTickOnly::class)
     fun tick() {
-        System.out.println("tick");
         control?.ship = ship
     }
 

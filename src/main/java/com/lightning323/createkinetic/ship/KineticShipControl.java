@@ -23,11 +23,15 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.joml.*;
 import org.valkyrienskies.core.api.ships.*;
+import org.valkyrienskies.core.api.ships.properties.ShipTransform;
 import org.valkyrienskies.core.api.world.PhysLevel;
 import org.valkyrienskies.core.impl.game.ships.PhysShipImpl;
+import org.valkyrienskies.mod.api.SeatedControllingPlayer;
+import org.valkyrienskies.mod.common.entity.ShipMountingEntity;
 
 import static java.lang.Math.*;
 
+import java.lang.Math;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -138,7 +142,8 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
     @JsonIgnore
     public Player seatedPlayer = null;
 
-
+    @JsonIgnore
+    private ControlData controlData = null;
 
     @JsonIgnore
     public Component message;
@@ -195,6 +200,13 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
         }
     }
 
+    public boolean isPlayerValid() {
+        // Check if we have a player and if they are still riding a mounting entity
+        return seatedPlayer != null &&
+                seatedPlayer.getVehicle() instanceof ShipMountingEntity &&
+                !isAnchored(); // Use your own anchor logic
+    }
+
     @Override
     public void physTick(@NotNull PhysShip physShip, @NotNull PhysLevel physLevel) {
 //        Createkinetic.LOGGER.debug("PHYS TICK");
@@ -204,6 +216,30 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
 
         physShip1.setDoFluidDrag(true);
         physShip.setStatic(isAnchored());
+
+        boolean validPlayer = isPlayerValid();
+        if (validPlayer) {
+            // Manually extract the inputs from the Minecraft Player object
+            // xxa = left/right (A/D)
+            // zza = forward/backward (W/S)
+            // jja = up/down (Space/Shift)
+
+            float leftImpulse = seatedPlayer.xxa;
+            float forwardImpulse = seatedPlayer.zza;
+            float upImpulse = seatedPlayer.yya;
+
+            // Pass these values into your applyPlayerControl method
+            this.controlData = new ControlData(
+                    Direction.NORTH, // Or get the seat's direction
+                    forwardImpulse,
+                    leftImpulse,
+                    upImpulse,
+                    seatedPlayer.isSprinting()
+            );
+
+
+            applyPlayerControl(this.controlData, physShip);
+        }
 
         while (!invForces.isEmpty()) {
             physShip1.applyInvariantForce(Objects.requireNonNull(invForces.poll()));
@@ -429,6 +465,64 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
         if (shouldDispose()) {
             ship.removeAttachment(KineticShipControl.class);
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    private void applyPlayerControl(ControlData control, PhysShip physShip) {
+        LOGGER.debug("ControlData: " + this.controlData);
+        if (this.ship == null) return;
+//
+//        final ShipTransform transform = physShip.getTransform();
+//        final org.joml.primitives.AABBdc aabb = this.ship.getWorldAABB();
+//        final Vector3dc center = transform.getPositionInWorld();
+//
+//        // 1. Calculate Largest Distance for Turn Penalty
+//        double dist1 = center.distance(aabb.minX(), center.y(), aabb.minZ());
+//        double dist2 = center.distance(aabb.minX(), center.y(), aabb.maxZ());
+//        double dist3 = center.distance(aabb.maxX(), center.y(), aabb.minZ());
+//        double dist4 = center.distance(aabb.maxX(), center.y(), aabb.maxZ());
+//
+//        double largestDistance = Math.max(Math.max(dist1, dist2), Math.max(dist3, dist4));
+//
+//        // Equivalent to .coerceIn(0.5, maxSize)
+//        double maxSize = EurekaConfig.SERVER.maxSizeForTurnSpeedPenalty;
+//        largestDistance = Math.max(0.5, Math.min(largestDistance, maxSize));
+//
+//        // 2. Physics Constants
+//        final Matrix3dc moiTensor = physShip.getMomentOfInertia();
+//        final Vector3dc omega = physShip.getAngularVelocity();
+//
+//        double maxLinearAcceleration = EurekaConfig.SERVER.turnAcceleration;
+//        double maxLinearSpeed = EurekaConfig.SERVER.turnSpeed + this.extraForceAngular;
+//
+//        // acceleration = alpha * r -> maxAlpha = maxAcceleration / r
+//        double maxOmegaY = maxLinearSpeed / largestDistance;
+//        double maxAlphaY = maxLinearAcceleration / largestDistance;
+//
+//        boolean isBelowMaxTurnSpeed = Math.abs(omega.y()) < maxOmegaY;
+//
+//        // 3. Determine Acceleration Multiplier
+//        double normalizedAlphaYMultiplier;
+//        if (isBelowMaxTurnSpeed && control.getLeftImpulse() != 0.0f) {
+//            normalizedAlphaYMultiplier = (double) control.getLeftImpulse();
+//        } else {
+//            // If not turning or over speed, apply counter-torque to stabilize
+//            normalizedAlphaYMultiplier = -Math.max(-1.0, Math.min(1.0, omega.y()));
+//        }
+//
+//        double idealAlphaY = normalizedAlphaYMultiplier * maxAlphaY;
+//
+//        // 4. Apply Torque (Rotation)
+//        Vector3d torque = new Vector3d(0.0, idealAlphaY, 0.0);
+//        moiTensor.transform(torque); // Applies the Moment of Inertia tensor to the vector
+//
+//        // Add banking effect (leaning into the turn)
+//        torque.add(getPlayerControlledBanking(control, physShip, moiTensor, -idealAlphaY));
+//
+//        physShip.applyWorldTorque(torque);
+//
+//        // 5. Apply Force (Forward/Backward)
+//        physShip.applyWorldForce(getPlayerForwardVel(control, physShip));
     }
 
     @Override
