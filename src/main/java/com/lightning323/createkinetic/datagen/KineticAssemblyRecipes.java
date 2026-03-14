@@ -73,11 +73,15 @@ public class KineticAssemblyRecipes extends RecipeProvider {
         ResourceLocation id = CreateKinetic.resource("mechanical_sail_assembly");
 
         new SequencedAssemblyRecipeBuilder(id)
-                .require(AllItems.ANDESITE_ALLOY) // <--- ADD THIS: The base item to start the process
+                .require(AllItems.BRASS_SHEET) // <--- ADD THIS: The base item to start the process
                 .transitionTo(KineticItems.INCOMPLETE_STEERING_MECHANISM.get())
                 .addOutput(KineticItems.STEERING_MECHANISM.get(), 1)
+                // 20% chance to fail and get a "failed" variant or scrap
+                .addOutput(AllBlocks.COGWHEEL.get(), 10)
+                .addOutput(Items.IRON_NUGGET, 10)
                 .loops(3)
-                .addStep(DeployerApplicationRecipe::new, b -> b.require(Items.WHITE_WOOL))
+                .addStep(DeployerApplicationRecipe::new, b -> b.require(AllItems.ELECTRON_TUBE))
+                .addStep(DeployerApplicationRecipe::new, b -> b.require(AllBlocks.LARGE_COGWHEEL))
                 .addStep(DeployerApplicationRecipe::new, b -> b.require(Items.IRON_NUGGET))
                 .addStep(PressingRecipe::new, b -> b)
                 .build(consumer);
