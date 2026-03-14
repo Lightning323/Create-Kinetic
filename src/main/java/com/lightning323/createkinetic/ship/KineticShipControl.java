@@ -449,6 +449,9 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
             }
         }
         waterAmount = physShip1.getLiquidOverlap();
+        if (shouldDispose()) {//Dispose of this ship if its no longer needed
+            ship.removeAttachment(KineticShipControl.class);
+        }
     }
 
     private boolean isAnchored() {
@@ -625,14 +628,6 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
         this.frozen = frozen;
     }
 
-    //TODO: Make a more efficient way with event handlers rather than ticking
-    public void periodicUpdate() {
-        updateShipBounds();
-        updateShipDirection();
-        if (shouldDispose()) {
-            ship.removeAttachment(KineticShipControl.class);
-        }
-    }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     private static class ForceAtPos {
