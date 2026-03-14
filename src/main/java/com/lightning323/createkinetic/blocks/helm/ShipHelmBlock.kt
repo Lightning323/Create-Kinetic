@@ -1,7 +1,6 @@
 package com.lightning323.createkinetic.blocks.helm
 
 import com.lightning323.createkinetic.registries.KineticBlockEntities
-import com.lightning323.createkinetic.ship.KineticShipControl
 import com.lightning323.createkinetic.utils.VSUtils
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -32,7 +31,6 @@ import org.valkyrienskies.core.api.VsBeta
 import org.valkyrienskies.core.api.util.GameTickOnly
 import org.valkyrienskies.mod.common.ValkyrienSkiesMod
 import org.valkyrienskies.mod.common.getLoadedShipManagingPos
-import org.valkyrienskies.mod.common.entity.ShipMountingEntity
 import org.valkyrienskies.mod.common.getShipManagingPos
 
 class ShipHelmBlock(properties: Properties, val woodType: WoodType) : BaseEntityBlock(properties) {
@@ -41,9 +39,15 @@ class ShipHelmBlock(properties: Properties, val woodType: WoodType) : BaseEntity
     val SIMPLE_SHAPE = Block.box(0.0, 0.0, 0.0, 16.0, 2.0, 16.0)
 
     //    val HELM_SHAPE = DirectionalShape(RotShapes.or(HELM_BASE, HELM_POLE))
-//
+    private val woodTypeEnum: WoodTypeEnum
+
+    fun getWoodTypeEnum(): WoodTypeEnum {
+        return this.woodTypeEnum
+    }
+
     init {
         registerDefaultState(this.stateDefinition.any().setValue(HORIZONTAL_FACING, Direction.NORTH))
+        woodTypeEnum = WoodTypeEnum.fromVanilla(woodType)
     }
 
     override fun newBlockEntity(blockPos: BlockPos, state: BlockState): BlockEntity {
@@ -165,4 +169,8 @@ class ShipHelmBlock(properties: Properties, val woodType: WoodType) : BaseEntity
             blockEntity.tick()
         }
     }
+
+
+
+
 }

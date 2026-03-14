@@ -3,7 +3,6 @@ package com.lightning323.createkinetic.registries;
 import com.lightning323.createkinetic.blocks.AnchorBlock;
 import com.lightning323.createkinetic.blocks.BallastBlock;
 import com.lightning323.createkinetic.blocks.BuoyBlock;
-import com.lightning323.createkinetic.blocks.helm.IWoodType;
 import com.lightning323.createkinetic.blocks.helm.ShipHelmBlock;
 import com.lightning323.createkinetic.blocks.sail.SailBlock;
 import com.lightning323.createkinetic.blocks.sail.sailPulley.SailPulleyBlock;

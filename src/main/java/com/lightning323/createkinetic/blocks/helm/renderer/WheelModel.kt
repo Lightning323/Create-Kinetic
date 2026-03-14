@@ -1,21 +1,16 @@
 package org.valkyrienskies.eureka.blockentity.renderer
 
-import com.google.common.collect.ImmutableMap
-import com.lightning323.createkinetic.Createkinetic
-import com.lightning323.createkinetic.blocks.helm.IWoodType
 import com.lightning323.createkinetic.blocks.helm.ShipHelmBlock
+import com.lightning323.createkinetic.blocks.helm.WoodTypeEnum
 import com.lightning323.createkinetic.registries.KineticPartialModels
 import com.mojang.blaze3d.vertex.PoseStack
+import dev.engine_room.flywheel.lib.model.baked.PartialModel
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.RenderType
-import net.minecraft.client.resources.model.BakedModel
 import net.minecraft.util.RandomSource
 import net.minecraft.world.level.block.entity.BlockEntity
-import net.minecraft.world.level.block.state.StateHolder
-import net.minecraft.world.level.block.state.properties.EnumProperty
 import net.minecraft.world.level.block.state.properties.WoodType
-import java.util.function.Function
 
 // OK so what dis does im making mc happy about states
 // WheelModels has many states (wood type)
@@ -34,16 +29,14 @@ object WheelModels {
     ) {
         val level = blockEntity.level ?: return
         val blockState = blockEntity.blockState
-        val woodType = (blockState.block as ShipHelmBlock).woodType
+        val woodType = (blockState.block as ShipHelmBlock).getWoodTypeEnum()
 
         matrixStack.pushPose()
         // Model isn't centered calculated and need to use 0.625 on y and z 0.25
         matrixStack.translate(-0.5, -0.625, -0.25)
-
         val blockPos = blockEntity.blockPos
-
-
-        val bakedModel = KineticPartialModels.HELM_WHEEL.get() // That's it!
+        var bakedModel = KineticPartialModels.getHelmWheel(woodType).get();
+//        val bakedModel = KineticPartialModels.HELM_WHEEL.get()
 
         mc.blockRenderer.modelRenderer.tesselateWithoutAO(
             level,
