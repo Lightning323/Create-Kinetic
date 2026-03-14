@@ -16,6 +16,7 @@ import it.unimi.dsi.fastutil.longs.LongSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.core.Direction;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.Vec3;
@@ -124,7 +125,7 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
     public int numBallast = 0;
     public int numMagicBallast = 0;
     public int numBuoys = 0;
-    public int numHelms = 0;
+    public int helms = 0;
 
     public volatile double waterAmount = 0.0;
 
@@ -133,6 +134,11 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
 
     @JsonIgnore
     public Level world = null;
+
+    @JsonIgnore
+    public Player seatedPlayer = null;
+
+
 
     @JsonIgnore
     public Component message;
@@ -243,7 +249,7 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
             keelForce = new Vector3d(0, 0, force.z() * 4);
         }
 
-        if (numHelms > 0) physShip.applyRotDependentForce(keelForce);
+        if (helms > 0) physShip.applyRotDependentForce(keelForce);
 
 //        if (numMagicBallast > 0) { //TODO: Implement this
 //            Vector3d shipUp = new Vector3d(0.0, 1.0, 0.0);
@@ -416,7 +422,7 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
     }
 
     public boolean shouldDispose() {
-        return numBallast <= 0 && numFnASails <= 0 && numSquareSails <= 0 && numMagicBallast <= 0 && numBuoys <= 0 && numHelms == 0 && !frozen;
+        return numBallast <= 0 && numFnASails <= 0 && numSquareSails <= 0 && numMagicBallast <= 0 && numBuoys <= 0 && helms == 0 && !frozen;
     }
 
     private void deleteIfEmpty() { //fixme add call for this

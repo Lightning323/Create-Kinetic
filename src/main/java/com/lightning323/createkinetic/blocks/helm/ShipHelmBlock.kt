@@ -1,6 +1,8 @@
 package com.lightning323.createkinetic.blocks.helm
 
 import com.lightning323.createkinetic.registries.KineticBlockEntities
+import com.lightning323.createkinetic.ship.KineticShipControl
+import com.lightning323.createkinetic.utils.VSUtils
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.network.chat.Component
@@ -33,82 +35,85 @@ import org.valkyrienskies.mod.common.getLoadedShipManagingPos
 import org.valkyrienskies.mod.common.entity.ShipMountingEntity
 import org.valkyrienskies.mod.common.getShipManagingPos
 
-class ShipHelmBlock(properties: Properties, val woodType: WoodType) :    BaseEntityBlock(properties) {
-//    val HELM_BASE = RotShapes.box(2.0, 0.0, 2.0, 14.0, 2.0, 14.0)
+class ShipHelmBlock(properties: Properties, val woodType: WoodType) : BaseEntityBlock(properties) {
+    //    val HELM_BASE = RotShapes.box(2.0, 0.0, 2.0, 14.0, 2.0, 14.0)
 //    val HELM_POLE = RotShapes.box(4.0, 2.0, 5.0, 12.0, 13.0, 13.0)
-//
-//    val HELM_SHAPE = DirectionalShape(RotShapes.or(HELM_BASE, HELM_POLE))
+    val SIMPLE_SHAPE = Block.box(0.0, 0.0, 0.0, 16.0, 2.0, 16.0)
+
+    //    val HELM_SHAPE = DirectionalShape(RotShapes.or(HELM_BASE, HELM_POLE))
 //
     init {
         registerDefaultState(this.stateDefinition.any().setValue(HORIZONTAL_FACING, Direction.NORTH))
     }
 
-    // 1. Tell Create/Registrate which BE class this block uses
-    fun getBlockEntityClass(): Class<ShipHelmBlockEntity> = ShipHelmBlockEntity::class.java
-
-    // 2. Point to the Registry Entry
-    fun getBlockEntityType(): BlockEntityType<out ShipHelmBlockEntity> =
-        KineticBlockEntities.SHIP_HELM.get()
-
-    // 3. Use the helper to create the entity safely
     override fun newBlockEntity(blockPos: BlockPos, state: BlockState): BlockEntity {
         return KineticBlockEntities.SHIP_HELM.create(blockPos, state)
     }
 
-//    @OptIn(GameTickOnly::class)
-//    override fun onPlace(state: BlockState, level: Level, pos: BlockPos, oldState: BlockState, isMoving: Boolean) {
-//        super.onPlace(state, level, pos, oldState, isMoving)
-//
-//        if (level.isClientSide) return
-//        level as ServerLevel
-//
-//        val ship = level.getLoadedShipManagingPos(pos) ?: level.getShipManagingPos(pos) ?: return
-//        EurekaShipControl.deferUntilLoaded(ship) { it.helms += 1 }
-//    }
-//
-//    @OptIn(GameTickOnly::class, VsBeta::class)
-//    override fun onRemove(state: BlockState, level: Level, pos: BlockPos, newState: BlockState, isMoving: Boolean) {
-//        super.onRemove(state, level, pos, newState, isMoving)
-//
-//        if (level.isClientSide) return
-//        level as ServerLevel
-//
-//        val ship = level.getLoadedShipManagingPos(pos) ?: level.getShipManagingPos(pos) ?: return
-//        EurekaShipControl.deferUntilLoaded(ship
-//        ) {
+    @OptIn(GameTickOnly::class)
+    override fun onPlace(state: BlockState, level: Level, pos: BlockPos, oldState: BlockState, isMoving: Boolean) {
+        super.onPlace(state, level, pos, oldState, isMoving)
+
+        if (level.isClientSide) return
+        level as ServerLevel
+
+        val ship = level.getLoadedShipManagingPos(pos) ?: level.getShipManagingPos(pos) ?: return
+        val it = VSUtils.getOrCreateShipController(level, pos);
+        if (it != null) {
+            it.helms+=1;
+        }
+//        KineticShipControl.deferUntilLoaded(ship) { it.helms += 1 }
+    }
+
+    @OptIn(GameTickOnly::class, VsBeta::class)
+    override fun onRemove(state: BlockState, level: Level, pos: BlockPos, newState: BlockState, isMoving: Boolean) {
+        super.onRemove(state, level, pos, newState, isMoving)
+
+        if (level.isClientSide) return
+        level as ServerLevel
+
+        val ship = level.getLoadedShipManagingPos(pos) ?: level.getShipManagingPos(pos) ?: return
+
+        val it = VSUtils.getOrCreateShipController(level, pos);
+        if (it != null) {
+            if (it.helms <= 1 && it.seatedPlayer?.vehicle?.type == ValkyrienSkiesMod.SHIP_MOUNTING_ENTITY_TYPE) {
+                it.seatedPlayer!!.unRide()
+                it.seatedPlayer = null
+            }
+            it.helms -= 1
+        }
+//        KineticShipControl.deferUntilLoaded(ship) {
 //            if (it.helms <= 1 && it.seatedPlayer?.vehicle?.type == ValkyrienSkiesMod.SHIP_MOUNTING_ENTITY_TYPE) {
 //                it.seatedPlayer!!.unRide()
 //                it.seatedPlayer = null
 //            }
 //            it.helms -= 1
 //        }
-//    }
+    }
 
-//    override fun use(
-//        state: BlockState,
-//        level: Level,
-//        pos: BlockPos,
-//        player: Player,
-//        hand: InteractionHand,
-//        blockHitResult: BlockHitResult
-//    ): InteractionResult {
-//        if (level.isClientSide) return InteractionResult.SUCCESS
-//        val blockEntity = level.getBlockEntity(pos) as ShipHelmBlockEntity
-//
-//        return if (player.isSecondaryUseActive) {
-//            player.openMenu(blockEntity)
-//            InteractionResult.CONSUME
-//        } else if (level.getShipManagingPos(pos) == null) {
-//            player.displayClientMessage(Component.translatable("info.vs_eureka.sneak_to_open_helm"), true)
-//            InteractionResult.CONSUME
-//        } else if (blockEntity.sit(player)) {
-//            InteractionResult.CONSUME
-//        } else InteractionResult.PASS
-//    }
+    override fun use(
+        state: BlockState,
+        level: Level,
+        pos: BlockPos,
+        player: Player,
+        hand: InteractionHand,
+        blockHitResult: BlockHitResult
+    ): InteractionResult {
+        if (level.isClientSide) return InteractionResult.SUCCESS
+        val blockEntity = level.getBlockEntity(pos) as ShipHelmBlockEntity
+
+        return if (level.getShipManagingPos(pos) == null) {
+            player.displayClientMessage(Component.translatable("info.vs_eureka.sneak_to_open_helm"), true)
+            InteractionResult.CONSUME
+        } else if (blockEntity.sit(player)) {
+            InteractionResult.CONSUME
+        } else InteractionResult.PASS
+    }
 
     override fun getRenderShape(blockState: BlockState): RenderShape {
         return RenderShape.MODEL
     }
+
     override fun getStateForPlacement(ctx: BlockPlaceContext): BlockState? {
         return defaultBlockState()
             .setValue(HORIZONTAL_FACING, ctx.horizontalDirection.opposite)
@@ -117,43 +122,47 @@ class ShipHelmBlock(properties: Properties, val woodType: WoodType) :    BaseEnt
     override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {
         builder.add(HORIZONTAL_FACING)
     }
-//
 
-//
-//    override fun getShape(
-//        blockState: BlockState,
-//        blockGetter: BlockGetter,
-//        blockPos: BlockPos,
-//        collisionContext: CollisionContext
-//    ): VoxelShape {
+
+    override fun getShape(
+        blockState: BlockState,
+        blockGetter: BlockGetter,
+        blockPos: BlockPos,
+        collisionContext: CollisionContext
+    ): VoxelShape {
+        return SIMPLE_SHAPE;
 //        return HELM_SHAPE[blockState.getValue(HORIZONTAL_FACING)]
-//    }
-//
-//    override fun useShapeForLightOcclusion(blockState: BlockState): Boolean {
-//        return true
-//    }
-//
-//    override fun isPathfindable(
-//        blockState: BlockState,
-//        blockGetter: BlockGetter,
-//        blockPos: BlockPos,
-//        pathComputationType: PathComputationType
-//    ): Boolean {
-//        return false
-//    }
-//
-//    override fun rotate(state: BlockState, rotation: Rotation): BlockState? {
-//        return state.setValue(HORIZONTAL_FACING, rotation.rotate(state.getValue(HORIZONTAL_FACING) as Direction)) as BlockState
-//    }
-//
-//    override fun <T : BlockEntity?> getTicker(
-//        level: Level,
-//        state: BlockState,
-//        type: BlockEntityType<T>
-//    ): BlockEntityTicker<T> = BlockEntityTicker { level, pos, state, blockEntity ->
-//        if (level.isClientSide) return@BlockEntityTicker
-//        if (blockEntity is ShipHelmBlockEntity) {
-//            blockEntity.tick()
-//        }
-//    }
+    }
+
+    //
+    override fun useShapeForLightOcclusion(blockState: BlockState): Boolean {
+        return true
+    }
+
+    override fun isPathfindable(
+        blockState: BlockState,
+        blockGetter: BlockGetter,
+        blockPos: BlockPos,
+        pathComputationType: PathComputationType
+    ): Boolean {
+        return false
+    }
+
+    override fun rotate(state: BlockState, rotation: Rotation): BlockState? {
+        return state.setValue(
+            HORIZONTAL_FACING,
+            rotation.rotate(state.getValue(HORIZONTAL_FACING) as Direction)
+        ) as BlockState
+    }
+
+    override fun <T : BlockEntity?> getTicker(
+        level: Level,
+        state: BlockState,
+        type: BlockEntityType<T>
+    ): BlockEntityTicker<T> = BlockEntityTicker { level, pos, state, blockEntity ->
+        if (level.isClientSide) return@BlockEntityTicker
+        if (blockEntity is ShipHelmBlockEntity) {
+            blockEntity.tick()
+        }
+    }
 }
