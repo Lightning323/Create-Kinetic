@@ -3,15 +3,17 @@ package com.lightning323.createkinetic.events;
 import com.lightning323.createkinetic.ship.KineticShipControl;
 import com.lightning323.createkinetic.ship.ShipUtils;
 import com.simibubi.create.content.contraptions.bearing.SailBlock;
+import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.valkyrienskies.mod.common.VSGameUtilsKt;
 
-import static com.lightning323.createkinetic.Createkinetic.MOD_ID;
+import static com.lightning323.createkinetic.CreateKinetic.MOD_ID;
 
 @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class KineticEvents {
@@ -19,24 +21,22 @@ public class KineticEvents {
     @SubscribeEvent
     public static void onBlockPlaced(BlockEvent.EntityPlaceEvent event) {
         BlockState state = event.getPlacedBlock();
-        /**
-         * Windmill sails act as sails for our ship
-         */
-        if (
-                state.getBlock() instanceof SailBlock
-        ) {
-            ShipUtils.addSail(event.getEntity().level(), event.getPos());
+        if (event.getLevel().isClientSide()) return;
+
+        if (state.getBlock() instanceof SailBlock) {
+            Direction value = state.getValue(BlockStateProperties.FACING);
+            ShipUtils.addBlockSail(event.getEntity().level(), event.getPos(), value);
         }
     }
 
     @SubscribeEvent
     public static void onBlockBroken(BlockEvent.BreakEvent event) {
         BlockState state = event.getState();
+        if (event.getLevel().isClientSide()) return;
 
-        if (
-                state.getBlock() instanceof SailBlock
-        ) {
-            ShipUtils.removeSail(event.getPlayer().level(), event.getPos());
+        if (state.getBlock() instanceof SailBlock) {
+            Direction value = state.getValue(BlockStateProperties.FACING);
+            ShipUtils.removeBlockSail(event.getPlayer().level(), event.getPos(), value);
         }
     }
 

@@ -4,7 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
-public class ServerWindManager {
+public class WindManager {
     public static double getWindStrength(Level world, BlockPos shipPos3) {
         return 1.0;//TODO: Add
     }

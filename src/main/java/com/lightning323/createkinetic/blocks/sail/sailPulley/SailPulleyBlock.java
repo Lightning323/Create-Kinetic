@@ -4,7 +4,7 @@ import com.lightning323.createkinetic.registries.KineticBlockEntities;
 import com.lightning323.createkinetic.registries.KineticBlocks;
 import com.lightning323.createkinetic.registries.KineticShapes;
 import com.lightning323.createkinetic.ship.KineticShipControl;
-import com.lightning323.createkinetic.utils.VSUtils;
+import com.lightning323.createkinetic.ship.ShipUtils;
 import com.simibubi.create.content.kinetics.base.HorizontalAxisKineticBlock;
 import com.simibubi.create.foundation.block.IBE;
 import net.minecraft.core.BlockPos;
@@ -123,10 +123,10 @@ public class SailPulleyBlock extends HorizontalAxisKineticBlock implements IBE<S
 
         @Override
         public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-            KineticShipControl shipController = VSUtils.getOrCreateShipController(worldIn, pos);
+            KineticShipControl shipController = ShipUtils.getOrCreateShipController(worldIn, pos);
             if (shipController != null) {
                 shipController.numSquareSails--;
-                shipController.countSails();
+                shipController.countAndRemoveSails();
             }
 
 

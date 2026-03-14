@@ -10,7 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 
 import java.util.function.Supplier;
 
-import static com.lightning323.createkinetic.Createkinetic.MOD_ID;
+import static com.lightning323.createkinetic.CreateKinetic.MOD_ID;
 
 public class KineticContraptions {
     public static final Holder.Reference<ContraptionType> SAIL = register("sail", SailPulleyContraption::new);

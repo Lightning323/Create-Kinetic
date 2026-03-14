@@ -1,9 +1,9 @@
 package com.lightning323.createkinetic.blocks.sail;
 
-import com.lightning323.createkinetic.Createkinetic;
+import com.lightning323.createkinetic.CreateKinetic;
 import com.lightning323.createkinetic.registries.KineticBlocks;
 import com.lightning323.createkinetic.ship.KineticShipControl;
-import com.lightning323.createkinetic.utils.VSUtils;
+import com.lightning323.createkinetic.ship.ShipUtils;
 import com.simibubi.create.api.contraption.BlockMovementChecks;
 import com.simibubi.create.content.contraptions.*;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
@@ -248,13 +248,13 @@ public class SailBlockEntity extends KineticBlockEntity implements IDisplayAssem
     @Override
     public void onLoad() {
         super.onLoad();
-        addSail(getLevel(),getBlockPos());
+        addSail(getLevel(), getBlockPos(), this.getBlockState().getValue(BlockStateProperties.HORIZONTAL_AXIS));
     }
 
     @Override
     public void remove() {
         super.remove();
-        removeSail(getLevel(),getBlockPos());
+        removeSail(getLevel(), getBlockPos(), this.getBlockState().getValue(BlockStateProperties.HORIZONTAL_AXIS));
     }
 
 
@@ -435,9 +435,9 @@ public class SailBlockEntity extends KineticBlockEntity implements IDisplayAssem
             }
 
             this.totalSails = (int) actuallyPlacedSails;
-            KineticShipControl shipController = VSUtils.getOrCreateShipController(getLevel(), getBlockPos());
+            KineticShipControl shipController = ShipUtils.getOrCreateShipController(getLevel(), getBlockPos());
             if (shipController != null) {
-                Createkinetic.LOGGER.debug("Total sails: " + totalSails + " Offset: " + offset);
+                CreateKinetic.LOGGER.debug("Total sails: " + totalSails + " Offset: " + offset);
                 shipController.updateSailCount();
             }
 

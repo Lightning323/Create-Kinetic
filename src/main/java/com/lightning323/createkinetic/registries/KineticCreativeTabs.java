@@ -8,8 +8,8 @@ import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 
-import static com.lightning323.createkinetic.Createkinetic.MOD_ID;
-import static com.lightning323.createkinetic.Createkinetic.REGISTRATE;
+import static com.lightning323.createkinetic.CreateKinetic.MOD_ID;
+import static com.lightning323.createkinetic.CreateKinetic.REGISTRATE;
 
 public class KineticCreativeTabs {
     // Create a Deferred Register to hold CreativeModeTabs which will all be registered under the "createkinetic" namespace

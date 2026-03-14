@@ -4,7 +4,7 @@ import com.lightning323.createkinetic.items.ShipTotemItem;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import net.minecraft.world.item.Rarity;
 
-import static com.lightning323.createkinetic.Createkinetic.REGISTRATE;
+import static com.lightning323.createkinetic.CreateKinetic.REGISTRATE;
 
 public class KineticItems {
 

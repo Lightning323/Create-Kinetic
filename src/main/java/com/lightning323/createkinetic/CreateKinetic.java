@@ -20,17 +20,18 @@ import org.slf4j.Logger;
 import com.lightning323.createkinetic.network.NetworkHandler;
 import org.slf4j.LoggerFactory;
 import org.valkyrienskies.mod.api.ValkyrienSkies;
+import org.valkyrienskies.mod.common.ValkyrienSkiesMod;
 
 import static com.lightning323.createkinetic.registries.KineticCreativeTabs.CREATIVE_MODE_TABS;
 
 // The value here should match an entry in the META-INF/mods.toml file
-@Mod(Createkinetic.MOD_ID)
-public class Createkinetic {
+@Mod(CreateKinetic.MOD_ID)
+public class CreateKinetic {
     public static final String MOD_ID = "createkinetic";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
     public static final CreateRegistrate REGISTRATE = CreateRegistrate.create(MOD_ID);
 
-    public Createkinetic() {
+    public CreateKinetic() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         modEventBus.addListener(this::commonSetup);
@@ -62,6 +63,7 @@ public class Createkinetic {
         KineticPartialModels.init();
         KineticContraptions.init();
         KineticSpriteShifts.init();
+        KineticParticles.init();
     }
 
     //Datagen event

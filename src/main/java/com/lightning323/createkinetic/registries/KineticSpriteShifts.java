@@ -1,14 +1,8 @@
 package com.lightning323.createkinetic.registries;
 
-import com.lightning323.createkinetic.Createkinetic;
-import com.lightning323.createkinetic.sprite.KineticSpriteShiftEntry;
 import com.lightning323.createkinetic.sprite.KineticSpriteShifter;
 import com.simibubi.create.Create;
 import net.createmod.catnip.render.SpriteShiftEntry;
-import net.createmod.catnip.render.SpriteShifter;
-import net.minecraft.resources.ResourceLocation;
-
-import static com.lightning323.createkinetic.Createkinetic.MOD_ID;
 
 public class KineticSpriteShifts {
 

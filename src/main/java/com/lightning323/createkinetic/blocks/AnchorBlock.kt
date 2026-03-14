@@ -1,8 +1,7 @@
 package com.lightning323.createkinetic.blocks
 
 import com.lightning323.createkinetic.registries.KineticShapes
-import com.lightning323.createkinetic.ship.KineticShipControl
-import com.lightning323.createkinetic.utils.VSUtils
+import com.lightning323.createkinetic.ship.ShipUtils
 import net.minecraft.world.level.block.HorizontalDirectionalBlock
 
 import net.minecraft.core.BlockPos
@@ -12,18 +11,14 @@ import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.SoundType
 import net.minecraft.world.level.block.state.BlockBehaviour
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
-import net.minecraft.world.level.material.MapColor
 import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.VoxelShape
 import org.valkyrienskies.core.api.VsBeta
 import org.valkyrienskies.core.api.util.GameTickOnly
-import org.valkyrienskies.mod.common.getLoadedShipManagingPos
-import org.valkyrienskies.mod.common.getShipManagingPos
 
 class AnchorBlock(properties: BlockBehaviour.Properties) : HorizontalDirectionalBlock(properties){
 
@@ -84,7 +79,7 @@ class AnchorBlock(properties: BlockBehaviour.Properties) : HorizontalDirectional
 
         val bl = state.getValue(BlockStateProperties.POWERED)
 
-        val controller = VSUtils.getOrCreateShipController(level, pos);
+        val controller = ShipUtils.getOrCreateShipController(level, pos);
         if(controller!=null) {
             controller.anchors += 1
             controller.anchorsActive += if (bl) 1 else 0
@@ -99,7 +94,7 @@ class AnchorBlock(properties: BlockBehaviour.Properties) : HorizontalDirectional
         level as ServerLevel
         val bl = state.getValue(BlockStateProperties.POWERED)
 
-        val controller = VSUtils.getOrCreateShipController(level, pos);
+        val controller = ShipUtils.getOrCreateShipController(level, pos);
         if(controller!=null) {
             controller.anchors -= 1
             controller.anchorsActive -= if (bl) 1 else 0

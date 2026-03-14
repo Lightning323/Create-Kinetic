@@ -1,6 +1,6 @@
 package com.lightning323.createkinetic.items;
 
-import com.lightning323.createkinetic.Createkinetic;
+import com.lightning323.createkinetic.CreateKinetic;
 import com.lightning323.createkinetic.commands.KineticCommands;
 import com.lightning323.createkinetic.utils.VSUtils;
 import net.minecraft.ChatFormatting;
@@ -8,16 +8,12 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.HoverEvent;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import org.valkyrienskies.core.api.ships.LoadedServerShip;
 import org.valkyrienskies.core.api.ships.Ship;
 import org.valkyrienskies.core.internal.world.VsiServerShipWorld;
 import org.valkyrienskies.mod.common.VSGameUtilsKt;
-
-import static com.lightning323.createkinetic.commands.KineticCommands.executeParsedCommandOP;
 
 public class ShipTotemItem extends TotemItem {
 
@@ -31,7 +27,7 @@ public class ShipTotemItem extends TotemItem {
         if (shipSlug.isBlank() || !i.hasCustomHoverName()) {
             VsiServerShipWorld shipObjectWorld = VSGameUtilsKt.getShipObjectWorld(player.getServer());
             Ship ship = VSUtils.getShipNearPlayer(shipObjectWorld, player);
-            Createkinetic.LOGGER.debug("Found ship: {}", ship);
+            CreateKinetic.LOGGER.debug("Found ship: {}", ship);
             if (ship == null
                     || KineticCommands.renameShipTotem(player, player::sendSystemMessage, ship) != 1) {
                 player.sendSystemMessage(Component.literal("You cant use it yet! Click the totem on an existing ship to rename it, or Rename the totem with ").append(

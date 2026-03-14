@@ -10,7 +10,7 @@ import com.lightning323.createkinetic.blocks.sail.sailPulley.SailPulleyVisual;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
 import org.valkyrienskies.eureka.blockentity.renderer.ShipHelmBlockEntityRenderer;
 
-import static com.lightning323.createkinetic.Createkinetic.REGISTRATE;
+import static com.lightning323.createkinetic.CreateKinetic.REGISTRATE;
 
 
 public class KineticBlockEntities {

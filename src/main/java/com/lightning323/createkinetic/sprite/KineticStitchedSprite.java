@@ -1,14 +1,8 @@
 package com.lightning323.createkinetic.sprite;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import com.lightning323.createkinetic.Createkinetic;
+import com.lightning323.createkinetic.CreateKinetic;
 import net.createmod.catnip.render.StitchedSprite;
 import net.minecraft.client.renderer.texture.TextureAtlas;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.InventoryMenu;
 
@@ -24,7 +18,7 @@ public class KineticStitchedSprite extends StitchedSprite {
 
     protected void loadSprite(TextureAtlas atlas) {
         sprite = atlas.getSprite(location);
-        Createkinetic.LOGGER.debug("Created spriteShiftEntry for {} at X={}; y={}", location, sprite.getX(), sprite.getY());
+        CreateKinetic.LOGGER.debug("Created spriteShiftEntry for {} at X={}; y={}", location, sprite.getX(), sprite.getY());
     }
 
 }

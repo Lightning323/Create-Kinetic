@@ -1,13 +1,10 @@
 package com.lightning323.createkinetic.utils;
 
-import com.lightning323.createkinetic.commands.KineticCommands;
-import com.lightning323.createkinetic.ship.KineticShipControl;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.SharedSuggestionProvider;
-import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
@@ -39,23 +36,6 @@ public class VSUtils {
                 + teleportx + " " + teleporty + " " + teleportz, false);
     }
 
-
-    public static KineticShipControl getOrCreateShipController(Level world, BlockPos pos) {
-        if (VSGameUtilsKt.isBlockInShipyard(world, pos)) {
-            ServerShip ship = VSGameUtilsKt.getShipObjectManagingPos((ServerLevel) world, pos);
-            if (ship != null) {
-                KineticShipControl controller = KineticShipControl.getOrCreate((LoadedServerShip) ship, world);
-                return controller;
-            } else { //ship is being loaded from template
-                ship = VSGameUtilsKt.getShipManagingPos((ServerLevel) world, pos);
-                if (ship instanceof LoadedServerShip) {
-                    KineticShipControl controller = KineticShipControl.getOrCreate((LoadedServerShip) ship, world);
-                    return controller;
-                }
-            }
-        }
-        return null;
-    }
 
     public static SuggestionProvider<CommandSourceStack> shipSlugSuggestions(boolean allDimensions, int maxDistance) {
         return (CommandContext<CommandSourceStack> context, SuggestionsBuilder builder) -> {

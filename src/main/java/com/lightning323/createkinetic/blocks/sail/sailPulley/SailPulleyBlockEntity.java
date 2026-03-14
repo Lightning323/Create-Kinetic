@@ -1,9 +1,9 @@
 package com.lightning323.createkinetic.blocks.sail.sailPulley;
 
-import com.lightning323.createkinetic.Createkinetic;
+import com.lightning323.createkinetic.CreateKinetic;
 import com.lightning323.createkinetic.registries.KineticBlocks;
 import com.lightning323.createkinetic.ship.KineticShipControl;
-import com.lightning323.createkinetic.utils.VSUtils;
+import com.lightning323.createkinetic.ship.ShipUtils;
 import com.simibubi.create.api.contraption.BlockMovementChecks;
 import com.simibubi.create.content.contraptions.AbstractContraptionEntity;
 import com.simibubi.create.content.contraptions.AssemblyException;
@@ -42,19 +42,24 @@ import java.util.List;
 public class SailPulleyBlockEntity extends LinearActuatorBlockEntity implements ThresholdSwitchObservable {
 
 
-    public static void addSail(Level level, BlockPos pos){
+    public static void addSail(Level level, BlockPos pos, Direction.Axis sailAxis) {
         if (level.isClientSide) return;
-        KineticShipControl shipController = VSUtils.getOrCreateShipController(level, pos);
+        KineticShipControl shipController = ShipUtils.getOrCreateShipController(level, pos);
         if (shipController != null) {
-            shipController.sailPulleys.add(pos.asLong());
+            if(sailAxis == Direction.Axis.X){
+                shipController.sailPulleysX.add(pos.asLong());
+            }
+            else{
+                shipController.sailPulleysZ.add(pos.asLong());
+            }
         }
     }
 
-    public static void removeSail(Level level, BlockPos pos){
+    public static void removeSail(Level level, BlockPos pos, Direction.Axis sailAxis) {
         if (level.isClientSide) return;
-        KineticShipControl shipController = VSUtils.getOrCreateShipController(level, pos);
+        KineticShipControl shipController = ShipUtils.getOrCreateShipController(level, pos);
         if (shipController != null) {
-            shipController.sailPulleys.remove(pos.asLong());
+            shipController.sailPulleysX.remove(pos.asLong());
             shipController.updateSailCount();
         }
     }
@@ -62,13 +67,13 @@ public class SailPulleyBlockEntity extends LinearActuatorBlockEntity implements 
     @Override
     public void onLoad() {
         super.onLoad();
-        addSail(getLevel(),getBlockPos());
+        addSail(getLevel(), getBlockPos(), this.getBlockState().getValue(BlockStateProperties.HORIZONTAL_AXIS));
     }
 
     @Override
     public void remove() {
         super.remove();
-        removeSail(getLevel(),getBlockPos());
+        removeSail(getLevel(), getBlockPos(), this.getBlockState().getValue(BlockStateProperties.HORIZONTAL_AXIS));
     }
 
     protected int initialOffset;
@@ -280,9 +285,9 @@ public class SailPulleyBlockEntity extends LinearActuatorBlockEntity implements 
             }
 
             this.totalSails = (int) actuallyPlacedSails;
-            KineticShipControl shipController = VSUtils.getOrCreateShipController(getLevel(), getBlockPos());
+            KineticShipControl shipController = ShipUtils.getOrCreateShipController(getLevel(), getBlockPos());
             if (shipController != null) {
-                Createkinetic.LOGGER.debug("Total sails: " + totalSails + " Offset: " + offset);
+                CreateKinetic.LOGGER.debug("Total sails: " + totalSails + " Offset: " + offset);
                 shipController.updateSailCount();
             }
 

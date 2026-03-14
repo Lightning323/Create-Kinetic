@@ -1,7 +1,7 @@
 package com.lightning323.createkinetic.blocks.helm
 
 import com.lightning323.createkinetic.registries.KineticBlockEntities
-import com.lightning323.createkinetic.utils.VSUtils
+import com.lightning323.createkinetic.ship.ShipUtils
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.network.chat.Component
@@ -36,7 +36,7 @@ import org.valkyrienskies.mod.common.getShipManagingPos
 class ShipHelmBlock(properties: Properties, val woodType: WoodType) : BaseEntityBlock(properties) {
     //    val HELM_BASE = RotShapes.box(2.0, 0.0, 2.0, 14.0, 2.0, 14.0)
 //    val HELM_POLE = RotShapes.box(4.0, 2.0, 5.0, 12.0, 13.0, 13.0)
-    val SIMPLE_SHAPE = Block.box(0.0, 0.0, 0.0, 16.0, 2.0, 16.0)
+    val SIMPLE_SHAPE = Block.box(0.0, 0.0, 0.0, 16.0, 16.0, 16.0)
 
     //    val HELM_SHAPE = DirectionalShape(RotShapes.or(HELM_BASE, HELM_POLE))
     private val woodTypeEnum: WoodTypeEnum
@@ -62,7 +62,7 @@ class ShipHelmBlock(properties: Properties, val woodType: WoodType) : BaseEntity
         level as ServerLevel
 
         val ship = level.getLoadedShipManagingPos(pos) ?: level.getShipManagingPos(pos) ?: return
-        val it = VSUtils.getOrCreateShipController(level, pos);
+        val it = ShipUtils.getOrCreateShipController(level, pos);
         if (it != null) {
             it.helms+=1;
         }
@@ -78,7 +78,7 @@ class ShipHelmBlock(properties: Properties, val woodType: WoodType) : BaseEntity
 
         val ship = level.getLoadedShipManagingPos(pos) ?: level.getShipManagingPos(pos) ?: return
 
-        val it = VSUtils.getOrCreateShipController(level, pos);
+        val it = ShipUtils.getOrCreateShipController(level, pos);
         if (it != null) {
             if (it.helms <= 1 && it.seatedPlayer?.vehicle?.type == ValkyrienSkiesMod.SHIP_MOUNTING_ENTITY_TYPE) {
                 it.seatedPlayer!!.unRide()

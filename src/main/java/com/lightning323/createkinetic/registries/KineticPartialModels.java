@@ -1,6 +1,6 @@
 package com.lightning323.createkinetic.registries;
 
-import com.lightning323.createkinetic.Createkinetic;
+import com.lightning323.createkinetic.CreateKinetic;
 import com.lightning323.createkinetic.blocks.helm.WoodTypeEnum;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import net.minecraft.resources.ResourceLocation;
@@ -8,7 +8,7 @@ import net.minecraft.resources.ResourceLocation;
 import java.util.EnumMap;
 import java.util.Map;
 
-import static com.lightning323.createkinetic.Createkinetic.MOD_ID;
+import static com.lightning323.createkinetic.CreateKinetic.MOD_ID;
 
 public class KineticPartialModels {
     public static final PartialModel
@@ -28,7 +28,7 @@ public class KineticPartialModels {
      * Use this if a specific wood type doesn't follow the standard naming convention.
      */
     public static void registerHelmWheel(WoodTypeEnum srType, String path) {
-        HELM_WHEELS.put(srType, block("helm/" + path));
+        HELM_WHEELS.put(srType, block(path));
     }
 
     public static PartialModel getHelmWheel(WoodTypeEnum srType) {
@@ -48,8 +48,8 @@ public class KineticPartialModels {
         //Registers all helm wheel models
         for (WoodTypeEnum type : WoodTypeEnum.values()) {
             // Automatically builds "helm/oak_ship_helm_wheel", etc.
-            registerHelmWheel(type, type.getId() + "_ship_helm_wheel");
-            Createkinetic.LOGGER.debug("Registering type {} as {}", type, type.getId() + "_ship_helm_wheel");
+            registerHelmWheel(type, "helm/" + type.getId() + "_ship_helm_wheel");
+            CreateKinetic.LOGGER.debug("Registering type {} as {}", type, type.getId() + "_ship_helm_wheel");
         }
     }
 }

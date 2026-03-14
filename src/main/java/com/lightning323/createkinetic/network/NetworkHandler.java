@@ -6,7 +6,7 @@ import net.minecraftforge.network.simple.SimpleChannel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkDirection;
 
-import static com.lightning323.createkinetic.Createkinetic.MOD_ID;
+import static com.lightning323.createkinetic.CreateKinetic.MOD_ID;
 
 public class NetworkHandler {
 

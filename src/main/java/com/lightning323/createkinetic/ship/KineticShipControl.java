@@ -3,10 +3,9 @@ package com.lightning323.createkinetic.ship;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import static com.lightning323.createkinetic.Createkinetic.LOGGER;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.lightning323.createkinetic.Createkinetic;
+import com.lightning323.createkinetic.CreateKinetic;
 import com.lightning323.createkinetic.KineticConfig;
 import com.lightning323.createkinetic.blocks.sail.SailBlockEntity;
 import com.lightning323.createkinetic.blocks.sail.sailPulley.SailPulleyBlockEntity;
@@ -15,7 +14,6 @@ import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import it.unimi.dsi.fastutil.longs.LongSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
-import net.minecraft.network.chat.Component;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -23,11 +21,12 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.joml.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.valkyrienskies.core.api.ships.*;
 import org.valkyrienskies.core.api.ships.properties.ShipTransform;
 import org.valkyrienskies.core.api.world.PhysLevel;
 import org.valkyrienskies.core.impl.game.ships.PhysShipImpl;
-import org.valkyrienskies.mod.api.SeatedControllingPlayer;
 import org.valkyrienskies.mod.common.entity.ShipMountingEntity;
 
 import static java.lang.Math.*;
@@ -38,6 +37,18 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 
 public final class KineticShipControl implements ShipPhysicsListener, ServerTickListener {
+    @JsonIgnore
+    public static final Logger LOGGER = CreateKinetic.LOGGER;
+//    public static void deferUntilLoaded(ServerShip ship, Level level, Consumer<KineticShipControl> consumer) {
+//        if(ship instanceof LoadedServerShip) {
+//            consumer.accept(getOrCreate(ship, level));
+//        } else {
+//            ValkyrienSkiesMod.vsCore.shipLoadEvent.once(
+//                    { event -> event.ship.id == ship.id },
+//                    {event -> consumer.accept(getOrCreate(event.ship))}
+//            );
+//        }
+//    }
 
     /**
      * Ship Control MUST be serializable and deserializable with Jackson JSON, otherwise, this will happen, when it tries to load ship control:
@@ -57,55 +68,89 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
     private ConcurrentLinkedQueue<Double> buoyForces = new ConcurrentLinkedQueue<Double>();
     private ConcurrentLinkedQueue<Double> rotTorques = new ConcurrentLinkedQueue<Double>();
 
+    public Direction shipDirection = Direction.NORTH;
+    public boolean frozen = false;
+    public int anchors = 0;
+    public int anchorsActive = 0;
+    public int numBallast = 0;
+    public int numMagicBallast = 0;
+    public int numBuoys = 0;
+    public int helms = 0;
+    public volatile double waterAmount = 0.0;
+    public int boundx = 1;
+    public int boundz = 1;
 
-//    public static void deferUntilLoaded(ServerShip ship, Level level, Consumer<KineticShipControl> consumer) {
-//        if(ship instanceof LoadedServerShip) {
-//            consumer.accept(getOrCreate(ship, level));
-//        } else {
-//            ValkyrienSkiesMod.vsCore.shipLoadEvent.once(
-//                    { event -> event.ship.id == ship.id },
-//                    {event -> consumer.accept(getOrCreate(event.ship))}
-//            );
-//        }
-//    }
+    /**
+     * SAIL COUNT
+     */
+    //TODO: Wind is 2D, meaning sails placed flat wont catch wind. Should this be changed?
+    public int blockSailsX = 0;
+    public int blockSailsZ = 0;
 
-    // 1. Tell Jackson to ignore the complex object itself
     @JsonIgnore
-    public LongSet sailPulleys = new LongOpenHashSet();
+    public LongSet sailPulleysX = new LongOpenHashSet();
+
+    @JsonIgnore
+    public LongSet sailPulleysZ = new LongOpenHashSet();
 
     // 2. The Getter (Serialization)
-    @JsonProperty("pulleys")
-    public long[] getJsonSailPulleys() {
-        return sailPulleys.toLongArray();
+    @JsonProperty("pulleysX")
+    public long[] getJsonSailPulleysX() {
+        return sailPulleysX.toLongArray();
+    }
+
+    @JsonProperty("pulleysZ")
+    public long[] getJsonSailPulleysZ() {
+        return sailPulleysZ.toLongArray();
     }
 
     // 3. The Setter/Constructor (Deserialization)
-    @JsonProperty("pulleys")
-    public void setJsonSailPulleys(long[] data) {
-        this.sailPulleys.clear();
+    @JsonProperty("pulleysX")
+    public void setJsonSailPulleysX(long[] data) {
+        this.sailPulleysX.clear();
         if (data != null) {
-            for (long p : data) {
-                this.sailPulleys.add(p);
-            }
+            for (long p : data) this.sailPulleysX.add(p);
         }
     }
 
-    public boolean frozen = false;
-    public int blockSails = 0;
+    @JsonProperty("pulleysZ")
+    public void setJsonSailPulleysZ(long[] data) {
+        this.sailPulleysZ.clear();
+        if (data != null) {
+            for (long p : data) this.sailPulleysZ.add(p);
+        }
+    }
 
     //These values are calculated from sailPulleys and blockSails and should be read only
-    public int numFnASails = 0;
-    public int numSquareSails = 0;
+    public int numFnASails = 0; //Fore and aft sails are the sails that are paralell to the length of the ship (sideways). They catch wind sideways.
+    public int numSquareSails = 0; //Square sails are across the width of the ship, they catch wind from the front and back
 
-    //Anchors
-    public int anchors = 0;
-    public int anchorsActive = 0;
 
     public void updateSailCount() {
-        numSquareSails = blockSails;
+        //North = -Z (Direction.AxisDirection.NEGATIVE, Direction.Axis.Z)
+        //South = +Z (Direction.AxisDirection.POSITIVE, Direction.Axis.Z)
+        //East = +X  (Direction.AxisDirection.POSITIVE, Direction.Axis.X)
+        //West = -X  (Direction.AxisDirection.NEGATIVE, Direction.Axis.X)
+        switch (shipDirection) {
+            case NORTH, SOUTH -> {
+                numSquareSails = blockSailsZ + countAndRemoveSails(sailPulleysZ);
+                numFnASails = blockSailsX + countAndRemoveSails(sailPulleysX);
+            }
+            case EAST, WEST -> {
+                numSquareSails = blockSailsX + countAndRemoveSails(sailPulleysX);
+                numFnASails = blockSailsZ + countAndRemoveSails(sailPulleysZ);
+            }
+            default -> {
+                numSquareSails = 0;
+                numFnASails = 0;
+            }
+        }
+        LOGGER.debug("Square: {} ForeNAft: {}", numSquareSails, numFnASails);
+    }
 
-        // Use the specialized LongIterator to avoid object creation
-        LongIterator iterator = sailPulleys.iterator();
+    private int countAndRemoveSails(LongSet set) {
+        LongIterator iterator = set.iterator();
+        int count = 0;
 
         while (iterator.hasNext()) {
             long packedPos = iterator.nextLong();
@@ -118,24 +163,15 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
                 iterator.remove(); // Safely remove stale positions
                 continue;
             }
-            if (blockEntity instanceof SailPulleyBlockEntity sbe) numSquareSails += sbe.getTotalSails();
-            else if (blockEntity instanceof SailBlockEntity sbe) numSquareSails += sbe.getTotalSails();
+            if (blockEntity instanceof SailPulleyBlockEntity sbe) count += sbe.getTotalSails();
+            else if (blockEntity instanceof SailBlockEntity sbe) count += sbe.getTotalSails();
             else {
                 iterator.remove();
             }
         }
-        countSails();
+        return count;
     }
 
-    public int numBallast = 0;
-    public int numMagicBallast = 0;
-    public int numBuoys = 0;
-    public int helms = 0;
-
-    public volatile double waterAmount = 0.0;
-
-    public int boundx = 1;
-    public int boundz = 1;
 
     @JsonIgnore
     public Level world = null;
@@ -147,13 +183,36 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
     private ControlData controlData = null;
 
     @JsonIgnore
-    public Component message;
-
-    public Direction shipDirection = Direction.NORTH;
-
-    @JsonIgnore
     public LoadedServerShip ship = null;
 
+    private void updateShipBounds() {
+        boundx = ship.getShipAABB().maxX() - ship.getShipAABB().minX();
+        boundz = ship.getShipAABB().maxZ() - ship.getShipAABB().minZ();
+        LOGGER.info("Xbound=" + boundx + " Zbound=" + boundz);
+    }
+
+    private void updateShipDirection() {
+        if (boundx > boundz) {
+            if (shipDirection != Direction.WEST && shipDirection != Direction.EAST) {
+                shipDirection = Direction.EAST;
+                //swap square and fna sails
+                int x = numSquareSails;
+                numSquareSails = numFnASails;
+                numFnASails = x;
+                LOGGER.info("Sail types swapped! New ship dir: " + shipDirection);
+            }
+        } else {
+            if (shipDirection != Direction.SOUTH && shipDirection != Direction.NORTH) {
+                shipDirection = Direction.NORTH;
+                //swap square and fna sails
+                int x = numSquareSails;
+                numSquareSails = numFnASails;
+                numFnASails = x;
+                LOGGER.info("Sail types swapped! New ship dir: " + shipDirection);
+            }
+        }
+        LOGGER.info("Ship direction = {}", shipDirection.toString());
+    }
 
     @JsonIgnore
     public static KineticShipControl getOrCreate(LoadedServerShip ship, Level world) {
@@ -163,38 +222,18 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
             }
             KineticShipControl controller = ship.getAttachment(KineticShipControl.class);
             assert controller != null;
+            controller.ship = ship;
             if (world != null) {
                 controller.world = world;
             }
+
             if (ship.getShipAABB() != null) {
-                controller.boundx = ship.getShipAABB().maxX() - ship.getShipAABB().minX();
-                controller.boundz = ship.getShipAABB().maxZ() - ship.getShipAABB().minZ();
+                controller.updateShipBounds();
             } else {
                 controller.boundx = 0;
                 controller.boundz = 0;
             }
-            if (controller.boundx > controller.boundz) {
-                if (controller.shipDirection != Direction.WEST && controller.shipDirection != Direction.EAST) {
-                    controller.shipDirection = Direction.EAST;
-                    //swap square and fna sails
-                    int x = controller.numSquareSails;
-                    controller.numSquareSails = controller.numFnASails;
-                    controller.numFnASails = x;
-                    LOGGER.info("Sail types swapped! New ship dir: " + controller.shipDirection);
-                }
-            } else {
-                if (controller.shipDirection != Direction.SOUTH && controller.shipDirection != Direction.NORTH) {
-                    controller.shipDirection = Direction.NORTH;
-                    //swap square and fna sails
-                    int x = controller.numSquareSails;
-                    controller.numSquareSails = controller.numFnASails;
-                    controller.numFnASails = x;
-                    LOGGER.info("Sail types swapped! New ship dir: " + controller.shipDirection);
-                }
-            }
-
-            //LOGGER.info("Xbound=" + boundx + " Zbound=" + boundz);
-            //LOGGER.info("dir=" + controller.shipDirection.toString());
+            controller.updateShipDirection();
             return controller;
         } else {
             return null;
@@ -335,8 +374,8 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
                 BlockPos shipPosBlockPos = new BlockPos((int) worldShipPos.x(), (int) worldShipPos.y(), (int) worldShipPos.z());
 
                 //Get the wind parameters
-                double windDirection = ServerWindManager.getWindDirection(world, shipPosVec); //in degrees
-                double windStrength = ServerWindManager.getWindStrength(world, shipPosBlockPos)  // -1.0 -- 1.0
+                double windDirection = WindManager.getWindDirection(world, shipPosVec); //in degrees
+                double windStrength = WindManager.getWindStrength(world, shipPosBlockPos)  // -1.0 -- 1.0
                         * KineticConfig.windStrengthMultiplier;
 
                 //Get the Y angle of our ship in radians
@@ -523,8 +562,7 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
 
         // 5. Apply Force (Forward/Backward)
 //        physShip.applyWorldForce(getPlayerForwardVel(control, physShip));
-
-        LOGGER.debug("Turn rotation: {}; ControlData: {}",idealAlphaY, this.controlData);
+//        LOGGER.debug("Turn rotation: {}; ControlData: {}", idealAlphaY, this.controlData);
     }
 
     private Vector3d getPlayerControlledBanking(ControlData control, PhysShip physShip, Matrix3dc moiTensor, double strength) {
@@ -558,8 +596,8 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
 //        Createkinetic.LOGGER.debug("SERVER TICK");
     }
 
-    public void countSails() {
-        Createkinetic.LOGGER.debug("SAIL COUNT Square: {}, FNA: {}", numSquareSails, numFnASails);
+    public void countAndRemoveSails() {
+        CreateKinetic.LOGGER.debug("SAIL COUNT Square: {}, FNA: {}", numSquareSails, numFnASails);
     }
 
     public void setStatic(boolean frozen) {

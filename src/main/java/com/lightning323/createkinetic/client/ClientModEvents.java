@@ -1,18 +1,23 @@
-package com.lightning323.createkinetic.events;
+package com.lightning323.createkinetic.client;
 
-import net.minecraft.world.inventory.InventoryMenu;
+import com.lightning323.createkinetic.registries.KineticParticles;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.TextureStitchEvent;
+import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
-import static com.lightning323.createkinetic.Createkinetic.MOD_ID;
+import static com.lightning323.createkinetic.CreateKinetic.MOD_ID;
 
 @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ClientModEvents {
 
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event) {
+    }
+
+    @SubscribeEvent
+    public static void onParticleFactoryRegistration(RegisterParticleProvidersEvent event) {
+       KineticParticles.register(event);
     }
 }
