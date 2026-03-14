@@ -1,6 +1,6 @@
 package com.lightning323.createkinetic.blocks.sail.sailPulley;
 
-import com.lightning323.createkinetic.registries.KineticItems;
+import com.lightning323.createkinetic.registries.KineticBlocks;
 import com.lightning323.createkinetic.registries.KineticPartialModels;
 import com.lightning323.createkinetic.registries.KineticSpriteShifts;
 import com.simibubi.create.content.contraptions.AbstractContraptionEntity;
@@ -35,7 +35,7 @@ public class SailPulleyRenderer extends AbstractSailPulleyRenderer<SailPulleyBlo
         BlockState state = be.getBlockState();// Get the axis the pulley is placed on
         Axis axis = state.getValue(SailPulleyBlock.HORIZONTAL_AXIS);
 
-        SuperByteBuffer buffer = CachedBuffers.block(KineticItems.PULLEY_SAIL_CLOTH.getDefaultState());
+        SuperByteBuffer buffer = CachedBuffers.block(KineticBlocks.PULLEY_SAIL_CLOTH.getDefaultState());
         if (axis == Axis.Z) {
             buffer.rotateCentered((float) (Math.PI / 2), Axis.Y);
         }
@@ -47,7 +47,7 @@ public class SailPulleyRenderer extends AbstractSailPulleyRenderer<SailPulleyBlo
         BlockState state = be.getBlockState();// Get the axis the pulley is placed on
         Axis axis = state.getValue(SailPulleyBlock.HORIZONTAL_AXIS);
 
-        SuperByteBuffer buffer = CachedBuffers.block(KineticItems.PULLEY_SAIL_MAGNET.getDefaultState());
+        SuperByteBuffer buffer = CachedBuffers.block(KineticBlocks.PULLEY_SAIL_MAGNET.getDefaultState());
         if (axis == Axis.Z) {
             buffer.rotateCentered((float) (Math.PI / 2), Axis.Y);
         }

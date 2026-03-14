@@ -1,7 +1,7 @@
 package com.lightning323.createkinetic.blocks.sail.sailPulley;
 
 import com.lightning323.createkinetic.Createkinetic;
-import com.lightning323.createkinetic.registries.KineticItems;
+import com.lightning323.createkinetic.registries.KineticBlocks;
 import com.lightning323.createkinetic.ship.KineticShipControl;
 import com.lightning323.createkinetic.utils.VSUtils;
 import com.simibubi.create.api.contraption.BlockMovementChecks;
@@ -24,7 +24,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -142,7 +141,7 @@ public class SailPulleyBlockEntity extends LinearActuatorBlockEntity implements 
         while (i <= maxLength) {
             BlockPos ropePos = worldPosition.below(i);
             BlockState ropeState = level.getBlockState(ropePos);
-            if (!KineticItems.PULLEY_SAIL_CLOTH.has(ropeState) && !KineticItems.PULLEY_SAIL_MAGNET.has(ropeState)) {
+            if (!KineticBlocks.PULLEY_SAIL_CLOTH.has(ropeState) && !KineticBlocks.PULLEY_SAIL_MAGNET.has(ropeState)) {
                 break;
             }
             ++i;
@@ -240,7 +239,7 @@ public class SailPulleyBlockEntity extends LinearActuatorBlockEntity implements 
                         level.destroyBlock(magnetPos, level.getBlockState(magnetPos)
                                 .getCollisionShape(level, magnetPos)
                                 .isEmpty());
-                        boolean success = level.setBlock(magnetPos, KineticItems.PULLEY_SAIL_MAGNET.getDefaultState()
+                        boolean success = level.setBlock(magnetPos, KineticBlocks.PULLEY_SAIL_MAGNET.getDefaultState()
                                         .setValue(BlockStateProperties.WATERLOGGED, //Waterlogged property
                                                 Boolean.valueOf(ifluidstate.getType() == Fluids.WATER))
                                         .setValue(BlockStateProperties.HORIZONTAL_AXIS, //Horizontal axis property
@@ -270,7 +269,7 @@ public class SailPulleyBlockEntity extends LinearActuatorBlockEntity implements 
                         }
 
                         BlockPos sailPos = worldPosition.below(i);
-                        boolean success = level.setBlock(sailPos, KineticItems.PULLEY_SAIL_CLOTH.getDefaultState()
+                        boolean success = level.setBlock(sailPos, KineticBlocks.PULLEY_SAIL_CLOTH.getDefaultState()
                                         .setValue(BlockStateProperties.WATERLOGGED, waterlog[i]) //Waterlogged property
                                         .setValue(BlockStateProperties.HORIZONTAL_AXIS, //Horizontal axis property
                                                 this.getBlockState().getValue(BlockStateProperties.HORIZONTAL_AXIS))

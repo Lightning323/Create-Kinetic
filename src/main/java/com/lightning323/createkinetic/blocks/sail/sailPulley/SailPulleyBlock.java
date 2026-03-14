@@ -1,7 +1,7 @@
 package com.lightning323.createkinetic.blocks.sail.sailPulley;
 
 import com.lightning323.createkinetic.registries.KineticBlockEntities;
-import com.lightning323.createkinetic.registries.KineticItems;
+import com.lightning323.createkinetic.registries.KineticBlocks;
 import com.lightning323.createkinetic.registries.KineticShapes;
 import com.lightning323.createkinetic.ship.KineticShipControl;
 import com.lightning323.createkinetic.utils.VSUtils;
@@ -118,7 +118,7 @@ public class SailPulleyBlock extends HorizontalAxisKineticBlock implements IBE<S
         @Override
         public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter world, BlockPos pos,
                                            Player player) {
-            return KineticItems.SAIL_PULLEY.asStack();
+            return KineticBlocks.SAIL_PULLEY.asStack();
         }
 
         @Override

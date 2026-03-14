@@ -2,17 +2,15 @@ package com.lightning323.createkinetic.blocks.sail;
 
 import com.lightning323.createkinetic.blocks.sail.sailPulley.AbstractSailPulleyRenderer;
 import com.lightning323.createkinetic.blocks.sail.sailPulley.SailPulleyBlock;
-import com.lightning323.createkinetic.registries.KineticItems;
+import com.lightning323.createkinetic.registries.KineticBlocks;
 import com.lightning323.createkinetic.registries.KineticPartialModels;
 import com.lightning323.createkinetic.registries.KineticSpriteShifts;
-import com.simibubi.create.content.contraptions.AbstractContraptionEntity;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import net.createmod.catnip.render.CachedBuffers;
 import net.createmod.catnip.render.SpriteShiftEntry;
 import net.createmod.catnip.render.SuperByteBuffer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.Direction.Axis;
-import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class SailRenderer extends AbstractSailPulleyRenderer<SailBlockEntity> {
@@ -37,7 +35,7 @@ public class SailRenderer extends AbstractSailPulleyRenderer<SailBlockEntity> {
         BlockState state = be.getBlockState();// Get the axis the pulley is placed on
         Axis axis = state.getValue(SailPulleyBlock.HORIZONTAL_AXIS);
 
-        SuperByteBuffer buffer = CachedBuffers.block(KineticItems.PULLEY_SAIL_CLOTH.getDefaultState());
+        SuperByteBuffer buffer = CachedBuffers.block(KineticBlocks.PULLEY_SAIL_CLOTH.getDefaultState());
         if (axis == Axis.Z) {
             buffer.rotateCentered((float) (Math.PI / 2), Axis.Y);
         }
@@ -49,7 +47,7 @@ public class SailRenderer extends AbstractSailPulleyRenderer<SailBlockEntity> {
         BlockState state = be.getBlockState();// Get the axis the pulley is placed on
         Axis axis = state.getValue(SailPulleyBlock.HORIZONTAL_AXIS);
 
-        SuperByteBuffer buffer = CachedBuffers.block(KineticItems.PULLEY_SAIL_WEIGHT.getDefaultState());
+        SuperByteBuffer buffer = CachedBuffers.block(KineticBlocks.PULLEY_SAIL_WEIGHT.getDefaultState());
         if (axis == Axis.Z) {
             buffer.rotateCentered((float) (Math.PI / 2), Axis.Y);
         }

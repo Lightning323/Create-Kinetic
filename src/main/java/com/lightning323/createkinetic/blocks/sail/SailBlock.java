@@ -2,7 +2,7 @@ package com.lightning323.createkinetic.blocks.sail;
 
 import com.lightning323.createkinetic.blocks.sail.sailPulley.SailPulleyBlock;
 import com.lightning323.createkinetic.registries.KineticBlockEntities;
-import com.lightning323.createkinetic.registries.KineticItems;
+import com.lightning323.createkinetic.registries.KineticBlocks;
 import com.lightning323.createkinetic.registries.KineticShapes;
 import com.simibubi.create.content.kinetics.base.HorizontalAxisKineticBlock;
 import com.simibubi.create.foundation.block.IBE;
@@ -73,7 +73,7 @@ public class SailBlock extends HorizontalAxisKineticBlock implements IBE<SailBlo
     @Override
     public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter world, BlockPos pos,
                                        Player player) {
-        return KineticItems.RETRACTABLE_SAIL.asStack();
+        return KineticBlocks.RETRACTABLE_SAIL.asStack();
     }
 
     @Override

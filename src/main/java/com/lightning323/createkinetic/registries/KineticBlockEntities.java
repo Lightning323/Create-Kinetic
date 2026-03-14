@@ -1,5 +1,6 @@
 package com.lightning323.createkinetic.registries;
 
+import com.lightning323.createkinetic.blocks.helm.ShipHelmBlockEntity;
 import com.lightning323.createkinetic.blocks.sail.SailBlockEntity;
 import com.lightning323.createkinetic.blocks.sail.SailRenderer;
 import com.lightning323.createkinetic.blocks.sail.SailVisual;
@@ -19,15 +20,28 @@ public class KineticBlockEntities {
     public static final BlockEntityEntry<SailPulleyBlockEntity> SAIL_PULLEY = REGISTRATE
             .blockEntity("sail_pulley", SailPulleyBlockEntity::new)
             .visual(() -> SailPulleyVisual::new, false)
-            .validBlocks(KineticItems.SAIL_PULLEY)
+            .validBlocks(KineticBlocks.SAIL_PULLEY)
             .renderer(() -> SailPulleyRenderer::new)
             .register();
 
     public static final BlockEntityEntry<SailBlockEntity> SAIL = REGISTRATE
             .blockEntity("sail", SailBlockEntity::new)
             .visual(() -> SailVisual::new, false)
-            .validBlocks(KineticItems.RETRACTABLE_SAIL)
+            .validBlocks(KineticBlocks.RETRACTABLE_SAIL)
             .renderer(() -> SailRenderer::new)
+            .register();
+
+    public static final BlockEntityEntry<ShipHelmBlockEntity> SHIP_HELM = REGISTRATE
+            .<ShipHelmBlockEntity> blockEntity("ship_helm", ShipHelmBlockEntity::new)
+            .validBlocks(
+                    KineticBlocks.OAK_SHIP_HELM,
+                    KineticBlocks.BIRCH_SHIP_HELM,
+                    KineticBlocks.JUNGLE_SHIP_HELM,
+                    KineticBlocks.ACACIA_SHIP_HELM,
+                    KineticBlocks.DARK_OAK_SHIP_HELM,
+                    KineticBlocks.CRIMSON_SHIP_HELM,
+                    KineticBlocks.WARPED_SHIP_HELM
+            )
             .register();
 
     public static void register() {

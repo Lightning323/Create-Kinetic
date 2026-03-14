@@ -38,6 +38,7 @@ public class Createkinetic {
         modEventBus.addListener(KineticCreativeTabs::addCreative);
         modEventBus.addListener(this::onRegister);
 
+        KineticBlocks.register();
         KineticItems.register();
         KineticBlockEntities.register();
 
