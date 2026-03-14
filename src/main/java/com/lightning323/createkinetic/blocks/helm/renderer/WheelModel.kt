@@ -1,8 +1,10 @@
 package org.valkyrienskies.eureka.blockentity.renderer
 
 import com.google.common.collect.ImmutableMap
+import com.lightning323.createkinetic.Createkinetic
 import com.lightning323.createkinetic.blocks.helm.IWoodType
 import com.lightning323.createkinetic.blocks.helm.ShipHelmBlock
+import com.lightning323.createkinetic.registries.KineticPartialModels
 import com.mojang.blaze3d.vertex.PoseStack
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.MultiBufferSource
@@ -20,11 +22,8 @@ import java.util.function.Function
 // WheelModel has 1 woodtype and represents 1 state
 // In the mixin it gets queued and abused
 object WheelModels {
-//    private val mc get() = Minecraft.getInstance()
-//    private val property = EnumProperty.create("wood", WoodTypeSR::class.java)
-//    private val random = RandomSource.create()
-//
-//    private val models by lazy { property.possibleValues.associateWith { WheelModel(it) } }
+    private val mc get() = Minecraft.getInstance()
+    private val random = RandomSource.create()
 
     fun render(
         matrixStack: PoseStack,
@@ -33,40 +32,32 @@ object WheelModels {
         combinedLight: Int,
         combinedOverlay: Int
     ) {
-//        val level = blockEntity.level ?: return
-//        val blockState = blockEntity.blockState
-//        val woodType = (blockState.block as ShipHelmBlock).woodType
-//
-//        matrixStack.pushPose()
-//        // Model isn't centered calculated and need to use 0.625 on y and z 0.25
-//        matrixStack.translate(-0.5, -0.625, -0.25)
-//
-//        val blockPos = blockEntity.blockPos
-//        mc.blockRenderer.modelRenderer.tesselateWithoutAO(
-//            level,
-//            models[woodType]!!.model,
-//            blockState,
-//            blockPos,
-//            matrixStack,
-//            buffer.getBuffer(RenderType.cutout()),
-//            true,
-//            random,
-//            blockState.getSeed(blockPos),
-//            combinedOverlay
-//        )
-//
-//        matrixStack.popPose()
-    }
+        val level = blockEntity.level ?: return
+        val blockState = blockEntity.blockState
+        val woodType = (blockState.block as ShipHelmBlock).woodType
 
-    fun setModelGetter(getter: Function<WoodType, BakedModel>) {
-//        models.values.forEach { it.getter = getter::apply }
-    }
+        matrixStack.pushPose()
+        // Model isn't centered calculated and need to use 0.625 on y and z 0.25
+        matrixStack.translate(-0.5, -0.625, -0.25)
 
-//    class WheelModel(type: WoodType) :
-//        StateHolder<WheelModels, WheelModel>(WheelModels, ImmutableMap.of(property, type), null) {
-//
-//        var getter: (WoodType) -> BakedModel = { throw IllegalStateException("Getter not set") }
-//
-//        val model by lazy { getter(type) }
-//    }
+        val blockPos = blockEntity.blockPos
+
+
+        val bakedModel = KineticPartialModels.HELM_WHEEL.get() // That's it!
+
+        mc.blockRenderer.modelRenderer.tesselateWithoutAO(
+            level,
+            bakedModel,
+            blockState,
+            blockPos,
+            matrixStack,
+            buffer.getBuffer(RenderType.cutout()),
+            true,
+            random,
+            blockState.getSeed(blockPos),
+            combinedOverlay
+        )
+
+        matrixStack.popPose()
+    }
 }

@@ -8,6 +8,7 @@ import com.lightning323.createkinetic.blocks.sail.sailPulley.SailPulleyBlockEnti
 import com.lightning323.createkinetic.blocks.sail.sailPulley.SailPulleyRenderer;
 import com.lightning323.createkinetic.blocks.sail.sailPulley.SailPulleyVisual;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
+import org.valkyrienskies.eureka.blockentity.renderer.ShipHelmBlockEntityRenderer;
 
 import static com.lightning323.createkinetic.Createkinetic.REGISTRATE;
 
@@ -32,7 +33,7 @@ public class KineticBlockEntities {
             .register();
 
     public static final BlockEntityEntry<ShipHelmBlockEntity> SHIP_HELM = REGISTRATE
-            .<ShipHelmBlockEntity> blockEntity("ship_helm", ShipHelmBlockEntity::new)
+            .<ShipHelmBlockEntity>blockEntity("ship_helm", ShipHelmBlockEntity::new)
             .validBlocks(
                     KineticBlocks.OAK_SHIP_HELM,
                     KineticBlocks.BIRCH_SHIP_HELM,
@@ -42,6 +43,8 @@ public class KineticBlockEntities {
                     KineticBlocks.CRIMSON_SHIP_HELM,
                     KineticBlocks.WARPED_SHIP_HELM
             )
+            //TODO: Add visual for ship helm for better performance
+            .renderer(() -> ShipHelmBlockEntityRenderer::new)
             .register();
 
     public static void register() {
