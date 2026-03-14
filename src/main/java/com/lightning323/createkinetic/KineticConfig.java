@@ -34,6 +34,22 @@ public class KineticConfig {
    private static final ForgeConfigSpec.IntValue SAIL_SPEED
             = BUILDER.defineInRange("sail_speed", 1000, 0, Integer.MAX_VALUE);
 
+
+    private static final ForgeConfigSpec.DoubleValue TURN_ACCELERATION
+            = BUILDER.comment("The maximum linear acceleration at any point on the ship caused by helm torque")
+            .defineInRange("turn_acceleration", 10.0, 0.0, Double.MAX_VALUE);
+
+    private static final ForgeConfigSpec.DoubleValue MAX_SIZE_FOR_TURN_SPEED_PENALTY
+            = BUILDER.comment("The maximum distance from center of mass to one end of the ship considered by " +
+                    "the turn speed. At it's default of 16, it ensures that really large ships will turn at the same " +
+                    "speed as a ship with a center of mass only 16 blocks away from the farthest point in the ship. " +
+                    "That way, large ships do not turn painfully slowly")
+            .defineInRange("max_size_for_turn_speed_penalty", 16.0, 0.0, Double.MAX_VALUE);
+
+    private static final ForgeConfigSpec.DoubleValue TURN_SPEED
+            = BUILDER.comment("The maximum linear speed at any point on the ship caused by helm torque")
+            .defineInRange("turn_speed", 3.0, 0.0, Double.MAX_VALUE);
+
     static final ForgeConfigSpec SPEC = BUILDER.build();
 
     public static boolean forgivingSails;
@@ -45,6 +61,10 @@ public class KineticConfig {
     public static double noSailZone;
     public static double sailSpeed;
 
+    public static double turnAcceleration;
+    public static double maxSizeForTurnSpeedPenalty;
+    public static double turnSpeed;
+
     @SubscribeEvent
     static void onLoad(final ModConfigEvent event) {
         forgivingSails = FORGIVING_SAILS.get();
@@ -55,6 +75,9 @@ public class KineticConfig {
         windStrengthMultiplier = WIND_STRENGTH.get();
         noSailZone = NO_SAIL_ZONE.get();
         sailSpeed = SAIL_SPEED.get();
+        turnAcceleration = TURN_ACCELERATION.get();
+        maxSizeForTurnSpeedPenalty = MAX_SIZE_FOR_TURN_SPEED_PENALTY.get();
+        turnSpeed = TURN_SPEED.get();
 
 //        magicNumberIntroduction = MAGIC_NUMBER_INTRODUCTION.get();
 //        items = ITEM_STRINGS.get().stream().map(itemName -> ForgeRegistries.ITEMS.getValue(new ResourceLocation(itemName))).collect(Collectors.toSet());

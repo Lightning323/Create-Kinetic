@@ -36,16 +36,10 @@ class ShipHelmBlockEntityRenderer(val ctx: BlockEntityRendererProvider.Context) 
         val ship = (blockEntity.level)?.getShipManagingPos(blockEntity.blockPos)
         var rot = 0.0
         if (ship != null) {
-            // 1. Get the current game time (ticks)
-            val time = blockEntity.level!!.gameTime.toDouble()
-
-            // 2. Add partialTicks (passed from the render method) for sub-tick smoothness
-            // partialTicks is a value from 0.0 to 1.0 representing how far we are between ticks
-            val smoothTime = time + partialTicks
-
-            // 3. Define a rotation (e.g., 2 degrees per tick)
-            rot = smoothTime * 2.0
-            //rot = ship.omega.y()
+//            val time = blockEntity.level!!.gameTime.toDouble()
+//            val smoothTime = time + partialTicks
+//            rot = smoothTime * 2.0
+            rot = ship.angularVelocity.y()
         }
         // Add offset of the base based of rotation
         matrixStack.translate(0.0, 0.0, 0.19)

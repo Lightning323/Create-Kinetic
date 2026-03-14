@@ -14,6 +14,7 @@ import it.unimi.dsi.fastutil.longs.LongIterator;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import it.unimi.dsi.fastutil.longs.LongSet;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Vec3i;
 import net.minecraft.network.chat.Component;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.player.Player;
@@ -469,61 +470,88 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
 
     @SuppressWarnings("unchecked")
     private void applyPlayerControl(ControlData control, PhysShip physShip) {
-        LOGGER.debug("ControlData: " + this.controlData);
         if (this.ship == null) return;
-//
-//        final ShipTransform transform = physShip.getTransform();
-//        final org.joml.primitives.AABBdc aabb = this.ship.getWorldAABB();
-//        final Vector3dc center = transform.getPositionInWorld();
-//
-//        // 1. Calculate Largest Distance for Turn Penalty
-//        double dist1 = center.distance(aabb.minX(), center.y(), aabb.minZ());
-//        double dist2 = center.distance(aabb.minX(), center.y(), aabb.maxZ());
-//        double dist3 = center.distance(aabb.maxX(), center.y(), aabb.minZ());
-//        double dist4 = center.distance(aabb.maxX(), center.y(), aabb.maxZ());
-//
-//        double largestDistance = Math.max(Math.max(dist1, dist2), Math.max(dist3, dist4));
-//
-//        // Equivalent to .coerceIn(0.5, maxSize)
-//        double maxSize = EurekaConfig.SERVER.maxSizeForTurnSpeedPenalty;
-//        largestDistance = Math.max(0.5, Math.min(largestDistance, maxSize));
-//
-//        // 2. Physics Constants
-//        final Matrix3dc moiTensor = physShip.getMomentOfInertia();
-//        final Vector3dc omega = physShip.getAngularVelocity();
-//
-//        double maxLinearAcceleration = EurekaConfig.SERVER.turnAcceleration;
-//        double maxLinearSpeed = EurekaConfig.SERVER.turnSpeed + this.extraForceAngular;
-//
-//        // acceleration = alpha * r -> maxAlpha = maxAcceleration / r
-//        double maxOmegaY = maxLinearSpeed / largestDistance;
-//        double maxAlphaY = maxLinearAcceleration / largestDistance;
-//
-//        boolean isBelowMaxTurnSpeed = Math.abs(omega.y()) < maxOmegaY;
-//
-//        // 3. Determine Acceleration Multiplier
-//        double normalizedAlphaYMultiplier;
-//        if (isBelowMaxTurnSpeed && control.getLeftImpulse() != 0.0f) {
-//            normalizedAlphaYMultiplier = (double) control.getLeftImpulse();
-//        } else {
-//            // If not turning or over speed, apply counter-torque to stabilize
-//            normalizedAlphaYMultiplier = -Math.max(-1.0, Math.min(1.0, omega.y()));
-//        }
-//
-//        double idealAlphaY = normalizedAlphaYMultiplier * maxAlphaY;
-//
-//        // 4. Apply Torque (Rotation)
-//        Vector3d torque = new Vector3d(0.0, idealAlphaY, 0.0);
-//        moiTensor.transform(torque); // Applies the Moment of Inertia tensor to the vector
-//
-//        // Add banking effect (leaning into the turn)
-//        torque.add(getPlayerControlledBanking(control, physShip, moiTensor, -idealAlphaY));
-//
-//        physShip.applyWorldTorque(torque);
-//
-//        // 5. Apply Force (Forward/Backward)
+
+        final ShipTransform transform = physShip.getTransform();
+        final org.joml.primitives.AABBdc aabb = this.ship.getWorldAABB();
+        final Vector3dc center = transform.getPositionInWorld();
+
+        // 1. Calculate Largest Distance for Turn Penalty
+        double dist1 = center.distance(aabb.minX(), center.y(), aabb.minZ());
+        double dist2 = center.distance(aabb.minX(), center.y(), aabb.maxZ());
+        double dist3 = center.distance(aabb.maxX(), center.y(), aabb.minZ());
+        double dist4 = center.distance(aabb.maxX(), center.y(), aabb.maxZ());
+
+        double largestDistance = Math.max(Math.max(dist1, dist2), Math.max(dist3, dist4));
+
+        // Equivalent to .coerceIn(0.5, maxSize)
+        double maxSize = KineticConfig.maxSizeForTurnSpeedPenalty;
+        largestDistance = Math.max(0.5, Math.min(largestDistance, maxSize));
+
+        // 2. Physics Constants
+        final Matrix3dc moiTensor = physShip.getMomentOfInertia();
+        final Vector3dc omega = physShip.getAngularVelocity();
+
+        double maxLinearAcceleration = KineticConfig.turnAcceleration;
+        double extraForceAngular = 0.0;
+        double maxLinearSpeed = KineticConfig.turnSpeed + extraForceAngular;
+
+        // acceleration = alpha * r -> maxAlpha = maxAcceleration / r
+        double maxOmegaY = maxLinearSpeed / largestDistance;
+        double maxAlphaY = maxLinearAcceleration / largestDistance;
+
+        boolean isBelowMaxTurnSpeed = Math.abs(omega.y()) < maxOmegaY;
+
+        // 3. Determine Acceleration Multiplier
+        double normalizedAlphaYMultiplier;
+        if (isBelowMaxTurnSpeed && control.getLeftImpulse() != 0.0f) {
+            normalizedAlphaYMultiplier = (double) control.getLeftImpulse();
+        } else {
+            // If not turning or over speed, apply counter-torque to stabilize
+            normalizedAlphaYMultiplier = -Math.max(-1.0, Math.min(1.0, omega.y()));
+        }
+
+        double idealAlphaY = normalizedAlphaYMultiplier * maxAlphaY;
+        // 4. Apply Torque (Rotation)
+        Vector3d torque = new Vector3d(0.0, idealAlphaY, 0.0);
+        moiTensor.transform(torque); // Applies the Moment of Inertia tensor to the vector
+
+        // Add banking effect (leaning into the turn)
+        torque.add(getPlayerControlledBanking(control, physShip, moiTensor, -idealAlphaY));
+
+        physShip.applyWorldTorque(torque);
+
+        // 5. Apply Force (Forward/Backward)
 //        physShip.applyWorldForce(getPlayerForwardVel(control, physShip));
+
+        LOGGER.debug("Turn rotation: {}; ControlData: {}",idealAlphaY, this.controlData);
     }
+
+    private Vector3d getPlayerControlledBanking(ControlData control, PhysShip physShip, Matrix3dc moiTensor, double strength) {
+        // 1. Get the direction the seat is facing (e.g., North, East)
+        // Assuming toJOMLD() converted a Vector3i or Direction.Normal to a Vector3d
+        Vec3i normal = control.getSeatInDirection().getNormal();
+        Vector3d rotationVector = new Vector3d(normal.getX(), normal.getY(), normal.getZ());
+
+        // 2. Transform the local seat direction to world rotation
+        physShip.getTransform().getShipToWorldRotation().transform(rotationVector);
+
+        // 3. Project onto the horizontal plane and apply strength
+        rotationVector.y = 0.0;
+        rotationVector.mul(strength * 1.5);
+
+        // 4. Transform into Ship Space, apply Moment of Inertia, and transform back to World Space
+        // This is the JOML equivalent of the nested Kotlin calls
+        Quaterniondc shipToWorld = physShip.getTransform().getShipToWorldRotation();
+
+        // transformInverse -> moiTensor.transform -> transform
+        shipToWorld.transformInverse(rotationVector);
+        moiTensor.transform(rotationVector);
+        shipToWorld.transform(rotationVector);
+
+        return rotationVector;
+    }
+
 
     @Override
     public void onServerTick() {
