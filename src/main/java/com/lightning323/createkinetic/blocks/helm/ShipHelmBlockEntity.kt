@@ -54,10 +54,6 @@ class ShipHelmBlockEntity(
     @OptIn(GameTickOnly::class)
     val assembled get() = ship != null
 //    val aligning get() = control?.aligning == true
-//    override fun getDisplayName(): Component {
-//        return Component.translatable("gui.vs_eureka.ship_helm")
-//    }
-//
 //    // Needs to get called server-side
 //    fun spawnSeat(blockPos: BlockPos, state: BlockState, level: ServerLevel): ShipMountingEntity {
 //        val newPos = blockPos.relative(state.getValue(HorizontalDirectionalBlock.FACING))
@@ -140,16 +136,16 @@ class ShipHelmBlockEntity(
 //    }
 //
 //
-//    override fun setRemoved() {
-//        if (level?.isClientSide == false) {
-//            for (i in seats.indices) {
-//                seats[i].kill()
-//            }
-//            seats.clear()
-//        }
-//
-//        super.setRemoved()
-//    }
+    override fun setRemoved() {
+        if (level?.isClientSide == false) {
+            for (i in seats.indices) {
+                seats[i].kill()
+            }
+            seats.clear()
+        }
+
+        super.setRemoved()
+    }
 //
 //    fun sit(player: Player, force: Boolean = false): Boolean {
 //        // If player is already controlling the ship, open the helm menu

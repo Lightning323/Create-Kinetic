@@ -21,6 +21,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BlockStateProperties.HORIZONTAL_FACING
+import net.minecraft.world.level.block.state.properties.WoodType
 import net.minecraft.world.level.pathfinder.PathComputationType
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.shapes.CollisionContext
@@ -32,9 +33,8 @@ import org.valkyrienskies.mod.common.getLoadedShipManagingPos
 import org.valkyrienskies.mod.common.entity.ShipMountingEntity
 import org.valkyrienskies.mod.common.getShipManagingPos
 
-class ShipHelmBlock(properties: Properties, val woodType: net.minecraft.world.level.block.state.properties.WoodType) :
-    BaseEntityBlock(properties) {
-    //    val HELM_BASE = RotShapes.box(2.0, 0.0, 2.0, 14.0, 2.0, 14.0)
+class ShipHelmBlock(properties: Properties, val woodType: WoodType) :    BaseEntityBlock(properties) {
+//    val HELM_BASE = RotShapes.box(2.0, 0.0, 2.0, 14.0, 2.0, 14.0)
 //    val HELM_POLE = RotShapes.box(4.0, 2.0, 5.0, 12.0, 13.0, 13.0)
 //
 //    val HELM_SHAPE = DirectionalShape(RotShapes.or(HELM_BASE, HELM_POLE))
@@ -54,7 +54,7 @@ class ShipHelmBlock(properties: Properties, val woodType: net.minecraft.world.le
     override fun newBlockEntity(blockPos: BlockPos, state: BlockState): BlockEntity {
         return KineticBlockEntities.SHIP_HELM.create(blockPos, state)
     }
-//
+
 //    @OptIn(GameTickOnly::class)
 //    override fun onPlace(state: BlockState, level: Level, pos: BlockPos, oldState: BlockState, isMoving: Boolean) {
 //        super.onPlace(state, level, pos, oldState, isMoving)
@@ -83,7 +83,7 @@ class ShipHelmBlock(properties: Properties, val woodType: net.minecraft.world.le
 //            it.helms -= 1
 //        }
 //    }
-//
+
 //    override fun use(
 //        state: BlockState,
 //        level: Level,
@@ -105,16 +105,15 @@ class ShipHelmBlock(properties: Properties, val woodType: net.minecraft.world.le
 //            InteractionResult.CONSUME
 //        } else InteractionResult.PASS
 //    }
-//
-//    override fun getRenderShape(blockState: BlockState): RenderShape {
-//        return RenderShape.MODEL
-//    }
-//
-//    override fun getStateForPlacement(ctx: BlockPlaceContext): BlockState? {
-//        return defaultBlockState()
-//            .setValue(HORIZONTAL_FACING, ctx.horizontalDirection.opposite)
-//    }
-//
+
+    override fun getRenderShape(blockState: BlockState): RenderShape {
+        return RenderShape.MODEL
+    }
+    override fun getStateForPlacement(ctx: BlockPlaceContext): BlockState? {
+        return defaultBlockState()
+            .setValue(HORIZONTAL_FACING, ctx.horizontalDirection.opposite)
+    }
+
     override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {
         builder.add(HORIZONTAL_FACING)
     }

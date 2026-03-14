@@ -44,7 +44,7 @@ class ShipHelmBlockEntityRenderer(val ctx: BlockEntityRendererProvider.Context) 
         // Rotate the wheel based of the ship omega
         matrixStack.mulPose(Quaternionf(AxisAngle4f((rot / 20f * Math.PI.toFloat()).toFloat(), 0.0f, 0.0f, 1.0f)))
         // Render the wheel
-//        WheelModels.render(matrixStack, blockEntity, buffer, combinedLight, combinedOverlay)
+        WheelModels.render(matrixStack, blockEntity, buffer, combinedLight, combinedOverlay)
 
         matrixStack.popPose()
     }
