@@ -39,6 +39,7 @@ public class KineticAssemblyRecipes extends RecipeProvider {
         shipHelmRecipe(consumer, Items.BAMBOO_PLANKS, Items.BAMBOO_FENCE, KineticBlocks.BAMBOO_SHIP_HELM.get());
         shipHelmRecipe(consumer, Items.CRIMSON_PLANKS, Items.CRIMSON_FENCE, KineticBlocks.CRIMSON_SHIP_HELM.get());
         shipHelmRecipe(consumer, Items.SPRUCE_PLANKS, Items.SPRUCE_FENCE, KineticBlocks.SPRUCE_SHIP_HELM.get());
+        shipHelmRecipe(consumer, Items.CHERRY_PLANKS, Items.CHERRY_FENCE, KineticBlocks.CHERRY_SHIP_HELM.get());
     }
 
     //    private void registerPressingRecipe(Consumer<FinishedRecipe> consumer, Item input, Item output) {

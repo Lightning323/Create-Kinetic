@@ -44,7 +44,8 @@ public class KineticBlockEntities {
                     KineticBlocks.WARPED_SHIP_HELM,
                     KineticBlocks.BAMBOO_SHIP_HELM,
                     KineticBlocks.MANGROVE_SHIP_HELM,
-                    KineticBlocks.SPRUCE_SHIP_HELM
+                    KineticBlocks.SPRUCE_SHIP_HELM,
+                    KineticBlocks.CHERRY_SHIP_HELM
             )
             //TODO: Add visual for ship helm for better performance
             .renderer(() -> ShipHelmBlockEntityRenderer::new)
