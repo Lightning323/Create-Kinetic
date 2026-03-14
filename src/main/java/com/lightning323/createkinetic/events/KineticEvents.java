@@ -67,15 +67,15 @@ public class KineticEvents {
 //    }
 
     private static void kineticWorldTick(ServerLevel world) {
-        VSGameUtilsKt.getShipObjectWorld(world).getLoadedShips().forEach(ship -> {
-            if (ship != null) {
-                KineticShipControl controller = ship.getAttachment(KineticShipControl.class);
-                if (controller != null) {
-                    controller.world = world; //TODO: Not sure why this is needed
-                    controller.periodicUpdate();
-                }
-            }
-        });
+//        VSGameUtilsKt.getShipObjectWorld(world).getLoadedShips().forEach(ship -> {
+//            if (ship != null) {
+//                KineticShipControl controller = ship.getAttachment(KineticShipControl.class);
+//                if (controller != null) {
+//                    controller.world = world; //TODO: Not sure why this is needed
+//                    controller.periodicUpdate();
+//                }
+//            }
+//        });
 
         //TODO: Add wind particles?
 //        if (KineticConfig.windParticles && KineticConfig.windStrengthMultiplier > 0) {

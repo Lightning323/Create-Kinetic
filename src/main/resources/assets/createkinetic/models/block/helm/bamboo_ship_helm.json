@@ -2,8 +2,8 @@
 	"credit": "End_Rage waz here",
 	"textures": {
 		"2": "createkinetic:block/brass_shaft",
-		"3": "createkinetic:block/wheels/spruce_ship_wheel",
-		"4": "createkinetic:block/bases/spruce_ship_base",
+		"3": "createkinetic:block/wheels/bamboo_ship_wheel",
+		"4": "createkinetic:block/bases/bamboo_ship_base",
 		"5": "create:block/pulley_rope",
 		"particle": "create:block/pulley_rope"
 	},
@@ -175,7 +175,7 @@
 				"east": {"uv": [11, 11, 13, 4], "rotation": 180, "texture": "#3"},
 				"south": {"uv": [11, 11, 13, 4], "rotation": 180, "texture": "#3"},
 				"west": {"uv": [11, 11, 13, 4], "rotation": 180, "texture": "#3"},
-				"down": {"uv": [11, 4, 13, 6], "rotation": 180, "texture": "#3"}
+				"down": {"uv": [9, 7, 11, 9], "rotation": 180, "texture": "#3"}
 			}
 		},
 		{
@@ -201,7 +201,7 @@
 				"east": {"uv": [13, 11, 15, 4], "texture": "#3"},
 				"south": {"uv": [13, 11, 15, 4], "texture": "#3"},
 				"west": {"uv": [13, 11, 15, 4], "texture": "#3"},
-				"up": {"uv": [11, 9, 13, 11], "texture": "#3"}
+				"up": {"uv": [9, 7, 11, 9], "texture": "#3"}
 			}
 		},
 		{
@@ -223,7 +223,7 @@
 			"faces": {
 				"north": {"uv": [11, 11, 13, 4], "rotation": 90, "texture": "#3"},
 				"south": {"uv": [11, 11, 13, 4], "rotation": 270, "texture": "#3"},
-				"west": {"uv": [11, 4, 13, 6], "rotation": 270, "texture": "#3"},
+				"west": {"uv": [9, 7, 11, 9], "rotation": 270, "texture": "#3"},
 				"up": {"uv": [11, 11, 13, 4], "rotation": 270, "texture": "#3"},
 				"down": {"uv": [11, 11, 13, 4], "rotation": 270, "texture": "#3"}
 			}
@@ -247,7 +247,7 @@
 			"faces": {
 				"north": {"uv": [11, 11, 13, 4], "rotation": 90, "texture": "#3"},
 				"south": {"uv": [11, 11, 13, 4], "rotation": 270, "texture": "#3"},
-				"west": {"uv": [11, 4, 13, 6], "rotation": 270, "texture": "#3"},
+				"west": {"uv": [9, 7, 11, 9], "rotation": 270, "texture": "#3"},
 				"up": {"uv": [11, 11, 13, 4], "rotation": 270, "texture": "#3"},
 				"down": {"uv": [11, 11, 13, 4], "rotation": 270, "texture": "#3"}
 			}
@@ -271,7 +271,7 @@
 			"faces": {
 				"north": {"uv": [11, 11, 13, 4], "rotation": 90, "texture": "#3"},
 				"south": {"uv": [11, 11, 13, 4], "rotation": 270, "texture": "#3"},
-				"west": {"uv": [11, 4, 13, 6], "rotation": 270, "texture": "#3"},
+				"west": {"uv": [9, 7, 11, 9], "rotation": 270, "texture": "#3"},
 				"up": {"uv": [11, 11, 13, 4], "rotation": 270, "texture": "#3"},
 				"down": {"uv": [11, 11, 13, 4], "rotation": 270, "texture": "#3"}
 			}

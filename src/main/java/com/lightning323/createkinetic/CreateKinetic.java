@@ -1,8 +1,10 @@
 package com.lightning323.createkinetic;
 
+import com.lightning323.createkinetic.datagen.KineticAssemblyRecipes;
 import com.lightning323.createkinetic.registries.*;
 import com.lightning323.createkinetic.ship.KineticShipControl;
 import com.simibubi.create.foundation.data.CreateRegistrate;
+import com.tterrag.registrate.providers.ProviderType;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
@@ -20,7 +22,6 @@ import org.slf4j.Logger;
 import com.lightning323.createkinetic.network.NetworkHandler;
 import org.slf4j.LoggerFactory;
 import org.valkyrienskies.mod.api.ValkyrienSkies;
-import org.valkyrienskies.mod.common.ValkyrienSkiesMod;
 
 import static com.lightning323.createkinetic.registries.KineticCreativeTabs.CREATIVE_MODE_TABS;
 
@@ -53,8 +54,6 @@ public class CreateKinetic {
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, KineticConfig.SPEC);
         REGISTRATE.registerEventListeners(modEventBus);
-
-
         CREATIVE_MODE_TABS.register(modEventBus);
         MinecraftForge.EVENT_BUS.register(this);
     }

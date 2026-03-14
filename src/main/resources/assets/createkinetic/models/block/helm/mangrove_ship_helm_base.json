@@ -2,7 +2,7 @@
 	"credit": "Made with Blockbench",
 	"textures": {
 		"2": "createkinetic:block/brass_shaft",
-		"3": "createkinetic:block/bases/spruce_ship_base",
+		"3": "createkinetic:block/bases/mangrove_ship_base",
 		"5": "create:block/pulley_rope",
 		"particle": "create:block/pulley_rope"
 	},

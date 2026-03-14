@@ -45,18 +45,29 @@ public class KineticBlocks {
                 //Complete helm model for the item
                 .model((c, p) -> p.withExistingParent(c.getName(), p.modLoc("block/helm/" + name)))
                 .build()
+//                .recipe((ctx, prov) -> {
+//                    ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, ctx.getEntry())
+//                            .pattern(" F ")
+//                            .pattern("FIF")
+//                            .pattern("PBP")
+//                            .define('F', Items.OAK_FENCE)
+//                            .define('I', KineticItems.STEERING_MECHANISM.get())
+//                            .define('B', AllBlocks.BRASS_CASING)
+//                            .unlockedBy("has_chain", prov.has(Items.CHAIN))
+//                            .save(prov);
+//                })
                 .register();
     }
 
     public static final BlockEntry<ShipHelmBlock> OAK_SHIP_HELM = registerShipHelm("oak_ship_helm", WoodType.OAK);
-    //    public static final BlockEntry<ShipHelmBlock> SPRUCE_SHIP_HELM = registerShipHelm("spruce_ship_helm",WoodType.SPRUCE);
+        public static final BlockEntry<ShipHelmBlock> SPRUCE_SHIP_HELM = registerShipHelm("spruce_ship_helm",WoodType.SPRUCE);
     public static final BlockEntry<ShipHelmBlock> BIRCH_SHIP_HELM = registerShipHelm("birch_ship_helm", WoodType.BIRCH);
     public static final BlockEntry<ShipHelmBlock> JUNGLE_SHIP_HELM = registerShipHelm("jungle_ship_helm", WoodType.JUNGLE);
     public static final BlockEntry<ShipHelmBlock> ACACIA_SHIP_HELM = registerShipHelm("acacia_ship_helm", WoodType.ACACIA);
     public static final BlockEntry<ShipHelmBlock> DARK_OAK_SHIP_HELM = registerShipHelm("dark_oak_ship_helm", WoodType.DARK_OAK);
     public static final BlockEntry<ShipHelmBlock> WARPED_SHIP_HELM = registerShipHelm("warped_ship_helm", WoodType.WARPED);
-    //    public static final BlockEntry<ShipHelmBlock> MANGROVE_SHIP_HELM = registerShipHelm("mangrove_ship_helm",WoodType.MANGROVE);
-//    public static final BlockEntry<ShipHelmBlock> BAMBOO_SHIP_HELM = registerShipHelm("bamboo_ship_helm",WoodType.BAMBOO);
+    public static final BlockEntry<ShipHelmBlock> MANGROVE_SHIP_HELM = registerShipHelm("mangrove_ship_helm",WoodType.MANGROVE);
+    public static final BlockEntry<ShipHelmBlock> BAMBOO_SHIP_HELM = registerShipHelm("bamboo_ship_helm",WoodType.BAMBOO);
     public static final BlockEntry<ShipHelmBlock> CRIMSON_SHIP_HELM = registerShipHelm("crimson_ship_helm", WoodType.CRIMSON);
 //    public static final BlockEntry<ShipHelmBlock> CHERRY_SHIP_HELM = registerShipHelm("wood_ship_helm",WoodType.CHERRY);
 
