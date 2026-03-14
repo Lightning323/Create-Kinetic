@@ -20,9 +20,14 @@ public class KineticCreativeTabs {
                     .title(Component.translatable("itemGroup." + MOD_ID + ".tab"))
                     .icon(() -> KineticItems.SHIP_TOTEM.get().getDefaultInstance())
                     .displayItems((parameters, output) -> {
-                        //Registrate
-                        REGISTRATE.getAll(Registries.ITEM)
-                                .forEach(item -> output.accept(item.get()));
+                        REGISTRATE.getAll(Registries.ITEM).forEach(itemEntry -> {
+                            var item = itemEntry.get();
+
+                            // Only add to the tab if it is NOT a SequencedAssemblyItem
+                            if (!(item instanceof com.simibubi.create.content.processing.sequenced.SequencedAssemblyItem)) {
+                                output.accept(item);
+                            }
+                        });
                     }).build());
 
     //For vanilla tabs

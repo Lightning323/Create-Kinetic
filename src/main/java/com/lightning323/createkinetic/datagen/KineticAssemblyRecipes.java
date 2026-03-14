@@ -78,8 +78,8 @@ public class KineticAssemblyRecipes extends RecipeProvider {
                 .transitionTo(KineticItems.INCOMPLETE_STEERING_MECHANISM.get())
                 .addOutput(KineticItems.STEERING_MECHANISM.get(), 1)
                 // 20% chance to fail and get a "failed" variant or scrap
-                .addOutput(AllBlocks.COGWHEEL.get(), 10)
-                .addOutput(Items.IRON_NUGGET, 10)
+                .addOutput(AllBlocks.COGWHEEL.get(), 0.1f)
+                .addOutput(Items.IRON_NUGGET, 0.1f)
                 .loops(3)
                 .addStep(DeployerApplicationRecipe::new, b -> b.require(AllItems.ELECTRON_TUBE))
                 .addStep(DeployerApplicationRecipe::new, b -> b.require(AllBlocks.LARGE_COGWHEEL))
