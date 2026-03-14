@@ -1,6 +1,5 @@
 package com.lightning323.createkinetic.blocks.sail.sailPulley;
 
-import com.lightning323.createkinetic.CreateKinetic;
 import com.lightning323.createkinetic.registries.KineticBlocks;
 import com.lightning323.createkinetic.ship.KineticShipControl;
 import com.lightning323.createkinetic.ship.ShipUtils;
@@ -24,8 +23,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -41,40 +40,17 @@ import java.util.List;
 
 public class SailPulleyBlockEntity extends LinearActuatorBlockEntity implements ThresholdSwitchObservable {
 
-
-    public static void addSail(Level level, BlockPos pos, Direction.Axis sailAxis) {
-        if (level.isClientSide) return;
-        KineticShipControl shipController = ShipUtils.getOrCreateShipController(level, pos);
-        if (shipController != null) {
-            if(sailAxis == Direction.Axis.X){
-                shipController.sailPulleysX.add(pos.asLong());
-            }
-            else{
-                shipController.sailPulleysZ.add(pos.asLong());
-            }
-        }
-    }
-
-    public static void removeSail(Level level, BlockPos pos, Direction.Axis sailAxis) {
-        if (level.isClientSide) return;
-        KineticShipControl shipController = ShipUtils.getOrCreateShipController(level, pos);
-        if (shipController != null) {
-            shipController.sailPulleysX.remove(pos.asLong());
-            shipController.updateSailCount();
-        }
-    }
-
-    @Override
-    public void onLoad() {
-        super.onLoad();
-        addSail(getLevel(), getBlockPos(), this.getBlockState().getValue(BlockStateProperties.HORIZONTAL_AXIS));
-    }
-
-    @Override
-    public void remove() {
-        super.remove();
-        removeSail(getLevel(), getBlockPos(), this.getBlockState().getValue(BlockStateProperties.HORIZONTAL_AXIS));
-    }
+//    @Override
+//    public void onLoad() {
+//        super.onLoad();
+//        ShipUtils.addSail(getLevel(), getBlockPos(), this.getBlockState().getValue(BlockStateProperties.HORIZONTAL_AXIS));
+//    }
+//
+//    @Override
+//    public void remove() {
+//        super.remove();
+//        ShipUtils.removeSail(getLevel(), getBlockPos(), this.getBlockState().getValue(BlockStateProperties.HORIZONTAL_AXIS));
+//    }
 
     protected int initialOffset;
     private float prevAnimatedOffset;
@@ -146,7 +122,7 @@ public class SailPulleyBlockEntity extends LinearActuatorBlockEntity implements 
         while (i <= maxLength) {
             BlockPos ropePos = worldPosition.below(i);
             BlockState ropeState = level.getBlockState(ropePos);
-            if (!KineticBlocks.PULLEY_SAIL_CLOTH.has(ropeState) && !KineticBlocks.PULLEY_SAIL_MAGNET.has(ropeState)) {
+            if (!KineticBlocks.SAIL_CLOTH.has(ropeState) && !KineticBlocks.PULLEY_SAIL_MAGNET.has(ropeState)) {
                 break;
             }
             ++i;
@@ -274,7 +250,7 @@ public class SailPulleyBlockEntity extends LinearActuatorBlockEntity implements 
                         }
 
                         BlockPos sailPos = worldPosition.below(i);
-                        boolean success = level.setBlock(sailPos, KineticBlocks.PULLEY_SAIL_CLOTH.getDefaultState()
+                        boolean success = level.setBlock(sailPos, KineticBlocks.SAIL_CLOTH.getDefaultState()
                                         .setValue(BlockStateProperties.WATERLOGGED, waterlog[i]) //Waterlogged property
                                         .setValue(BlockStateProperties.HORIZONTAL_AXIS, //Horizontal axis property
                                                 this.getBlockState().getValue(BlockStateProperties.HORIZONTAL_AXIS))
@@ -285,11 +261,7 @@ public class SailPulleyBlockEntity extends LinearActuatorBlockEntity implements 
             }
 
             this.totalSails = (int) actuallyPlacedSails;
-            KineticShipControl shipController = ShipUtils.getOrCreateShipController(getLevel(), getBlockPos());
-            if (shipController != null) {
-                CreateKinetic.LOGGER.debug("Total sails: " + totalSails + " Offset: " + offset);
-                shipController.updateSailCount();
-            }
+            updateSailCount();
 
             if (movedContraption != null && mirrorParent == null)
                 movedContraption.disassemble();
@@ -303,6 +275,14 @@ public class SailPulleyBlockEntity extends LinearActuatorBlockEntity implements 
         initialOffset = 0;
         running = false;
         sendData();
+    }
+
+    private void updateSailCount() {
+        if (getLevel().isClientSide) return;
+        KineticShipControl shipController = ShipUtils.getOrCreateShipController(getLevel(), getBlockPos());
+        if (shipController != null) {
+            shipController.updateSailCount((ServerLevel) level);
+        }
     }
 
     protected boolean shouldCreateRopes() {

@@ -14,29 +14,29 @@ public class ShipUtils {
     //East = +X  (Direction.AxisDirection.POSITIVE, Direction.Axis.X)
     //West = -X  (Direction.AxisDirection.NEGATIVE, Direction.Axis.X)
 
-    public static void addBlockSail(Level level, BlockPos pos, Direction axis) {
-        KineticShipControl shipController = getOrCreateShipController(level, pos);
+    public static void addSail(Level level, BlockPos pos, Direction.Axis sailAxis) {
+        if (level.isClientSide) return;
+        KineticShipControl shipController = ShipUtils.getOrCreateShipController(level, pos);
         if (shipController != null) {
-            switch (axis) {
-                case NORTH -> shipController.blockSailsZ++;
-                case SOUTH -> shipController.blockSailsZ++;
-                case EAST -> shipController.blockSailsX++;
-                case WEST -> shipController.blockSailsX++;
+            if (sailAxis == Direction.Axis.X) {
+                shipController.sailsX.add(pos.asLong());
+            } else if (sailAxis == Direction.Axis.Z) {
+                shipController.sailsZ.add(pos.asLong());
             }
-            shipController.updateSailCount();
+            shipController.updateSailCount((ServerLevel) level);
         }
     }
 
-    public static void removeBlockSail(Level level, BlockPos pos, Direction axis) {
-        KineticShipControl shipController = getOrCreateShipController(level, pos);
+    public static void removeSail(Level level, BlockPos pos, Direction.Axis sailAxis) {
+        if (level.isClientSide) return;
+        KineticShipControl shipController = ShipUtils.getOrCreateShipController(level, pos);
         if (shipController != null) {
-            switch (axis) {
-                case NORTH -> shipController.blockSailsZ--;
-                case SOUTH -> shipController.blockSailsZ--;
-                case EAST -> shipController.blockSailsX--;
-                case WEST -> shipController.blockSailsX--;
+            if (sailAxis == Direction.Axis.X) {
+                shipController.sailsX.remove(pos.asLong());
+            } else if (sailAxis == Direction.Axis.Z) {
+                shipController.sailsZ.remove(pos.asLong());
             }
-            shipController.updateSailCount();
+            shipController.updateSailCount((ServerLevel) level);
         }
     }
 
@@ -44,12 +44,12 @@ public class ShipUtils {
         if (VSGameUtilsKt.isBlockInShipyard(world, pos)) {
             ServerShip ship = VSGameUtilsKt.getShipObjectManagingPos((ServerLevel) world, pos);
             if (ship != null) {
-                KineticShipControl controller = KineticShipControl.getOrCreate((LoadedServerShip) ship, (ServerLevel)world);
+                KineticShipControl controller = KineticShipControl.getOrCreate((LoadedServerShip) ship, (ServerLevel) world);
                 return controller;
             } else { //ship is being loaded from template
                 ship = VSGameUtilsKt.getShipManagingPos((ServerLevel) world, pos);
                 if (ship instanceof LoadedServerShip) {
-                    KineticShipControl controller = KineticShipControl.getOrCreate((LoadedServerShip) ship, (ServerLevel)world);
+                    KineticShipControl controller = KineticShipControl.getOrCreate((LoadedServerShip) ship, (ServerLevel) world);
                     return controller;
                 }
             }

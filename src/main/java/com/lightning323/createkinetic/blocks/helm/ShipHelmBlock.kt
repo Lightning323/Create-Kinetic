@@ -1,5 +1,6 @@
 package com.lightning323.createkinetic.blocks.helm
 
+import com.lightning323.createkinetic.CreateKinetic
 import com.lightning323.createkinetic.registries.KineticBlockEntities
 import com.lightning323.createkinetic.ship.ShipUtils
 import net.minecraft.core.BlockPos
@@ -36,7 +37,7 @@ import org.valkyrienskies.mod.common.getShipManagingPos
 class ShipHelmBlock(properties: Properties, val woodType: WoodType) : BaseEntityBlock(properties) {
     //    val HELM_BASE = RotShapes.box(2.0, 0.0, 2.0, 14.0, 2.0, 14.0)
 //    val HELM_POLE = RotShapes.box(4.0, 2.0, 5.0, 12.0, 13.0, 13.0)
-    val SIMPLE_SHAPE = Block.box(0.0, 0.0, 0.0, 16.0, 16.0, 16.0)
+    val SIMPLE_SHAPE = Block.box(1.0, 0.0, 1.0, 15.0, 16.0, 15.0)
 
     //    val HELM_SHAPE = DirectionalShape(RotShapes.or(HELM_BASE, HELM_POLE))
     private val woodTypeEnum: WoodTypeEnum
@@ -64,7 +65,12 @@ class ShipHelmBlock(properties: Properties, val woodType: WoodType) : BaseEntity
         val ship = level.getLoadedShipManagingPos(pos) ?: level.getShipManagingPos(pos) ?: return
         val it = ShipUtils.getOrCreateShipController(level, pos);
         if (it != null) {
-            it.helms+=1;
+            //When we set the helm, set the preferred direction to the direction the helm is facing
+            val direction = state.getValue(HORIZONTAL_FACING);
+//            CreateKinetic.LOGGER.debug("Helm preffered direction: {}", direction)
+            it.preferredDirection = direction
+            it.helms += 1;
+            it.updateShipDirection()
         }
 //        KineticShipControl.deferUntilLoaded(ship) { it.helms += 1 }
     }
@@ -169,8 +175,6 @@ class ShipHelmBlock(properties: Properties, val woodType: WoodType) : BaseEntity
             blockEntity.tick()
         }
     }
-
-
 
 
 }

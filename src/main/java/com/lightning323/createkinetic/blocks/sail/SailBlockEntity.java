@@ -1,6 +1,5 @@
 package com.lightning323.createkinetic.blocks.sail;
 
-import com.lightning323.createkinetic.CreateKinetic;
 import com.lightning323.createkinetic.registries.KineticBlocks;
 import com.lightning323.createkinetic.ship.KineticShipControl;
 import com.lightning323.createkinetic.ship.ShipUtils;
@@ -25,6 +24,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -36,9 +36,6 @@ import net.minecraft.world.phys.AABB;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.lightning323.createkinetic.blocks.sail.sailPulley.SailPulleyBlockEntity.addSail;
-import static com.lightning323.createkinetic.blocks.sail.sailPulley.SailPulleyBlockEntity.removeSail;
 
 public class SailBlockEntity extends KineticBlockEntity implements IDisplayAssemblyExceptions, ThresholdSwitchObservable {
 
@@ -245,17 +242,17 @@ public class SailBlockEntity extends KineticBlockEntity implements IDisplayAssem
         sendData();
     }
 
-    @Override
-    public void onLoad() {
-        super.onLoad();
-        addSail(getLevel(), getBlockPos(), this.getBlockState().getValue(BlockStateProperties.HORIZONTAL_AXIS));
-    }
-
-    @Override
-    public void remove() {
-        super.remove();
-        removeSail(getLevel(), getBlockPos(), this.getBlockState().getValue(BlockStateProperties.HORIZONTAL_AXIS));
-    }
+//    @Override
+//    public void onLoad() {
+//        super.onLoad();
+//        ShipUtils.addSail(getLevel(), getBlockPos(), this.getBlockState().getValue(BlockStateProperties.HORIZONTAL_AXIS));
+//    }
+//
+//    @Override
+//    public void remove() {
+//        super.remove();
+//        ShipUtils.removeSail(getLevel(), getBlockPos(), this.getBlockState().getValue(BlockStateProperties.HORIZONTAL_AXIS));
+//    }
 
 
     protected int initialOffset;
@@ -301,7 +298,7 @@ public class SailBlockEntity extends KineticBlockEntity implements IDisplayAssem
         while (i <= maxLength) {
             BlockPos ropePos = worldPosition.below(i);
             BlockState ropeState = level.getBlockState(ropePos);
-            if (!KineticBlocks.PULLEY_SAIL_CLOTH.has(ropeState) && !KineticBlocks.PULLEY_SAIL_WEIGHT.has(ropeState)) {
+            if (!KineticBlocks.SAIL_CLOTH.has(ropeState) && !KineticBlocks.PULLEY_SAIL_WEIGHT.has(ropeState)) {
                 break;
             }
             ++i;
@@ -364,8 +361,7 @@ public class SailBlockEntity extends KineticBlockEntity implements IDisplayAssem
         for (int i = ((int) offset); i > 0; i--) {
             BlockPos offset = worldPosition.below(i);
             BlockState oldState = level.getBlockState(offset);
-            level.setBlock(offset, oldState.getFluidState()
-                    .createLegacyBlock(), 66);
+            level.setBlock(offset, oldState.getFluidState().createLegacyBlock(), 66);
         }
     }
 
@@ -424,7 +420,7 @@ public class SailBlockEntity extends KineticBlockEntity implements IDisplayAssem
                         }
 
                         BlockPos sailPos = worldPosition.below(i);
-                        boolean success = level.setBlock(sailPos, KineticBlocks.PULLEY_SAIL_CLOTH.getDefaultState()
+                        boolean success = level.setBlock(sailPos, KineticBlocks.SAIL_CLOTH.getDefaultState()
                                         .setValue(BlockStateProperties.WATERLOGGED, waterlog[i]) //Waterlogged property
                                         .setValue(BlockStateProperties.HORIZONTAL_AXIS, //Horizontal axis property
                                                 this.getBlockState().getValue(BlockStateProperties.HORIZONTAL_AXIS))
@@ -435,15 +431,8 @@ public class SailBlockEntity extends KineticBlockEntity implements IDisplayAssem
             }
 
             this.totalSails = (int) actuallyPlacedSails;
-            KineticShipControl shipController = ShipUtils.getOrCreateShipController(getLevel(), getBlockPos());
-            if (shipController != null) {
-                CreateKinetic.LOGGER.debug("Total sails: " + totalSails + " Offset: " + offset);
-                shipController.updateSailCount();
-            }
-
-//            if (movedContraption != null && mirrorParent == null)
-//                movedContraption.disassemble();
             notifyMirrorsOfDisassembly();
+            updateSailCount();
         }
 
 //        if (movedContraption != null)
@@ -459,6 +448,13 @@ public class SailBlockEntity extends KineticBlockEntity implements IDisplayAssem
         return !remove;
     }
 
+    private void updateSailCount() {
+        if (getLevel().isClientSide) return;
+        KineticShipControl shipController = ShipUtils.getOrCreateShipController(getLevel(), getBlockPos());
+        if (shipController != null) {
+            shipController.updateSailCount((ServerLevel) level);
+        }
+    }
 
     protected void visitNewPosition() {
 

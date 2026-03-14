@@ -5,6 +5,7 @@ import com.lightning323.createkinetic.blocks.BallastBlock;
 import com.lightning323.createkinetic.blocks.BuoyBlock;
 import com.lightning323.createkinetic.blocks.helm.ShipHelmBlock;
 import com.lightning323.createkinetic.blocks.sail.SailBlock;
+import com.lightning323.createkinetic.blocks.sail.sailPulley.SailClothBlock;
 import com.lightning323.createkinetic.blocks.sail.sailPulley.SailPulleyBlock;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
@@ -124,7 +125,7 @@ public class KineticBlocks {
             })
             .register();
 
-    public static final BlockEntry<SailPulleyBlock.SailBlock> PULLEY_SAIL_CLOTH = REGISTRATE.block("rope", SailPulleyBlock.SailBlock::new)
+    public static final BlockEntry<SailClothBlock> SAIL_CLOTH = REGISTRATE.block("rope", SailClothBlock::new)
             .properties(p -> p.sound(SoundType.WOOL)
                     .mapColor(MapColor.COLOR_BROWN))
             .tag(AllTags.AllBlockTags.BRITTLE.tag)
@@ -184,7 +185,7 @@ public class KineticBlocks {
 
                     return ConfiguredModel.builder()
                             .modelFile(powered ? modelOn : modelOff)
-                            .rotationY(yRot)
+                            .rotationY(yRot+180)
                             .build();
                 });
             })

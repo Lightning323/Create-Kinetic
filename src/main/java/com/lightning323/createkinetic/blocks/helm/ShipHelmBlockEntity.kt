@@ -1,9 +1,11 @@
 package com.lightning323.createkinetic.blocks.helm
 
+import com.lightning323.createkinetic.CreateKinetic
 import com.lightning323.createkinetic.registries.KineticBlockEntities
 import com.lightning323.createkinetic.ship.KineticShipControl
 import net.minecraft.commands.arguments.EntityAnchorArgument
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
 import net.minecraft.core.Direction.Axis
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
@@ -43,6 +45,9 @@ class ShipHelmBlockEntity(
     pos: BlockPos,
     state: BlockState
 ) : BlockEntity(type, pos, state) {
+
+    //For the renderer
+    var smoothedHelmRotation = 0.0
 
     @OptIn(GameTickOnly::class)
     private val ship: LoadedServerShip? get() = (level as ServerLevel).getLoadedShipManagingPos(this.blockPos)
@@ -148,9 +153,17 @@ class ShipHelmBlockEntity(
     }
 
     fun sit(player: Player, force: Boolean = false): Boolean {
-         val seat = spawnSeat(blockPos, blockState, level as ServerLevel)
-         control?.seatedPlayer = player
-         return player.startRiding(seat, force)
+
+        val seat = spawnSeat(blockPos, blockState, level as ServerLevel)
+
+        //When we sit in a helm, set the preferred direction to the direction the helm is facing
+        var direction = blockState.getValue(HORIZONTAL_FACING);
+        CreateKinetic.LOGGER.debug("Helm seating direction: {}", direction)
+        control?.preferredDirection = direction
+        control?.updateShipDirection()
+
+        control?.seatedPlayer = player
+        return player.startRiding(seat, force)
         return startRiding(player, force, blockPos, blockState, level as ServerLevel)
     }
 

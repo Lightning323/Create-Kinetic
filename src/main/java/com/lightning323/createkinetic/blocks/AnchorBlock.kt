@@ -23,7 +23,7 @@ import org.valkyrienskies.core.api.util.GameTickOnly
 class AnchorBlock(properties: BlockBehaviour.Properties) : HorizontalDirectionalBlock(properties){
 
 
-    val ANCHOR_SHAPE = KineticShapes.cuboid(2.0, -1.0, 2.0, 14.0, 28.0, 14.0)
+    val ANCHOR_SHAPE = KineticShapes.cuboid(2.0, -1.0, 2.0, 14.0, 29.0, 14.0)
 
     init {
         registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH))

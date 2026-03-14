@@ -1,7 +1,7 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"1": "createkinetic:block/sail_pulley",
+		"1": "createkinetic:block/retractable_sail",
 		"particle": "create:block/gearbox"
 	},
 	"elements": [

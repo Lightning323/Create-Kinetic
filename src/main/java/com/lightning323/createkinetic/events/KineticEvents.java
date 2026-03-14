@@ -30,9 +30,9 @@ public class KineticEvents {
         BlockState state = event.getPlacedBlock();
         if (event.getLevel().isClientSide()) return;
 
-        if (state.getBlock() instanceof SailBlock) {
+        if (state.getBlock() instanceof com.simibubi.create.content.contraptions.bearing.SailBlock) {
             Direction value = state.getValue(BlockStateProperties.FACING);
-            ShipUtils.addBlockSail(event.getEntity().level(), event.getPos(), value);
+            ShipUtils.addSail(event.getEntity().level(), event.getPos(), value.getAxis());
         }
     }
 
@@ -41,9 +41,9 @@ public class KineticEvents {
         BlockState state = event.getState();
         if (event.getLevel().isClientSide()) return;
 
-        if (state.getBlock() instanceof SailBlock) {
+        if (state.getBlock() instanceof com.simibubi.create.content.contraptions.bearing.SailBlock) {
             Direction value = state.getValue(BlockStateProperties.FACING);
-            ShipUtils.removeBlockSail(event.getPlayer().level(), event.getPos(), value);
+            ShipUtils.removeSail(event.getPlayer().level(), event.getPos(), value.getAxis());
         }
     }
 
@@ -51,20 +51,20 @@ public class KineticEvents {
     private static final int tickInterval = 100;
 
     //TODO: Optimize this (Remove tick logic
-    @SubscribeEvent
-    public static void onWorldTick(TickEvent.LevelTickEvent event) {
-        //Server side tick
-        if (event.phase == TickEvent.Phase.START && !event.level.isClientSide) {// Phase.START is equivalent to "PRE"
-            if (tickCount == tickInterval) {//We only do this every N ticks
-                tickCount = 0;
-                if (event.level instanceof ServerLevel serverLevel) {
-                    kineticWorldTick(serverLevel);
-                }
-            } else {
-                tickCount++;
-            }
-        }
-    }
+//    @SubscribeEvent
+//    public static void onWorldTick(TickEvent.LevelTickEvent event) {
+//        //Server side tick
+//        if (event.phase == TickEvent.Phase.START && !event.level.isClientSide) {// Phase.START is equivalent to "PRE"
+//            if (tickCount == tickInterval) {//We only do this every N ticks
+//                tickCount = 0;
+//                if (event.level instanceof ServerLevel serverLevel) {
+//                    kineticWorldTick(serverLevel);
+//                }
+//            } else {
+//                tickCount++;
+//            }
+//        }
+//    }
 
     private static void kineticWorldTick(ServerLevel world) {
         VSGameUtilsKt.getShipObjectWorld(world).getLoadedShips().forEach(ship -> {

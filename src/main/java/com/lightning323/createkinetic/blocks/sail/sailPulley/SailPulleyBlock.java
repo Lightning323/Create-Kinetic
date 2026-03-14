@@ -123,13 +123,6 @@ public class SailPulleyBlock extends HorizontalAxisKineticBlock implements IBE<S
 
         @Override
         public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-            KineticShipControl shipController = ShipUtils.getOrCreateShipController(worldIn, pos);
-            if (shipController != null) {
-                shipController.numSquareSails--;
-                shipController.countAndRemoveSails();
-            }
-
-
             if (!isMoving && (!state.hasProperty(BlockStateProperties.WATERLOGGED) || !newState.hasProperty(BlockStateProperties.WATERLOGGED) || state.getValue(BlockStateProperties.WATERLOGGED) == newState.getValue(BlockStateProperties.WATERLOGGED))) {
                 onRopeBroken(worldIn, pos.above());
                 if (!worldIn.isClientSide) {
@@ -175,7 +168,6 @@ public class SailPulleyBlock extends HorizontalAxisKineticBlock implements IBE<S
                     // Add a default axis so it doesn't break when placed manually
                     .setValue(BlockStateProperties.HORIZONTAL_AXIS, context.getHorizontalDirection().getAxis());
         }
-
     }
 
     public static class MagnetBlock extends SailBlockBase {
@@ -190,19 +182,6 @@ public class SailPulleyBlock extends HorizontalAxisKineticBlock implements IBE<S
             return KineticShapes.SAIL_MAGNET.get(axis);
         }
 
-    }
-
-    public static class SailBlock extends SailBlockBase {
-
-        public SailBlock(Properties properties) {
-            super(properties);
-        }
-
-        @Override
-        public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
-            Direction.Axis axis = state.getValue(BlockStateProperties.HORIZONTAL_AXIS);
-            return KineticShapes.SAIL_CLOTH.get(axis);
-        }
     }
 
 }

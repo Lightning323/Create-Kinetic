@@ -34,20 +34,26 @@ class ShipHelmBlockEntityRenderer(val ctx: BlockEntityRendererProvider.Context) 
             )
         )
         val ship = (blockEntity.level)?.getShipManagingPos(blockEntity.blockPos)
-        var rot = 0.0
         if (ship != null) {
 //            val time = blockEntity.level!!.gameTime.toDouble()
 //            val smoothTime = time + partialTicks
 //            rot = smoothTime * 2.0
-            rot = ship.angularVelocity.y()
+            blockEntity.smoothedHelmRotation = lerp(
+                blockEntity.smoothedHelmRotation,
+                ship.angularVelocity.y() * 60
+                , 0.1);
         }
         // Add offset of the base based of rotation
         matrixStack.translate(0.0, 0.0, 0.19)
         // Rotate the wheel based of the ship omega
-        matrixStack.mulPose(Quaternionf(AxisAngle4f((rot / 20f * Math.PI.toFloat()).toFloat(), 0.0f, 0.0f, 1.0f)))
+        matrixStack.mulPose(Quaternionf(AxisAngle4f((blockEntity.smoothedHelmRotation / 20f * Math.PI.toFloat()).toFloat(), 0.0f, 0.0f, 1.0f)))
         // Render the wheel
         WheelModels.render(matrixStack, blockEntity, buffer, combinedLight, combinedOverlay)
 
         matrixStack.popPose()
+    }
+
+    fun lerp(start: Double, end: Double, factor: Double): Double {
+        return start + factor * (end - start)
     }
 }

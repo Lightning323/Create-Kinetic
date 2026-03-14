@@ -32,8 +32,7 @@ public class KineticConfig {
             .defineInRange("no_sail_zone", 45.0, 0.0, 360.0);
 
    private static final ForgeConfigSpec.IntValue SAIL_SPEED
-            = BUILDER.defineInRange("sail_speed", 1000, 0, Integer.MAX_VALUE);
-
+            = BUILDER.defineInRange("sail_speed", 10000, 0, Integer.MAX_VALUE);
 
     private static final ForgeConfigSpec.DoubleValue TURN_ACCELERATION
             = BUILDER.comment("The maximum linear acceleration at any point on the ship caused by helm torque")
@@ -50,9 +49,9 @@ public class KineticConfig {
             = BUILDER.comment("The maximum linear speed at any point on the ship caused by helm torque")
             .defineInRange("turn_speed", 3.0, 0.0, Double.MAX_VALUE);
 
-    private static final ForgeConfigSpec.BooleanValue WIND_PARTICLES
-            = BUILDER.comment("Should wind particles be enabled?")
-            .define("wind_particles", true);
+//    private static final ForgeConfigSpec.BooleanValue WIND_PARTICLES
+//            = BUILDER.comment("Should wind particles be enabled?")
+//            .define("wind_particles", true);
 
     static final ForgeConfigSpec SPEC = BUILDER.build();
 
@@ -83,7 +82,7 @@ public class KineticConfig {
         turnAcceleration = TURN_ACCELERATION.get();
         maxSizeForTurnSpeedPenalty = MAX_SIZE_FOR_TURN_SPEED_PENALTY.get();
         turnSpeed = TURN_SPEED.get();
-        windParticles = WIND_PARTICLES.get();
+//        windParticles = WIND_PARTICLES.get();
 
 //        magicNumberIntroduction = MAGIC_NUMBER_INTRODUCTION.get();
 //        items = ITEM_STRINGS.get().stream().map(itemName -> ForgeRegistries.ITEMS.getValue(new ResourceLocation(itemName))).collect(Collectors.toSet());

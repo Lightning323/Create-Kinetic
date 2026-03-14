@@ -51,8 +51,8 @@ public class SailBlock extends HorizontalAxisKineticBlock implements IBE<SailBlo
             worldIn.destroyBlock(pos.below(), true);
     }
 
-    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn,
-                                 BlockHitResult hit) {
+    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos,
+                                 Player player, InteractionHand handIn, BlockHitResult hit) {
         if (!player.mayBuild())
             return InteractionResult.PASS;
         if (player.isShiftKeyDown())
