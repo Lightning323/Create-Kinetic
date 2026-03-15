@@ -36,7 +36,7 @@ public class KineticConfig {
 
     private static final ForgeConfigSpec.DoubleValue TURN_ACCELERATION
             = BUILDER.comment("The maximum linear acceleration at any point on the ship caused by helm torque")
-            .defineInRange("turn_acceleration", 10.0, 0.0, Double.MAX_VALUE);
+            .defineInRange("turn_acceleration", 5.0, 0.0, Double.MAX_VALUE);
 
     private static final ForgeConfigSpec.DoubleValue MAX_SIZE_FOR_TURN_SPEED_PENALTY
             = BUILDER.comment("The maximum distance from center of mass to one end of the ship considered by " +
@@ -47,7 +47,7 @@ public class KineticConfig {
 
     private static final ForgeConfigSpec.DoubleValue TURN_SPEED
             = BUILDER.comment("The maximum linear speed at any point on the ship caused by helm torque")
-            .defineInRange("turn_speed", 3.0, 0.0, Double.MAX_VALUE);
+            .defineInRange("turn_speed", 2.0, 0.0, Double.MAX_VALUE);
 
 //    private static final ForgeConfigSpec.BooleanValue WIND_PARTICLES
 //            = BUILDER.comment("Should wind particles be enabled?")

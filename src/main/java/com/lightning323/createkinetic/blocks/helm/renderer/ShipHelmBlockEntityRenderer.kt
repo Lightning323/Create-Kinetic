@@ -40,7 +40,7 @@ class ShipHelmBlockEntityRenderer(val ctx: BlockEntityRendererProvider.Context) 
 //            rot = smoothTime * 2.0
             blockEntity.smoothedHelmRotation = lerp(
                 blockEntity.smoothedHelmRotation,
-                ship.angularVelocity.y() * 60
+                ship.angularVelocity.y() * 100
                 , 0.1);
         }
         // Add offset of the base based of rotation

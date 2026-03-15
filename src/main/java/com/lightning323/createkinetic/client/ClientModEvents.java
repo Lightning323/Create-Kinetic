@@ -1,6 +1,10 @@
 package com.lightning323.createkinetic.client;
 
+import com.lightning323.createkinetic.registries.KineticBlockEntities;
+import com.lightning323.createkinetic.registries.KineticBlocks;
 import com.lightning323.createkinetic.registries.KineticParticles;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;

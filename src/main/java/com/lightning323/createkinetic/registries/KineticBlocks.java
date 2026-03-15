@@ -3,6 +3,7 @@ package com.lightning323.createkinetic.registries;
 import com.lightning323.createkinetic.blocks.AnchorBlock;
 import com.lightning323.createkinetic.blocks.BallastBlock;
 import com.lightning323.createkinetic.blocks.BuoyBlock;
+import com.lightning323.createkinetic.blocks.EnchantedBallastBlock;
 import com.lightning323.createkinetic.blocks.helm.ShipHelmBlock;
 import com.lightning323.createkinetic.blocks.sail.SailBlock;
 import com.lightning323.createkinetic.blocks.sail.sailPulley.SailClothBlock;
@@ -13,19 +14,24 @@ import com.simibubi.create.AllTags;
 import com.simibubi.create.foundation.data.BlockStateGen;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.tterrag.registrate.util.entry.BlockEntry;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.level.material.MapColor;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
+import net.minecraftforge.fml.DistExecutor;
 
 import static com.lightning323.createkinetic.CreateKinetic.REGISTRATE;
 import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
@@ -239,6 +245,28 @@ public class KineticBlocks {
                         // Use prov.getConsumer() to save the recipe
                         .save(prov);
             })
+            .register();
+
+
+    public static final BlockEntry<BallastBlock> ENCHANTED_BALLAST = REGISTRATE.block("enchanted_ballast", BallastBlock::new)
+            .initialProperties(() -> Blocks.IRON_BLOCK)
+            .properties(p -> p.explosionResistance(0.0f).noOcclusion())
+            .blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(),
+                    prov.models().getExistingFile(prov.modLoc("block/enchanted_ballast")
+                    )))
+            .item((block, props) -> new BlockItem(block, props) {
+                @Override
+                public boolean isFoil(ItemStack stack) {
+                    return true; // Keeps the purple enchantment glow
+                }
+            })
+            // THIS PART overrides the item model specifically
+            .model((ctx, prov) -> prov.withExistingParent(ctx.getName(), "block/cube_bottom_top")
+                    .texture("side", prov.modLoc("block/ballast_side"))
+                    .texture("bottom", prov.modLoc("block/ballast_top"))
+                    .texture("top", prov.modLoc("block/ballast_top"))
+            )
+            .build()
             .register();
 
 
