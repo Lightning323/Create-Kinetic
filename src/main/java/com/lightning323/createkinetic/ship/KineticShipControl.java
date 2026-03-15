@@ -72,7 +72,7 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
     public int anchors = 0;
     public int anchorsActive = 0;
     public int numBallast = 0;
-    public int numMagicBallast = 0;
+    public int numEnchantedBallast = 0;
     public int numBuoys = 0;
     public int helms = 0;
     public volatile double waterAmount = 0.0;
@@ -354,35 +354,35 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
 
         if (helms > 0) physShip.applyRotDependentForce(keelForce);
 
-//        if (numMagicBallast > 0) { //TODO: Implement this
-//            Vector3d shipUp = new Vector3d(0.0, 1.0, 0.0);
-//            Vector3d worldUp = new Vector3d(0.0, 1.0, 0.0);
-//            //todo possibly modify worldUp based on wind angle & numsails to make ship heel (should really do it separately)
-//            physShip1.getTransform().getShipToWorldRotation().transform(shipUp);
-//
-//            double angleBetween = shipUp.angle(worldUp);
-//            Vector3d idealAngularAcceleration = new Vector3d(0, 0, 0);
-//
-//            if (angleBetween > 0.01) {
-//                Vector3d stabilizationRotationAxisNormalized = shipUp.cross(worldUp, new Vector3d()).normalize();
-//                idealAngularAcceleration.add(stabilizationRotationAxisNormalized.mul(
-//                        angleBetween, stabilizationRotationAxisNormalized)
-//                );
-//            }
-//
-//            Vector3dc omega = physShip1.getAngularVelocity();
-//            idealAngularAcceleration.sub(omega.x(), omega.y(), omega.z());
-//
-//            Vector3d stabilizationTorque = physShip1.getTransform().getShipToWorldRotation().transform(
-//                    physShip1.getMomentOfInertia().transform(
-//                            physShip1.getTransform().getShipToWorldRotation().transformInverse(idealAngularAcceleration)
-//                    )
-//            );
-//
-//            stabilizationTorque.mul(numMagicBallast * KineticConfig.magicBallastForce);
-//            physShip1.applyInvariantTorque(stabilizationTorque);
-//
-//        }
+        if (numEnchantedBallast > 0) {
+            Vector3d shipUp = new Vector3d(0.0, 1.0, 0.0);
+            Vector3d worldUp = new Vector3d(0.0, 1.0, 0.0);
+            //todo possibly modify worldUp based on wind angle & numsails to make ship heel (should really do it separately)
+            physShip1.getTransform().getShipToWorldRotation().transform(shipUp);
+
+            double angleBetween = shipUp.angle(worldUp);
+            Vector3d idealAngularAcceleration = new Vector3d(0, 0, 0);
+
+            if (angleBetween > 0.01) {
+                Vector3d stabilizationRotationAxisNormalized = shipUp.cross(worldUp, new Vector3d()).normalize();
+                idealAngularAcceleration.add(stabilizationRotationAxisNormalized.mul(
+                        angleBetween, stabilizationRotationAxisNormalized)
+                );
+            }
+
+            Vector3dc omega = physShip1.getAngularVelocity();
+            idealAngularAcceleration.sub(omega.x(), omega.y(), omega.z());
+
+            Vector3d stabilizationTorque = physShip1.getTransform().getShipToWorldRotation().transform(
+                    physShip1.getMomentOfInertia().transform(
+                            physShip1.getTransform().getShipToWorldRotation().transformInverse(idealAngularAcceleration)
+                    )
+            );
+
+            stabilizationTorque.mul(numEnchantedBallast * KineticConfig.enchantedBallastForce);
+            physShip1.applyInvariantTorque(stabilizationTorque);
+
+        }
 
         if (numBallast > 0 || numBuoys > 0) {
             physShip1.setBuoyantFactor(1.0 + numBuoys * KineticConfig.buoyStrength + numBallast * KineticConfig.ballastStrength);
@@ -528,7 +528,7 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
     }
 
     public boolean shouldDispose() {
-        return numBallast <= 0 && numFnASails <= 0 && numSquareSails <= 0 && numMagicBallast <= 0 && numBuoys <= 0 && helms == 0 && !frozen;
+        return numBallast <= 0 && numFnASails <= 0 && numSquareSails <= 0 && numEnchantedBallast <= 0 && numBuoys <= 0 && helms == 0 && !frozen;
     }
 
     @SuppressWarnings("unchecked")

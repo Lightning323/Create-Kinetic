@@ -248,6 +248,10 @@
     "mass": 20000.0
   },
   {
+    "block": "createkinetic:enchanted_ballast",
+    "mass": 20000.0
+  },
+  {
     "block": "createkinetic:buoy_block",
     "mass": 0.1
   },

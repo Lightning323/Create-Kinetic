@@ -1,9 +1,19 @@
 package com.lightning323.createkinetic.blocks;
 
-import net.minecraft.world.item.ItemStack;
+import com.lightning323.createkinetic.ship.KineticShipControl;
 
-public class EnchantedBallastBlock extends BallastBlock{
+public class EnchantedBallastBlock extends CountableBlock {
     public EnchantedBallastBlock(Properties settings) {
         super(settings);
+    }
+
+    @Override
+    void addToShip(KineticShipControl controller) {
+        controller.numEnchantedBallast++;
+    }
+
+    @Override
+    void removeFromShip(KineticShipControl controller) {
+        controller.numEnchantedBallast--;
     }
 }
