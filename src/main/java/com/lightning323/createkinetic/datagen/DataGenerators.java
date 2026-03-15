@@ -17,7 +17,7 @@ public class DataGenerators {
 
         // Register your Recipe Provider here
         if (event.includeServer()) {
-            gen.addProvider(true, new KineticAssemblyRecipes(gen));
+            gen.addProvider(true, new KineticRecipes(gen));
         }
     }
 }

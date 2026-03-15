@@ -1,6 +1,7 @@
 package com.lightning323.createkinetic.blocks.helm
 
 import com.lightning323.createkinetic.CreateKinetic
+import com.lightning323.createkinetic.CreateKinetic.MOD_ID
 import com.lightning323.createkinetic.registries.KineticBlockEntities
 import com.lightning323.createkinetic.ship.ShipUtils
 import net.minecraft.core.BlockPos
@@ -113,7 +114,7 @@ class ShipHelmBlock(properties: Properties, val woodType: WoodType) : BaseEntity
         val blockEntity = level.getBlockEntity(pos) as ShipHelmBlockEntity
 
         return if (level.getShipManagingPos(pos) == null) {
-            player.displayClientMessage(Component.translatable("info.vs_eureka.sneak_to_open_helm"), true)
+            player.displayClientMessage(Component.translatable("info."+MOD_ID+".needs_ship"), true)
             InteractionResult.CONSUME
         } else if (blockEntity.sit(player)) {
             InteractionResult.CONSUME

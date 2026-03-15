@@ -13,17 +13,20 @@ import com.simibubi.create.AllItems;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.foundation.data.BlockStateGen;
 import com.simibubi.create.foundation.data.SharedProperties;
+import com.simibubi.create.foundation.item.TooltipHelper;
 import com.tterrag.registrate.util.entry.BlockEntry;
+import net.createmod.catnip.lang.Lang;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.network.chat.Component;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
+import net.minecraft.world.item.*;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -32,6 +35,9 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.fml.DistExecutor;
+
+import javax.annotation.Nullable;
+import java.util.List;
 
 import static com.lightning323.createkinetic.CreateKinetic.REGISTRATE;
 import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
@@ -248,7 +254,7 @@ public class KineticBlocks {
             .register();
 
 
-    public static final BlockEntry<BallastBlock> ENCHANTED_BALLAST = REGISTRATE.block("enchanted_ballast", BallastBlock::new)
+    public static final BlockEntry<EnchantedBallastBlock> ENCHANTED_BALLAST = REGISTRATE.block("enchanted_ballast", EnchantedBallastBlock::new)
             .initialProperties(() -> Blocks.IRON_BLOCK)
             .properties(p -> p.explosionResistance(0.0f).noOcclusion())
             .blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(),
@@ -256,8 +262,15 @@ public class KineticBlocks {
                     )))
             .item((block, props) -> new BlockItem(block, props) {
                 @Override
+                public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
+                    TooltipHelper.addHint(tooltip,"create_kinetic.tooltip.enchanted_ballast.summary",
+                            Component.translatable("create_kinetic.tooltip.enchanted_ballast"),
+                            true);
+                }
+
+                @Override
                 public boolean isFoil(ItemStack stack) {
-                    return true; // Keeps the purple enchantment glow
+                    return true; // Keeping your glint logic
                 }
             })
             // THIS PART overrides the item model specifically

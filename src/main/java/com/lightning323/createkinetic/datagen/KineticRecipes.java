@@ -6,22 +6,28 @@ import com.lightning323.createkinetic.registries.KineticBlocks;
 import com.lightning323.createkinetic.registries.KineticItems;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
+import com.simibubi.create.AllTags;
 import com.simibubi.create.api.data.recipe.MechanicalCraftingRecipeBuilder;
 import com.simibubi.create.content.kinetics.deployer.DeployerApplicationRecipe;
+import com.simibubi.create.content.kinetics.mixer.MixingRecipe;
 import com.simibubi.create.content.kinetics.press.PressingRecipe;
+import com.simibubi.create.content.processing.recipe.HeatCondition;
+import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder;
 import com.simibubi.create.content.processing.sequenced.SequencedAssemblyRecipeBuilder;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 
 import java.util.function.Consumer;
 
-public class KineticAssemblyRecipes extends RecipeProvider {
+public class KineticRecipes extends RecipeProvider {
 
-    public KineticAssemblyRecipes(DataGenerator generator) {
+    public KineticRecipes(DataGenerator generator) {
         super(generator.getPackOutput());
     }
 
@@ -29,6 +35,7 @@ public class KineticAssemblyRecipes extends RecipeProvider {
     protected void buildRecipes(Consumer<FinishedRecipe> consumer) {
         // Build your recipes here
         createMechanicalPart(consumer);
+        enchantedBallastRecipes(consumer);
         shipHelmRecipe(consumer, Items.OAK_PLANKS, Items.OAK_FENCE, KineticBlocks.OAK_SHIP_HELM.get());
         shipHelmRecipe(consumer, Items.BIRCH_PLANKS, Items.BIRCH_FENCE, KineticBlocks.BIRCH_SHIP_HELM.get());
         shipHelmRecipe(consumer, Items.JUNGLE_PLANKS, Items.JUNGLE_FENCE, KineticBlocks.JUNGLE_SHIP_HELM.get());
@@ -48,14 +55,22 @@ public class KineticAssemblyRecipes extends RecipeProvider {
 //                .withSingleItemOutput(KineticItems.SAIL_CLOTH.asStack())
 //                .build(consumer);
 //    }
-//private void registerMixingRecipe(Consumer<FinishedRecipe> consumer) {
-//    new ProcessingRecipeBuilder<>(MixingRecipe::new, CreateKinetic.resource("treated_wood"))
+    private void enchantedBallastRecipes(Consumer<FinishedRecipe> consumer) {
+        new ProcessingRecipeBuilder<>(MixingRecipe::new, CreateKinetic.resource("enchanted_ballast"))
 //            .withItemIngredients(Ingredient.of(ItemTags.PLANKS))
-//            .withFluidIngredients(FluidIngredient.fromFluid(Fluids.WATER, 250))
-//            .withSingleItemOutput(new ItemStack(Items.OAK_PLANKS)) // Replace with your treated wood
-//            .requiresHeat(HeatCondition.HEATED)
-//            .build(consumer);
-//}
+                // .withFluidIngredients(FluidIngredient.fromFluid(Fluids.WATER, 250))
+                .withItemIngredients(
+                        Ingredient.of(AllItems.EXP_NUGGET.get()),
+                        Ingredient.of(AllItems.EXP_NUGGET.get()),
+                        Ingredient.of(AllItems.EXP_NUGGET.get()),
+                        Ingredient.of(AllItems.EXP_NUGGET.get()),
+                        Ingredient.of(KineticBlocks.BALLAST_BLOCK.get()))
+
+                .withSingleItemOutput(new ItemStack(KineticBlocks.ENCHANTED_BALLAST.get())) // Replace with your treated wood
+                .requiresHeat(HeatCondition.HEATED)
+                .build(consumer);
+    }
+
     private void shipHelmRecipe(Consumer<FinishedRecipe> consumer, Item planks, Item fence, ShipHelmBlock output) {
         MechanicalCraftingRecipeBuilder.shapedRecipe(output)
                 .key('S', KineticItems.STEERING_MECHANISM.get())

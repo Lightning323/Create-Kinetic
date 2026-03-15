@@ -19,7 +19,7 @@ public class KineticConfig {
             = BUILDER.comment("Keel Strength").defineInRange("keel_strength", 4.0, 0.0, Double.MAX_VALUE);
 
     private static final ForgeConfigSpec.DoubleValue ENCHANTED_BALLAST_FORCE
-            = BUILDER.comment("Enchanted Ballast Righting Force").defineInRange("enchanted_ballast_force", 1, 0.0, Double.MAX_VALUE);
+            = BUILDER.comment("Enchanted Ballast Righting Force").defineInRange("enchanted_ballast_force", 2, 0.0, Double.MAX_VALUE);
 
     private static final ForgeConfigSpec.DoubleValue BALLAST_STRENGTH
             = BUILDER.comment("Ballast Float Strength").defineInRange("ballast_strength", 0.0625, 0.0, Double.MAX_VALUE);

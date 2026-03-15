@@ -1,10 +1,8 @@
 package com.lightning323.createkinetic;
 
-import com.lightning323.createkinetic.datagen.KineticAssemblyRecipes;
 import com.lightning323.createkinetic.registries.*;
 import com.lightning323.createkinetic.ship.KineticShipControl;
 import com.simibubi.create.foundation.data.CreateRegistrate;
-import com.tterrag.registrate.providers.ProviderType;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;

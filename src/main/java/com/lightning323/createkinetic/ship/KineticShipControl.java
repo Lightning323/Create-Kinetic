@@ -201,6 +201,8 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
 
     @JsonIgnore
     public LoadedServerShip ship = null;
+    @JsonIgnore
+    private static final Vector3d up = new Vector3d(0.0, 1.0, 0.0);
 
     private void updateShipBounds() {
         boundx = ship.getShipAABB().maxX() - ship.getShipAABB().minX();
@@ -277,13 +279,14 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
 
     @Override
     public void physTick(@NotNull PhysShip physShip, @NotNull PhysLevel physLevel) {
-//        Createkinetic.LOGGER.debug("PHYS TICK");
+        if(isAnchored()) {
+            physShip.setStatic(true);
+            return; //If we are static, skip the rest of the tick
+        }else{
+            physShip.setStatic(false);
+        }
         PhysShipImpl physShip1 = (PhysShipImpl) physShip;
-
-
         physShip1.setDoFluidDrag(true);
-        physShip.setStatic(isAnchored());
-
         boolean validPlayer = isPlayerValid();
         if (validPlayer) {
             // Manually extract the inputs from the Minecraft Player object
@@ -349,39 +352,46 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
         if (shipDirection == Direction.NORTH || shipDirection == Direction.SOUTH) {
             keelForce = new Vector3d(force.x() * KineticConfig.keelStrength, 0, 0);
         } else {
-            keelForce = new Vector3d(0, 0, force.z() * 4);
+            keelForce = new Vector3d(0, 0, force.z() * KineticConfig.keelStrength);
         }
 
         if (helms > 0) physShip.applyRotDependentForce(keelForce);
 
         if (numEnchantedBallast > 0) {
-            Vector3d shipUp = new Vector3d(0.0, 1.0, 0.0);
-            Vector3d worldUp = new Vector3d(0.0, 1.0, 0.0);
-            //todo possibly modify worldUp based on wind angle & numsails to make ship heel (should really do it separately)
+            Vector3d worldUp = new Vector3d(0, 1, 0);
+            Vector3d shipUp = new Vector3d(0, 1, 0);
             physShip1.getTransform().getShipToWorldRotation().transform(shipUp);
 
             double angleBetween = shipUp.angle(worldUp);
-            Vector3d idealAngularAcceleration = new Vector3d(0, 0, 0);
 
-            if (angleBetween > 0.01) {
-                Vector3d stabilizationRotationAxisNormalized = shipUp.cross(worldUp, new Vector3d()).normalize();
-                idealAngularAcceleration.add(stabilizationRotationAxisNormalized.mul(
-                        angleBetween, stabilizationRotationAxisNormalized)
-                );
+            if (angleBetween > 0.001) {
+                Vector3d rotationAxis = new Vector3d();
+                shipUp.cross(worldUp, rotationAxis);
+                rotationAxis.normalize();
+
+                // 1. Proportional Gain (How hard it pulls back based on angle)
+                double pStrength = numEnchantedBallast * KineticConfig.enchantedBallastForce;
+                Vector3d restorationTorque = new Vector3d(rotationAxis).mul(angleBetween * pStrength);
+
+                // 2. Derivative Gain (Damping - resists current spinning)
+                // Without this, the ship will wobble like a bobblehead.
+                Vector3dc currentOmega = physShip1.getAngularVelocity();
+                double dampingStrength = pStrength * 0.5; // Start with half of P strength
+                Vector3d dampingTorque = new Vector3d(currentOmega).mul(-dampingStrength);
+
+                // 3. Combine
+                Vector3d totalTorque = restorationTorque.add(dampingTorque);
+
+                // 4. Transform through Inertia (Crucial for heavy ships)
+                Matrix3dc inertia = physShip1.getMomentOfInertia();
+                Quaterniondc shipRot = physShip1.getTransform().getShipToWorldRotation();
+
+                shipRot.transformInverse(totalTorque);
+                inertia.transform(totalTorque);
+                shipRot.transform(totalTorque);
+                LOGGER.debug("Applying enchanted ballast torque {}, strength: {}", totalTorque,pStrength);
+                physShip1.applyInvariantTorque(totalTorque);
             }
-
-            Vector3dc omega = physShip1.getAngularVelocity();
-            idealAngularAcceleration.sub(omega.x(), omega.y(), omega.z());
-
-            Vector3d stabilizationTorque = physShip1.getTransform().getShipToWorldRotation().transform(
-                    physShip1.getMomentOfInertia().transform(
-                            physShip1.getTransform().getShipToWorldRotation().transformInverse(idealAngularAcceleration)
-                    )
-            );
-
-            stabilizationTorque.mul(numEnchantedBallast * KineticConfig.enchantedBallastForce);
-            physShip1.applyInvariantTorque(stabilizationTorque);
-
         }
 
         if (numBallast > 0 || numBuoys > 0) {
@@ -443,7 +453,6 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
                 double mul = -(squareWindModifier + fnAWindModifier) * KineticConfig.sailSpeed * (windStrength * windStrength);
 //                LOGGER.debug("Sail speed = {}", mul);
                 sailForce.mul(mul);
-
 //                LOGGER.info("sailforce=" + sailForce.toString() + " shipdir=" + shipDirection.toString());
                 physShip1.applyRotDependentForce(sailForce);
             }

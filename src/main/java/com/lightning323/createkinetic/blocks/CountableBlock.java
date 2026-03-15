@@ -60,10 +60,10 @@ public abstract class CountableBlock extends Block {
         if (newState.isAir() || !newState.is(state.getBlock())) {
             if (VSGameUtilsKt.isBlockInShipyard(world, pos)) {
                 LoadedServerShip ship = VSGameUtilsKt.getShipObjectManagingPos((ServerLevel) world, pos);
-                assert ship != null;
-                KineticShipControl controller = ship.getAttachment(KineticShipControl.class);
-                assert controller != null;
-                removeFromShip(controller);
+                if (ship != null) {
+                    KineticShipControl controller = ship.getAttachment(KineticShipControl.class);
+                    if (controller != null) removeFromShip(controller);
+                }
             }
         }
     }
