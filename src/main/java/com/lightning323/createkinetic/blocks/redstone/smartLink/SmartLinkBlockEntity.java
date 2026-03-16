@@ -1,5 +1,6 @@
 package com.lightning323.createkinetic.blocks.redstone.smartLink;
 
+import com.lightning323.createkinetic.blocks.redstone.KLinkBehaviour;
 import com.lightning323.createkinetic.registries.KineticBlocks;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelSupportBehaviour;
 import com.simibubi.create.content.redstone.link.LinkBehaviour;
@@ -20,7 +21,7 @@ public class SmartLinkBlockEntity extends SmartBlockEntity {
 	private boolean receivedSignalChanged;
 	private int receivedSignal;
 	private int transmittedSignal;
-	private LinkBehaviour link;
+	private KLinkBehaviour link;
 	private boolean transmitter;
 
 	public FactoryPanelSupportBehaviour panelSupport;
@@ -45,8 +46,8 @@ public class SmartLinkBlockEntity extends SmartBlockEntity {
 	protected void createLink() {
 		Pair<ValueBoxTransform, ValueBoxTransform> slots =
 			ValueBoxTransform.Dual.makeSlots(SmartLinkFrequencySlot::new);
-		link = transmitter ? LinkBehaviour.transmitter(this, slots, this::getSignal)
-			: LinkBehaviour.receiver(this, slots, this::setSignal);
+		link = transmitter ? KLinkBehaviour.transmitter(this, slots, this::getSignal)
+			: KLinkBehaviour.receiver(this, slots, this::setSignal);
 	}
 
 	public int getSignal() {
@@ -91,7 +92,7 @@ public class SmartLinkBlockEntity extends SmartBlockEntity {
 
 		if (isTransmitterBlock() != transmitter) {
 			transmitter = isTransmitterBlock();
-			LinkBehaviour prevlink = link;
+			KLinkBehaviour prevlink = link;
 			removeBehaviour(LinkBehaviour.TYPE);
 			createLink();
 			link.copyItemsFrom(prevlink);

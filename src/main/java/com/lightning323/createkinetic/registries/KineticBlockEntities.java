@@ -1,6 +1,7 @@
 package com.lightning323.createkinetic.registries;
 
 import com.lightning323.createkinetic.blocks.helm.ShipHelmBlockEntity;
+import com.lightning323.createkinetic.blocks.redstone.smartLink.KSmartBlockEntityRenderer;
 import com.lightning323.createkinetic.blocks.sail.RetractableSailBlockEntity;
 import com.lightning323.createkinetic.blocks.sail.SailRenderer;
 import com.lightning323.createkinetic.blocks.sail.SailVisual;
@@ -56,7 +57,7 @@ public class KineticBlockEntities {
     public static final BlockEntityEntry<SmartLinkBlockEntity> SMART_LINK = REGISTRATE
             .blockEntity("redstone_link", SmartLinkBlockEntity::new)
             .validBlocks(KineticBlocks.SMART_LINK)
-            .renderer(() -> SmartBlockEntityRenderer::new)
+            .renderer(() -> KSmartBlockEntityRenderer::new)
             .register();
 
     public static void register() {

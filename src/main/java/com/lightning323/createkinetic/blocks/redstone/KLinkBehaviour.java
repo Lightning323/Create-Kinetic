@@ -31,10 +31,10 @@ public class KLinkBehaviour extends BlockEntityBehaviour implements KIRedstoneLi
         TRANSMIT, RECEIVE
     }
 
-    KFrequency frequencyFirst;
-    KFrequency frequencyLast;
-    ValueBoxTransform firstSlot;
-    ValueBoxTransform secondSlot;
+    public KFrequency frequencyFirst;
+    public KFrequency frequencyLast;
+    public ValueBoxTransform firstSlot;
+    public ValueBoxTransform secondSlot;
     Vec3 textShift;
 
     public boolean newPosition;
