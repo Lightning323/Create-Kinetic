@@ -7,6 +7,8 @@ import com.lightning323.createkinetic.blocks.sail.SailVisual;
 import com.lightning323.createkinetic.blocks.sail.sailPulley.SailPulleyBlockEntity;
 import com.lightning323.createkinetic.blocks.sail.sailPulley.SailPulleyRenderer;
 import com.lightning323.createkinetic.blocks.sail.sailPulley.SailPulleyVisual;
+import com.lightning323.createkinetic.blocks.smartLink.SmartLinkBlockEntity;
+import com.simibubi.create.foundation.blockEntity.renderer.SmartBlockEntityRenderer;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
 import org.valkyrienskies.eureka.blockentity.renderer.ShipHelmBlockEntityRenderer;
 
@@ -49,6 +51,12 @@ public class KineticBlockEntities {
             )
             //TODO: Add visual for ship helm for better performance
             .renderer(() -> ShipHelmBlockEntityRenderer::new)
+            .register();
+
+    public static final BlockEntityEntry<SmartLinkBlockEntity> SMART_LINK = REGISTRATE
+            .blockEntity("redstone_link", SmartLinkBlockEntity::new)
+            .validBlocks(KineticBlocks.SMART_LINK)
+            .renderer(() -> SmartBlockEntityRenderer::new)
             .register();
 
     public static void register() {
