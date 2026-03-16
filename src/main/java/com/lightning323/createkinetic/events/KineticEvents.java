@@ -47,24 +47,14 @@ public class KineticEvents {
         }
     }
 
-    private static int tickCount = 0;
-    private static final int tickInterval = 100;
 
-    //TODO: Optimize this (Remove tick logic
-//    @SubscribeEvent
-//    public static void onWorldTick(TickEvent.LevelTickEvent event) {
-//        //Server side tick
-//        if (event.phase == TickEvent.Phase.START && !event.level.isClientSide) {// Phase.START is equivalent to "PRE"
-//            if (tickCount == tickInterval) {//We only do this every N ticks
-//                tickCount = 0;
-//                if (event.level instanceof ServerLevel serverLevel) {
-//                    kineticWorldTick(serverLevel);
-//                }
-//            } else {
-//                tickCount++;
-//            }
-//        }
-//    }
+    @SubscribeEvent
+    public static void onWorldTick(TickEvent.LevelTickEvent event) {
+        //Server side tick
+        if (event.phase == TickEvent.Phase.START && !event.level.isClientSide) {
+            WindManager.updateWind(event.level);
+        }
+    }
 
     private static void kineticWorldTick(ServerLevel world) {
 //        VSGameUtilsKt.getShipObjectWorld(world).getLoadedShips().forEach(ship -> {

@@ -12,9 +12,6 @@ public class KineticConfig {
     private static final ForgeConfigSpec.BooleanValue FORGIVING_SAILS
             = BUILDER.comment("Should sails be forgiving?").define("forgiving_sails", false);
 
-    private static final ForgeConfigSpec.DoubleValue WIND_STRENGTH
-            = BUILDER.defineInRange("wind_strength", 1.0, 0.0, Double.MAX_VALUE);
-
     private static final ForgeConfigSpec.DoubleValue KEEL_STRENGTH
             = BUILDER.comment("Keel Strength").defineInRange("keel_strength", 4.0, 0.0, Double.MAX_VALUE);
 
@@ -32,7 +29,7 @@ public class KineticConfig {
             .defineInRange("no_sail_zone", 45.0, 0.0, 360.0);
 
    private static final ForgeConfigSpec.IntValue SAIL_SPEED
-            = BUILDER.defineInRange("sail_speed", 10000, 0, Integer.MAX_VALUE);
+            = BUILDER.defineInRange("sail_speed", 20000, 0, Integer.MAX_VALUE);
 
     private static final ForgeConfigSpec.DoubleValue TURN_ACCELERATION
             = BUILDER.comment("The maximum linear acceleration at any point on the ship caused by helm torque")
@@ -47,7 +44,7 @@ public class KineticConfig {
 
     private static final ForgeConfigSpec.DoubleValue TURN_SPEED
             = BUILDER.comment("The maximum linear speed at any point on the ship caused by helm torque")
-            .defineInRange("turn_speed", 2.0, 0.0, Double.MAX_VALUE);
+            .defineInRange("turn_speed", 3.0, 0.0, Double.MAX_VALUE);
 
 //    private static final ForgeConfigSpec.BooleanValue WIND_PARTICLES
 //            = BUILDER.comment("Should wind particles be enabled?")
@@ -56,7 +53,6 @@ public class KineticConfig {
     static final ForgeConfigSpec SPEC = BUILDER.build();
 
     public static boolean forgivingSails;
-    public static double windStrengthMultiplier;
     public static double keelStrength;
     public static double enchantedBallastForce;
     public static double ballastStrength;
@@ -76,7 +72,6 @@ public class KineticConfig {
         enchantedBallastForce = ENCHANTED_BALLAST_FORCE.get();
         ballastStrength = BALLAST_STRENGTH.get();
         buoyStrength = BUOY_STRENGTH.get();
-        windStrengthMultiplier = WIND_STRENGTH.get();
         noSailZone = NO_SAIL_ZONE.get();
         sailSpeed = SAIL_SPEED.get();
         turnAcceleration = TURN_ACCELERATION.get();

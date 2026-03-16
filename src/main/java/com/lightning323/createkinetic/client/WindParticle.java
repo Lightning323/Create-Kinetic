@@ -13,8 +13,6 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.Nullable;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.spongepowered.asm.mixin.Unique;
 
 public class WindParticle extends TextureSheetParticle {
@@ -52,7 +50,7 @@ public class WindParticle extends TextureSheetParticle {
         this.lifetime = 20;
         this.alpha = 0;
         this.oscillationPhase = this.random.nextDouble() * Math.PI * 2.0d;
-        this.oscillationAmplitude = this.random.nextDouble() * WindManager.getWindStrength(world, new BlockPos((int)x, (int)y, (int)z));
+        this.oscillationAmplitude = this.random.nextDouble() * WindManager.getWindStrength();
         this.lastOscillationOffset = 0.0d;
         this.setSpriteFromAge(spriteSet);
 
@@ -76,7 +74,7 @@ public class WindParticle extends TextureSheetParticle {
     }
 
     private void fade() {
-        double windStrength = WindManager.getWindStrength(this.level, new BlockPos((int)this.x, (int)this.y, (int)this.z));
+        double windStrength = WindManager.getWindStrength();
         float fadeEnvelope = (float) Math.sin((Math.PI * age) / lifetime);
         //int lightLevel = this.world.getLightLevel(LightType.SKY, new BlockPos((int) this.x, (int) this.y, (int) this.z));
         //todo how would I get the viewing player to make the particles fade out when they get close to the player?
@@ -86,7 +84,7 @@ public class WindParticle extends TextureSheetParticle {
 
     private void applyOscillation() {
         Vec3 particlePos = new Vec3(this.x, this.y, this.z);
-        double directionRadians = Math.toRadians(WindManager.getWindDirection(this.level, particlePos));
+        double directionRadians = Math.toRadians(WindManager.getWindDirection());
         double oscillation = Math.sin((age * 0.45d) + oscillationPhase) * oscillationAmplitude;
         double delta = oscillation - lastOscillationOffset;
         lastOscillationOffset = oscillation;
@@ -109,7 +107,7 @@ public class WindParticle extends TextureSheetParticle {
 //        }
 
         Vec3 particlePos = new Vec3(this.x, this.y, this.z);
-        Vec3 windDirection = new Vec3(Math.cos(Math.toRadians(WindManager.getWindDirection(this.level, particlePos))), 0, Math.sin(Math.toRadians(WindManager.getWindDirection(this.level, particlePos))));
+        Vec3 windDirection = new Vec3(Math.cos(Math.toRadians(WindManager.getWindDirection())), 0, Math.sin(Math.toRadians(WindManager.getWindDirection())));
 
         double windInfluenceFactor = getWindInfluenceFactor(particlePos, windDirection);
         return d + axis * windInfluenceFactor;
@@ -142,9 +140,9 @@ public class WindParticle extends TextureSheetParticle {
         double windEffectiveness = 2;
         BlockPos pos = new BlockPos((int) this.x, (int) this.y, (int) this.z);
 
-        double angleRadians = Math.toRadians(WindManager.getWindDirection(this.level, particlePos));
-        double windX = Math.cos(angleRadians) * WindManager.getWindStrength(this.level, pos) * windEffectiveness;
-        double windZ = Math.sin(angleRadians) * WindManager.getWindStrength(this.level, pos) * windEffectiveness;
+        double angleRadians = Math.toRadians(WindManager.getWindDirection());
+        double windX = Math.cos(angleRadians) * WindManager.getWindStrength() * windEffectiveness;
+        double windZ = Math.sin(angleRadians) * WindManager.getWindStrength() * windEffectiveness;
         Vec3 initialWindEffect = new Vec3(windX, 0, windZ);
 
         return calculateRealisticWindFlow(initialWindEffect, pos);

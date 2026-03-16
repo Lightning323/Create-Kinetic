@@ -279,10 +279,10 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
 
     @Override
     public void physTick(@NotNull PhysShip physShip, @NotNull PhysLevel physLevel) {
-        if(isAnchored()) {
+        if (isAnchored()) {
             physShip.setStatic(true);
             return; //If we are static, skip the rest of the tick
-        }else{
+        } else {
             physShip.setStatic(false);
         }
         PhysShipImpl physShip1 = (PhysShipImpl) physShip;
@@ -404,58 +404,56 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
                     shipDirection.getNormal().getX(), shipDirection.getNormal().getY(), shipDirection.getNormal().getZ()
             );
 
-            if (KineticConfig.windStrengthMultiplier > 0) {
-                Vector3dc worldShipPos = physShip1.getTransform().getPositionInWorld();
-                //Get the position of our ship
-                Vec3 shipPosVec = new Vec3(worldShipPos.x(), worldShipPos.y(), worldShipPos.z());
-                BlockPos shipPosBlockPos = new BlockPos((int) worldShipPos.x(), (int) worldShipPos.y(), (int) worldShipPos.z());
+            Vector3dc worldShipPos = physShip1.getTransform().getPositionInWorld();
+            //Get the position of our ship
+            Vec3 shipPosVec = new Vec3(worldShipPos.x(), worldShipPos.y(), worldShipPos.z());
+            BlockPos shipPosBlockPos = new BlockPos((int) worldShipPos.x(), (int) worldShipPos.y(), (int) worldShipPos.z());
 
-                //Get the wind parameters
-                double windDirection = WindManager.getWindDirection(world, shipPosVec); //in degrees
-                double windStrength = WindManager.getWindStrength(world, shipPosBlockPos)  // -1.0 -- 1.0
-                        * KineticConfig.windStrengthMultiplier;
+            //Get the wind parameters
+            double windDirection = WindManager.getWindDirection(); //in degrees
+            double windStrength = WindManager.getWindStrength();  // -1.0 -- 1.0
 
-                //Get the Y angle of our ship in radians
-                double shipAngle = getShipYaw(physShip1.getTransform().getShipToWorldRotation()); //in radians
+            //Get the Y angle of our ship in radians
+            double shipAngle = getShipYaw(physShip1.getTransform().getShipToWorldRotation()); //in radians
 
-                double windAngle;
-                double squareAngleBetween;
-                double fnaAngleBetween;
-                //LOGGER.info("wind:"+windAngle+" ship:"+shipAngle);
-                if (windStrength > 0) {
-                    windAngle = windDirection + 90 % 360;
-                } else {
-                    windAngle = windDirection + 270 % 360;
-                }
-                if (shipDirection == Direction.WEST) {
-                    windAngle = (windAngle - 90) % 360;
-                } else if (shipDirection == Direction.NORTH) {
-                    windAngle = (windAngle + 180) % 360;
-                } else if (shipDirection == Direction.EAST) {
-                    windAngle = (windAngle + 90) % 360;
-                }
-
-                windAngle = toRadians(windAngle);
-                squareAngleBetween = abs(min(abs(shipAngle - windAngle), 2 * PI - abs(shipAngle - windAngle)));
-                double fnaAngle1 = abs(shipAngle + PI / 2 - windAngle);
-                double fnaAngle2 = abs(shipAngle - PI / 2 - windAngle);
-                fnaAngleBetween = abs(min(min(fnaAngle1, 2 * PI - fnaAngle1), min(fnaAngle2, 2 * PI - fnaAngle2)));
-                if (squareAngleBetween > PI / 2) {
-                    fnaAngleBetween *= 2;
-                }
-
-                //Square sails are hung from a horizontal "yard" perpendicular to the mast.
-                double squareWindModifier = numSquareSails / calculateWindAngleModifier(squareAngleBetween, PI - KineticConfig.noSailZone);
-
-                //Fore-and-aft sails (like Jibs, Staysails, or Bermuda rigs) are aligned with the centerline of the ship (front-to-back).
-                double fnAWindModifier = numFnASails / calculateWindAngleModifier(fnaAngleBetween, PI - KineticConfig.noSailZone);
-
-                double mul = -(squareWindModifier + fnAWindModifier) * KineticConfig.sailSpeed * (windStrength * windStrength);
-//                LOGGER.debug("Sail speed = {}", mul);
-                sailForce.mul(mul);
-//                LOGGER.info("sailforce=" + sailForce.toString() + " shipdir=" + shipDirection.toString());
-                physShip1.applyRotDependentForce(sailForce);
+            double windAngle;
+            double squareAngleBetween;
+            double fnaAngleBetween;
+            //LOGGER.info("wind:"+windAngle+" ship:"+shipAngle);
+            if (windStrength > 0) {
+                windAngle = windDirection + 90 % 360;
+            } else {
+                windAngle = windDirection + 270 % 360;
             }
+            if (shipDirection == Direction.WEST) {
+                windAngle = (windAngle - 90) % 360;
+            } else if (shipDirection == Direction.NORTH) {
+                windAngle = (windAngle + 180) % 360;
+            } else if (shipDirection == Direction.EAST) {
+                windAngle = (windAngle + 90) % 360;
+            }
+
+            windAngle = toRadians(windAngle);
+            squareAngleBetween = abs(min(abs(shipAngle - windAngle), 2 * PI - abs(shipAngle - windAngle)));
+            double fnaAngle1 = abs(shipAngle + PI / 2 - windAngle);
+            double fnaAngle2 = abs(shipAngle - PI / 2 - windAngle);
+            fnaAngleBetween = abs(min(min(fnaAngle1, 2 * PI - fnaAngle1), min(fnaAngle2, 2 * PI - fnaAngle2)));
+            if (squareAngleBetween > PI / 2) {
+                fnaAngleBetween *= 2;
+            }
+
+            //Square sails are hung from a horizontal "yard" perpendicular to the mast.
+            double squareWindModifier = numSquareSails / calculateWindAngleModifier(squareAngleBetween, PI - KineticConfig.noSailZone);
+
+            //Fore-and-aft sails (like Jibs, Staysails, or Bermuda rigs) are aligned with the centerline of the ship (front-to-back).
+            double fnAWindModifier = numFnASails / calculateWindAngleModifier(fnaAngleBetween, PI - KineticConfig.noSailZone);
+
+            double mul = -(squareWindModifier + fnAWindModifier) * KineticConfig.sailSpeed * (windStrength * windStrength);
+//                LOGGER.debug("Sail speed = {}", mul);
+            sailForce.mul(mul);
+//                LOGGER.info("sailforce=" + sailForce.toString() + " shipdir=" + shipDirection.toString());
+            physShip1.applyRotDependentForce(sailForce);
+
         }
         waterAmount = physShip1.getLiquidOverlap();
         if (shouldDispose()) {//Dispose of this ship if its no longer needed
@@ -498,10 +496,17 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
     }
 
     private double calculateWindAngleModifier(double windAngle, double noSail) {
+        // Prevent division by zero
+        if (noSail == 0) return 1.0;
+
         if (KineticConfig.forgivingSails) {
-            return pow(2, windAngle / noSail) + pow(2, -windAngle / noSail);
+            //Forgiving sails doesnt stop the ship so agressively when going against the wind
+            double ratio = windAngle / noSail;
+            return Math.pow(2, ratio) + Math.pow(2, -ratio);
         }
-        return pow(2, pow(windAngle, 2) / noSail) + pow(2, -pow(windAngle, 2) / noSail);
+
+        double ratioSq = (windAngle * windAngle) / noSail;
+        return Math.pow(2, ratioSq) + Math.pow(2, -ratioSq);
     }
 
     public static double getShipYaw(Quaterniondc shipRotation) {
