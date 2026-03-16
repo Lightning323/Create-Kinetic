@@ -1,5 +1,6 @@
 package com.lightning323.createkinetic.blocks.sail;
 
+import com.lightning323.createkinetic.blocks.sail.sailPulley.SailBlockBase;
 import com.lightning323.createkinetic.blocks.sail.sailPulley.SailPulleyBlock;
 import com.lightning323.createkinetic.registries.KineticBlockEntities;
 import com.lightning323.createkinetic.registries.KineticBlocks;
@@ -11,31 +12,32 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class SailBlock extends HorizontalAxisKineticBlock implements IBE<SailBlockEntity> {
+public class RetractableSailBlock extends HorizontalAxisKineticBlock implements IBE<RetractableSailBlockEntity> {
 
-
-    public SailBlock(Properties properties) {
+    public RetractableSailBlock(Properties properties) {
         super(properties);
+        this.defaultBlockState().setValue(SailBlockBase.COLOR, DyeColor.WHITE);
     }
 
-    private static void onRopeBroken(Level world, BlockPos sailPos) {
-        BlockEntity be = world.getBlockEntity(sailPos);
-        if (be instanceof SailBlockEntity sail) {
-            sail.initialOffset = 0;
-            sail.onLengthBroken();
-        }
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(SailBlockBase.COLOR);
+        super.createBlockStateDefinition(builder);
     }
 
     @Override
@@ -47,7 +49,7 @@ public class SailBlock extends HorizontalAxisKineticBlock implements IBE<SailBlo
             return;
 
         BlockState below = worldIn.getBlockState(pos.below());
-        if (below.getBlock() instanceof SailPulleyBlock.SailBlockBase)
+        if (below.getBlock() instanceof SailBlockBase)
             worldIn.destroyBlock(pos.below(), true);
     }
 
@@ -66,8 +68,8 @@ public class SailBlock extends HorizontalAxisKineticBlock implements IBE<SailBlo
     }
 
     @Override
-    public Class<SailBlockEntity> getBlockEntityClass() {
-        return SailBlockEntity.class;
+    public Class<RetractableSailBlockEntity> getBlockEntityClass() {
+        return RetractableSailBlockEntity.class;
     }
 
     @Override
@@ -77,11 +79,11 @@ public class SailBlock extends HorizontalAxisKineticBlock implements IBE<SailBlo
     }
 
     @Override
-    public BlockEntityType<? extends SailBlockEntity> getBlockEntityType() {
+    public BlockEntityType<? extends RetractableSailBlockEntity> getBlockEntityType() {
         return KineticBlockEntities.SAIL.get();
     }
 
-    public static class WeightBlock extends SailPulleyBlock.SailBlockBase {
+    public static class WeightBlock extends SailBlockBase {
 
         public WeightBlock(Properties properties) {
             super(properties);

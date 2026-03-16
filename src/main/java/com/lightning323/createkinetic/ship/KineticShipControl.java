@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.lightning323.createkinetic.CreateKinetic;
 import com.lightning323.createkinetic.KineticConfig;
-import com.lightning323.createkinetic.blocks.sail.sailPulley.SailClothBlock;
+import com.lightning323.createkinetic.blocks.sail.SailClothBlock;
 import it.unimi.dsi.fastutil.longs.LongIterator;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import it.unimi.dsi.fastutil.longs.LongSet;

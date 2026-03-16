@@ -28,109 +28,127 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public abstract class AbstractSailPulleyRenderer<T extends KineticBlockEntity> extends KineticBlockEntityRenderer<T> {
 
-	private PartialModel halfRope;
-	private PartialModel halfMagnet;
+    private PartialModel halfRope;
+    private PartialModel halfMagnet;
 
-	public AbstractSailPulleyRenderer(BlockEntityRendererProvider.Context context, PartialModel halfRope,
-									  PartialModel halfMagnet) {
-		super(context);
-		this.halfRope = halfRope;
-		this.halfMagnet = halfMagnet;
-	}
+    public AbstractSailPulleyRenderer(BlockEntityRendererProvider.Context context, PartialModel halfRope,
+                                      PartialModel halfMagnet) {
+        super(context);
+        this.halfRope = halfRope;
+        this.halfMagnet = halfMagnet;
+    }
 
-	@Override
-	public boolean shouldRenderOffScreen(T p_188185_1_) {
-		return true;
-	}
+    @Override
+    public boolean shouldRenderOffScreen(T p_188185_1_) {
+        return true;
+    }
 
-	@Override
-	protected void renderSafe(T be, float partialTicks, PoseStack ms, MultiBufferSource buffer,
-		int light, int overlay) {
+    @Override
+    protected void renderSafe(T be, float partialTicks, PoseStack ms, MultiBufferSource buffer,
+                              int light, int overlay) {
 
-		if (VisualizationManager.supportsVisualization(be.getLevel()))
-			return;
+        if (VisualizationManager.supportsVisualization(be.getLevel()))
+            return;
 
-		super.renderSafe(be, partialTicks, ms, buffer, light, overlay);
-		float offset = getOffset(be, partialTicks);
-		boolean running = isRunning(be);
+        Axis axis = be.getBlockState().getValue(SailPulleyBlock.HORIZONTAL_AXIS);
+        int colorRGB = be.getBlockState().getValue(SailBlockBase.COLOR).getFireworkColor();
+        int colorRGBA = colorRGB | 0xFF000000;
 
-		VertexConsumer vb = buffer.getBuffer(RenderType.solid());
-		scrollCoil(getRotatedCoil(be), getCoilShift(), offset, 1)
-			.light(light)
-			.renderInto(ms, vb);
+        super.renderSafe(be, partialTicks, ms, buffer, light, overlay);
+        float offset = getOffset(be, partialTicks);
+        boolean running = isRunning(be);
 
-		Level world = be.getLevel();
-		BlockState blockState = be.getBlockState();
-		BlockPos pos = be.getBlockPos();
+        VertexConsumer vb = buffer.getBuffer(RenderType.solid());
+        scrollCoil(getRotatedCoil(be), getCoilShift(), offset, 1)
+                .light(light)
+                .renderInto(ms, vb);
 
-		SuperByteBuffer halfMagnet = CachedBuffers.partial(this.halfMagnet, blockState);
-		SuperByteBuffer halfRope = CachedBuffers.partial(this.halfRope, blockState);
-		SuperByteBuffer magnet = renderMagnet(be);
-		SuperByteBuffer rope = renderRope(be);
+        Level world = be.getLevel();
+        BlockState blockState = be.getBlockState();
+        BlockPos pos = be.getBlockPos();
 
-		if (running || offset == 0)
-			renderAt(world, offset > .25f ? magnet : halfMagnet, offset, pos, ms, vb);
+        SuperByteBuffer halfMagnet = CachedBuffers.partial(this.halfMagnet, blockState);
+        SuperByteBuffer halfRope = CachedBuffers.partial(this.halfRope, blockState);
+        SuperByteBuffer magnet = renderMagnet(be);
+        SuperByteBuffer rope = renderRope(be);
 
-		float f = offset % 1;
-		if (offset > .75f && (f < .25f || f > .75f))
-			renderAt(world, halfRope, f > .75f ? f - 1 : f, pos, ms, vb);
+        //Rotate the models
+        if (axis == Axis.Z) {
+            halfMagnet.rotateCentered((float) (Math.PI / 2), Axis.Y);
+            halfRope.rotateCentered((float) (Math.PI / 2), Axis.Y);
+            magnet.rotateCentered((float) (Math.PI / 2), Axis.Y);
+            rope.rotateCentered((float) (Math.PI / 2), Axis.Y);
+        }
 
-		if (!running)
-			return;
+        //Tint the models
+        rope.color(colorRGBA);
+        halfRope.color(colorRGBA);
+//		halfMagnet.color(colorRGBA);
+//		magnet.color(colorRGBA);
 
-		for (int i = 0; i < offset - 1.25f; i++)
-			renderAt(world, rope, offset - i - 1, pos, ms, vb);
-	}
+        if (running || offset == 0)
+            renderAt(world, offset > .25f ? magnet : halfMagnet, offset, pos, ms, vb);
 
-	public static void renderAt(LevelAccessor world, SuperByteBuffer partial, float offset, BlockPos pulleyPos,
-		PoseStack ms, VertexConsumer buffer) {
-		BlockPos actualPos = pulleyPos.below((int) offset);
-		int light = LevelRenderer.getLightColor(world, world.getBlockState(actualPos), actualPos);
-		partial.translate(0, -offset, 0)
-		.light(light)
-			.renderInto(ms, buffer);
-	}
+        float f = offset % 1;
+        if (offset > .75f && (f < .25f || f > .75f))
+            renderAt(world, halfRope, f > .75f ? f - 1 : f, pos, ms, vb);
 
-	protected abstract Axis getShaftAxis(T be);
+        if (!running)
+            return;
 
-	protected abstract PartialModel getCoil();
+        for (int i = 0; i < offset - 1.25f; i++)
+            renderAt(world, rope, offset - i - 1, pos, ms, vb);
+    }
 
-	protected abstract SpriteShiftEntry getCoilShift();
+    public static void renderAt(LevelAccessor world, SuperByteBuffer partial, float offset, BlockPos pulleyPos,
+                                PoseStack ms, VertexConsumer buffer) {
+        BlockPos actualPos = pulleyPos.below((int) offset);
+        int light = LevelRenderer.getLightColor(world, world.getBlockState(actualPos), actualPos);
+        partial.translate(0, -offset, 0)
+                .light(light)
+                .renderInto(ms, buffer);
+    }
 
-	protected abstract SuperByteBuffer renderRope(T be);
+    protected abstract Axis getShaftAxis(T be);
 
-	protected abstract SuperByteBuffer renderMagnet(T be);
+    protected abstract PartialModel getCoil();
 
-	protected abstract float getOffset(T be, float partialTicks);
+    protected abstract SpriteShiftEntry getCoilShift();
 
-	protected abstract boolean isRunning(T be);
+    protected abstract SuperByteBuffer renderRope(T be);
 
-	@Override
-	protected BlockState getRenderedBlockState(T be) {
-		return shaft(getShaftAxis(be));
-	}
+    protected abstract SuperByteBuffer renderMagnet(T be);
 
-	protected SuperByteBuffer getRotatedCoil(T be) {
-		BlockState blockState = be.getBlockState();
-		return CachedBuffers.partialFacing(getCoil(), blockState,
-			Direction.get(AxisDirection.POSITIVE, getShaftAxis(be)));
-	}
+    protected abstract float getOffset(T be, float partialTicks);
 
-	public static SuperByteBuffer scrollCoil(SuperByteBuffer sbb, SpriteShiftEntry coilShift, float offset, float speedModifier) {
-		if (offset == 0)
-			return sbb;
-		float spriteSize = coilShift.getTarget()
-			.getV1()
-			- coilShift.getTarget()
-				.getV0();
-		offset *= speedModifier / 2;
-		double coilScroll = -(offset + 3 / 16f) - Math.floor((offset + 3 / 16f) * -2) / 2;
-		return sbb.shiftUVScrolling(coilShift, (float) coilScroll * spriteSize);
-	}
+    protected abstract boolean isRunning(T be);
 
-	@Override
-	public int getViewDistance() {
-		return AllConfigs.server().kinetics.maxRopeLength.get();
-	}
+    @Override
+    protected BlockState getRenderedBlockState(T be) {
+        return shaft(getShaftAxis(be));
+    }
+
+    protected SuperByteBuffer getRotatedCoil(T be) {
+        BlockState blockState = be.getBlockState();
+        return CachedBuffers.partialFacing(getCoil(), blockState,
+                Direction.get(AxisDirection.POSITIVE, getShaftAxis(be)));
+    }
+
+    public static SuperByteBuffer scrollCoil(SuperByteBuffer sbb, SpriteShiftEntry coilShift, float offset, float speedModifier) {
+        if (offset == 0)
+            return sbb;
+        float spriteSize = coilShift.getTarget()
+                .getV1()
+                - coilShift.getTarget()
+                .getV0();
+        offset *= speedModifier / 2;
+        double coilScroll = -(offset + 3 / 16f) - Math.floor((offset + 3 / 16f) * -2) / 2;
+        return sbb.shiftUVScrolling(coilShift, (float) coilScroll * spriteSize);
+    }
+
+    @Override
+    public int getViewDistance() {
+        return AllConfigs.server().kinetics.maxRopeLength.get();
+    }
 
 }

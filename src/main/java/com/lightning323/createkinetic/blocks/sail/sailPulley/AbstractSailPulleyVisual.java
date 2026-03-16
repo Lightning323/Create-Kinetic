@@ -1,5 +1,6 @@
 package com.lightning323.createkinetic.blocks.sail.sailPulley;
 
+import com.lightning323.createkinetic.blocks.sail.SailClothBlock;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import org.joml.Quaternionf;
 import org.joml.Quaternionfc;
@@ -33,222 +34,243 @@ import net.minecraft.world.level.LightLayer;
 import java.util.function.Consumer;
 
 public abstract class AbstractSailPulleyVisual<T extends KineticBlockEntity> extends ShaftVisual<T> implements SimpleDynamicVisual {
-	private final ScrollInstance coil;
-	private final TransformedInstance magnet;
-	private final SmartRecycler<Boolean, TransformedInstance> rope;
+    private final ScrollInstance coil;
+    private final TransformedInstance magnet;
+    private final SmartRecycler<Boolean, TransformedInstance> rope;
 
-	protected final Direction rotatingAbout;
-	protected final Axis rotationAxis;
+    protected final Direction rotatingAbout;
+    protected final Axis rotationAxis;
 
-	private final LightCache lightCache = new LightCache();
+    private final LightCache lightCache = new LightCache();
 
-	private float offset;
+    private float offset;
 
-	//New
-	private final Quaternionf sailRotation = new Quaternionf();
+    //New
+    private final Quaternionf sailRotation = new Quaternionf();
+//    private int color;
 
-	public AbstractSailPulleyVisual(VisualizationContext dispatcher, T blockEntity, float partialTick) {
-		super(dispatcher, blockEntity, partialTick);
+    public AbstractSailPulleyVisual(VisualizationContext dispatcher, T blockEntity, float partialTick) {
+        super(dispatcher, blockEntity, partialTick);
 
-		rotatingAbout = Direction.get(Direction.AxisDirection.POSITIVE, rotationAxis());
-		rotationAxis = Axis.of(rotatingAbout.step());
+        rotatingAbout = Direction.get(Direction.AxisDirection.POSITIVE, rotationAxis());
+        rotationAxis = Axis.of(rotatingAbout.step());
 
-		float blockStateAngle = AngleHelper.horizontalAngle(rotatingAbout);
-		Quaternionfc rotation = new Quaternionf().rotationY(Mth.DEG_TO_RAD * blockStateAngle);
+        float blockStateAngle = AngleHelper.horizontalAngle(rotatingAbout);
+        Quaternionfc rotation = new Quaternionf().rotationY(Mth.DEG_TO_RAD * blockStateAngle);
 
-		coil = getCoilModel().createInstance()
-			.rotation(rotation)
-			.position(getVisualPosition())
-			.setSpriteShift(getCoilAnimation());
+        coil = getCoilModel().createInstance()
+                .rotation(rotation)
+                .position(getVisualPosition())
+                .setSpriteShift(getCoilAnimation());
 
-		coil.setChanged();
+        coil.setChanged();
 
-		magnet = magnetInstancer().createInstance();
+        magnet = magnetInstancer().createInstance();
 
-		rope = new SmartRecycler<>(b -> b ? getHalfRopeModel().createInstance() : getRopeModel().createInstance());
+        rope = new SmartRecycler<>(b -> b ? getHalfRopeModel().createInstance() : getRopeModel().createInstance());
 
-		if (blockState.getValue(BlockStateProperties.HORIZONTAL_AXIS) == net.minecraft.core.Direction.Axis.Z) {
-			sailRotation.rotationY(Mth.HALF_PI); // 90 degrees in radians
-		}
+        if (blockState.getValue(BlockStateProperties.HORIZONTAL_AXIS) == net.minecraft.core.Direction.Axis.Z) {
+            sailRotation.rotationY(Mth.HALF_PI); // 90 degrees in radians
+        }
 
-		updateOffset(partialTick);
-		updateLight(partialTick);
-		animate();
-	}
 
-	@Override
-	public void setSectionCollector(SectionCollector sectionCollector) {
-		super.setSectionCollector(sectionCollector);
-		lightCache.updateSections();
-	}
+        updateOffset(partialTick);
+        updateLight(partialTick);
+        animate();
+    }
 
-	protected abstract Instancer<TransformedInstance> getRopeModel();
+    @Override
+    public void setSectionCollector(SectionCollector sectionCollector) {
+        super.setSectionCollector(sectionCollector);
+        lightCache.updateSections();
+    }
 
-	protected abstract Instancer<TransformedInstance> getMagnetModel();
+    protected abstract Instancer<TransformedInstance> getRopeModel();
 
-	protected abstract Instancer<TransformedInstance> getHalfMagnetModel();
+    protected abstract Instancer<TransformedInstance> getMagnetModel();
 
-	protected abstract Instancer<ScrollInstance> getCoilModel();
+    protected abstract Instancer<TransformedInstance> getHalfMagnetModel();
 
-	protected abstract Instancer<TransformedInstance> getHalfRopeModel();
+    protected abstract Instancer<ScrollInstance> getCoilModel();
 
-	protected abstract float getOffset(float pt);
+    protected abstract Instancer<TransformedInstance> getHalfRopeModel();
 
-	protected abstract boolean isRunning();
+    protected abstract float getOffset(float pt);
 
-	protected abstract SpriteShiftEntry getCoilAnimation();
+    protected abstract boolean isRunning();
 
-	private Instancer<TransformedInstance> magnetInstancer() {
-		return offset > .25f ? getMagnetModel() : getHalfMagnetModel();
-	}
+    protected abstract SpriteShiftEntry getCoilAnimation();
 
-	@Override
-	public void beginFrame(DynamicVisual.Context ctx) {
-		updateOffset(ctx.partialTick());
-		animate();
-	}
+    private Instancer<TransformedInstance> magnetInstancer() {
+        return offset > .25f ? getMagnetModel() : getHalfMagnetModel();
+    }
 
-	private void animate() {
-		coil.offsetV = -offset;
-		coil.setChanged();
+    @Override
+    public void beginFrame(DynamicVisual.Context ctx) {
+        updateOffset(ctx.partialTick());
+        animate();
+    }
 
-		magnet.setVisible(isRunning() || offset == 0);
+    private void animate() {
+        int color = blockState.getValue(SailClothBlock.COLOR).getFireworkColor();
+        coil.offsetV = -offset;
+        coil.setChanged();
 
-		magnetInstancer().stealInstance(magnet);
+        magnet.setVisible(isRunning() || offset == 0);
 
-		//Magnet
-		magnet.setIdentityTransform()
-				.translate(getVisualPosition())
-				.rotateCentered(sailRotation)
-				.translate(0, -offset, 0)
-				.light(lightCache.getPackedLight(Math.max(0, Mth.floor(offset))))
-				.setChanged();
+        magnetInstancer().stealInstance(magnet);
 
-		rope.resetCount();
+        //Magnet
+        magnet.setIdentityTransform()
+                .translate(getVisualPosition())
+                .rotateCentered(sailRotation)
+                .translate(0, -offset, 0)
+                .light(lightCache.getPackedLight(Math.max(0, Mth.floor(offset))));
+        applyTint(magnet,color);
+        magnet.setChanged();
 
-		//Half sail
-		if (shouldRenderHalfRope()) {
-			float f = offset % 1;
-			float halfRopeNudge = f > .75f ? f - 1 : f;
+        rope.resetCount();
 
-			rope.get(true).setIdentityTransform()
-					.translate(getVisualPosition())
-					.rotateCentered(sailRotation)
-					.translate(0, -halfRopeNudge, 0)
-					.light(lightCache.getPackedLight(0))
-					.setChanged();
-		}
+        //Half sail
+        if (shouldRenderHalfRope()) {
+            float f = offset % 1;
+            float halfRopeNudge = f > .75f ? f - 1 : f;
 
-		//Sail segments
-		if (isRunning()) {
-			int neededRopeCount = getNeededRopeCount();
+            TransformedInstance halfRope = rope.get(true);
+            halfRope.setIdentityTransform()
+                    .translate(getVisualPosition())
+                    .rotateCentered(sailRotation)
+                    .translate(0, -halfRopeNudge, 0)
+                    .light(lightCache.getPackedLight(0));
+            applyTint(halfRope,color);
+            halfRope.setChanged();
+        }
 
-			for (int i = 0; i < neededRopeCount; i++) {
+        //Sail segments
+        if (isRunning()) {
+            int neededRopeCount = getNeededRopeCount();
 
-				rope.get(false)
-						.setIdentityTransform()
-						.translate(getVisualPosition())
-						.rotateCentered(sailRotation)
-						.translate(0, -offset + i + 1, 0)
-						.light(lightCache.getPackedLight(neededRopeCount - 1 - i))
-						.setChanged();
-			}
-		}
+            for (int i = 0; i < neededRopeCount; i++) {
+                TransformedInstance transformedInstance = rope.get(false);
+                transformedInstance.setIdentityTransform()
+                        .translate(getVisualPosition())
+                        .rotateCentered(sailRotation)
+                        .translate(0, -offset + i + 1, 0)
+                        .light(lightCache.getPackedLight(neededRopeCount - 1 - i));
+                applyTint(transformedInstance,color);
+                transformedInstance.setChanged();
+            }
+        }
 
-		rope.discardExtra();
-	}
+        rope.discardExtra();
+    }
 
-	@Override
-	public void updateLight(float partialTick) {
-		super.updateLight(partialTick);
-		relight(coil);
+    private void applyTint(TransformedInstance transformedInstance, int colorRGB) {
+//        transformedInstance.red = (byte) 255;
+//        transformedInstance.green = (byte) 0;
+//        transformedInstance.blue = (byte) 0;
+//        transformedInstance.alpha = (byte) 255;
+        if (blockState.hasProperty(SailClothBlock.COLOR)) {
+            // Extract RGB components
+            // We cast to (byte) because Flywheel's writer uses memPutByte
+            transformedInstance.red = (byte) ((colorRGB >> 16) & 0xFF);
+            transformedInstance.green = (byte) ((colorRGB >> 8) & 0xFF);
+            transformedInstance.blue = (byte) (colorRGB & 0xFF);
+            transformedInstance.alpha = (byte) 255; // Fully opaque
+        }
+    }
 
-		lightCache.update();
-	}
+    @Override
+    public void updateLight(float partialTick) {
+        super.updateLight(partialTick);
+        relight(coil);
 
-	private void updateOffset(float pt) {
-		offset = getOffset(pt);
-		lightCache.setSize(Mth.ceil(offset) + 2);
-	}
+        lightCache.update();
+    }
 
-	private int getNeededRopeCount() {
-		return Math.max(0, Mth.ceil(offset - 1.25f));
-	}
+    private void updateOffset(float pt) {
+        offset = getOffset(pt);
+        lightCache.setSize(Mth.ceil(offset) + 2);
+    }
 
-	private boolean shouldRenderHalfRope() {
-		float f = offset % 1;
-		return offset > .75f && (f < .25f || f > .75f);
-	}
+    private int getNeededRopeCount() {
+        return Math.max(0, Mth.ceil(offset - 1.25f));
+    }
 
-	@Override
-	public void collectCrumblingInstances(Consumer<Instance> consumer) {
-		super.collectCrumblingInstances(consumer);
-		consumer.accept(coil);
-		consumer.accept(magnet);
-	}
+    private boolean shouldRenderHalfRope() {
+        float f = offset % 1;
+        return offset > .75f && (f < .25f || f > .75f);
+    }
 
-	@Override
+    @Override
+    public void collectCrumblingInstances(Consumer<Instance> consumer) {
+        super.collectCrumblingInstances(consumer);
+        consumer.accept(coil);
+        consumer.accept(magnet);
+    }
+
+    @Override
     protected void _delete() {
-		super._delete();
-		coil.delete();
-		magnet.delete();
-		rope.delete();
-	}
+        super._delete();
+        coil.delete();
+        magnet.delete();
+        rope.delete();
+    }
 
-	private class LightCache {
-		private final ByteList data =  new ByteArrayList();
-		private final LongSet sections = new LongOpenHashSet();
-		private final BlockPos.MutableBlockPos mutablePos = new BlockPos.MutableBlockPos();
-		private int sectionCount;
+    private class LightCache {
+        private final ByteList data = new ByteArrayList();
+        private final LongSet sections = new LongOpenHashSet();
+        private final BlockPos.MutableBlockPos mutablePos = new BlockPos.MutableBlockPos();
+        private int sectionCount;
 
-		public void setSize(int size) {
-			if (size != data.size()) {
-				data.size(size);
-				update();
+        public void setSize(int size) {
+            if (size != data.size()) {
+                data.size(size);
+                update();
 
-				int sectionCount = MoreMath.ceilingDiv(size + 15 - pos.getY() + pos.getY() / 4 * 4, SectionPos.SECTION_SIZE);
-				if (sectionCount != this.sectionCount) {
-					this.sectionCount = sectionCount;
-					sections.clear();
-					int sectionX = SectionPos.blockToSectionCoord(pos.getX());
-					int sectionY = SectionPos.blockToSectionCoord(pos.getY());
-					int sectionZ = SectionPos.blockToSectionCoord(pos.getZ());
-					for (int i = 0; i < sectionCount; i++) {
-						sections.add(SectionPos.asLong(sectionX, sectionY - i, sectionZ));
-					}
-					// Will be null during initialization
-					if (lightSections != null) {
-						updateSections();
-					}
-				}
-			}
-		}
+                int sectionCount = MoreMath.ceilingDiv(size + 15 - pos.getY() + pos.getY() / 4 * 4, SectionPos.SECTION_SIZE);
+                if (sectionCount != this.sectionCount) {
+                    this.sectionCount = sectionCount;
+                    sections.clear();
+                    int sectionX = SectionPos.blockToSectionCoord(pos.getX());
+                    int sectionY = SectionPos.blockToSectionCoord(pos.getY());
+                    int sectionZ = SectionPos.blockToSectionCoord(pos.getZ());
+                    for (int i = 0; i < sectionCount; i++) {
+                        sections.add(SectionPos.asLong(sectionX, sectionY - i, sectionZ));
+                    }
+                    // Will be null during initialization
+                    if (lightSections != null) {
+                        updateSections();
+                    }
+                }
+            }
+        }
 
-		public void updateSections() {
-			lightSections.sections(sections);
-		}
+        public void updateSections() {
+            lightSections.sections(sections);
+        }
 
-		public void update() {
-			mutablePos.set(pos);
+        public void update() {
+            mutablePos.set(pos);
 
-			for (int i = 0; i < data.size(); i++) {
-				int blockLight = level.getBrightness(LightLayer.BLOCK, mutablePos);
-				int skyLight = level.getBrightness(LightLayer.SKY, mutablePos);
-				int light = ((skyLight & 0xF) << 4) | (blockLight & 0xF);
-				data.set(i, (byte) light);
-				mutablePos.move(Direction.DOWN);
-			}
-		}
+            for (int i = 0; i < data.size(); i++) {
+                int blockLight = level.getBrightness(LightLayer.BLOCK, mutablePos);
+                int skyLight = level.getBrightness(LightLayer.SKY, mutablePos);
+                int light = ((skyLight & 0xF) << 4) | (blockLight & 0xF);
+                data.set(i, (byte) light);
+                mutablePos.move(Direction.DOWN);
+            }
+        }
 
-		public int getPackedLight(int offset) {
-			if (offset < 0 || offset >= data.size()) {
-				return 0;
-			}
+        public int getPackedLight(int offset) {
+            if (offset < 0 || offset >= data.size()) {
+                return 0;
+            }
 
-			int light = Byte.toUnsignedInt(data.getByte(offset));
-			int blockLight = light & 0xF;
-			int skyLight = (light >>> 4) & 0xF;
-			return LightTexture.pack(blockLight, skyLight);
-		}
-	}
+            int light = Byte.toUnsignedInt(data.getByte(offset));
+            int blockLight = light & 0xF;
+            int skyLight = (light >>> 4) & 0xF;
+            return LightTexture.pack(blockLight, skyLight);
+        }
+    }
 }

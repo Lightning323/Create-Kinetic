@@ -1,5 +1,6 @@
 package com.lightning323.createkinetic.blocks.sail.sailPulley;
 
+import com.lightning323.createkinetic.blocks.sail.SailRenderer;
 import com.lightning323.createkinetic.registries.KineticBlocks;
 import com.lightning323.createkinetic.registries.KineticPartialModels;
 import com.lightning323.createkinetic.registries.KineticSpriteShifts;
@@ -11,7 +12,6 @@ import net.createmod.catnip.render.SuperByteBuffer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.util.Mth;
-import net.minecraft.world.level.block.state.BlockState;
 
 public class SailPulleyRenderer extends AbstractSailPulleyRenderer<SailPulleyBlockEntity> {
 
@@ -31,27 +31,13 @@ public class SailPulleyRenderer extends AbstractSailPulleyRenderer<SailPulleyBlo
     }
 
     @Override
-    protected SuperByteBuffer renderRope(SailPulleyBlockEntity be) {
-        BlockState state = be.getBlockState();// Get the axis the pulley is placed on
-        Axis axis = state.getValue(SailPulleyBlock.HORIZONTAL_AXIS);
-
-        SuperByteBuffer buffer = CachedBuffers.block(KineticBlocks.SAIL_CLOTH.getDefaultState());
-        if (axis == Axis.Z) {
-            buffer.rotateCentered((float) (Math.PI / 2), Axis.Y);
-        }
-        return buffer;
+    protected SuperByteBuffer renderMagnet(SailPulleyBlockEntity be) {
+        return SailRenderer.renderSailAppendage(CachedBuffers.block(KineticBlocks.SAIL_MAGNET.getDefaultState()), be.getBlockState());
     }
 
     @Override
-    protected SuperByteBuffer renderMagnet(SailPulleyBlockEntity be) {
-        BlockState state = be.getBlockState();// Get the axis the pulley is placed on
-        Axis axis = state.getValue(SailPulleyBlock.HORIZONTAL_AXIS);
-
-        SuperByteBuffer buffer = CachedBuffers.block(KineticBlocks.PULLEY_SAIL_MAGNET.getDefaultState());
-        if (axis == Axis.Z) {
-            buffer.rotateCentered((float) (Math.PI / 2), Axis.Y);
-        }
-        return buffer;
+    protected SuperByteBuffer renderRope(SailPulleyBlockEntity be) {
+        return SailRenderer.renderSailAppendage(CachedBuffers.block(KineticBlocks.SAIL_CLOTH.getDefaultState()), be.getBlockState());
     }
 
     @Override

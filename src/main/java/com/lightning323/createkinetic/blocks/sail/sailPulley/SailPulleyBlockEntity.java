@@ -25,6 +25,7 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -38,7 +39,7 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SailPulleyBlockEntity extends LinearActuatorBlockEntity implements ThresholdSwitchObservable {
+public class SailPulleyBlockEntity extends LinearActuatorBlockEntity implements ThresholdSwitchObservable, IRetractableSail {
 
 //    @Override
 //    public void onLoad() {
@@ -122,7 +123,7 @@ public class SailPulleyBlockEntity extends LinearActuatorBlockEntity implements 
         while (i <= maxLength) {
             BlockPos ropePos = worldPosition.below(i);
             BlockState ropeState = level.getBlockState(ropePos);
-            if (!KineticBlocks.SAIL_CLOTH.has(ropeState) && !KineticBlocks.PULLEY_SAIL_MAGNET.has(ropeState)) {
+            if (!KineticBlocks.SAIL_CLOTH.has(ropeState) && !KineticBlocks.SAIL_MAGNET.has(ropeState)) {
                 break;
             }
             ++i;
@@ -220,11 +221,12 @@ public class SailPulleyBlockEntity extends LinearActuatorBlockEntity implements 
                         level.destroyBlock(magnetPos, level.getBlockState(magnetPos)
                                 .getCollisionShape(level, magnetPos)
                                 .isEmpty());
-                        boolean success = level.setBlock(magnetPos, KineticBlocks.PULLEY_SAIL_MAGNET.getDefaultState()
+                        boolean success = level.setBlock(magnetPos, KineticBlocks.SAIL_MAGNET.getDefaultState()
                                         .setValue(BlockStateProperties.WATERLOGGED, //Waterlogged property
                                                 Boolean.valueOf(ifluidstate.getType() == Fluids.WATER))
                                         .setValue(BlockStateProperties.HORIZONTAL_AXIS, //Horizontal axis property
                                                 this.getBlockState().getValue(BlockStateProperties.HORIZONTAL_AXIS))
+                                        .setValue(SailBlockBase.COLOR, this.getBlockState().getValue(SailBlockBase.COLOR))
                                 , 66);
                         if (success) actuallyPlacedSails++;
                     }
@@ -254,6 +256,7 @@ public class SailPulleyBlockEntity extends LinearActuatorBlockEntity implements 
                                         .setValue(BlockStateProperties.WATERLOGGED, waterlog[i]) //Waterlogged property
                                         .setValue(BlockStateProperties.HORIZONTAL_AXIS, //Horizontal axis property
                                                 this.getBlockState().getValue(BlockStateProperties.HORIZONTAL_AXIS))
+                                        .setValue(SailBlockBase.COLOR, this.getBlockState().getValue(SailBlockBase.COLOR))
                                 , 66);
                         if (success) actuallyPlacedSails++;
                     }

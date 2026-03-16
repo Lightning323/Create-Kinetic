@@ -1,5 +1,7 @@
 package com.lightning323.createkinetic.blocks.sail;
 
+import com.lightning323.createkinetic.blocks.sail.sailPulley.IRetractableSail;
+import com.lightning323.createkinetic.blocks.sail.sailPulley.SailBlockBase;
 import com.lightning323.createkinetic.registries.KineticBlocks;
 import com.lightning323.createkinetic.ship.KineticShipControl;
 import com.lightning323.createkinetic.ship.ShipUtils;
@@ -26,6 +28,7 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -37,7 +40,10 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SailBlockEntity extends KineticBlockEntity implements IDisplayAssemblyExceptions, ThresholdSwitchObservable {
+import static com.lightning323.createkinetic.blocks.sail.sailPulley.SailBlockBase.COLOR;
+
+public class RetractableSailBlockEntity extends KineticBlockEntity implements IDisplayAssemblyExceptions, ThresholdSwitchObservable, IRetractableSail {
+
 
     public float offset;
     public boolean running;
@@ -262,7 +268,7 @@ public class SailBlockEntity extends KineticBlockEntity implements IDisplayAssem
     protected List<BlockPos> mirrorChildren;
     public WeakReference<AbstractContraptionEntity> sharedMirrorContraption;
 
-    public SailBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+    public RetractableSailBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
         setLazyTickRate(3);
         forceMove = true;
@@ -289,7 +295,7 @@ public class SailBlockEntity extends KineticBlockEntity implements IDisplayAssem
 
     protected void assemble() throws AssemblyException {
         if (!(level.getBlockState(worldPosition)
-                .getBlock() instanceof SailBlock))
+                .getBlock() instanceof RetractableSailBlock))
             return;
         if (speed == 0 && mirrorParent == null)
             return;
@@ -298,7 +304,7 @@ public class SailBlockEntity extends KineticBlockEntity implements IDisplayAssem
         while (i <= maxLength) {
             BlockPos ropePos = worldPosition.below(i);
             BlockState ropeState = level.getBlockState(ropePos);
-            if (!KineticBlocks.SAIL_CLOTH.has(ropeState) && !KineticBlocks.PULLEY_SAIL_WEIGHT.has(ropeState)) {
+            if (!KineticBlocks.SAIL_CLOTH.has(ropeState) && !KineticBlocks.SAIL_WEIGHT.has(ropeState)) {
                 break;
             }
             ++i;
@@ -390,11 +396,12 @@ public class SailBlockEntity extends KineticBlockEntity implements IDisplayAssem
                         level.destroyBlock(magnetPos, level.getBlockState(magnetPos)
                                 .getCollisionShape(level, magnetPos)
                                 .isEmpty());
-                        boolean success = level.setBlock(magnetPos, KineticBlocks.PULLEY_SAIL_WEIGHT.getDefaultState()
+                        boolean success = level.setBlock(magnetPos, KineticBlocks.SAIL_WEIGHT.getDefaultState()
                                         .setValue(BlockStateProperties.WATERLOGGED, //Waterlogged property
                                                 Boolean.valueOf(ifluidstate.getType() == Fluids.WATER))
                                         .setValue(BlockStateProperties.HORIZONTAL_AXIS, //Horizontal axis property
                                                 this.getBlockState().getValue(BlockStateProperties.HORIZONTAL_AXIS))
+                                        .setValue(COLOR, this.getBlockState().getValue(SailBlockBase.COLOR))
                                 , 66);
                         if (success) actuallyPlacedSails++;
                     }
@@ -424,6 +431,7 @@ public class SailBlockEntity extends KineticBlockEntity implements IDisplayAssem
                                         .setValue(BlockStateProperties.WATERLOGGED, waterlog[i]) //Waterlogged property
                                         .setValue(BlockStateProperties.HORIZONTAL_AXIS, //Horizontal axis property
                                                 this.getBlockState().getValue(BlockStateProperties.HORIZONTAL_AXIS))
+                                        .setValue(COLOR, this.getBlockState().getValue(SailBlockBase.COLOR))
                                 , 66);
                         if (success) actuallyPlacedSails++;
                     }
@@ -552,7 +560,7 @@ public class SailBlockEntity extends KineticBlockEntity implements IDisplayAssem
     public void startMirroringOther(BlockPos parent) {
         if (parent.equals(worldPosition))
             return;
-        if (!(level.getBlockEntity(parent) instanceof SailBlockEntity pbe))
+        if (!(level.getBlockEntity(parent) instanceof RetractableSailBlockEntity pbe))
             return;
         if (pbe.getType() != getType())
             return;
@@ -573,7 +581,7 @@ public class SailBlockEntity extends KineticBlockEntity implements IDisplayAssem
         if (mirrorChildren == null)
             return;
         for (BlockPos blockPos : mirrorChildren) {
-            if (!(level.getBlockEntity(blockPos) instanceof SailBlockEntity pbe))
+            if (!(level.getBlockEntity(blockPos) instanceof RetractableSailBlockEntity pbe))
                 continue;
             pbe.offset = offset;
             this.totalSails = (int) offset;

@@ -5,20 +5,16 @@ import com.lightning323.createkinetic.blocks.BallastBlock;
 import com.lightning323.createkinetic.blocks.BuoyBlock;
 import com.lightning323.createkinetic.blocks.EnchantedBallastBlock;
 import com.lightning323.createkinetic.blocks.helm.ShipHelmBlock;
-import com.lightning323.createkinetic.blocks.sail.SailBlock;
-import com.lightning323.createkinetic.blocks.sail.sailPulley.SailClothBlock;
+import com.lightning323.createkinetic.blocks.sail.RetractableSailBlock;
+import com.lightning323.createkinetic.blocks.sail.SailClothBlock;
 import com.lightning323.createkinetic.blocks.sail.sailPulley.SailPulleyBlock;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.foundation.data.BlockStateGen;
 import com.simibubi.create.foundation.data.SharedProperties;
-import com.simibubi.create.foundation.item.TooltipHelper;
 import com.tterrag.registrate.util.entry.BlockEntry;
-import net.createmod.catnip.lang.Lang;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
 import net.minecraft.data.recipes.RecipeCategory;
@@ -32,11 +28,8 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.level.material.MapColor;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
-import net.minecraftforge.fml.DistExecutor;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 import static com.lightning323.createkinetic.CreateKinetic.REGISTRATE;
@@ -83,7 +76,7 @@ public class KineticBlocks {
     public static final BlockEntry<ShipHelmBlock> CRIMSON_SHIP_HELM = registerShipHelm("crimson_ship_helm", WoodType.CRIMSON);
     public static final BlockEntry<ShipHelmBlock> CHERRY_SHIP_HELM = registerShipHelm("cherry_ship_helm", WoodType.CHERRY);
 
-    public static final BlockEntry<SailBlock> RETRACTABLE_SAIL = REGISTRATE.block("retractable_sail", SailBlock::new)
+    public static final BlockEntry<RetractableSailBlock> RETRACTABLE_SAIL = REGISTRATE.block("retractable_sail", RetractableSailBlock::new)
             .initialProperties(SharedProperties::stone)
             .properties(p -> p.mapColor(MapColor.PODZOL))
             .properties(p -> p.noOcclusion())
@@ -106,8 +99,8 @@ public class KineticBlocks {
             })
             .register();
 
-    public static final BlockEntry<SailBlock.WeightBlock> PULLEY_SAIL_WEIGHT =
-            REGISTRATE.block("pulley_weight", SailBlock.WeightBlock::new)
+    public static final BlockEntry<RetractableSailBlock.WeightBlock> SAIL_WEIGHT =
+            REGISTRATE.block("pulley_weight", RetractableSailBlock.WeightBlock::new)
                     .initialProperties(SharedProperties::stone)
                     .tag(AllTags.AllBlockTags.BRITTLE.tag)
                     .tag(BlockTags.CLIMBABLE)
@@ -168,7 +161,7 @@ public class KineticBlocks {
             )
             .register();
 
-    public static final BlockEntry<SailPulleyBlock.MagnetBlock> PULLEY_SAIL_MAGNET =
+    public static final BlockEntry<SailPulleyBlock.MagnetBlock> SAIL_MAGNET =
             REGISTRATE.block("pulley_magnet", SailPulleyBlock.MagnetBlock::new)
                     .initialProperties(SharedProperties::stone)
                     .tag(AllTags.AllBlockTags.BRITTLE.tag)
@@ -225,9 +218,9 @@ public class KineticBlocks {
             .recipe((ctx, prov) -> {
                 ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, ctx.getEntry())
                         .pattern(" I ")
-                        .pattern("ICI")
+                        .pattern(" T ")
                         .pattern("IBI")
-                        .define('C', Items.CHAIN)
+                        .define('T', AllItems.ELECTRON_TUBE)
                         .define('I', Items.IRON_INGOT)
                         .define('B', Items.IRON_BLOCK)
                         .unlockedBy("has_chain", prov.has(Items.CHAIN))

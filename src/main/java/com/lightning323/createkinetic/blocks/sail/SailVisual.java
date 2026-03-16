@@ -13,15 +13,14 @@ import dev.engine_room.flywheel.lib.instance.TransformedInstance;
 import dev.engine_room.flywheel.lib.model.Models;
 import net.createmod.catnip.render.SpriteShiftEntry;
 
-public class SailVisual extends AbstractSailPulleyVisual<SailBlockEntity> {
-	public SailVisual(VisualizationContext context, SailBlockEntity blockEntity, float partialTick) {
+public class SailVisual extends AbstractSailPulleyVisual<RetractableSailBlockEntity> {
+	public SailVisual(VisualizationContext context, RetractableSailBlockEntity blockEntity, float partialTick) {
 		super(context, blockEntity, partialTick);
 	}
 
 
 	@Override
 	protected Instancer<TransformedInstance> getRopeModel() {
-
 		return instancerProvider().instancer(InstanceTypes.TRANSFORMED, Models.partial(KineticPartialModels.SAIL_CLOTH));
 	}
 
