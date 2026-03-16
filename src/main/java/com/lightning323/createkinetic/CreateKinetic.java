@@ -2,6 +2,7 @@ package com.lightning323.createkinetic;
 
 import com.lightning323.createkinetic.registries.*;
 import com.lightning323.createkinetic.ship.KineticShipControl;
+import com.simibubi.create.AllPackets;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.providers.ProviderType;
 import net.minecraft.data.DataGenerator;
@@ -42,6 +43,7 @@ public class CreateKinetic {
         KineticBlocks.register();
         KineticItems.register();
         KineticBlockEntities.register();
+        KineticPackets.registerPackets();
 
         //Register ship control
         ValkyrienSkies.api().registerAttachment(ValkyrienSkies.api()
