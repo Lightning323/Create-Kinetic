@@ -389,7 +389,7 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
                 shipRot.transformInverse(totalTorque);
                 inertia.transform(totalTorque);
                 shipRot.transform(totalTorque);
-                LOGGER.debug("Applying enchanted ballast torque {}, strength: {}", totalTorque,pStrength);
+//                LOGGER.debug("Applying enchanted ballast torque {}, strength: {}", totalTorque,pStrength);
                 physShip1.applyInvariantTorque(totalTorque);
             }
         }

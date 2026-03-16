@@ -262,13 +262,6 @@ public class KineticBlocks {
                     )))
             .item((block, props) -> new BlockItem(block, props) {
                 @Override
-                public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
-                    TooltipHelper.addHint(tooltip,"create_kinetic.tooltip.enchanted_ballast.summary",
-                            Component.translatable("create_kinetic.tooltip.enchanted_ballast"),
-                            true);
-                }
-
-                @Override
                 public boolean isFoil(ItemStack stack) {
                     return true; // Keeping your glint logic
                 }

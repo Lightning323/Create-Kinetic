@@ -3,6 +3,7 @@ package com.lightning323.createkinetic;
 import com.lightning323.createkinetic.registries.*;
 import com.lightning323.createkinetic.ship.KineticShipControl;
 import com.simibubi.create.foundation.data.CreateRegistrate;
+import com.tterrag.registrate.providers.ProviderType;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
@@ -53,6 +54,11 @@ public class CreateKinetic {
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, KineticConfig.SPEC);
         REGISTRATE.registerEventListeners(modEventBus);
         CREATIVE_MODE_TABS.register(modEventBus);
+        //TODO: Come up with a better way to handle translation keys
+        REGISTRATE.addDataGenerator(ProviderType.LANG, provider -> {
+            provider.add("info." + MOD_ID + ".needs_ship", "You need a ship to use this helm");
+            provider.add("itemGroup." + MOD_ID + ".tab", "Create Kinetic");
+        });
         MinecraftForge.EVENT_BUS.register(this);
     }
 
