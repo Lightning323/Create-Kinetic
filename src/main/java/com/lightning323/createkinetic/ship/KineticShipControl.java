@@ -207,7 +207,7 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
     private void updateShipBounds() {
         boundx = ship.getShipAABB().maxX() - ship.getShipAABB().minX();
         boundz = ship.getShipAABB().maxZ() - ship.getShipAABB().minZ();
-        LOGGER.info("Xbound=" + boundx + " Zbound=" + boundz);
+        LOGGER.debug("Bounds X={} Z={}",boundx,boundz);
     }
 
     public void updateShipDirection() {
@@ -228,7 +228,7 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
                 int x = numSquareSails;
                 numSquareSails = numFnASails;
                 numFnASails = x;
-                LOGGER.info("Sail types swapped! New ship dir: " + shipDirection);
+                LOGGER.debug("Sail types swapped!");
             }
             shipDirection = preferredDirection == Direction.EAST ? Direction.EAST : Direction.WEST;
         } else {
@@ -237,11 +237,11 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
                 int x = numSquareSails;
                 numSquareSails = numFnASails;
                 numFnASails = x;
-                LOGGER.info("Sail types swapped! New ship dir: " + shipDirection);
+                LOGGER.debug("Sail types swapped!");
             }
             shipDirection = preferredDirection == Direction.NORTH ? Direction.NORTH : Direction.SOUTH;
         }
-        LOGGER.info("Ship direction = {}; Ship ratio = {}", shipDirection.toString(), ratio);
+        LOGGER.debug("Ship direction = {}; Ship ratio = {}", shipDirection.toString(), ratio);
     }
 
     @JsonIgnore
@@ -419,7 +419,6 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
             double windAngle;
             double squareAngleBetween;
             double fnaAngleBetween;
-            //LOGGER.info("wind:"+windAngle+" ship:"+shipAngle);
             if (windStrength > 0) {
                 windAngle = windDirection + 90 % 360;
             } else {
