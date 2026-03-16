@@ -9,6 +9,8 @@ public class BallastBlock extends Block {
         super(settings);
     }
 
+
+
 //    @Override
 //    void addToShip(KineticShipControl controller) {
 //        controller.numBallast++;

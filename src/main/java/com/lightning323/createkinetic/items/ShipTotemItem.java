@@ -2,23 +2,47 @@ package com.lightning323.createkinetic.items;
 
 import com.lightning323.createkinetic.CreateKinetic;
 import com.lightning323.createkinetic.commands.KineticCommands;
+import com.lightning323.createkinetic.registries.KineticItems;
 import com.lightning323.createkinetic.utils.VSUtils;
+import com.simibubi.create.foundation.item.TooltipHelper;
+import net.createmod.catnip.lang.FontHelper;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.HoverEvent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import org.valkyrienskies.core.api.ships.Ship;
 import org.valkyrienskies.core.internal.world.VsiServerShipWorld;
 import org.valkyrienskies.mod.common.VSGameUtilsKt;
 
+import java.util.List;
+
 public class ShipTotemItem extends TotemItem {
+    final boolean freezeShip;
 
     public ShipTotemItem(boolean freezeShip) {
+
         super((s, i) -> recoverShip(s, i, freezeShip));
+        this.freezeShip = freezeShip;
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flag) {
+        if (Screen.hasShiftDown()) {
+            tooltip.add(Component.translatable("tooltip.createkinetic.shiptotem")
+                    .withStyle(ChatFormatting.GRAY));
+            if (this.freezeShip) {
+                tooltip.add(Component.translatable("tooltip.createkinetic.shiptotem.freeze")
+                        .withStyle(ChatFormatting.BLUE));
+            }
+        } else {
+            tooltip.add(TooltipHelper.holdShift(FontHelper.Palette.STANDARD_CREATE, false));
+        }
     }
 
     private static boolean recoverShip(ServerPlayer player, ItemStack i, boolean freezeShip) {

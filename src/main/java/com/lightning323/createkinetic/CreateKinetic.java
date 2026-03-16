@@ -56,8 +56,7 @@ public class CreateKinetic {
         CREATIVE_MODE_TABS.register(modEventBus);
         //TODO: Come up with a better way to handle translation keys
         REGISTRATE.addDataGenerator(ProviderType.LANG, provider -> {
-            provider.add("info." + MOD_ID + ".needs_ship", "You need a ship to use this helm");
-            provider.add("itemGroup." + MOD_ID + ".tab", "Create Kinetic");
+            KineticEnglishTranslationProvider.addTranslations(provider);
         });
         MinecraftForge.EVENT_BUS.register(this);
     }

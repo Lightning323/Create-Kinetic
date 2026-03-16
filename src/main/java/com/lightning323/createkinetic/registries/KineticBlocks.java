@@ -81,7 +81,7 @@ public class KineticBlocks {
     public static final BlockEntry<ShipHelmBlock> MANGROVE_SHIP_HELM = registerShipHelm("mangrove_ship_helm", WoodType.MANGROVE);
     public static final BlockEntry<ShipHelmBlock> BAMBOO_SHIP_HELM = registerShipHelm("bamboo_ship_helm", WoodType.BAMBOO);
     public static final BlockEntry<ShipHelmBlock> CRIMSON_SHIP_HELM = registerShipHelm("crimson_ship_helm", WoodType.CRIMSON);
-    public static final BlockEntry<ShipHelmBlock> CHERRY_SHIP_HELM = registerShipHelm("cherry_ship_helm",WoodType.CHERRY);
+    public static final BlockEntry<ShipHelmBlock> CHERRY_SHIP_HELM = registerShipHelm("cherry_ship_helm", WoodType.CHERRY);
 
     public static final BlockEntry<SailBlock> RETRACTABLE_SAIL = REGISTRATE.block("retractable_sail", SailBlock::new)
             .initialProperties(SharedProperties::stone)
@@ -212,8 +212,13 @@ public class KineticBlocks {
                             .build();
                 });
             })
-            // Replace .simpleItem() with this:
-            .item()
+            .item((block, props) -> new BlockItem(block, props) {
+                @Override
+                public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flag) {
+                    KineticItems.shiftForTooltip(tooltip,
+                            Component.translatable("tooltip.createkinetic.anchor").withStyle(ChatFormatting.GRAY));
+                }
+            })
             .model((ctx, prov) ->
                     prov.withExistingParent(ctx.getName(), prov.modLoc("block/anchor_off")))
             .build()
@@ -264,6 +269,12 @@ public class KineticBlocks {
                 @Override
                 public boolean isFoil(ItemStack stack) {
                     return true; // Keeping your glint logic
+                }
+
+                @Override
+                public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flag) {
+                    KineticItems.shiftForTooltip(tooltip,
+                            Component.translatable("tooltip.createkinetic.enchantedballast").withStyle(ChatFormatting.GRAY));
                 }
             })
             // THIS PART overrides the item model specifically
