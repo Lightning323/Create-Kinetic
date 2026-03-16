@@ -148,7 +148,7 @@ public class KineticBlocks {
             })
             .register();
 
-    public static final BlockEntry<SailClothBlock> SAIL_CLOTH = REGISTRATE.block("rope", SailClothBlock::new)
+    public static final BlockEntry<SailClothBlock> SAIL_CLOTH = REGISTRATE.block("sail_cloth", SailClothBlock::new)
             .properties(p -> p.sound(SoundType.WOOL)
                     .mapColor(MapColor.COLOR_BROWN))
             .tag(AllTags.AllBlockTags.BRITTLE.tag)
@@ -156,13 +156,13 @@ public class KineticBlocks {
             .blockstate((c, p) -> p.getVariantBuilder(c.get())
                     .partialState().with(BlockStateProperties.HORIZONTAL_AXIS, Direction.Axis.X)
                     .modelForState()
-                    .modelFile(p.models().getExistingFile(p.modLoc("block/sail_pulley/" + c.getName())))
+                    .modelFile(p.models().getExistingFile(p.modLoc("block/" + c.getName())))
                     .addModel()
 
                     // For Axis Z (Rotate 90 degrees)
                     .partialState().with(BlockStateProperties.HORIZONTAL_AXIS, Direction.Axis.Z)
                     .modelForState()
-                    .modelFile(p.models().getExistingFile(p.modLoc("block/sail_pulley/" + c.getName())))
+                    .modelFile(p.models().getExistingFile(p.modLoc("block/" + c.getName())))
                     .rotationY(90) // This performs the 90-degree turn for the X axis
                     .addModel()
             )

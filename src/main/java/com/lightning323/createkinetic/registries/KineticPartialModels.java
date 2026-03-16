@@ -15,7 +15,7 @@ public class KineticPartialModels {
             SAIL_COIL = block("sail_pulley/sail_coil"),
             ROPE_HALF = block("sail_pulley/rope_half"),
             ROPE_HALF_MAGNET = block("sail_pulley/rope_half_magnet"),
-            ROPE = block("sail_pulley/rope"),
+            SAIL_CLOTH = block("sail_cloth"),
             PULLEY_MAGNET = block("sail_pulley/pulley_magnet"),
             ROPE_HALF_WEIGHT = block("retractable_sail/rope_half_weight"),
             PULLEY_WEIGHT = block("retractable_sail/pulley_weight"),

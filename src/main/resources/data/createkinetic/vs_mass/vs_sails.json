@@ -108,7 +108,7 @@
     "mass": 0.01
   },
   {
-    "block": "createkinetic:white_sail",
+    "block": "createkinetic:sail_cloth",
     "mass": 0.01
   },
   {
@@ -245,11 +245,11 @@
   },
   {
     "block": "createkinetic:ballast_block",
-    "mass": 20000.0
+    "mass": 15000.0
   },
   {
     "block": "createkinetic:enchanted_ballast",
-    "mass": 20000.0
+    "mass": 15000.0
   },
   {
     "block": "createkinetic:buoy_block",

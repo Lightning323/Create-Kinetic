@@ -21,7 +21,7 @@ public class SailPulleyVisual extends AbstractSailPulleyVisual<SailPulleyBlockEn
 	@Override
 	protected Instancer<TransformedInstance> getRopeModel() {
 
-		return instancerProvider().instancer(InstanceTypes.TRANSFORMED, Models.partial(KineticPartialModels.ROPE));
+		return instancerProvider().instancer(InstanceTypes.TRANSFORMED, Models.partial(KineticPartialModels.SAIL_CLOTH));
 	}
 
 	@Override
