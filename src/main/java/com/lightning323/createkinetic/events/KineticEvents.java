@@ -1,18 +1,24 @@
 package com.lightning323.createkinetic.events;
 
+import com.lightning323.createkinetic.CreateKinetic;
 import com.lightning323.createkinetic.KineticConfig;
 import com.lightning323.createkinetic.registries.KineticParticles;
 import com.lightning323.createkinetic.ship.KineticShipControl;
 import com.lightning323.createkinetic.ship.ShipUtils;
 import com.lightning323.createkinetic.ship.WindManager;
+import com.simibubi.create.Create;
 import com.simibubi.create.content.contraptions.bearing.SailBlock;
+import com.simibubi.create.content.kinetics.drill.CobbleGenOptimisation;
+import net.createmod.catnip.data.WorldAttached;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.level.BlockEvent;
+import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.joml.Vector3dc;
@@ -24,6 +30,24 @@ import static com.lightning323.createkinetic.CreateKinetic.MOD_ID;
 
 @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class KineticEvents {
+
+    @SubscribeEvent
+    public static void onLoadWorld(LevelEvent.Load event) {
+        LevelAccessor world = event.getLevel();
+        CreateKinetic.REDSTONE_LINK_NETWORK_HANDLER.onLoadWorld(world);
+//        Create.TORQUE_PROPAGATOR.onLoadWorld(world);
+//        Create.RAILWAYS.levelLoaded(world);
+//        Create.LOGISTICS.levelLoaded(world);
+    }
+
+    @SubscribeEvent
+    public static void onUnloadWorld(LevelEvent.Unload event) {
+        LevelAccessor world = event.getLevel();
+        CreateKinetic.REDSTONE_LINK_NETWORK_HANDLER.onUnloadWorld(world);
+//        Create.TORQUE_PROPAGATOR.onUnloadWorld(world);
+//        WorldAttached.invalidateWorld(world);
+//        CobbleGenOptimisation.invalidateWorld(world);
+    }
 
     @SubscribeEvent
     public static void onBlockPlaced(BlockEvent.EntityPlaceEvent event) {

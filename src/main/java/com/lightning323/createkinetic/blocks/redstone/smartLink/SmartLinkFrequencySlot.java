@@ -1,4 +1,4 @@
-package com.lightning323.createkinetic.blocks.smartLink;
+package com.lightning323.createkinetic.blocks.redstone.smartLink;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.foundation.blockEntity.behaviour.ValueBoxTransform;

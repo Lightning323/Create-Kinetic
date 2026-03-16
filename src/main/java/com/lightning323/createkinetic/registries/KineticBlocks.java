@@ -8,7 +8,7 @@ import com.lightning323.createkinetic.blocks.helm.ShipHelmBlock;
 import com.lightning323.createkinetic.blocks.sail.RetractableSailBlock;
 import com.lightning323.createkinetic.blocks.sail.SailClothBlock;
 import com.lightning323.createkinetic.blocks.sail.sailPulley.SailPulleyBlock;
-import com.lightning323.createkinetic.blocks.smartLink.SmartLinkBlock;
+import com.lightning323.createkinetic.blocks.redstone.smartLink.SmartLinkBlock;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.AllTags;

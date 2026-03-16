@@ -7,7 +7,7 @@ import com.lightning323.createkinetic.blocks.sail.SailVisual;
 import com.lightning323.createkinetic.blocks.sail.sailPulley.SailPulleyBlockEntity;
 import com.lightning323.createkinetic.blocks.sail.sailPulley.SailPulleyRenderer;
 import com.lightning323.createkinetic.blocks.sail.sailPulley.SailPulleyVisual;
-import com.lightning323.createkinetic.blocks.smartLink.SmartLinkBlockEntity;
+import com.lightning323.createkinetic.blocks.redstone.smartLink.SmartLinkBlockEntity;
 import com.simibubi.create.foundation.blockEntity.renderer.SmartBlockEntityRenderer;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
 import org.valkyrienskies.eureka.blockentity.renderer.ShipHelmBlockEntityRenderer;

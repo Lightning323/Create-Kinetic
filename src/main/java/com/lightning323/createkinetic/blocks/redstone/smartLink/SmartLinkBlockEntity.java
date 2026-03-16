@@ -1,4 +1,4 @@
-package com.lightning323.createkinetic.blocks.smartLink;
+package com.lightning323.createkinetic.blocks.redstone.smartLink;
 
 import com.lightning323.createkinetic.registries.KineticBlocks;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelSupportBehaviour;
