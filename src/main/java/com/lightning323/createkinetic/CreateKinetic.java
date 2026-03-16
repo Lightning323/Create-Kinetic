@@ -1,10 +1,8 @@
 package com.lightning323.createkinetic;
 
-import com.lightning323.createkinetic.blocks.redstone.KineticRedstoneLinkNetworkHandler;
+import com.lightning323.createkinetic.blocks.redstone.KRedstoneLinkNetworkHandler;
 import com.lightning323.createkinetic.registries.*;
 import com.lightning323.createkinetic.ship.KineticShipControl;
-import com.simibubi.create.AllPackets;
-import com.simibubi.create.content.redstone.link.RedstoneLinkNetworkHandler;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.providers.ProviderType;
 import net.minecraft.data.DataGenerator;
@@ -65,7 +63,7 @@ public class CreateKinetic {
         MinecraftForge.EVENT_BUS.register(this);
     }
 
-    public static final KineticRedstoneLinkNetworkHandler REDSTONE_LINK_NETWORK_HANDLER = new KineticRedstoneLinkNetworkHandler();
+    public static final KRedstoneLinkNetworkHandler REDSTONE_LINK_NETWORK_HANDLER = new KRedstoneLinkNetworkHandler();
 
     public void onRegister(final RegisterEvent event) {
         KineticPartialModels.init();

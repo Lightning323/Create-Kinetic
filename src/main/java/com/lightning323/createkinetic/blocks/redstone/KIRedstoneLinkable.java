@@ -13,7 +13,7 @@ public interface KIRedstoneLinkable {
 
     public boolean isAlive();
 
-    public Couple<Frequency> getNetworkKey();
+    public Couple<KFrequency> getNetworkKey();
 
     public BlockPos getLocation();
 

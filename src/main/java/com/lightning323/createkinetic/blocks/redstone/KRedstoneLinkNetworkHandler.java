@@ -16,9 +16,9 @@ import net.createmod.catnip.data.Couple;
 import net.createmod.catnip.levelWrappers.WorldHelper;
 import net.minecraft.world.level.LevelAccessor;
 
-public class KineticRedstoneLinkNetworkHandler {
+public class KRedstoneLinkNetworkHandler {
 
-	static final Map<LevelAccessor, Map<Couple<Frequency>, Set<KIRedstoneLinkable>>> connections =
+	static final Map<LevelAccessor, Map<Couple<KFrequency>, Set<KIRedstoneLinkable>>> connections =
 		new IdentityHashMap<>();
 
 	public final AtomicInteger globalPowerVersion = new AtomicInteger();
@@ -35,8 +35,8 @@ public class KineticRedstoneLinkNetworkHandler {
 	}
 
 	public Set<KIRedstoneLinkable> getNetworkOf(LevelAccessor world, KIRedstoneLinkable actor) {
-		Map<Couple<Frequency>, Set<KIRedstoneLinkable>> networksInWorld = networksIn(world);
-		Couple<Frequency> key = actor.getNetworkKey();
+		Map<Couple<KFrequency>, Set<KIRedstoneLinkable>> networksInWorld = networksIn(world);
+		Couple<KFrequency> key = actor.getNetworkKey();
 		if (!networksInWorld.containsKey(key))
 			networksInWorld.put(key, new LinkedHashSet<>());
 		return networksInWorld.get(key);
@@ -97,7 +97,7 @@ public class KineticRedstoneLinkNetworkHandler {
 			.closerThan(to.getLocation(), AllConfigs.server().logistics.linkRange.get());
 	}
 
-	public Map<Couple<Frequency>, Set<KIRedstoneLinkable>> networksIn(LevelAccessor world) {
+	public Map<Couple<KFrequency>, Set<KIRedstoneLinkable>> networksIn(LevelAccessor world) {
 		if (!connections.containsKey(world)) {
 			Create.LOGGER.warn("Tried to Access unprepared network space of " + WorldHelper.getDimensionID(world));
 			return new HashMap<>();
@@ -105,8 +105,8 @@ public class KineticRedstoneLinkNetworkHandler {
 		return connections.get(world);
 	}
 
-	public boolean hasAnyLoadedPower(Couple<Frequency> frequency) {
-		for (Map<Couple<Frequency>, Set<KIRedstoneLinkable>> map : connections.values()) {
+	public boolean hasAnyLoadedPower(Couple<KFrequency> frequency) {
+		for (Map<Couple<KFrequency>, Set<KIRedstoneLinkable>> map : connections.values()) {
 			Set<KIRedstoneLinkable> set = map.get(frequency);
 			if (set == null || set.isEmpty())
 				continue;
