@@ -33,8 +33,11 @@ public class KFrequency {
                 address = tag.getString("Address");
                 return;
             }
+        } else {
+            address = stack.getDisplayName().getString();
+            return;
         }
-        address="";
+        address = null;
     }
 
     public ItemStack getStack() {
@@ -51,6 +54,7 @@ public class KFrequency {
         if (this == obj) return true;
         if (!(obj instanceof KFrequency other)) return false;
 
+        if (this.address == null || other.address == null) return this.address == null && other.address == null;
         return this.address.equals(other.address);
     }
 }

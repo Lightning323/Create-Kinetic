@@ -1,6 +1,7 @@
 package com.lightning323.createkinetic.items.frequencyFilter;
 
 import com.lightning323.createkinetic.registries.KineticGuiTextures;
+import com.lightning323.createkinetic.registries.KineticItems;
 import com.lightning323.createkinetic.registries.KineticPackets;
 import com.simibubi.create.content.logistics.filter.AbstractFilterScreen;
 import com.simibubi.create.content.logistics.filter.FilterScreenPacket;
@@ -64,8 +65,7 @@ public class FrequencyFilterScreen extends AbstractFilterScreen<FrequencyFilterM
         PoseStack ms = graphics.pose();
         ms.pushPose();
         ms.translate(leftPos + 16, topPos + 23, 0);
-        GuiGameElement.of(PackageStyles.getDefaultBox())
-                .render(graphics);
+        GuiGameElement.of(KineticItems.FREQUENCY_FILTER.get()).render(graphics);
         ms.popPose();
     }
 
