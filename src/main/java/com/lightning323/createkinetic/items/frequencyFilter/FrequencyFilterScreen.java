@@ -1,5 +1,7 @@
 package com.lightning323.createkinetic.items.frequencyFilter;
 
+import com.lightning323.createkinetic.registries.KineticGuiTextures;
+import com.lightning323.createkinetic.registries.KineticPackets;
 import com.simibubi.create.content.logistics.filter.AbstractFilterScreen;
 import com.simibubi.create.content.logistics.filter.FilterScreenPacket;
 import org.lwjgl.glfw.GLFW;
@@ -21,97 +23,97 @@ import net.minecraft.world.entity.player.Inventory;
 
 public class FrequencyFilterScreen extends AbstractFilterScreen<FrequencyFilterMenu> {
 
-	private EditBox addressBox;
-	private boolean deferFocus;
+    private EditBox addressBox;
+    private boolean deferFocus;
 
 	public FrequencyFilterScreen(FrequencyFilterMenu menu, Inventory inv, Component title) {
 		super(menu, inv, title, AllGuiTextures.PACKAGE_FILTER);
 	}
 
-	@Override
-	protected void containerTick() {
-		super.containerTick();
-		if (deferFocus) {
-			deferFocus = false;
-			setFocused(addressBox);
-		}
-		addressBox.tick();
-	}
+    @Override
+    protected void containerTick() {
+        super.containerTick();
+        if (deferFocus) {
+            deferFocus = false;
+            setFocused(addressBox);
+        }
+        addressBox.tick();
+    }
 
-	@Override
-	protected void init() {
-		setWindowOffset(-11, 7);
-		super.init();
+    @Override
+    protected void init() {
+        setWindowOffset(-11, 7);
+        super.init();
 
-		int x = leftPos;
-		int y = topPos;
+        int x = leftPos;
+        int y = topPos;
 
-		addressBox = new AddressEditBox(this, this.font, x + 44, y + 28, 129, 9, false);
-		addressBox.setTextColor(0xffffff);
-		addressBox.setValue(menu.address);
-		addressBox.setResponder(this::onAddressEdited);
-		addRenderableWidget(addressBox);
+        addressBox = new AddressEditBox(this, this.font, x + 44, y + 28, 129, 9, false);
+        addressBox.setTextColor(0xffffff);
+        addressBox.setValue(menu.address);
+        addressBox.setResponder(this::onAddressEdited);
+        addRenderableWidget(addressBox);
 
-		setFocused(addressBox);
-	}
+        setFocused(addressBox);
+    }
 
-	@Override
-	public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
-		super.render(graphics, mouseX, mouseY, partialTicks);
+    @Override
+    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+        super.render(graphics, mouseX, mouseY, partialTicks);
 
-		PoseStack ms = graphics.pose();
-		ms.pushPose();
-		ms.translate(leftPos + 16, topPos + 23, 0);
-		GuiGameElement.of(PackageStyles.getDefaultBox())
-			.render(graphics);
-		ms.popPose();
-	}
+        PoseStack ms = graphics.pose();
+        ms.pushPose();
+        ms.translate(leftPos + 16, topPos + 23, 0);
+        GuiGameElement.of(PackageStyles.getDefaultBox())
+                .render(graphics);
+        ms.popPose();
+    }
 
-	public void onAddressEdited(String s) {
-		menu.address = s;
-		CompoundTag tag = new CompoundTag();
-		tag.putString("Address", s);
-		AllPackets.getChannel()
-			.sendToServer(new FilterScreenPacket(Option.UPDATE_ADDRESS, tag));
-	}
+    public void onAddressEdited(String s) {
+        menu.address = s;
+        CompoundTag tag = new CompoundTag();
+        tag.putString("Address", s);
+        KineticPackets.getChannel()
+                .sendToServer(new KFilterScreenPacket(KFilterScreenPacket.KOption.UPDATE_ADDRESS, tag));
+    }
 
-	@Override
-	public boolean mouseClicked(double pMouseX, double pMouseY, int pButton) {
-		return super.mouseClicked(pMouseX, pMouseY, pButton);
-	}
+    @Override
+    public boolean mouseClicked(double pMouseX, double pMouseY, int pButton) {
+        return super.mouseClicked(pMouseX, pMouseY, pButton);
+    }
 
-	@Override
-	public boolean mouseScrolled(double mouseX, double mouseY, double delta) {
-		if (addressBox.mouseScrolled(mouseX, mouseY, delta))
-			return true;
-		return super.mouseScrolled(mouseX, mouseY, delta);
-	}
+    @Override
+    public boolean mouseScrolled(double mouseX, double mouseY, double delta) {
+        if (addressBox.mouseScrolled(mouseX, mouseY, delta))
+            return true;
+        return super.mouseScrolled(mouseX, mouseY, delta);
+    }
 
-	@Override
-	public boolean keyPressed(int pKeyCode, int pScanCode, int pModifiers) {
-		if (pKeyCode == GLFW.GLFW_KEY_ENTER)
-			setFocused(null);
-		return super.keyPressed(pKeyCode, pScanCode, pModifiers);
-	}
+    @Override
+    public boolean keyPressed(int pKeyCode, int pScanCode, int pModifiers) {
+        if (pKeyCode == GLFW.GLFW_KEY_ENTER)
+            setFocused(null);
+        return super.keyPressed(pKeyCode, pScanCode, pModifiers);
+    }
 
-	@Override
-	public boolean charTyped(char pCodePoint, int pModifiers) {
-		return super.charTyped(pCodePoint, pModifiers);
-	}
+    @Override
+    public boolean charTyped(char pCodePoint, int pModifiers) {
+        return super.charTyped(pCodePoint, pModifiers);
+    }
 
-	@Override
-	protected void contentsCleared() {
-		addressBox.setValue("");
-		deferFocus = true;
-	}
+    @Override
+    protected void contentsCleared() {
+        addressBox.setValue("");
+        deferFocus = true;
+    }
 
-	@Override
-	protected boolean isButtonEnabled(IconButton button) {
-		return false;
-	}
+    @Override
+    protected boolean isButtonEnabled(IconButton button) {
+        return false;
+    }
 
-	@Override
-	protected int getTitleColor() {
-		return 0x3D3C48;
-	}
+    @Override
+    protected int getTitleColor() {
+        return 0x3D3C48;
+    }
 }

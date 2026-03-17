@@ -8,6 +8,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 import com.lightning323.createkinetic.CreateKinetic;
+import com.lightning323.createkinetic.items.frequencyFilter.KFilterScreenPacket;
 import com.simibubi.create.compat.computercraft.AttachedComputerPacket;
 import com.simibubi.create.compat.trainmap.TrainMapSyncPacket;
 import com.simibubi.create.compat.trainmap.TrainMapSyncRequestPacket;
@@ -132,10 +133,7 @@ import net.minecraftforge.network.PacketDistributor.TargetPoint;
 import net.minecraftforge.network.simple.SimpleChannel;
 
 public enum KineticPackets {
-    LINKED_CONTROLLER_INPUT(LinkedControllerInputPacket.class, LinkedControllerInputPacket::new, PLAY_TO_SERVER),
-    LINKED_CONTROLLER_BIND(LinkedControllerBindPacket.class, LinkedControllerBindPacket::new, PLAY_TO_SERVER),
-    LINKED_CONTROLLER_USE_LECTERN(LinkedControllerStopLecternPacket.class, LinkedControllerStopLecternPacket::new,
-            PLAY_TO_SERVER);
+    CONFIGURE_FILTER(KFilterScreenPacket.class, KFilterScreenPacket::new, PLAY_TO_SERVER);
 
 
     public static final ResourceLocation CHANNEL_NAME = CreateKinetic.resource("main");
