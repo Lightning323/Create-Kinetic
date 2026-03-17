@@ -1,19 +1,13 @@
 package com.lightning323.createkinetic.items.frequencyFilter;
 
-import java.util.Collections;
-import java.util.List;
-
-import com.lightning323.createkinetic.blocks.redstone.KFrequency;
+import com.lightning323.createkinetic.utils.MiscUtils;
 import com.simibubi.create.content.logistics.filter.FilterItem;
 import com.simibubi.create.content.logistics.filter.FilterItemStack;
-import com.simibubi.create.content.logistics.filter.PackageFilterMenu;
 import com.simibubi.create.foundation.item.TooltipHelper;
+import com.simibubi.create.foundation.recipe.ItemCopyingRecipe.SupportsItemCopying;
 import com.simibubi.create.foundation.utility.CreateLang;
 import net.createmod.catnip.lang.FontHelper;
 import net.minecraft.ChatFormatting;
-
-import com.simibubi.create.foundation.recipe.ItemCopyingRecipe.SupportsItemCopying;
-
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -27,7 +21,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 
+import java.util.Collections;
+import java.util.List;
+
 public class FrequencyFilterItem extends FilterItem implements MenuProvider, SupportsItemCopying {
+
+    public static final String ADDRESS_TAG = "Address";
 
     public FrequencyFilterItem(Properties properties) {
         super(properties);
@@ -39,8 +38,8 @@ public class FrequencyFilterItem extends FilterItem implements MenuProvider, Sup
         // Only run this on the server
         if (!level.isClientSide) {
             CompoundTag tag = stack.getOrCreateTag();
-            if (!tag.contains("Address") || tag.get("Address").getAsString().isBlank()) {
-                tag.putString("Address", KFrequency.generateRandomString(20));
+            if (!tag.contains(ADDRESS_TAG) || tag.get(ADDRESS_TAG).getAsString().isBlank()) {
+                tag.putString(ADDRESS_TAG, MiscUtils.generateRandomString(20));
             }
         }
         return super.use(level, player, hand);
@@ -67,7 +66,7 @@ public class FrequencyFilterItem extends FilterItem implements MenuProvider, Sup
         if (!filter.hasTag()) return Collections.emptyList();
 
         String address = filter.getOrCreateTag()
-                .getString("Address");
+                .getString(ADDRESS_TAG);
         if (address.isBlank()) return Collections.emptyList();
 
         return List.of(CreateLang.text("-> ")
@@ -86,8 +85,8 @@ public class FrequencyFilterItem extends FilterItem implements MenuProvider, Sup
     @Override
     public Component getName(ItemStack stack) {
         CompoundTag tag = stack.getTag();
-        if (tag != null && tag.contains("Address")) {
-            String address = tag.getString("Address");
+        if (tag != null && tag.contains(ADDRESS_TAG)) {
+            String address = tag.getString(ADDRESS_TAG);
             // Returns "Frequency Filter (AddressName)"
             return Component.translatable(this.getDescriptionId())
                     .append(" (")

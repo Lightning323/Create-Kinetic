@@ -1,15 +1,11 @@
 package com.lightning323.createkinetic.client;
 
-import com.lightning323.createkinetic.blocks.redstone.smartLink.KLinkRenderer;
 import com.lightning323.createkinetic.blocks.sail.SailClothBlock;
 import com.lightning323.createkinetic.registries.KineticBlocks;
 import com.lightning323.createkinetic.registries.KineticParticles;
-import net.minecraft.client.Minecraft;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;

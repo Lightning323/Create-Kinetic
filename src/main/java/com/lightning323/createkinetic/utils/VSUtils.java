@@ -3,6 +3,7 @@ package com.lightning323.createkinetic.utils;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
+import net.minecraft.client.Minecraft;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.network.chat.Component;
@@ -27,6 +28,14 @@ import java.util.concurrent.atomic.AtomicInteger;
 import static com.lightning323.createkinetic.commands.KineticCommands.executeParsedCommandOP;
 
 public class VSUtils {
+
+    //TODO: any instance of distanceToSqr should be changed in your code, otherwise it may not work on VS ships
+    //From org.valkyrienskies.mod.mixin.mod_compat.create.client;
+    public static double vsDistanceToSqr(Vec3 position1, Vec3 position2) {
+        Vec3 shipPos1 = VSGameUtilsKt.toShipRenderCoordinates(Minecraft.getInstance().level, position2, position1);
+        return shipPos1.distanceToSqr(position2);
+    }
+
     public static int recoverShip(MinecraftServer server, ServerPlayer player, String shipSlug) {
         CommandSourceStack source = player.createCommandSourceStack();
         int teleportx = (int) player.getEyePosition().x;

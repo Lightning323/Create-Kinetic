@@ -1,23 +1,19 @@
 package com.lightning323.createkinetic.items.frequencyFilter;
 
-import com.lightning323.createkinetic.CreateKinetic;
-import com.lightning323.createkinetic.blocks.redstone.KFrequency;
 import com.lightning323.createkinetic.registries.KineticPackets;
-import com.simibubi.create.AllItems;
-import com.simibubi.create.content.logistics.filter.AbstractFilterScreen;
-import org.lwjgl.glfw.GLFW;
-
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.simibubi.create.AllItems;
 import com.simibubi.create.content.logistics.AddressEditBox;
+import com.simibubi.create.content.logistics.filter.AbstractFilterScreen;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
 import com.simibubi.create.foundation.gui.widget.IconButton;
-
 import net.createmod.catnip.gui.element.GuiGameElement;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
+import org.lwjgl.glfw.GLFW;
 
 public class FrequencyFilterScreen extends AbstractFilterScreen<FrequencyFilterMenu> {
 

@@ -8,11 +8,9 @@ import com.lightning323.createkinetic.blocks.helm.ShipHelmBlock;
 import com.lightning323.createkinetic.blocks.sail.RetractableSailBlock;
 import com.lightning323.createkinetic.blocks.sail.SailClothBlock;
 import com.lightning323.createkinetic.blocks.sail.sailPulley.SailPulleyBlock;
-import com.lightning323.createkinetic.blocks.redstone.smartLink.SmartLinkBlock;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.AllTags;
-import com.simibubi.create.content.redstone.link.RedstoneLinkGenerator;
 import com.simibubi.create.foundation.data.BlockStateGen;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.tterrag.registrate.util.entry.BlockEntry;
@@ -39,28 +37,6 @@ import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
 import static com.simibubi.create.foundation.data.TagGen.axeOrPickaxe;
 
 public class KineticBlocks {
-
-    public static final BlockEntry<SmartLinkBlock> SMART_LINK =
-            REGISTRATE.block("redstone_link", SmartLinkBlock::new)
-                    .initialProperties(SharedProperties::wooden)
-                    .properties(p -> p.mapColor(MapColor.TERRACOTTA_BROWN)
-                            .forceSolidOn())
-                    .transform(axeOrPickaxe())
-                    .tag(AllTags.AllBlockTags.BRITTLE.tag, AllTags.AllBlockTags.SAFE_NBT.tag)
-                    .blockstate(new RedstoneLinkGenerator()::generate)
-                    .addLayer(() -> RenderType::cutoutMipped)
-                    .item((block, props) -> new BlockItem(block, props) {
-                        @Override
-                        public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flag) {
-                            KineticItems.shiftForTooltip(tooltip,
-                                    Component.translatable("tooltip.createkinetic.redstone_link").withStyle(ChatFormatting.GOLD));
-                        }
-                    })
-
-                    .lang("Smart Redstone Link")
-                    .transform(customItemModel("_", "transmitter"))
-                    .register();
-
     public static BlockEntry<ShipHelmBlock> registerShipHelm(String name, WoodType woodType) {
         return REGISTRATE
                 .block(name, p -> new ShipHelmBlock(p, woodType)) // Manual constructor call

@@ -34,7 +34,7 @@ public class KineticEvents {
     @SubscribeEvent
     public static void onLoadWorld(LevelEvent.Load event) {
         LevelAccessor world = event.getLevel();
-        CreateKinetic.REDSTONE_LINK_NETWORK_HANDLER.onLoadWorld(world);
+//        CreateKinetic.REDSTONE_LINK_NETWORK_HANDLER.onLoadWorld(world);
 //        Create.TORQUE_PROPAGATOR.onLoadWorld(world);
 //        Create.RAILWAYS.levelLoaded(world);
 //        Create.LOGISTICS.levelLoaded(world);
@@ -43,7 +43,7 @@ public class KineticEvents {
     @SubscribeEvent
     public static void onUnloadWorld(LevelEvent.Unload event) {
         LevelAccessor world = event.getLevel();
-        CreateKinetic.REDSTONE_LINK_NETWORK_HANDLER.onUnloadWorld(world);
+//        CreateKinetic.REDSTONE_LINK_NETWORK_HANDLER.onUnloadWorld(world);
 //        Create.TORQUE_PROPAGATOR.onUnloadWorld(world);
 //        WorldAttached.invalidateWorld(world);
 //        CobbleGenOptimisation.invalidateWorld(world);
