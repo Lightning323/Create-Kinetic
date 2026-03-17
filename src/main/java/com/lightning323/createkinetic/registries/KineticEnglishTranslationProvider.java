@@ -12,5 +12,7 @@ public class KineticEnglishTranslationProvider {
         provider.add("tooltip.createkinetic.enchantedballast", "Keeps your ship upright");
         provider.add("tooltip.createkinetic.anchor", "Use redstone power to anchor (freeze) your ship");
         provider.add("tooltip.createkinetic.shiptotem.freeze", "Freezes the ship after recovery");
+        provider.add("tooltip.createkinetic.frequency_filter","Matches redstone signals against their corresponding address (frequency). Used in Smart Redstone Links");
+        provider.add("tooltip.createkinetic.redstone_link","Like a redstone link but uses frequency filters instead of items to send/receive signals");
     }
 }

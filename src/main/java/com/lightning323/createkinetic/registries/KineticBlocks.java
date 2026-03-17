@@ -49,7 +49,15 @@ public class KineticBlocks {
                     .tag(AllTags.AllBlockTags.BRITTLE.tag, AllTags.AllBlockTags.SAFE_NBT.tag)
                     .blockstate(new RedstoneLinkGenerator()::generate)
                     .addLayer(() -> RenderType::cutoutMipped)
-                    .item()
+                    .item((block, props) -> new BlockItem(block, props) {
+                        @Override
+                        public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flag) {
+                            KineticItems.shiftForTooltip(tooltip,
+                                    Component.translatable("tooltip.createkinetic.redstone_link").withStyle(ChatFormatting.GOLD));
+                        }
+                    })
+
+                    .lang("Smart Redstone Link")
                     .transform(customItemModel("_", "transmitter"))
                     .register();
 

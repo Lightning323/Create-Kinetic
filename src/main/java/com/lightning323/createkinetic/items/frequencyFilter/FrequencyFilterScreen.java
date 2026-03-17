@@ -1,17 +1,14 @@
 package com.lightning323.createkinetic.items.frequencyFilter;
 
-import com.lightning323.createkinetic.registries.KineticGuiTextures;
-import com.lightning323.createkinetic.registries.KineticItems;
+import com.lightning323.createkinetic.CreateKinetic;
+import com.lightning323.createkinetic.blocks.redstone.KFrequency;
 import com.lightning323.createkinetic.registries.KineticPackets;
+import com.simibubi.create.AllItems;
 import com.simibubi.create.content.logistics.filter.AbstractFilterScreen;
-import com.simibubi.create.content.logistics.filter.FilterScreenPacket;
 import org.lwjgl.glfw.GLFW;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.simibubi.create.AllPackets;
 import com.simibubi.create.content.logistics.AddressEditBox;
-import com.simibubi.create.content.logistics.box.PackageStyles;
-import com.simibubi.create.content.logistics.filter.FilterScreenPacket.Option;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
 import com.simibubi.create.foundation.gui.widget.IconButton;
 
@@ -24,7 +21,7 @@ import net.minecraft.world.entity.player.Inventory;
 
 public class FrequencyFilterScreen extends AbstractFilterScreen<FrequencyFilterMenu> {
 
-    private EditBox addressBox;
+    public EditBox addressBox;
     private boolean deferFocus;
 
 	public FrequencyFilterScreen(FrequencyFilterMenu menu, Inventory inv, Component title) {
@@ -54,7 +51,6 @@ public class FrequencyFilterScreen extends AbstractFilterScreen<FrequencyFilterM
         addressBox.setValue(menu.address);
         addressBox.setResponder(this::onAddressEdited);
         addRenderableWidget(addressBox);
-
         setFocused(addressBox);
     }
 
@@ -65,7 +61,7 @@ public class FrequencyFilterScreen extends AbstractFilterScreen<FrequencyFilterM
         PoseStack ms = graphics.pose();
         ms.pushPose();
         ms.translate(leftPos + 16, topPos + 23, 0);
-        GuiGameElement.of(KineticItems.FREQUENCY_FILTER.get()).render(graphics);
+        GuiGameElement.of(AllItems.TRANSMITTER.get()).render(graphics);//KineticItems.FREQUENCY_FILTER.get()
         ms.popPose();
     }
 

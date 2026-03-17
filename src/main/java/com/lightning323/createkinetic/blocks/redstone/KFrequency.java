@@ -1,20 +1,24 @@
 package com.lightning323.createkinetic.blocks.redstone;
 
+import com.google.common.hash.Hashing;
 import com.lightning323.createkinetic.items.frequencyFilter.FrequencyFilterItem;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
+import java.nio.charset.StandardCharsets;
 import java.util.IdentityHashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 
 public class KFrequency {
     public static final KFrequency EMPTY = new KFrequency(ItemStack.EMPTY);
     private static final Map<Item, KFrequency> simpleFrequencies = new IdentityHashMap<>();
 
     private ItemStack stack;//Used for asthetics
-    private final String address;//For comparison
+    private final long hash;//For comparison
 
     public static KFrequency of(ItemStack stack) {
         if (stack.isEmpty())
@@ -24,20 +28,35 @@ public class KFrequency {
         return new KFrequency(stack);
     }
 
+    public static String generateRandomString(int n) {
+        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        return ThreadLocalRandom.current().ints(n, 0, chars.length())
+                .mapToObj(i -> String.valueOf(chars.charAt(i)))
+                .collect(Collectors.joining());
+    }
+
     private KFrequency(ItemStack stack) {
         this.stack = stack;
 
+        /**
+         * The number of collisions is quite low for a 64 bit number
+         * in 1 million strings, the likelyhood of collision is 0.000000003%
+         */
         if (stack.getItem() instanceof FrequencyFilterItem && stack.hasTag()) {
             CompoundTag tag = stack.getTag();
             if (tag != null && tag.contains("Address")) {
-                address = tag.getString("Address");
+                hash = Hashing.murmur3_128()
+                        .hashString(tag.getString("Address"), StandardCharsets.UTF_8)
+                        .asLong();
                 return;
             }
         } else {
-            address = stack.getDisplayName().getString();
+            hash = Hashing.murmur3_128()
+                    .hashString(stack.getDisplayName().getString(), StandardCharsets.UTF_8)
+                    .asLong();
             return;
         }
-        address = null;
+        hash = 0;
     }
 
     public ItemStack getStack() {
@@ -46,16 +65,14 @@ public class KFrequency {
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(address);
+        return Objects.hashCode(hash);
     }
 
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
         if (!(obj instanceof KFrequency other)) return false;
-
-        if (this.address == null || other.address == null) return this.address == null && other.address == null;
-        return this.address.equals(other.address);
+        return this.hash == other.hash;
     }
 }
 
