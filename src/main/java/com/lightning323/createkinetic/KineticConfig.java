@@ -29,7 +29,7 @@ public class KineticConfig {
             .defineInRange("no_sail_zone", 45.0, 0.0, 360.0);
 
    private static final ForgeConfigSpec.IntValue SAIL_SPEED
-            = BUILDER.defineInRange("sail_speed", 20000, 0, Integer.MAX_VALUE);
+            = BUILDER.defineInRange("sail_speed", 40000, 0, Integer.MAX_VALUE);
 
     private static final ForgeConfigSpec.DoubleValue TURN_ACCELERATION
             = BUILDER.comment("The maximum linear acceleration at any point on the ship caused by helm torque")
