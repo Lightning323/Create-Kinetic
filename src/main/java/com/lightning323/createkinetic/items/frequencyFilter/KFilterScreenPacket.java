@@ -45,7 +45,7 @@ public class KFilterScreenPacket extends SimplePacketBase {
 			
 			if (player.containerMenu instanceof FrequencyFilterMenu c) {
 				if (option == KOption.UPDATE_ADDRESS)
-					c.address = data.getString("Address");
+					c.address = data.getString(FrequencyFilterItem.ADDRESS_TAG);
 			}
 		});
 		return true;

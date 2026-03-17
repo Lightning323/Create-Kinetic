@@ -26,7 +26,7 @@ import java.util.List;
 
 public class FrequencyFilterItem extends FilterItem implements MenuProvider, SupportsItemCopying {
 
-    public static final String ADDRESS_TAG = "Address";
+    public static final String ADDRESS_TAG = "Frequency";
 
     public FrequencyFilterItem(Properties properties) {
         super(properties);

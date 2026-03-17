@@ -64,7 +64,7 @@ public class FrequencyFilterScreen extends AbstractFilterScreen<FrequencyFilterM
     public void onAddressEdited(String s) {
         menu.address = s;
         CompoundTag tag = new CompoundTag();
-        tag.putString("Address", s);
+        tag.putString(FrequencyFilterItem.ADDRESS_TAG, s);
         KineticPackets.getChannel()
                 .sendToServer(new KFilterScreenPacket(KFilterScreenPacket.KOption.UPDATE_ADDRESS, tag));
     }

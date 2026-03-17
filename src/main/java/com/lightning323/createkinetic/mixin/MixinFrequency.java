@@ -36,10 +36,6 @@ public abstract class MixinFrequency {
         // This runs at the end of the constructor. 
         // You can re-assign the shadow fields or add custom logic.
         CompoundTag tag = stack.getTag();
-//        if (tag != null && tag.contains("CustomFreqData")) {
-//            // this.color = tag.getInt("CustomFreqData");
-//        }
-
         if (tag != null && tag.contains(FrequencyFilterItem.ADDRESS_TAG)) {
             hash = Hashing.murmur3_128()
                     .hashString(tag.getString(FrequencyFilterItem.ADDRESS_TAG), StandardCharsets.UTF_8)

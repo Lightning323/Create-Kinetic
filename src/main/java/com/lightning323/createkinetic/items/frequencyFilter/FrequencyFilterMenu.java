@@ -52,14 +52,14 @@ public class FrequencyFilterMenu extends AbstractFilterMenu {
     protected void initAndReadInventory(ItemStack filterItem) {
         super.initAndReadInventory(filterItem);
         address = filterItem.getOrCreateTag()
-                .getString("Address");
+                .getString(FrequencyFilterItem.ADDRESS_TAG);
     }
 
     @Override
     protected void saveData(ItemStack filterItem) {
         super.saveData(filterItem);
         filterItem.getOrCreateTag()
-                .putString("Address", address);
+                .putString(FrequencyFilterItem.ADDRESS_TAG, address);
     }
 
     @Override
