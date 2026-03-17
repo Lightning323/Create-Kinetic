@@ -17,11 +17,6 @@ public class ForgeBusClientEvents {
     }
 
     @SubscribeEvent
-    public static void onItemTooltip(ItemTooltipEvent event) {
-        // ...
-    }
-
-    @SubscribeEvent
     public static void onTick(TickEvent.ClientTickEvent event) {
         // Only run on one phase (usually END) to avoid double-ticking
         if (event.phase == TickEvent.Phase.END && isGameActive()) {

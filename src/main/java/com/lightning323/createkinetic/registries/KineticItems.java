@@ -1,24 +1,26 @@
 package com.lightning323.createkinetic.registries;
 
+import com.lightning323.createkinetic.items.frequencyFilter.FrequencyFilterItem;
 import com.lightning323.createkinetic.items.ShipTotemItem;
 import com.simibubi.create.content.processing.sequenced.SequencedAssemblyItem;
 import com.simibubi.create.foundation.item.TooltipHelper;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import net.createmod.catnip.lang.FontHelper;
-import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.Level;
 
 import java.util.List;
 
 import static com.lightning323.createkinetic.CreateKinetic.REGISTRATE;
 
 public class KineticItems {
+
+    public static final ItemEntry<FrequencyFilterItem> FREQUENCY_FILTER = REGISTRATE.item("frequency_filter",
+                    p -> new FrequencyFilterItem(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)))//FilterItem::regular
+            .lang("Frequency Filter")
+            .register();
 
     public static final ItemEntry<ShipTotemItem> SHIP_TOTEM = REGISTRATE.item("ship_totem",
                     p -> new ShipTotemItem(false))

@@ -42,6 +42,7 @@ public class CreateKinetic {
 
         KineticBlocks.register();
         KineticItems.register();
+        KineticMenus.register();
         KineticBlockEntities.register();
         KineticPackets.registerPackets();
 
