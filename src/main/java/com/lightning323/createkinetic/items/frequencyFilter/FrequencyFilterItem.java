@@ -39,7 +39,7 @@ public class FrequencyFilterItem extends FilterItem implements MenuProvider, Sup
         // Only run this on the server
         if (!level.isClientSide) {
             CompoundTag tag = stack.getOrCreateTag();
-            if (!tag.contains("Address")) {
+            if (!tag.contains("Address") || tag.get("Address").getAsString().isBlank()) {
                 tag.putString("Address", KFrequency.generateRandomString(20));
             }
         }
