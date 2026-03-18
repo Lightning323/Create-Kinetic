@@ -1,5 +1,6 @@
 package com.lightning323.createkinetic;
 
+import kotlin.reflect.jvm.internal.impl.resolve.constants.DoubleValue;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -24,12 +25,16 @@ public class KineticConfig {
     private static final ForgeConfigSpec.DoubleValue BUOY_STRENGTH
             = BUILDER.comment("Buoy Float Strength").defineInRange("buoy_strength", 0.125, 0.0, Double.MAX_VALUE);
 
-   private static final ForgeConfigSpec.DoubleValue NO_SAIL_ZONE
+    private static final ForgeConfigSpec.DoubleValue NO_SAIL_ZONE
             = BUILDER.comment("No sail zone (in degrees)")
             .defineInRange("no_sail_zone", 45.0, 0.0, 360.0);
 
-   private static final ForgeConfigSpec.IntValue SAIL_SPEED
-            = BUILDER.defineInRange("sail_speed", 40000, 0, Integer.MAX_VALUE);
+    private static final ForgeConfigSpec.IntValue SAIL_SPEED
+            = BUILDER.defineInRange("sail_speed", 60000, 0, Integer.MAX_VALUE);
+
+    private static final ForgeConfigSpec.DoubleValue MIN_WIND_SPEED
+            = BUILDER.defineInRange("min_wind", 0.5, 0, 1);
+
 
     private static final ForgeConfigSpec.DoubleValue TURN_ACCELERATION
             = BUILDER.comment("The maximum linear acceleration at any point on the ship caused by helm torque")
@@ -59,6 +64,7 @@ public class KineticConfig {
     public static double buoyStrength;
     public static double noSailZone;
     public static double sailSpeed;
+    public static double minWindSpeed;
 
     public static double turnAcceleration;
     public static double maxSizeForTurnSpeedPenalty;
@@ -74,6 +80,7 @@ public class KineticConfig {
         buoyStrength = BUOY_STRENGTH.get();
         noSailZone = NO_SAIL_ZONE.get();
         sailSpeed = SAIL_SPEED.get();
+        minWindSpeed = MIN_WIND_SPEED.get();
         turnAcceleration = TURN_ACCELERATION.get();
         maxSizeForTurnSpeedPenalty = MAX_SIZE_FOR_TURN_SPEED_PENALTY.get();
         turnSpeed = TURN_SPEED.get();

@@ -1,5 +1,7 @@
 package com.lightning323.createkinetic.ship;
 
+import com.lightning323.createkinetic.CreateKinetic;
+import com.lightning323.createkinetic.KineticConfig;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
@@ -13,7 +15,6 @@ public class WindManager {
     // 2 minutes = 120 seconds * 20 ticks = 2400 ticks
     private static final int UPDATE_INTERVAL = 2400;
     private static final int LERP_INTERVAL = 20;
-    private static final double MIN_WIND = 0.4;
 
     private static double lastStrength = 1.0;
     private static double targetStrength = 1.0;
@@ -42,10 +43,11 @@ public class WindManager {
 
             // Map Strength: Noise is [-1, 1], we want [MIN_WIND, 1.0]
             double normalized = (rawStrength + 1.0) / 2.0; // Shipped to [0, 1]
-            targetStrength = MIN_WIND + (normalized * (1.0 - MIN_WIND));
+            targetStrength = KineticConfig.minWindSpeed + (normalized * (1.0 - KineticConfig.minWindSpeed));
 
             //Map Direction: Noise is [-1, 1], we want [0, 360]
             targetDirection = ((rawDirection + 1) / 2.0) * 360.0;
+            LOGGER.debug("Wind: {}x {}°", currentStrength, currentDirection);
         }
         if (currentTime % LERP_INTERVAL == 0) {// 2. Continuous Interpolation
             long timeInCycle = currentTime % UPDATE_INTERVAL;

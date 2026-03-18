@@ -11,6 +11,7 @@ import net.createmod.catnip.lang.FontHelper;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.tags.ItemTags;
@@ -47,13 +48,6 @@ public class KineticItems {
     public static final ItemEntry<FrequencyFilterItem> FREQUENCY_FILTER = REGISTRATE.item("frequency_filter",
                     p -> new FrequencyFilterItem(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)))//FilterItem::regular
             .lang("Frequency Filter")
-            .recipe((ctx, prov) -> {
-                ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ctx.getEntry())
-                        .pattern("NWN")
-                        .define('N', AllItems.COPPER_NUGGET.get())
-                        .define('W', ItemTags.WOOL)
-                        .save(prov);
-            })
             .register();
 
     public static void shiftForTooltip(List<Component> tooltip, Component... addedTooltip) {

@@ -207,7 +207,7 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
     private void updateShipBounds() {
         boundx = ship.getShipAABB().maxX() - ship.getShipAABB().minX();
         boundz = ship.getShipAABB().maxZ() - ship.getShipAABB().minZ();
-        LOGGER.debug("Bounds X={} Z={}",boundx,boundz);
+        LOGGER.debug("Bounds X={} Z={}", boundx, boundz);
     }
 
     public void updateShipDirection() {
@@ -404,10 +404,10 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
                     shipDirection.getNormal().getX(), shipDirection.getNormal().getY(), shipDirection.getNormal().getZ()
             );
 
-            Vector3dc worldShipPos = physShip1.getTransform().getPositionInWorld();
+//            Vector3dc worldShipPos = physShip1.getTransform().getPositionInWorld();
             //Get the position of our ship
-            Vec3 shipPosVec = new Vec3(worldShipPos.x(), worldShipPos.y(), worldShipPos.z());
-            BlockPos shipPosBlockPos = new BlockPos((int) worldShipPos.x(), (int) worldShipPos.y(), (int) worldShipPos.z());
+//            Vec3 shipPosVec = new Vec3(worldShipPos.x(), worldShipPos.y(), worldShipPos.z());
+//            BlockPos shipPosBlockPos = new BlockPos((int) worldShipPos.x(), (int) worldShipPos.y(), (int) worldShipPos.z());
 
             //Get the wind parameters
             double windDirection = WindManager.getWindDirection(); //in degrees
@@ -416,14 +416,9 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
             //Get the Y angle of our ship in radians
             double shipAngle = getShipYaw(physShip1.getTransform().getShipToWorldRotation()); //in radians
 
-            double windAngle;
+            double windAngle = windDirection + 90 % 360;
             double squareAngleBetween;
             double fnaAngleBetween;
-            if (windStrength > 0) {
-                windAngle = windDirection + 90 % 360;
-            } else {
-                windAngle = windDirection + 270 % 360;
-            }
             if (shipDirection == Direction.WEST) {
                 windAngle = (windAngle - 90) % 360;
             } else if (shipDirection == Direction.NORTH) {
