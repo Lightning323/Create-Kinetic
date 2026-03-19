@@ -43,8 +43,6 @@ import java.util.List;
 import static com.lightning323.createkinetic.blocks.sail.sailPulley.SailBlockBase.COLOR;
 
 public class RetractableSailBlockEntity extends KineticBlockEntity implements IDisplayAssemblyExceptions, ThresholdSwitchObservable, IRetractableSail {
-
-
     public float offset;
     public boolean running;
     public boolean assembleNextTick;
@@ -79,15 +77,6 @@ public class RetractableSailBlockEntity extends KineticBlockEntity implements ID
         float prevOffset = offset;
         super.tick();
 
-        if (level.isClientSide() && mirrorParent != null)
-            if (sharedMirrorContraption == null || sharedMirrorContraption.get() == null
-                    || !sharedMirrorContraption.get()
-                    .isAlive()) {
-                sharedMirrorContraption = null;
-//                if (level.getBlockEntity(mirrorParent) instanceof SailBlockEntity pte && pte.movedContraption != null)
-//                    sharedMirrorContraption = new WeakReference<>(pte.movedContraption);
-            }
-
         if (isVirtual())
             prevAnimatedOffset = offset;
         invalidateRenderBoundingBox();
@@ -113,7 +102,23 @@ public class RetractableSailBlockEntity extends KineticBlockEntity implements ID
             } else {
                 if (getSpeed() != 0)
                     try {
-                        assemble();
+
+                        BlockPos posBelow = worldPosition.below((int) (offset + getMovementSpeed()) + 1);
+                        BlockState state = level.getBlockState(posBelow);
+//                        boolean movement = BlockMovementChecks.isMovementNecessary(state, level, posBelow);
+//                        boolean brittle = BlockMovementChecks.isBrittle(state);
+                        /**
+                         * ASSEMBLING DOWN 	            movement: false brittle:false 	Speed: 40.0
+                         * ASSEMBLING UP		        movement: true  brittle:true 	Speed: -40.0
+                         * INVALID ASSEMBLY DOWNWARD:	movement: true  brittle:false   Speed: 40.0
+                         */
+                        if(speed < 0 ||
+                                //If speed is going down, movement is necessary must be false
+                                //TODO: What does isMovementNecessary check?
+                                (speed > 0 && !BlockMovementChecks.isMovementNecessary(state, level, posBelow)))
+                            assemble();
+
+
                         lastException = null;
                     } catch (AssemblyException e) {
                         lastException = e;
@@ -248,25 +253,12 @@ public class RetractableSailBlockEntity extends KineticBlockEntity implements ID
         sendData();
     }
 
-//    @Override
-//    public void onLoad() {
-//        super.onLoad();
-//        ShipUtils.addSail(getLevel(), getBlockPos(), this.getBlockState().getValue(BlockStateProperties.HORIZONTAL_AXIS));
-//    }
-//
-//    @Override
-//    public void remove() {
-//        super.remove();
-//        ShipUtils.removeSail(getLevel(), getBlockPos(), this.getBlockState().getValue(BlockStateProperties.HORIZONTAL_AXIS));
-//    }
-
 
     protected int initialOffset;
     private float prevAnimatedOffset;
 
     protected BlockPos mirrorParent;
     protected List<BlockPos> mirrorChildren;
-    public WeakReference<AbstractContraptionEntity> sharedMirrorContraption;
 
     public RetractableSailBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
@@ -279,11 +271,6 @@ public class RetractableSailBlockEntity extends KineticBlockEntity implements ID
     @Override
     protected AABB createRenderBoundingBox() {
         double expandY = -offset;
-        if (sharedMirrorContraption != null) {
-            AbstractContraptionEntity ace = sharedMirrorContraption.get();
-            if (ace != null)
-                expandY = ace.getY() - worldPosition.getY();
-        }
         return super.createRenderBoundingBox().expandTowards(0, expandY, 0);
     }
 
@@ -321,38 +308,10 @@ public class RetractableSailBlockEntity extends KineticBlockEntity implements ID
             BlockPos anchor = worldPosition.below(Mth.floor(offset + 1));
             initialOffset = Mth.floor(offset);
             boolean canAssembleStructure = true;
-
-//            if (canAssembleStructure) {
-//                Direction movementDirection = getSpeed() > 0 ? Direction.DOWN : Direction.UP;
-//                if (ContraptionCollider.isCollidingWithWorld(level, contraption, anchor.relative(movementDirection),movementDirection))
-//                    canAssembleStructure = false;
-//            }
-
             if (!canAssembleStructure && getSpeed() > 0)
                 return;
 
             removeRopes();
-
-//            if (!contraption.getBlocks().isEmpty()) {
-////                contraption.removeBlocksFromWorld(level, BlockPos.ZERO);
-////                movedContraption = ControlledContraptionEntity.create(level, this, contraption);
-////                movedContraption.setPos(anchor.getX(), anchor.getY(), anchor.getZ());
-////                level.addFreshEntity(movedContraption);
-//                forceMove = true;
-//                needsContraption = true;
-//
-//                if (contraption.containsBlockBreakers())
-//                    award(AllAdvancements.CONTRAPTION_ACTORS);
-//
-//                for (BlockPos pos : contraption.createColliders(level, Direction.UP)) {
-//                    if (pos.getY() != 0)
-//                        continue;
-//                    pos = pos.offset(anchor);
-//                    if (level.getBlockEntity(
-//                            new BlockPos(pos.getX(), worldPosition.getY(), pos.getZ())) instanceof SailBlockEntity pbe)
-//                        pbe.startMirroringOther(worldPosition);
-//                }
-//            }
         }
 
         if (mirrorParent != null)
@@ -370,12 +329,6 @@ public class RetractableSailBlockEntity extends KineticBlockEntity implements ID
             level.setBlock(offset, oldState.getFluidState().createLegacyBlock(), 66);
         }
     }
-
-
-    public int getTotalSails() {
-        return totalSails;
-    }
-
 
     public void disassemble() {
         if (!running && mirrorParent == null)
@@ -437,16 +390,9 @@ public class RetractableSailBlockEntity extends KineticBlockEntity implements ID
                     }
                 }
             }
-
-            this.totalSails = (int) actuallyPlacedSails;
             notifyMirrorsOfDisassembly();
             updateSailCount();
         }
-
-//        if (movedContraption != null)
-//            movedContraption.discard();
-
-//        movedContraption = null;
         initialOffset = 0;
         running = false;
         sendData();
@@ -468,8 +414,6 @@ public class RetractableSailBlockEntity extends KineticBlockEntity implements ID
 
         if (level.isClientSide)
             return;
-//        if (movedContraption != null)
-//            return;
         if (getSpeed() <= 0)
             return;
 
@@ -481,11 +425,7 @@ public class RetractableSailBlockEntity extends KineticBlockEntity implements ID
             return;
 
         disassemble();
-        //We want to disable this, so when we hit a block in our sail, (and we dont have a contraption) We stop instead of keep going
-//        assembleNextTick = true;
     }
-
-    int totalSails = 0;
 
     @Override
     protected void read(CompoundTag compound, boolean clientPacket) {
@@ -515,23 +455,14 @@ public class RetractableSailBlockEntity extends KineticBlockEntity implements ID
         mirrorParent = null;
         mirrorChildren = null;
 
-        if (compound.contains("TotalSails")) {
-            this.totalSails = compound.getInt("TotalSails");
-        }
-
         if (compound.contains("MirrorParent")) {
             mirrorParent = NbtUtils.readBlockPos(compound.getCompound("MirrorParent"));
             offset = 0;
-            if (prevMirrorParent == null || !prevMirrorParent.equals(mirrorParent))
-                sharedMirrorContraption = null;
         }
 
         if (compound.contains("MirrorChildren"))
             mirrorChildren = NBTHelper.readCompoundList(compound.getList("MirrorChildren", Tag.TAG_COMPOUND),
                     NbtUtils::readBlockPos);
-
-        if (mirrorParent == null)
-            sharedMirrorContraption = null;
     }
 
     public void write(CompoundTag compound, boolean clientPacket) {
@@ -549,32 +480,10 @@ public class RetractableSailBlockEntity extends KineticBlockEntity implements ID
             forceMove = false;
         }
 
-        compound.putInt("TotalSails", totalSails);
-
         if (mirrorParent != null)
             compound.put("MirrorParent", NbtUtils.writeBlockPos(mirrorParent));
         if (mirrorChildren != null)
             compound.put("MirrorChildren", NBTHelper.writeCompoundList(mirrorChildren, NbtUtils::writeBlockPos));
-    }
-
-    public void startMirroringOther(BlockPos parent) {
-        if (parent.equals(worldPosition))
-            return;
-        if (!(level.getBlockEntity(parent) instanceof RetractableSailBlockEntity pbe))
-            return;
-        if (pbe.getType() != getType())
-            return;
-        if (pbe.mirrorChildren == null)
-            pbe.mirrorChildren = new ArrayList<>();
-        pbe.mirrorChildren.add(worldPosition);
-        pbe.notifyUpdate();
-
-        mirrorParent = parent;
-        try {
-            assemble();
-        } catch (AssemblyException e) {
-        }
-        notifyUpdate();
     }
 
     public void notifyMirrorsOfDisassembly() {
@@ -584,7 +493,6 @@ public class RetractableSailBlockEntity extends KineticBlockEntity implements ID
             if (!(level.getBlockEntity(blockPos) instanceof RetractableSailBlockEntity pbe))
                 continue;
             pbe.offset = offset;
-            this.totalSails = (int) offset;
             pbe.disassemble();
             pbe.mirrorParent = null;
             pbe.notifyUpdate();
@@ -615,10 +523,6 @@ public class RetractableSailBlockEntity extends KineticBlockEntity implements ID
         return interpolatedOffset;
     }
 
-
-    public BlockPos getMirrorParent() {
-        return mirrorParent;
-    }
 
     // Threshold switch
 

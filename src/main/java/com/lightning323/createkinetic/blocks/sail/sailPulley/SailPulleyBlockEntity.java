@@ -195,9 +195,6 @@ public class SailPulleyBlockEntity extends LinearActuatorBlockEntity implements 
     }
 
 
-    public int getTotalSails() {
-        return totalSails;
-    }
 
 
     @Override
@@ -262,8 +259,6 @@ public class SailPulleyBlockEntity extends LinearActuatorBlockEntity implements 
                     }
                 }
             }
-
-            this.totalSails = (int) actuallyPlacedSails;
             updateSailCount();
 
             if (movedContraption != null && mirrorParent == null)
@@ -324,7 +319,6 @@ public class SailPulleyBlockEntity extends LinearActuatorBlockEntity implements 
 //        assembleNextTick = true;
     }
 
-    int totalSails = 0;
 
     @Override
     protected void read(CompoundTag compound, boolean clientPacket) {
@@ -335,10 +329,6 @@ public class SailPulleyBlockEntity extends LinearActuatorBlockEntity implements 
         BlockPos prevMirrorParent = mirrorParent;
         mirrorParent = null;
         mirrorChildren = null;
-
-        if (compound.contains("TotalSails")) {
-            this.totalSails = compound.getInt("TotalSails");
-        }
 
         if (compound.contains("MirrorParent")) {
             mirrorParent = NbtUtils.readBlockPos(compound.getCompound("MirrorParent"));
@@ -359,8 +349,6 @@ public class SailPulleyBlockEntity extends LinearActuatorBlockEntity implements 
     public void write(CompoundTag compound, boolean clientPacket) {
         compound.putInt("InitialOffset", initialOffset);
         super.write(compound, clientPacket);
-
-        compound.putInt("TotalSails", totalSails);
 
         if (mirrorParent != null)
             compound.put("MirrorParent", NbtUtils.writeBlockPos(mirrorParent));
@@ -395,7 +383,6 @@ public class SailPulleyBlockEntity extends LinearActuatorBlockEntity implements 
             if (!(level.getBlockEntity(blockPos) instanceof SailPulleyBlockEntity pbe))
                 continue;
             pbe.offset = offset;
-            this.totalSails = (int) offset;
             pbe.disassemble();
             pbe.mirrorParent = null;
             pbe.notifyUpdate();
