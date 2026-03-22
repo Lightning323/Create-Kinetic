@@ -7,6 +7,9 @@ import com.lightning323.createkinetic.blocks.sail.SailVisual;
 import com.lightning323.createkinetic.blocks.sail.sailPulley.SailPulleyBlockEntity;
 import com.lightning323.createkinetic.blocks.sail.sailPulley.SailPulleyRenderer;
 import com.lightning323.createkinetic.blocks.sail.sailPulley.SailPulleyVisual;
+import com.simibubi.create.AllBlocks;
+import com.simibubi.create.content.fluids.tank.FluidTankBlockEntity;
+import com.simibubi.create.content.fluids.tank.FluidTankRenderer;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
 import org.valkyrienskies.eureka.blockentity.renderer.ShipHelmBlockEntityRenderer;
 
@@ -49,6 +52,12 @@ public class KineticBlockEntities {
             )
             //TODO: Add visual for ship helm for better performance
             .renderer(() -> ShipHelmBlockEntityRenderer::new)
+            .register();
+
+    public static final BlockEntityEntry<FluidTankBlockEntity> FLUID_TANK = REGISTRATE
+            .blockEntity("fluid_tank", FluidTankBlockEntity::new)
+            .validBlocks(KineticBlocks.FLUID_TANK)
+            .renderer(() -> FluidTankRenderer::new)
             .register();
 
     public static void register() {

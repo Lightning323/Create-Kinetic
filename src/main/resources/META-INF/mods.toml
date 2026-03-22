@@ -61,3 +61,10 @@ mandatory = true
 versionRange = "${minecraft_version_range}"
 ordering = "NONE"
 side = "BOTH"
+[[dependencies."${mod_id}"]]
+modId = "create"
+mandatory = true
+# This pulls from 'create_version_range' or 'create_version' in gradle.properties
+versionRange = "${create_version_range}"
+ordering = "AFTER"
+side = "BOTH"

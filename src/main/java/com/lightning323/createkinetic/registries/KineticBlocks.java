@@ -8,10 +8,11 @@ import com.lightning323.createkinetic.blocks.helm.ShipHelmBlock;
 import com.lightning323.createkinetic.blocks.sail.RetractableSailBlock;
 import com.lightning323.createkinetic.blocks.sail.SailClothBlock;
 import com.lightning323.createkinetic.blocks.sail.sailPulley.SailPulleyBlock;
-import com.simibubi.create.AllBlocks;
-import com.simibubi.create.AllItems;
-import com.simibubi.create.AllTags;
+import com.simibubi.create.*;
+import com.simibubi.create.content.fluids.tank.*;
+import com.simibubi.create.foundation.data.AssetLookup;
 import com.simibubi.create.foundation.data.BlockStateGen;
+import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import net.minecraft.ChatFormatting;
@@ -33,10 +34,31 @@ import net.minecraftforge.client.model.generators.ConfiguredModel;
 import java.util.List;
 
 import static com.lightning323.createkinetic.CreateKinetic.REGISTRATE;
+import static com.simibubi.create.api.behaviour.display.DisplaySource.displaySource;
+import static com.simibubi.create.api.behaviour.movement.MovementBehaviour.movementBehaviour;
+import static com.simibubi.create.api.contraption.storage.fluid.MountedFluidStorageType.mountedFluidStorage;
 import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
 import static com.simibubi.create.foundation.data.TagGen.axeOrPickaxe;
+import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 
 public class KineticBlocks {
+
+    public static final BlockEntry<FluidTankBlock> FLUID_TANK = REGISTRATE.block("fluid_tank", FluidTankBlock::regular)
+            .initialProperties(SharedProperties::copperMetal)
+            .properties(p -> p.noOcclusion()
+                    .isRedstoneConductor((p1, p2, p3) -> true))
+            .transform(pickaxeOnly())
+            .blockstate(new FluidTankGenerator()::generate)
+            .onRegister(CreateRegistrate.blockModel(() -> FluidTankModel::standard))
+            .transform(displaySource(AllDisplaySources.BOILER))
+            .transform(mountedFluidStorage(AllMountedStorageTypes.FLUID_TANK))
+            .onRegister(movementBehaviour(new FluidTankMovementBehavior()))
+            .addLayer(() -> RenderType::cutoutMipped)
+            .item(FluidTankItem::new)
+            .model(AssetLookup.customBlockItemModel("_", "block_single_window"))
+            .build()
+            .register();
+
     public static BlockEntry<ShipHelmBlock> registerShipHelm(String name, WoodType woodType) {
         return REGISTRATE
                 .block(name, p -> new ShipHelmBlock(p, woodType)) // Manual constructor call
