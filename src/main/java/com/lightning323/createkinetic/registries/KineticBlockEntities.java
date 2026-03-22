@@ -1,5 +1,6 @@
 package com.lightning323.createkinetic.registries;
 
+import com.lightning323.createkinetic.blocks.ballastTank.BallastTankBlockEntity;
 import com.lightning323.createkinetic.blocks.helm.ShipHelmBlockEntity;
 import com.lightning323.createkinetic.blocks.sail.RetractableSailBlockEntity;
 import com.lightning323.createkinetic.blocks.sail.SailRenderer;
@@ -54,11 +55,11 @@ public class KineticBlockEntities {
             .renderer(() -> ShipHelmBlockEntityRenderer::new)
             .register();
 
-    public static final BlockEntityEntry<FluidTankBlockEntity> FLUID_TANK = REGISTRATE
-            .blockEntity("fluid_tank", FluidTankBlockEntity::new)
-            .validBlocks(KineticBlocks.FLUID_TANK)
-            .renderer(() -> FluidTankRenderer::new)
-            .register();
+//    public static final BlockEntityEntry<BallastTankBlockEntity> FLUID_TANK = REGISTRATE
+//            .blockEntity("fluid_tank", BallastTankBlockEntity::new)
+//            .validBlocks(KineticBlocks.FLUID_TANK)
+//            .renderer(() -> FluidTankRenderer::new)
+//            .register();
 
     public static void register() {
         // This just "wakes up" the class to ensure static fields are loaded

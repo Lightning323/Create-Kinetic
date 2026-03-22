@@ -1,9 +1,7 @@
 package com.lightning323.createkinetic.registries;
 
-import com.lightning323.createkinetic.blocks.AnchorBlock;
-import com.lightning323.createkinetic.blocks.BallastBlock;
-import com.lightning323.createkinetic.blocks.BuoyBlock;
-import com.lightning323.createkinetic.blocks.EnchantedBallastBlock;
+import com.lightning323.createkinetic.blocks.*;
+import com.lightning323.createkinetic.blocks.ballastTank.BallastTankBlock;
 import com.lightning323.createkinetic.blocks.helm.ShipHelmBlock;
 import com.lightning323.createkinetic.blocks.sail.RetractableSailBlock;
 import com.lightning323.createkinetic.blocks.sail.SailClothBlock;
@@ -43,7 +41,8 @@ import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 
 public class KineticBlocks {
 
-    public static final BlockEntry<FluidTankBlock> FLUID_TANK = REGISTRATE.block("fluid_tank", FluidTankBlock::regular)
+    public static final BlockEntry<BallastTankBlock> FLUID_TANK =
+            REGISTRATE.block("fluid_tank", BallastTankBlock::kRegular)
             .initialProperties(SharedProperties::copperMetal)
             .properties(p -> p.noOcclusion()
                     .isRedstoneConductor((p1, p2, p3) -> true))
@@ -71,17 +70,6 @@ public class KineticBlocks {
                 //Complete helm model for the item
                 .model((c, p) -> p.withExistingParent(c.getName(), p.modLoc("block/helm/" + name)))
                 .build()
-//                .recipe((ctx, prov) -> {
-//                    ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, ctx.getEntry())
-//                            .pattern(" F ")
-//                            .pattern("FIF")
-//                            .pattern("PBP")
-//                            .define('F', Items.OAK_FENCE)
-//                            .define('I', KineticItems.STEERING_MECHANISM.get())
-//                            .define('B', AllBlocks.BRASS_CASING)
-//                            .unlockedBy("has_chain", prov.has(Items.CHAIN))
-//                            .save(prov);
-//                })
                 .register();
     }
 
