@@ -1,5 +1,6 @@
 package com.lightning323.createkinetic.registries;
 
+import com.lightning323.createkinetic.blocks.ballastTank.BallastTankBlockEntity;
 import com.lightning323.createkinetic.blocks.helm.ShipHelmBlockEntity;
 import com.lightning323.createkinetic.blocks.sail.RetractableSailBlockEntity;
 import com.lightning323.createkinetic.blocks.sail.SailRenderer;
@@ -7,6 +8,9 @@ import com.lightning323.createkinetic.blocks.sail.SailVisual;
 import com.lightning323.createkinetic.blocks.sail.sailPulley.SailPulleyBlockEntity;
 import com.lightning323.createkinetic.blocks.sail.sailPulley.SailPulleyRenderer;
 import com.lightning323.createkinetic.blocks.sail.sailPulley.SailPulleyVisual;
+import com.simibubi.create.AllBlocks;
+import com.simibubi.create.content.fluids.tank.FluidTankBlockEntity;
+import com.simibubi.create.content.fluids.tank.FluidTankRenderer;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
 import org.valkyrienskies.eureka.blockentity.renderer.ShipHelmBlockEntityRenderer;
 
@@ -51,11 +55,11 @@ public class KineticBlockEntities {
             .renderer(() -> ShipHelmBlockEntityRenderer::new)
             .register();
 
-//    public static final BlockEntityEntry<BallastTankBlockEntity> FLUID_TANK = REGISTRATE
-//            .blockEntity("fluid_tank", BallastTankBlockEntity::new)
-//            .validBlocks(KineticBlocks.FLUID_TANK)
+    public static final BlockEntityEntry<BallastTankBlockEntity> FLUID_TANK = REGISTRATE
+            .blockEntity("fluid_tank", BallastTankBlockEntity::new)
+            .validBlocks(KineticBlocks.FLUID_TANK)
 //            .renderer(() -> FluidTankRenderer::new)
-//            .register();
+            .register();
 
     public static void register() {
         // This just "wakes up" the class to ensure static fields are loaded
