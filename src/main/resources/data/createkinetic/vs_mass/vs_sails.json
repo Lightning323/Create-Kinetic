@@ -245,82 +245,82 @@
   },
   {
     "block": "createkinetic:ballast_block",
-    "mass": 15000.0
+    "mass": 10000.0
   },
   {
     "block": "createkinetic:enchanted_ballast",
-    "mass": 15000.0
+    "mass": 10000.0
   },
   {
     "block": "createkinetic:buoy_block",
-    "mass": 0.1
+    "mass": 0.001
   },
   {
     "block": "createkinetic:white_buoy",
-    "mass": 0.1
+    "mass": 0.001
   },
   {
     "block": "createkinetic:light_gray_buoy",
-    "mass": 0.1
+    "mass": 0.001
   },
   {
     "block": "createkinetic:gray_buoy",
-    "mass": 0.1
+    "mass": 0.001
   },
   {
     "block": "createkinetic:black_buoy",
-    "mass": 0.1
+    "mass": 0.001
   },
   {
     "block": "createkinetic:brown_buoy",
-    "mass": 0.1
+    "mass": 0.001
   },
   {
     "block": "createkinetic:red_buoy",
-    "mass": 0.1
+    "mass": 0.001
   },
   {
     "block": "createkinetic:orange_buoy",
-    "mass": 0.1
+    "mass": 0.001
   },
   {
     "block": "createkinetic:yellow_buoy",
-    "mass": 0.1
+    "mass": 0.001
   },
   {
     "block": "createkinetic:lime_buoy",
-    "mass": 0.1
+    "mass": 0.001
   },
   {
     "block": "createkinetic:green_buoy",
-    "mass": 0.1
+    "mass": 0.001
   },
   {
     "block": "createkinetic:cyan_buoy",
-    "mass": 0.1
+    "mass": 0.001
   },
   {
     "block": "createkinetic:light_blue_buoy",
-    "mass": 0.1
+    "mass": 0.001
   },
   {
     "block": "createkinetic:blue_buoy",
-    "mass": 0.1
+    "mass": 0.001
   },
   {
     "block": "createkinetic:purple_buoy",
-    "mass": 0.1
+    "mass": 0.001
   },
   {
     "block": "createkinetic:magenta_buoy",
-    "mass": 0.1
+    "mass": 0.001
   },
   {
     "block": "createkinetic:pink_buoy",
-    "mass": 0.1
+    "mass": 0.001
   },
   {
     "block": "createkinetic:rope_block",
-    "mass": 0.1
+    "mass": 0.001
   }
 ]

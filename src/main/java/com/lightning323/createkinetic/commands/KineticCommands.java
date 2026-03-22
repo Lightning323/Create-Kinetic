@@ -129,10 +129,18 @@ public class KineticCommands {
                 .then(Commands.literal("deletemassless").requires(source -> source.hasPermission(2)).executes(context -> {
                     VSUtils.deleteMasslessShips(context);
                     return Command.SINGLE_SUCCESS;
-                })).then(Commands.literal("total").requires(source -> source.hasPermission(2)).executes(context -> {
-                    VSUtils.countTotalShips(context);
+                })).then(Commands.literal("total")
+                        .requires(source -> source.hasPermission(2))
+                        .executes(context -> {
+                    VSUtils.listTotalShips(context,false);
                     return Command.SINGLE_SUCCESS;
-                })));
+                }))
+                .then(Commands.literal("list")
+                        .requires(source -> source.hasPermission(2))
+                        .executes(context -> {
+                            VSUtils.listTotalShips(context,true);
+                            return Command.SINGLE_SUCCESS;
+                        })));
 
         /**
          * NON-OPERATOR COMMANDS

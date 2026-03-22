@@ -3,10 +3,13 @@ package com.lightning323.createkinetic.utils;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.SharedSuggestionProvider;
+import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.HoverEvent;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
@@ -15,6 +18,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Vector3d;
+import org.joml.Vector3dc;
 import org.valkyrienskies.core.api.ships.LoadedServerShip;
 import org.valkyrienskies.core.api.ships.ServerShip;
 import org.valkyrienskies.core.api.ships.Ship;
@@ -141,9 +145,10 @@ public class VSUtils {
         return 0;
     }
 
-    public static void countTotalShips(CommandContext<CommandSourceStack> cc) {
+    public static void listTotalShips(CommandContext<CommandSourceStack> cc, boolean count) {
         VsiServerShipWorld shipObjectWorld = VSGameUtilsKt.getShipObjectWorld(cc.getSource().getServer());
         cc.getSource().sendSystemMessage(Component.literal("There are " + shipObjectWorld.getAllShips().size() + " total ships in the world."));
+
 
         /**
          * Player information
@@ -165,24 +170,63 @@ public class VSUtils {
 
 
         for (ServerShip ship : shipObjectWorld.getAllShips()) {
-            System.out.println("Ship " + ship.getSlug() + " is in dimension " + ship.getChunkClaimDimension());
-            if (ship.getInertiaData().getMass() < DELETE_MASSLESS_THRESHOLD) {
-                masslessShips.incrementAndGet();
-            }
-//            ship.setChunkClaimDimension(playerDimension);
-            if (ship.getChunkClaimDimension().endsWith(playerDimension)) {//Ship chunk claim dimension looks like this  minecraft:dimension:minecraft:overworld
-                shipsInThisDimension.incrementAndGet();
-                if (Math.abs(ship.getChunkClaim().getXMiddle() - playerChunkX) < PROXIMITY_RADIUS
-                        && Math.abs(ship.getChunkClaim().getZMiddle() - playerChunkZ) < PROXIMITY_RADIUS) {
-                    shipsWithinProximity.incrementAndGet(); //shipsWithinProximity
+            double mass = 0;
+
+            if (ship != null) {
+//                System.out.println("Ship " + ship.getSlug() + " is in dimension " + ship.getChunkClaimDimension());
+                mass = ship.getInertiaData().getMass();
+                if (mass < DELETE_MASSLESS_THRESHOLD) {
+                    masslessShips.incrementAndGet();
                 }
+                if (ship.getChunkClaimDimension().endsWith(playerDimension)) {//Ship chunk claim dimension looks like this  minecraft:dimension:minecraft:overworld
+                    shipsInThisDimension.incrementAndGet();
+                    if (Math.abs(ship.getChunkClaim().getXMiddle() - playerChunkX) < PROXIMITY_RADIUS
+                            && Math.abs(ship.getChunkClaim().getZMiddle() - playerChunkZ) < PROXIMITY_RADIUS) {
+                        shipsWithinProximity.incrementAndGet(); //shipsWithinProximity
+                    }
+                }
+            }
+
+            if (count) {
+                if (ship == null) {
+                    cc.getSource().sendSystemMessage(Component.literal("Null ship found."));
+                    continue;
+                }
+                String slug = ship.getSlug();
+                Vector3dc positionInWorld = ship.getTransform().getPositionInWorld();
+                // Create the full string first for the clipboard
+                String clipboardContent = String.format("%s\t Dim=%s\t X=%.2f\t Y=%.2f\t Z=%.2f\t Mass=%.2f",
+                        slug, ship.getChunkClaimDimension(), positionInWorld.x(), positionInWorld.y(), positionInWorld.z(), mass);
+
+                cc.getSource().sendSystemMessage(
+                        Component.literal(slug)
+                                .withStyle(ChatFormatting.WHITE)
+                                // Add the click event to the base component or a wrapper
+                                .withStyle(style -> style
+                                        .withClickEvent(new ClickEvent(ClickEvent.Action.COPY_TO_CLIPBOARD, clipboardContent))
+                                        .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.literal("Click to copy"))))
+                                .append(Component.literal(" Dim=")
+                                        .append(Component.literal(ship.getChunkClaimDimension())
+                                                .withStyle(ChatFormatting.BLUE)))
+                                .append(Component.literal(" X=")
+                                        .append(Component.literal(String.format("%.2f", positionInWorld.x()))
+                                                .withStyle(ChatFormatting.GREEN)))
+                                .append(Component.literal(" Y=")
+                                        .append(Component.literal(String.format("%.2f", positionInWorld.y()))
+                                                .withStyle(ChatFormatting.AQUA)))
+                                .append(Component.literal(" Z=")
+                                        .append(Component.literal(String.format("%.2f", positionInWorld.z()))
+                                                .withStyle(ChatFormatting.RED)))
+                                .append(Component.literal(" Mass=")
+                                        .append(Component.literal(String.format("%.2f", mass))
+                                                .withStyle(ChatFormatting.YELLOW)))
+                );
             }
         }
         cc.getSource().sendSystemMessage(Component.literal("(" + masslessShips.get() + " massless ships)"));
         cc.getSource().sendSystemMessage(Component.literal("(" + shipsInThisDimension.get() + " ships in this dimension)"));
 //        cc.getSource().sendSystemMessage(Component.literal("(" + shipsWithinProximity.get() + " ships within " + PROXIMITY_RADIUS + " chunk proximity)"));
     }
-
 
 
 }
