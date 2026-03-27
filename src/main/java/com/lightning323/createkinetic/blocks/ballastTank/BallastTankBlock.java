@@ -57,7 +57,7 @@ public class BallastTankBlock extends Block implements IWrenchable, IBE<BallastT
     public static boolean isTank(BlockState state) {
         return state.getBlock() instanceof BallastTankBlock;
     }
-    
+
     public static final BooleanProperty TOP = BooleanProperty.create("top");
     public static final BooleanProperty BOTTOM = BooleanProperty.create("bottom");
     public static final EnumProperty<FluidTankBlock.Shape> SHAPE = EnumProperty.create("shape", FluidTankBlock.Shape.class);
@@ -211,9 +211,10 @@ public class BallastTankBlock extends Block implements IWrenchable, IBE<BallastT
 
                     controllerBE.sendDataImmediately();
                     controllerBE.setChanged();
+                    if (!onClient) controllerBE.updateWeight();
                 }
             }
-            System.out.println("FLUID AMOUNT: "+fluidInTank.getAmount());
+//            System.out.println("FLUID AMOUNT: "+fluidInTank.getAmount());
         }
 
         return InteractionResult.SUCCESS;
@@ -282,7 +283,6 @@ public class BallastTankBlock extends Block implements IWrenchable, IBE<BallastT
     }
 
 
-
     // Tanks are less noisy when placed in batch
     public static final SoundType SILENCED_METAL =
             new ForgeSoundType(0.1F, 1.5F, () -> SoundEvents.METAL_BREAK, () -> SoundEvents.METAL_STEP,
@@ -317,7 +317,7 @@ public class BallastTankBlock extends Block implements IWrenchable, IBE<BallastT
         if (tankBE == null)
             return;
     }
-    
+
 
     //Override creates factory method for a regular (non-creative) tank
     public static BallastTankBlock kRegular(Properties p_i48440_1_) {

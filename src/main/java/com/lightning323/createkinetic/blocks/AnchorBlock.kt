@@ -79,7 +79,7 @@ class AnchorBlock(properties: BlockBehaviour.Properties) : HorizontalDirectional
 
         val bl = state.getValue(BlockStateProperties.POWERED)
 
-        val controller = ShipUtils.getOrCreateShipController(level, pos);
+        val controller = ShipUtils.getOrAddShipController(level, pos);
         if(controller!=null) {
             controller.anchors += 1
             controller.anchorsActive += if (bl) 1 else 0
@@ -94,7 +94,7 @@ class AnchorBlock(properties: BlockBehaviour.Properties) : HorizontalDirectional
         level as ServerLevel
         val bl = state.getValue(BlockStateProperties.POWERED)
 
-        val controller = ShipUtils.getOrCreateShipController(level, pos);
+        val controller = ShipUtils.getShipController(level, pos);
         if(controller!=null) {
             controller.anchors -= 1
             controller.anchorsActive -= if (bl) 1 else 0

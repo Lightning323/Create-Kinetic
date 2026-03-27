@@ -259,7 +259,7 @@ public class SailPulleyBlockEntity extends LinearActuatorBlockEntity implements 
                     }
                 }
             }
-            updateSailCount();
+//            updateSailCount();
 
             if (movedContraption != null && mirrorParent == null)
                 movedContraption.disassemble();
@@ -275,13 +275,13 @@ public class SailPulleyBlockEntity extends LinearActuatorBlockEntity implements 
         sendData();
     }
 
-    private void updateSailCount() {
-        if (getLevel().isClientSide) return;
-        KineticShipControl shipController = ShipUtils.getOrCreateShipController(getLevel(), getBlockPos());
-        if (shipController != null) {
-            shipController.updateSailCount((ServerLevel) level);
-        }
-    }
+//    private void updateSailCount() {
+//        if (getLevel().isClientSide) return;
+//        KineticShipControl shipController = ShipUtils.getOrAddShipController(getLevel(), getBlockPos());
+//        if (shipController != null) {
+//            shipController.updateSailCount((ServerLevel) level);
+//        }
+//    }
 
     protected boolean shouldCreateRopes() {
         return !remove;

@@ -55,7 +55,7 @@ public class KineticBlockEntities {
             .register();
 
     public static final BlockEntityEntry<BallastTankBlockEntity> FLUID_TANK = REGISTRATE
-            .blockEntity("fluid_tank", BallastTankBlockEntity::new)
+            .blockEntity("ballast_tank", BallastTankBlockEntity::new)
             .validBlocks(KineticBlocks.FLUID_TANK)
             .renderer(() -> BallastTankRenderer::new)
             .register();

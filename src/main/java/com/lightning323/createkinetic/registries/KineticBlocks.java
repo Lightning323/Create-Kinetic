@@ -42,7 +42,7 @@ import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 public class KineticBlocks {
 
     public static final BlockEntry<BallastTankBlock> FLUID_TANK =
-            REGISTRATE.block("fluid_tank", BallastTankBlock::kRegular)
+            REGISTRATE.block("ballast_tank", BallastTankBlock::kRegular)
             .initialProperties(SharedProperties::copperMetal)
             .properties(p -> p.noOcclusion()
                     .isRedstoneConductor((p1, p2, p3) -> true))

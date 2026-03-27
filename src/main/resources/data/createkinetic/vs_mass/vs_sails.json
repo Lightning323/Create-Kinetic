@@ -4,10 +4,6 @@
     "mass": 480
   },
   {
-    "block": "createkinetic:helm_wheel",
-    "mass": 240
-  },
-  {
     "block": "createkinetic:redstone_helm_block",
     "mass": 480
   },
@@ -250,6 +246,10 @@
   {
     "block": "createkinetic:enchanted_ballast",
     "mass": 10000.0
+  },
+  {
+    "block": "createkinetic:ballast_tank",
+    "mass": 10
   },
   {
     "block": "createkinetic:buoy_block",

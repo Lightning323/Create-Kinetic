@@ -1,6 +1,5 @@
 package com.lightning323.createkinetic;
 
-import kotlin.reflect.jvm.internal.impl.resolve.constants.DoubleValue;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -25,6 +24,9 @@ public class KineticConfig {
     private static final ForgeConfigSpec.DoubleValue BUOY_STRENGTH
             = BUILDER.comment("Buoy Float Strength").defineInRange("buoy_strength", 0.125, 0.0, Double.MAX_VALUE);
 
+    private static final ForgeConfigSpec.DoubleValue TANK_BALLAST_WEIGHT
+            = BUILDER.comment("Tank Ballast Weight").defineInRange("tank_ballast_weight", 0.2, 0.0, Double.MAX_VALUE);
+
     private static final ForgeConfigSpec.DoubleValue NO_SAIL_ZONE
             = BUILDER.comment("No sail zone (in degrees)")
             .defineInRange("no_sail_zone", 45.0, 0.0, 360.0);
@@ -34,7 +36,6 @@ public class KineticConfig {
 
     private static final ForgeConfigSpec.DoubleValue MIN_WIND_SPEED
             = BUILDER.defineInRange("min_wind", 0.5, 0, 1);
-
 
     private static final ForgeConfigSpec.DoubleValue TURN_ACCELERATION
             = BUILDER.comment("The maximum linear acceleration at any point on the ship caused by helm torque")
@@ -60,8 +61,8 @@ public class KineticConfig {
     public static boolean forgivingSails;
     public static double keelStrength;
     public static double enchantedBallastForce;
-    public static double ballastStrength;
-    public static double buoyStrength;
+    public static double ballastFloatStrength;
+    public static double buoyFloatStrength;
     public static double noSailZone;
     public static double sailSpeed;
     public static double minWindSpeed;
@@ -70,15 +71,17 @@ public class KineticConfig {
     public static double maxSizeForTurnSpeedPenalty;
     public static double turnSpeed;
     public static boolean windParticles;
+    public static double tankBallastWeight;
 
     @SubscribeEvent
     static void onLoad(final ModConfigEvent event) {
         forgivingSails = FORGIVING_SAILS.get();
         keelStrength = KEEL_STRENGTH.get();
         enchantedBallastForce = ENCHANTED_BALLAST_FORCE.get();
-        ballastStrength = BALLAST_STRENGTH.get();
-        buoyStrength = BUOY_STRENGTH.get();
+        ballastFloatStrength = BALLAST_STRENGTH.get();
+        buoyFloatStrength = BUOY_STRENGTH.get();
         noSailZone = NO_SAIL_ZONE.get();
+        tankBallastWeight = TANK_BALLAST_WEIGHT.get();
         sailSpeed = SAIL_SPEED.get();
         minWindSpeed = MIN_WIND_SPEED.get();
         turnAcceleration = TURN_ACCELERATION.get();

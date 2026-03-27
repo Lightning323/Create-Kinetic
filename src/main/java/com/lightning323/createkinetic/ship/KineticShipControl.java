@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.lightning323.createkinetic.CreateKinetic;
 import com.lightning323.createkinetic.KineticConfig;
+import com.lightning323.createkinetic.blocks.ballastTank.BallastTankBlockEntity;
 import com.lightning323.createkinetic.blocks.sail.SailClothBlock;
 import it.unimi.dsi.fastutil.longs.LongIterator;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
@@ -17,7 +18,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import org.jetbrains.annotations.NotNull;
 import org.joml.*;
 import org.slf4j.Logger;
@@ -71,13 +72,64 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
     public boolean frozen = false;
     public int anchors = 0;
     public int anchorsActive = 0;
-    public int numBallast = 0;
-    public int numEnchantedBallast = 0;
-    public int numBuoys = 0;
+
+
     public int helms = 0;
     public volatile double waterAmount = 0.0;
     public int boundx = 1;
     public int boundz = 1;
+
+    /**
+     * BALLAST / BUOY WEIGHT
+     */
+    //Each tank ballast can be at a different location or can change locations, we use a set to store all the locations
+    //If a ballast is moved, they find their old location and Assign it to the new location
+    @JsonIgnore
+    private LongSet tankBallastLocations = new LongOpenHashSet();
+
+    @JsonProperty("tankBallastLocations") //The Getter (Serialization)
+    public long[] getTankBallastLocations() {
+        return tankBallastLocations.toLongArray();
+    }
+
+    @JsonProperty("tankBallastLocations") //The Setter/Constructor (Deserialization)
+    public void setTankBallastLocations(long[] data) {
+        this.tankBallastLocations.clear();
+        if (data != null) {
+            for (long p : data) this.tankBallastLocations.add(p);
+        }
+    }
+
+    public void addTankBallastLocation(BlockPos pos) {
+        tankBallastLocations.add(pos.asLong());
+    }
+
+    public void removeTankBallastLocation(BlockPos pos) {
+        tankBallastLocations.remove(pos.asLong());
+    }
+
+    public void reassignTankBallastLocation(BlockPos lastKnownPos, BlockPos newLoc) {
+        if (tankBallastLocations.remove(lastKnownPos.asLong())) {
+            tankBallastLocations.add(newLoc.asLong());
+        }
+    }
+
+    public int numBallast = 0;
+    public int numEnchantedBallast = 0;
+    public int numBuoys = 0;
+    float tankBallastWeight = 0;
+
+    public void updateBallastWeights() {
+        tankBallastWeight = 0;
+        for (long location : tankBallastLocations) {
+            BlockPos pos = BlockPos.of(location);
+            BlockEntity blockEntity = world.getBlockEntity(pos);
+            if (blockEntity instanceof BallastTankBlockEntity tbe) {
+                tankBallastWeight += tbe.getWeight();
+            }
+        }
+        LOGGER.debug("Tank ballast weight: {}", tankBallastWeight);
+    }
 
     /**
      * SAIL COUNT
@@ -90,7 +142,7 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
     @JsonIgnore
     public LongSet sailsZ = new LongOpenHashSet();
 
-    // 2. The Getter (Serialization)
+    //The Getter (Serialization)
     @JsonProperty("sailsX")
     public long[] getJsonSailPulleysX() {
         return sailsX.toLongArray();
@@ -101,7 +153,7 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
         return sailsZ.toLongArray();
     }
 
-    // 3. The Setter/Constructor (Deserialization)
+    //The Setter/Constructor (Deserialization)
     @JsonProperty("sailsX")
     public void setJsonSailPulleysX(long[] data) {
         this.sailsX.clear();
@@ -124,8 +176,6 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
 
 
     public void updateSailCount(ServerLevel world) {
-        setWorld(world);
-
         //North = -Z (Direction.AxisDirection.NEGATIVE, Direction.Axis.Z)
         //South = +Z (Direction.AxisDirection.POSITIVE, Direction.Axis.Z)
         //East = +X  (Direction.AxisDirection.POSITIVE, Direction.Axis.X)
@@ -188,10 +238,6 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
     //TODO: There isnt a good way of getting the world (We can't just get it upon initialization) so perhaps it should be removed
     @JsonIgnore
     public ServerLevel world = null;
-
-    private void setWorld(ServerLevel world) {
-        if (this.world == null) this.world = world;
-    }
 
     @JsonIgnore
     public Player seatedPlayer = null;
@@ -364,7 +410,7 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
 
             double angleBetween = shipUp.angle(worldUp);
 
-            if (angleBetween > 0.001) {
+            if (angleBetween > 0.002) {//Right the ship
                 Vector3d rotationAxis = new Vector3d();
                 shipUp.cross(worldUp, rotationAxis);
                 rotationAxis.normalize();
@@ -394,8 +440,12 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
             }
         }
 
-        if (numBallast > 0 || numBuoys > 0) {
-            physShip1.setBuoyantFactor(1.0 + numBuoys * KineticConfig.buoyStrength + numBallast * KineticConfig.ballastStrength);
+        if (numBallast > 0 || numBuoys > 0 || tankBallastWeight > 0) {
+            physShip1.setBuoyantFactor(0.0//1.0
+                    + (numBuoys * KineticConfig.buoyFloatStrength)
+                    + (numBallast * KineticConfig.ballastFloatStrength)
+                    - (tankBallastWeight * KineticConfig.tankBallastWeight) //Negative boyancy results in increased mass
+            );
         }
 
         //sail force implementation

@@ -64,7 +64,7 @@ class ShipHelmBlock(properties: Properties, val woodType: WoodType) : BaseEntity
         level as ServerLevel
 
         val ship = level.getLoadedShipManagingPos(pos) ?: level.getShipManagingPos(pos) ?: return
-        val it = ShipUtils.getOrCreateShipController(level, pos);
+        val it = ShipUtils.getOrAddShipController(level, pos);
         if (it != null) {
             //When we set the helm, set the preferred direction to the direction the helm is facing
             val direction = state.getValue(HORIZONTAL_FACING);
@@ -85,7 +85,7 @@ class ShipHelmBlock(properties: Properties, val woodType: WoodType) : BaseEntity
 
         val ship = level.getLoadedShipManagingPos(pos) ?: level.getShipManagingPos(pos) ?: return
 
-        val it = ShipUtils.getOrCreateShipController(level, pos);
+        val it = ShipUtils.getShipController(level, pos);
         if (it != null) {
             if (it.helms <= 1 && it.seatedPlayer?.vehicle?.type == ValkyrienSkiesMod.SHIP_MOUNTING_ENTITY_TYPE) {
                 it.seatedPlayer!!.unRide()

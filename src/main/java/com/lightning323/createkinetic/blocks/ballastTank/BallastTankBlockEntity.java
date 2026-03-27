@@ -1,5 +1,8 @@
 package com.lightning323.createkinetic.blocks.ballastTank;
 
+import com.lightning323.createkinetic.CreateKinetic;
+import com.lightning323.createkinetic.ship.KineticShipControl;
+import com.lightning323.createkinetic.ship.ShipUtils;
 import com.simibubi.create.api.connectivity.ConnectivityHandler;
 import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.content.fluids.tank.FluidTankBlock;
@@ -15,6 +18,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -69,6 +73,60 @@ public class BallastTankBlockEntity extends SmartBlockEntity implements IHaveGog
         height = 1;
         width = 1;
         refreshCapability();
+    }
+
+    private long lastControllerUpdate;
+
+    @Override
+    public void onLoad() {
+        super.onLoad();
+        if (level.isClientSide()) return;
+        KineticShipControl controller = ShipUtils.getOrAddShipController((ServerLevel) level, getBlockPos());
+        if (controller != null) controller.addTankBallastLocation(getBlockPos());
+        updateWeight();
+    }
+
+    @Override
+    public void remove() {
+        super.remove();
+        if (level.isClientSide()) return;
+        KineticShipControl controller = ShipUtils.getShipController((ServerLevel) level, getBlockPos());
+        if (controller != null) controller.removeTankBallastLocation(getBlockPos());
+        updateWeight();
+    }
+
+    private void onPositionChanged() {
+        removeController(true);
+
+        if (!level.isClientSide()) {//Update our block entity location on the ship controller
+            KineticShipControl controller = ShipUtils.getOrAddShipController((ServerLevel) level, getBlockPos());
+            if (controller != null) controller.reassignTankBallastLocation(lastKnownPos, worldPosition);
+        }
+
+        lastKnownPos = worldPosition;
+    }
+
+    /**
+     * Return our weight (1 = 1 full tank)
+     */
+    public float getWeight() {
+        //This is how we get what is in the tank
+        //                FluidStack fluid = tankInventory.getFluid();
+        //From millibuckets to full ballasts
+        return (float) tankInventory.getFluidAmount() / 1000;
+    }
+
+    protected void updateWeight() {
+        //Only send controller updates every 20 ticks
+        if (level.getGameTime() - lastControllerUpdate > 20) {
+            CreateKinetic.LOGGER.debug("Fluid changed {} {}", getBlockPos(), getWeight());
+            lastControllerUpdate = level.getGameTime();
+            KineticShipControl control = ShipUtils.getOrAddShipController((ServerLevel) level, getBlockPos());
+            //Update the controller
+            if (control != null) {
+                control.updateBallastWeights();
+            }
+        }
     }
 
     protected SmartFluidTank createInventory() {
@@ -129,10 +187,6 @@ public class BallastTankBlockEntity extends SmartBlockEntity implements IHaveGog
             invalidateRenderBoundingBox();
     }
 
-    private void onPositionChanged() {
-        removeController(true);
-        lastKnownPos = worldPosition;
-    }
 
     protected void onFluidStackChanged(FluidStack newFluidStack) {
         if (!hasLevel())
@@ -166,6 +220,7 @@ public class BallastTankBlockEntity extends SmartBlockEntity implements IHaveGog
         if (!level.isClientSide) {
             setChanged();
             sendData();
+            updateWeight();
         }
 
         if (isVirtual()) {
@@ -175,6 +230,7 @@ public class BallastTankBlockEntity extends SmartBlockEntity implements IHaveGog
             fluidLevel.chase(getFillState(), .5f, LerpedFloat.Chaser.EXP);
         }
     }
+
 
     protected void setLuminosity(int luminosity) {
         if (level.isClientSide)
@@ -594,4 +650,5 @@ public class BallastTankBlockEntity extends SmartBlockEntity implements IHaveGog
         return tankInventory.getFluid()
                 .copy();
     }
+
 }

@@ -391,7 +391,7 @@ public class RetractableSailBlockEntity extends KineticBlockEntity implements ID
                 }
             }
             notifyMirrorsOfDisassembly();
-            updateSailCount();
+//            updateSailCount();
         }
         initialOffset = 0;
         running = false;
@@ -402,13 +402,13 @@ public class RetractableSailBlockEntity extends KineticBlockEntity implements ID
         return !remove;
     }
 
-    private void updateSailCount() {
-        if (getLevel().isClientSide) return;
-        KineticShipControl shipController = ShipUtils.getOrCreateShipController(getLevel(), getBlockPos());
-        if (shipController != null) {
-            shipController.updateSailCount((ServerLevel) level);
-        }
-    }
+//    private void updateSailCount() {
+//        if (getLevel().isClientSide) return;
+//        KineticShipControl shipController = ShipUtils.getOrAddShipController((ServerLevel) getLevel(), getBlockPos());
+//        if (shipController != null) {
+//            shipController.updateSailCount((ServerLevel) level);
+//        }
+//    }
 
     protected void visitNewPosition() {
 
