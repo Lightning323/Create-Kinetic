@@ -8,6 +8,7 @@ public class KineticEnglishTranslationProvider {
     public static void addTranslations(RegistrateLangProvider provider) {
         provider.add("info." + MOD_ID + ".needs_ship", "You need a ship to use this helm");
         provider.add("itemGroup." + MOD_ID + ".tab", "Create Kinetic");
+        provider.add("tooltip.createkinetic.ballast_tank", "Fill with fluid to increase weight, Can be used in submarines to change elevation");
         provider.add("tooltip.createkinetic.shiptotem", "A totem, useful for recovering lost or runaway ships");
         provider.add("tooltip.createkinetic.enchantedballast", "Keeps your ship upright");
         provider.add("tooltip.createkinetic.anchor", "Use redstone power to anchor (freeze) your ship");

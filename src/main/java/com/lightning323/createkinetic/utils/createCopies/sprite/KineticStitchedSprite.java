@@ -1,4 +1,4 @@
-package com.lightning323.createkinetic.sprite;
+package com.lightning323.createkinetic.utils.createCopies.sprite;
 
 import com.lightning323.createkinetic.CreateKinetic;
 import net.createmod.catnip.render.StitchedSprite;

@@ -1,4 +1,4 @@
-package com.lightning323.createkinetic.sprite;
+package com.lightning323.createkinetic.utils.createCopies.sprite;
 
 
 import java.util.HashMap;
@@ -6,7 +6,6 @@ import java.util.Map;
 
 import net.createmod.catnip.platform.CatnipServices;
 import net.createmod.catnip.render.SpriteShiftEntry;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.resources.ResourceLocation;
 
 //From create SpriteShifter

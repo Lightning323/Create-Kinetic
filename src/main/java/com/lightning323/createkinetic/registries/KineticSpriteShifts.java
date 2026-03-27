@@ -1,7 +1,6 @@
 package com.lightning323.createkinetic.registries;
 
-import com.lightning323.createkinetic.CreateKinetic;
-import com.lightning323.createkinetic.sprite.KineticSpriteShifter;
+import com.lightning323.createkinetic.utils.createCopies.sprite.KineticSpriteShifter;
 import com.simibubi.create.Create;
 import net.createmod.catnip.render.SpriteShiftEntry;
 

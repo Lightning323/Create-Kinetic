@@ -2,6 +2,9 @@ package com.lightning323.createkinetic.registries;
 
 import com.lightning323.createkinetic.blocks.ballastTank.BallastTankBlockEntity;
 import com.lightning323.createkinetic.blocks.ballastTank.BallastTankRenderer;
+import com.lightning323.createkinetic.blocks.crank.KCrankBlockEntity;
+import com.lightning323.createkinetic.blocks.crank.KCrankRenderer;
+import com.lightning323.createkinetic.blocks.crank.KCrankVisual;
 import com.lightning323.createkinetic.blocks.helm.ShipHelmBlockEntity;
 import com.lightning323.createkinetic.blocks.helm.renderer.ShipHelmBlockEntityRenderer;
 import com.lightning323.createkinetic.blocks.sail.RetractableSailBlockEntity;
@@ -10,7 +13,9 @@ import com.lightning323.createkinetic.blocks.sail.SailVisual;
 import com.lightning323.createkinetic.blocks.sail.sailPulley.SailPulleyBlockEntity;
 import com.lightning323.createkinetic.blocks.sail.sailPulley.SailPulleyRenderer;
 import com.lightning323.createkinetic.blocks.sail.sailPulley.SailPulleyVisual;
-import com.simibubi.create.content.fluids.tank.FluidTankRenderer;
+import com.simibubi.create.content.kinetics.crank.HandCrankBlockEntity;
+import com.simibubi.create.content.kinetics.crank.HandCrankRenderer;
+import com.simibubi.create.content.kinetics.crank.HandCrankVisual;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
 
 import static com.lightning323.createkinetic.CreateKinetic.REGISTRATE;
@@ -56,8 +61,15 @@ public class KineticBlockEntities {
 
     public static final BlockEntityEntry<BallastTankBlockEntity> FLUID_TANK = REGISTRATE
             .blockEntity("ballast_tank", BallastTankBlockEntity::new)
-            .validBlocks(KineticBlocks.FLUID_TANK)
+            .validBlocks(KineticBlocks.BALLAST_TANK)
             .renderer(() -> BallastTankRenderer::new)
+            .register();
+
+    public static final BlockEntityEntry<KCrankBlockEntity> HAND_CRANK = REGISTRATE
+            .blockEntity("hand_crank", KCrankBlockEntity::new)
+            .visual(() -> KCrankVisual::new)
+            .validBlocks(KineticBlocks.FORWARD_CRANK)
+            .renderer(() -> KCrankRenderer::new)
             .register();
 
     public static void register() {

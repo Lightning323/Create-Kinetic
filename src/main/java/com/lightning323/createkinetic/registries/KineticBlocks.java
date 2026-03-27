@@ -1,13 +1,23 @@
 package com.lightning323.createkinetic.registries;
 
-import com.lightning323.createkinetic.blocks.*;
+import com.lightning323.createkinetic.CreateKinetic;
+import com.lightning323.createkinetic.blocks.AnchorBlock;
+import com.lightning323.createkinetic.blocks.BallastBlock;
+import com.lightning323.createkinetic.blocks.BuoyBlock;
+import com.lightning323.createkinetic.blocks.EnchantedBallastBlock;
 import com.lightning323.createkinetic.blocks.ballastTank.BallastTankBlock;
+import com.lightning323.createkinetic.blocks.crank.KCrankBlock;
 import com.lightning323.createkinetic.blocks.helm.ShipHelmBlock;
 import com.lightning323.createkinetic.blocks.sail.RetractableSailBlock;
 import com.lightning323.createkinetic.blocks.sail.SailClothBlock;
 import com.lightning323.createkinetic.blocks.sail.sailPulley.SailPulleyBlock;
+import com.lightning323.createkinetic.mixin.CStressAccessor;
 import com.simibubi.create.*;
-import com.simibubi.create.content.fluids.tank.*;
+import com.simibubi.create.api.stress.BlockStressValues;
+import com.simibubi.create.content.fluids.tank.FluidTankGenerator;
+import com.simibubi.create.content.fluids.tank.FluidTankModel;
+import com.simibubi.create.content.fluids.tank.FluidTankMovementBehavior;
+import com.simibubi.create.foundation.block.ItemUseOverrides;
 import com.simibubi.create.foundation.data.AssetLookup;
 import com.simibubi.create.foundation.data.BlockStateGen;
 import com.simibubi.create.foundation.data.CreateRegistrate;
@@ -19,6 +29,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
@@ -41,22 +52,47 @@ import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 
 public class KineticBlocks {
 
-    public static final BlockEntry<BallastTankBlock> FLUID_TANK =
+    public static final BlockEntry<KCrankBlock> FORWARD_CRANK =
+            REGISTRATE.block("hand_crank", KCrankBlock::new)
+                    .initialProperties(SharedProperties::wooden)
+                    .properties(p -> p.mapColor(MapColor.PODZOL))
+                    .transform(axeOrPickaxe())
+                    .blockstate(BlockStateGen.directionalBlockProvider(true))
+                    .transform(builder -> {
+                        ResourceLocation id = CreateKinetic.resource(builder.getName());
+                        // Access the private map through the Accessor
+                        CStressAccessor.getCapacities().put(id, 8.0);
+                        return builder;
+                    })
+                    .onRegister(BlockStressValues.setGeneratorSpeed(32))
+                    .tag(AllTags.AllBlockTags.BRITTLE.tag)
+                    .onRegister(ItemUseOverrides::addBlock)
+                    .item()
+                    .transform(customItemModel())
+                    .register();
+
+    public static final BlockEntry<BallastTankBlock> BALLAST_TANK =
             REGISTRATE.block("ballast_tank", BallastTankBlock::kRegular)
-            .initialProperties(SharedProperties::copperMetal)
-            .properties(p -> p.noOcclusion()
-                    .isRedstoneConductor((p1, p2, p3) -> true))
-            .transform(pickaxeOnly())
-            .blockstate(new FluidTankGenerator()::generate)
-            .onRegister(CreateRegistrate.blockModel(() -> FluidTankModel::standard))
-            .transform(displaySource(AllDisplaySources.BOILER))
-            .transform(mountedFluidStorage(AllMountedStorageTypes.FLUID_TANK))
-            .onRegister(movementBehaviour(new FluidTankMovementBehavior()))
-            .addLayer(() -> RenderType::cutoutMipped)
-            .item(FluidTankItem::new)
-            .model(AssetLookup.customBlockItemModel("_", "block_single_window"))
-            .build()
-            .register();
+                    .initialProperties(SharedProperties::copperMetal)
+                    .properties(p -> p.noOcclusion()
+                            .isRedstoneConductor((p1, p2, p3) -> true))
+                    .transform(pickaxeOnly())
+                    .blockstate(new FluidTankGenerator()::generate)
+                    .onRegister(CreateRegistrate.blockModel(() -> FluidTankModel::standard))
+                    .transform(displaySource(AllDisplaySources.BOILER))
+                    .transform(mountedFluidStorage(AllMountedStorageTypes.FLUID_TANK))
+                    .onRegister(movementBehaviour(new FluidTankMovementBehavior()))
+                    .addLayer(() -> RenderType::cutoutMipped)
+                    .item((block, props) -> new BlockItem(block, props) {
+                        @Override
+                        public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flag) {
+                            KineticItems.shiftForTooltip(tooltip,
+                                    Component.translatable("tooltip.createkinetic.ballast_tank").withStyle(ChatFormatting.GRAY));
+                        }
+                    })
+                    .model(AssetLookup.customBlockItemModel("_", "block_single_window"))
+                    .build()
+                    .register();
 
     public static BlockEntry<ShipHelmBlock> registerShipHelm(String name, WoodType woodType) {
         return REGISTRATE

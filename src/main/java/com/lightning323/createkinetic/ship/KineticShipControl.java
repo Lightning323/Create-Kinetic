@@ -586,7 +586,8 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
     }
 
     public boolean shouldDispose() {
-        return numBallast <= 0 && numFnASails <= 0 && numSquareSails <= 0 && numEnchantedBallast <= 0 && numBuoys <= 0 && helms == 0 && !frozen;
+        return numBallast <= 0 && numFnASails <= 0 && numSquareSails <= 0 && numEnchantedBallast <= 0 && numBuoys <= 0
+                && helms == 0 && !frozen && tankBallastWeight <= 0;
     }
 
     @SuppressWarnings("unchecked")
