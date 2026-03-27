@@ -117,7 +117,7 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
     public int numBallast = 0;
     public int numEnchantedBallast = 0;
     public int numBuoys = 0;
-    float tankBallastWeight = 0;
+    public float tankBallastWeight = 0;
 
     public void updateBallastWeights() {
         tankBallastWeight = 0;
