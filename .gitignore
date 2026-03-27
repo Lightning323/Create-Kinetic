@@ -13,7 +13,7 @@ run-data
 
 # Cache of project
 .gradletasknamecache
-
+.kotlin
 # Eclipse Gradle plugin generated files
 # Eclipse Core
 .project

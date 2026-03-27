@@ -1,6 +1,7 @@
 package com.lightning323.createkinetic.registries;
 
 import com.lightning323.createkinetic.blocks.ballastTank.BallastTankBlockEntity;
+import com.lightning323.createkinetic.blocks.ballastTank.BallastTankRenderer;
 import com.lightning323.createkinetic.blocks.helm.ShipHelmBlockEntity;
 import com.lightning323.createkinetic.blocks.helm.renderer.ShipHelmBlockEntityRenderer;
 import com.lightning323.createkinetic.blocks.sail.RetractableSailBlockEntity;
@@ -9,6 +10,7 @@ import com.lightning323.createkinetic.blocks.sail.SailVisual;
 import com.lightning323.createkinetic.blocks.sail.sailPulley.SailPulleyBlockEntity;
 import com.lightning323.createkinetic.blocks.sail.sailPulley.SailPulleyRenderer;
 import com.lightning323.createkinetic.blocks.sail.sailPulley.SailPulleyVisual;
+import com.simibubi.create.content.fluids.tank.FluidTankRenderer;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
 
 import static com.lightning323.createkinetic.CreateKinetic.REGISTRATE;
@@ -55,7 +57,7 @@ public class KineticBlockEntities {
     public static final BlockEntityEntry<BallastTankBlockEntity> FLUID_TANK = REGISTRATE
             .blockEntity("fluid_tank", BallastTankBlockEntity::new)
             .validBlocks(KineticBlocks.FLUID_TANK)
-//            .renderer(() -> FluidTankRenderer::new)
+            .renderer(() -> BallastTankRenderer::new)
             .register();
 
     public static void register() {

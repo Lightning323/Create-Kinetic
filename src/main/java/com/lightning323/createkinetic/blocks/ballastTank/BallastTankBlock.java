@@ -3,6 +3,7 @@ package com.lightning323.createkinetic.blocks.ballastTank;
 import com.lightning323.createkinetic.registries.KineticBlockEntities;
 import com.simibubi.create.api.connectivity.ConnectivityHandler;
 import com.simibubi.create.content.equipment.wrench.IWrenchable;
+import com.simibubi.create.content.fluids.tank.FluidTankBlock;
 import com.simibubi.create.content.fluids.transfer.GenericItemEmptying;
 import com.simibubi.create.content.fluids.transfer.GenericItemFilling;
 import com.simibubi.create.foundation.advancement.AdvancementBehaviour;
@@ -59,7 +60,7 @@ public class BallastTankBlock extends Block implements IWrenchable, IBE<BallastT
     
     public static final BooleanProperty TOP = BooleanProperty.create("top");
     public static final BooleanProperty BOTTOM = BooleanProperty.create("bottom");
-    public static final EnumProperty<BallastTankBlock.Shape> SHAPE = EnumProperty.create("shape", BallastTankBlock.Shape.class);
+    public static final EnumProperty<FluidTankBlock.Shape> SHAPE = EnumProperty.create("shape", FluidTankBlock.Shape.class);
 
 
     @Override
@@ -72,7 +73,7 @@ public class BallastTankBlock extends Block implements IWrenchable, IBE<BallastT
         super(p_i48440_1_);
         registerDefaultState(defaultBlockState().setValue(TOP, true)
                 .setValue(BOTTOM, true)
-                .setValue(SHAPE, BallastTankBlock.Shape.WINDOW));
+                .setValue(SHAPE, FluidTankBlock.Shape.WINDOW));
     }
 
     @Override
@@ -106,13 +107,10 @@ public class BallastTankBlock extends Block implements IWrenchable, IBE<BallastT
         return InteractionResult.SUCCESS;
     }
 
-    static final VoxelShape CAMPFIRE_SMOKE_CLIP = Block.box(0, 4, 0, 16, 16, 16);
 
     @Override
     public VoxelShape getCollisionShape(BlockState pState, BlockGetter pLevel, BlockPos pPos,
                                         CollisionContext pContext) {
-        if (pContext == CollisionContext.empty())
-            return CAMPFIRE_SMOKE_CLIP;
         return pState.getShape(pLevel, pPos);
     }
 
@@ -249,13 +247,13 @@ public class BallastTankBlock extends Block implements IWrenchable, IBE<BallastT
         boolean x = mirror == Mirror.FRONT_BACK;
         switch (state.getValue(SHAPE)) {
             case WINDOW_NE:
-                return state.setValue(SHAPE, x ? BallastTankBlock.Shape.WINDOW_NW : BallastTankBlock.Shape.WINDOW_SE);
+                return state.setValue(SHAPE, x ? FluidTankBlock.Shape.WINDOW_NW : FluidTankBlock.Shape.WINDOW_SE);
             case WINDOW_NW:
-                return state.setValue(SHAPE, x ? BallastTankBlock.Shape.WINDOW_NE : BallastTankBlock.Shape.WINDOW_SW);
+                return state.setValue(SHAPE, x ? FluidTankBlock.Shape.WINDOW_NE : FluidTankBlock.Shape.WINDOW_SW);
             case WINDOW_SE:
-                return state.setValue(SHAPE, x ? BallastTankBlock.Shape.WINDOW_SW : BallastTankBlock.Shape.WINDOW_NE);
+                return state.setValue(SHAPE, x ? FluidTankBlock.Shape.WINDOW_SW : FluidTankBlock.Shape.WINDOW_NE);
             case WINDOW_SW:
-                return state.setValue(SHAPE, x ? BallastTankBlock.Shape.WINDOW_SE : BallastTankBlock.Shape.WINDOW_NW);
+                return state.setValue(SHAPE, x ? FluidTankBlock.Shape.WINDOW_SE : FluidTankBlock.Shape.WINDOW_NW);
             default:
                 return state;
         }
@@ -271,26 +269,19 @@ public class BallastTankBlock extends Block implements IWrenchable, IBE<BallastT
     private BlockState rotateOnce(BlockState state) {
         switch (state.getValue(SHAPE)) {
             case WINDOW_NE:
-                return state.setValue(SHAPE, BallastTankBlock.Shape.WINDOW_SE);
+                return state.setValue(SHAPE, FluidTankBlock.Shape.WINDOW_SE);
             case WINDOW_NW:
-                return state.setValue(SHAPE, BallastTankBlock.Shape.WINDOW_NE);
+                return state.setValue(SHAPE, FluidTankBlock.Shape.WINDOW_NE);
             case WINDOW_SE:
-                return state.setValue(SHAPE, BallastTankBlock.Shape.WINDOW_SW);
+                return state.setValue(SHAPE, FluidTankBlock.Shape.WINDOW_SW);
             case WINDOW_SW:
-                return state.setValue(SHAPE, BallastTankBlock.Shape.WINDOW_NW);
+                return state.setValue(SHAPE, FluidTankBlock.Shape.WINDOW_NW);
             default:
                 return state;
         }
     }
 
-    public enum Shape implements StringRepresentable {
-        PLAIN, WINDOW, WINDOW_NW, WINDOW_SW, WINDOW_NE, WINDOW_SE;
 
-        @Override
-        public String getSerializedName() {
-            return Lang.asId(name());
-        }
-    }
 
     // Tanks are less noisy when placed in batch
     public static final SoundType SILENCED_METAL =

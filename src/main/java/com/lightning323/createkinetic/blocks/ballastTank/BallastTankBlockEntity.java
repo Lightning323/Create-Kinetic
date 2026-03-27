@@ -2,6 +2,7 @@ package com.lightning323.createkinetic.blocks.ballastTank;
 
 import com.simibubi.create.api.connectivity.ConnectivityHandler;
 import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
+import com.simibubi.create.content.fluids.tank.FluidTankBlock;
 import com.simibubi.create.foundation.advancement.AllAdvancements;
 import com.simibubi.create.foundation.blockEntity.IMultiBlockEntityContainer;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
@@ -218,7 +219,7 @@ public class BallastTankBlockEntity extends SmartBlockEntity implements IHaveGog
         if (BallastTankBlock.isTank(state)) {
             state = state.setValue(BallastTankBlock.BOTTOM, true);
             state = state.setValue(BallastTankBlock.TOP, true);
-            state = state.setValue(BallastTankBlock.SHAPE, window ? BallastTankBlock.Shape.WINDOW : BallastTankBlock.Shape.PLAIN);
+            state = state.setValue(BallastTankBlock.SHAPE, window ? FluidTankBlock.Shape.WINDOW : FluidTankBlock.Shape.PLAIN);
             getLevel().setBlock(worldPosition, state, 22);
         }
 
@@ -262,21 +263,21 @@ public class BallastTankBlockEntity extends SmartBlockEntity implements IHaveGog
                     if (!BallastTankBlock.isTank(blockState))
                         continue;
 
-                    BallastTankBlock.Shape shape = BallastTankBlock.Shape.PLAIN;
+                    FluidTankBlock.Shape shape = FluidTankBlock.Shape.PLAIN;
                     if (window) {
                         // SIZE 1: Every tank has a window
                         if (width == 1)
-                            shape = BallastTankBlock.Shape.WINDOW;
+                            shape = FluidTankBlock.Shape.WINDOW;
                         // SIZE 2: Every tank has a corner window
                         if (width == 2)
-                            shape = xOffset == 0 ? zOffset == 0 ? BallastTankBlock.Shape.WINDOW_NW : BallastTankBlock.Shape.WINDOW_SW
-                                    : zOffset == 0 ? BallastTankBlock.Shape.WINDOW_NE : BallastTankBlock.Shape.WINDOW_SE;
+                            shape = xOffset == 0 ? zOffset == 0 ? FluidTankBlock.Shape.WINDOW_NW : FluidTankBlock.Shape.WINDOW_SW
+                                    : zOffset == 0 ? FluidTankBlock.Shape.WINDOW_NE : FluidTankBlock.Shape.WINDOW_SE;
                         // SIZE 3: Tanks in the center have a window
                         if (width == 3 && abs(abs(xOffset) - abs(zOffset)) == 1)
-                            shape = BallastTankBlock.Shape.WINDOW;
+                            shape = FluidTankBlock.Shape.WINDOW;
                     }
 
-                    level.setBlock(pos, blockState.setValue(BallastTankBlock.SHAPE, shape), 22);
+                    level.setBlock(pos, blockState.setValue(FluidTankBlock.SHAPE, shape), 22);
                     level.getChunkSource()
                             .getLightEngine()
                             .checkBlock(pos);
@@ -331,14 +332,6 @@ public class BallastTankBlockEntity extends SmartBlockEntity implements IHaveGog
             return super.createRenderBoundingBox().expandTowards(width - 1, height - 1, width - 1);
         else
             return super.createRenderBoundingBox();
-    }
-
-    @Nullable
-    public BallastTankBlockEntity getOtherBallastTankBlockEntity(Direction direction) {
-        BlockEntity otherBE = level.getBlockEntity(worldPosition.relative(direction));
-        if (otherBE instanceof BallastTankBlockEntity)
-            return (BallastTankBlockEntity) otherBE;
-        return null;
     }
 
     @Override
@@ -600,4 +593,5 @@ public class BallastTankBlockEntity extends SmartBlockEntity implements IHaveGog
     public FluidStack getFluid(int tank) {
         return tankInventory.getFluid()
                 .copy();
-    }}
+    }
+}
