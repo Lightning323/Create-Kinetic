@@ -1,16 +1,13 @@
-package org.valkyrienskies.eureka.blockentity.renderer
+package com.lightning323.createkinetic.blocks.helm.renderer
 
 import com.lightning323.createkinetic.blocks.helm.ShipHelmBlock
-import com.lightning323.createkinetic.blocks.helm.WoodTypeEnum
 import com.lightning323.createkinetic.registries.KineticPartialModels
 import com.mojang.blaze3d.vertex.PoseStack
-import dev.engine_room.flywheel.lib.model.baked.PartialModel
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.RenderType
 import net.minecraft.util.RandomSource
 import net.minecraft.world.level.block.entity.BlockEntity
-import net.minecraft.world.level.block.state.properties.WoodType
 
 // OK so what dis does im making mc happy about states
 // WheelModels has many states (wood type)

@@ -137,33 +137,41 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
     mavenCentral()
-
-
+    /**
+     * We can prioritize more stable sites
+     * The first repositories on the list take the highest priority when resolving dependencies
+     */
     //https://github.com/Creators-of-Create/Create/wiki/Depending-on-Create
     maven { url = "https://maven.createmod.net" } // Create, Ponder, Flywheel
     maven { url = "https://maven.ithundxr.dev/mirror" } // Registrate
+    maven { url = "https://maven.tterrag.com/" }// Registrate
     maven { url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/" } // ForgeConfigAPIPort
+
+    maven {
+        name = "Modrinth"
+        url = "https://api.modrinth.com/maven"
+        content {
+            includeGroup "maven.modrinth"
+        }
+    }
+    maven {
+        name = 'Curseforge'
+        url = 'https://cursemaven.com'
+    }
 
     maven {
         // location of a maven mirror for JEI files, as a fallback
         name = "ModMaven"
         url = "https://modmaven.dev"
     }
-    maven { //CurseMaven
-        name = 'CurseMaven'
-        url = 'https://cursemaven.com'
-    }
-
     maven { //Minecraft forge repo
         name = 'MinecraftForge'
         url = 'https://maven.minecraftforge.net/'
     }
-
-    maven { // Add KFF Maven repository
+    maven {
         name = 'Kotlin for Forge'
         url = 'https://thedarkcolour.github.io/KotlinForForge/'
     }
-
     maven { //Valkyrien Skies internal version
         name = "Valkyrien Skies Internal"
         url = 'https://maven.valkyrienskies.org'
@@ -176,19 +184,17 @@ repositories {
             includeGroup("cc.tweaked")
             includeModule("org.squiddev", "Cobalt")
 
-            maven { url = "https://maven.bawnorton.com/releases" }
-
-            // region JEI mavens
-            maven {
-                // location of the maven that hosts JEI files before January 2023
-                name = "Progwml6's maven"
-                url = "https://dvs1.progwml6.com/files/maven/"
-            }
             maven {
                 // location of the maven that hosts JEI files since January 2023
                 name = "Jared's maven"
                 url = "https://maven.blamejared.com/"
             }
+            maven {
+                // location of the maven that hosts JEI files before January 2023
+                name = "Progwml6's maven"
+                url = "https://dvs1.progwml6.com/files/maven/"
+            }
+
             maven {
                 url "https://maven.squiddev.cc"
                 content {
@@ -198,15 +204,14 @@ repositories {
             maven { url = "https://maven.shedaniel.me/" } // Cloth Config, REI
             maven { url = "https://maven.parchmentmc.org" } // Parchment mappings
             maven { url = "https://maven.quiltmc.org/repository/release" } // Quilt Mappings
-            maven { // Flywheel
-                url = "https://maven.tterrag.com/"
-            }
+
             maven {
                 url = "https://maven.realrobotix.me/createbigcannons/" // Create Big Cannons
                 content {
                     includeGroup "com.rbasamoyai"
                 }
             }
+//            maven { url = "https://maven.bawnorton.com/releases" }//500 server error
         }
     }
 
@@ -245,16 +250,15 @@ dependencies {
     implementation(fg.deobf("com.tterrag.registrate:Registrate:${registrate_version}"))
     compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.4.1"))
     implementation("io.github.llamalad7:mixinextras-forge:0.4.1")
+
     //CC Tweaked (dependency of create)
-    implementation fg.deobf("cc.tweaked:cc-tweaked-${minecraft_version}-forge:${cc_version}")
+//    implementation fg.deobf("cc.tweaked:cc-tweaked-${minecraft_version}-forge:${cc_version}")
+    implementation fg.deobf("maven.modrinth:cc-tweaked:5F5BaGQ4") //Backup for when the site goes down
 
 
     //JOML
     compileOnly("org.joml:joml:1.10.4")
     compileOnly("org.joml:joml-primitives:1.10.0")
-
-
-
 
 
     // For more info:

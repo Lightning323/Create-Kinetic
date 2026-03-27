@@ -2,17 +2,14 @@ package com.lightning323.createkinetic.registries;
 
 import com.lightning323.createkinetic.blocks.ballastTank.BallastTankBlockEntity;
 import com.lightning323.createkinetic.blocks.helm.ShipHelmBlockEntity;
+import com.lightning323.createkinetic.blocks.helm.renderer.ShipHelmBlockEntityRenderer;
 import com.lightning323.createkinetic.blocks.sail.RetractableSailBlockEntity;
 import com.lightning323.createkinetic.blocks.sail.SailRenderer;
 import com.lightning323.createkinetic.blocks.sail.SailVisual;
 import com.lightning323.createkinetic.blocks.sail.sailPulley.SailPulleyBlockEntity;
 import com.lightning323.createkinetic.blocks.sail.sailPulley.SailPulleyRenderer;
 import com.lightning323.createkinetic.blocks.sail.sailPulley.SailPulleyVisual;
-import com.simibubi.create.AllBlocks;
-import com.simibubi.create.content.fluids.tank.FluidTankBlockEntity;
-import com.simibubi.create.content.fluids.tank.FluidTankRenderer;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
-import org.valkyrienskies.eureka.blockentity.renderer.ShipHelmBlockEntityRenderer;
 
 import static com.lightning323.createkinetic.CreateKinetic.REGISTRATE;
 

@@ -1,4 +1,4 @@
-package org.valkyrienskies.eureka.blockentity.renderer
+package com.lightning323.createkinetic.blocks.helm.renderer
 
 import com.lightning323.createkinetic.blocks.helm.ShipHelmBlockEntity
 import com.mojang.blaze3d.vertex.PoseStack
