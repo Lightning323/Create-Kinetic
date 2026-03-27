@@ -613,38 +613,51 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
         final Matrix3dc moiTensor = physShip.getMomentOfInertia();
         final Vector3dc omega = physShip.getAngularVelocity();
 
-        double maxLinearAcceleration = KineticConfig.turnAcceleration;
-        double extraForceAngular = 0.0;
-        double maxLinearSpeed = KineticConfig.turnSpeed + extraForceAngular;
 
-        // acceleration = alpha * r -> maxAlpha = maxAcceleration / r
-        double maxOmegaY = maxLinearSpeed / largestDistance;
-        double maxAlphaY = maxLinearAcceleration / largestDistance;
+        double maxAlphaZX = KineticConfig.diveAcceleration / largestDistance;
+        double maxAlphaY = KineticConfig.turnAcceleration / largestDistance;
 
-        boolean isBelowMaxTurnSpeed = Math.abs(omega.y()) < maxOmegaY;
 
-        // 3. Determine Acceleration Multiplier
-        double normalizedAlphaYMultiplier;
-        if (isBelowMaxTurnSpeed && control.getLeftImpulse() != 0.0f) {
-            normalizedAlphaYMultiplier = (double) control.getLeftImpulse();
-        } else {
-            // If not turning or over speed, apply counter-torque to stabilize
-            normalizedAlphaYMultiplier = -Math.max(-1.0, Math.min(1.0, omega.y()));
-        }
+        double idealAlphaY = calculateIdealAlpha(KineticConfig.turnSpeed, maxAlphaY, largestDistance, omega.y(), control.getLeftImpulse());
 
-        double idealAlphaY = normalizedAlphaYMultiplier * maxAlphaY;
-        // 4. Apply Torque (Rotation)
-        Vector3d torque = new Vector3d(0.0, idealAlphaY, 0.0);
+        Vector3d torque = shipDirection == Direction.NORTH || shipDirection == Direction.SOUTH ?
+                new Vector3d(calculateIdealAlpha(
+                        KineticConfig.diveSpeed, maxAlphaZX, largestDistance, omega.x(), control.getForwardImpulse()),
+                        idealAlphaY,
+                        0.0) :
+
+                new Vector3d(0.0,
+                        idealAlphaY,
+                        calculateIdealAlpha(
+                                KineticConfig.diveSpeed, maxAlphaZX, largestDistance, omega.z(), control.getForwardImpulse()));
+
         moiTensor.transform(torque); // Applies the Moment of Inertia tensor to the vector
 
         // Add banking effect (leaning into the turn)
         torque.add(getPlayerControlledBanking(control, physShip, moiTensor, -idealAlphaY));
 
+        LOGGER.debug("Torque={}; ControlData={}", torque, this.controlData);
         physShip.applyWorldTorque(torque);
 
         // 5. Apply Force (Forward/Backward)
 //        physShip.applyWorldForce(getPlayerForwardVel(control, physShip));
 //        LOGGER.debug("Turn rotation: {}; ControlData: {}", idealAlphaY, this.controlData);
+    }
+
+    private double calculateIdealAlpha(double maxLinearSpeed, double maxAlpha, double largestDistance, double omega, float impulse) {
+        // Equivalent to .coerceIn(0.5, maxSize)
+        double maxSize = KineticConfig.maxSizeForTurnSpeedPenalty;
+        largestDistance = Math.max(0.5, Math.min(largestDistance, maxSize));
+        double maxOmega = maxLinearSpeed / largestDistance;
+        boolean isBelowMaxTurnSpeed = Math.abs(omega) < maxOmega;
+        double normalizedAlphaMultiplier;
+        if (isBelowMaxTurnSpeed && impulse != 0.0f) {
+            normalizedAlphaMultiplier = (double) impulse;
+        } else {
+            // If not turning or over speed, apply counter-torque to stabilize
+            normalizedAlphaMultiplier = -Math.max(-1.0, Math.min(1.0, omega));
+        }
+        return normalizedAlphaMultiplier * maxAlpha;
     }
 
     private Vector3d getPlayerControlledBanking(ControlData control, PhysShip physShip, Matrix3dc moiTensor, double strength) {
