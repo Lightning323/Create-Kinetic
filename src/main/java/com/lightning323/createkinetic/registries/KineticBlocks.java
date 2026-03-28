@@ -8,6 +8,7 @@ import com.lightning323.createkinetic.blocks.EnchantedBallastBlock;
 import com.lightning323.createkinetic.blocks.ballastTank.BallastTankBlock;
 import com.lightning323.createkinetic.blocks.crank.KCrankBlock;
 import com.lightning323.createkinetic.blocks.helm.ShipHelmBlock;
+import com.lightning323.createkinetic.blocks.rudder.RudderBlock;
 import com.lightning323.createkinetic.blocks.sail.RetractableSailBlock;
 import com.lightning323.createkinetic.blocks.sail.SailClothBlock;
 import com.lightning323.createkinetic.blocks.sail.sailPulley.SailPulleyBlock;
@@ -51,6 +52,16 @@ import static com.simibubi.create.foundation.data.TagGen.axeOrPickaxe;
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 
 public class KineticBlocks {
+
+    public static final BlockEntry<RudderBlock> RUDDER = REGISTRATE
+            .block("rudder", RudderBlock::new)
+            .initialProperties(SharedProperties::wooden)
+            .properties(p -> p.noOcclusion())
+            .blockstate((c, p) -> p.horizontalFaceBlock(c.get(), p.models().getExistingFile(p.modLoc("block/rudder/base"))))
+            .item()
+            .model((c, p) -> p.withExistingParent(c.getName(), p.modLoc("block/rudder/base")))
+            .build()
+            .register();
 
     public static final BlockEntry<KCrankBlock> FORWARD_CRANK =
             REGISTRATE.block("hand_crank", KCrankBlock::new)

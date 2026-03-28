@@ -7,6 +7,8 @@ import com.lightning323.createkinetic.blocks.crank.KCrankRenderer;
 import com.lightning323.createkinetic.blocks.crank.KCrankVisual;
 import com.lightning323.createkinetic.blocks.helm.ShipHelmBlockEntity;
 import com.lightning323.createkinetic.blocks.helm.renderer.ShipHelmBlockEntityRenderer;
+import com.lightning323.createkinetic.blocks.rudder.RudderBlockEntity;
+import com.lightning323.createkinetic.blocks.rudder.RudderRenderer;
 import com.lightning323.createkinetic.blocks.sail.RetractableSailBlockEntity;
 import com.lightning323.createkinetic.blocks.sail.SailRenderer;
 import com.lightning323.createkinetic.blocks.sail.SailVisual;
@@ -70,6 +72,12 @@ public class KineticBlockEntities {
             .visual(() -> KCrankVisual::new)
             .validBlocks(KineticBlocks.FORWARD_CRANK)
             .renderer(() -> KCrankRenderer::new)
+            .register();
+
+    public static final BlockEntityEntry<RudderBlockEntity> RUDDER_BE = REGISTRATE
+            .blockEntity("rudder", RudderBlockEntity::new)
+            .validBlocks(KineticBlocks.RUDDER)
+            .renderer(() -> RudderRenderer::new) // This links the BER automatically
             .register();
 
     public static void register() {
