@@ -1,6 +1,7 @@
 package com.lightning323.createkinetic.blocks.rudder;
 
 import com.lightning323.createkinetic.registries.KineticPartialModels;
+import com.lightning323.createkinetic.utils.MiscUtils;
 import com.simibubi.create.AllPartialModels;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityVisual;
 import com.simibubi.create.content.kinetics.base.RotatingInstance;
@@ -17,10 +18,12 @@ import dev.engine_room.flywheel.lib.visual.util.SmartRecycler;
 import net.createmod.catnip.math.AngleHelper;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
+import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Quaternionf;
+import org.lwjgl.system.MathUtil;
 
 import java.util.function.Consumer;
 
@@ -46,23 +49,9 @@ public class RudderVisual extends KineticBlockEntityVisual<RudderBlockEntity> im
         this.blade = instancerProvider().instancer(InstanceTypes.ORIENTED, Models.partial(KineticPartialModels.RUDDER_COPPER_BLADE))
                 .createInstance();
 
-// 1. Replicate your blockstate logic using JOML
-        float xRot = 90;
-        float yRot = 180;
-        switch (facing) {
-            case SOUTH -> yRot = 0;
-            case WEST  -> yRot = 270;
-            case EAST  -> yRot = 90;
-            case UP    -> xRot = 270 + 90; // 360 or 0
-            case DOWN  -> xRot = 90 + 90;  // 180
-        }
-        Quaternionf q = new Quaternionf();
-        // Minecraft Blockstate order: Y then X
-        q.rotationY((float) Math.toRadians(yRot));
-        q.rotateX((float) Math.toRadians(xRot));
-
+        // 1. Replicate your blockstate logic using JOML
         blade.position(getVisualPosition())
-                .rotation(q.x, q.y, q.z, q.w)
+                .rotation(blockEntity.rudderIdentityRotation)
                 .setChanged();
 
         animate();
@@ -75,10 +64,13 @@ public class RudderVisual extends KineticBlockEntityVisual<RudderBlockEntity> im
 
     private void animate() {
         shaft.setup(blockEntity).setChanged();
-
-        float time = net.createmod.catnip.animation.AnimationTickHolder.getRenderTime();
-        float testAngle = time * 0.001f;
-        blade.rotate(testAngle, Direction.Axis.Y).setChanged();
+//        float time = net.createmod.catnip.animation.AnimationTickHolder.getRenderTime();
+//        float testAngle = time * 0.001f;
+        blockEntity.renderAngle = Mth.lerp(0.05f, blockEntity.renderAngle,
+                Mth.map(blockEntity.getForce(), -256, 256, -Mth.HALF_PI/2, Mth.HALF_PI/2));//Delta,start,end
+        blade.rotation(blockEntity.rudderIdentityRotation);//set to identity
+        blade.rotate(blockEntity.renderAngle, Direction.Axis.Y);//rotate
+        blade.setChanged();
     }
 
 //    @Override

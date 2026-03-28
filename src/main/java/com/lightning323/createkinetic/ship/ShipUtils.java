@@ -8,8 +8,6 @@ import org.valkyrienskies.core.api.ships.LoadedServerShip;
 import org.valkyrienskies.core.api.ships.ServerShip;
 import org.valkyrienskies.mod.common.VSGameUtilsKt;
 
-import java.util.function.Consumer;
-
 public class ShipUtils {
     //North = -Z (Direction.AxisDirection.NEGATIVE, Direction.Axis.Z)
     //South = +Z (Direction.AxisDirection.POSITIVE, Direction.Axis.Z)
@@ -53,7 +51,7 @@ public class ShipUtils {
             LoadedServerShip ship = VSGameUtilsKt.getShipObjectManagingPos(world, pos);
             if (ship != null) {
                 KineticShipControl controller = ship.getAttachment(KineticShipControl.class);
-                if (controller != null && controller.world == null) controller.world = world;
+                if (controller != null && controller.level == null) controller.level = world;
                 return controller;
             }
         }

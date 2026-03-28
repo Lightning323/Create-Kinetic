@@ -54,8 +54,6 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 public class BallastTankBlock extends Block implements IWrenchable, IBE<BallastTankBlockEntity> {
 
 
-
-
     public static boolean isTank(BlockState state) {
         return state.getBlock() instanceof BallastTankBlock;
     }

@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.lightning323.createkinetic.CreateKinetic;
 import com.lightning323.createkinetic.KineticConfig;
 import com.lightning323.createkinetic.blocks.ballastTank.BallastTankBlockEntity;
+import com.lightning323.createkinetic.blocks.rudder.RudderBlockEntity;
 import com.lightning323.createkinetic.blocks.sail.SailClothBlock;
 import it.unimi.dsi.fastutil.longs.LongIterator;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
@@ -16,9 +17,11 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import org.jetbrains.annotations.NotNull;
 import org.joml.*;
 import org.slf4j.Logger;
@@ -80,6 +83,97 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
     public int boundz = 1;
 
     /**
+     * RUDDERS
+     */
+//    public float Vector3 rudderForce = new Vector3(0,0,0);
+    @JsonIgnore
+    private LongSet rudderLocations = new LongOpenHashSet();
+    public Vector3d rudderForce = new Vector3d(0, 0, 0);
+
+    @JsonProperty("rudderLocations") //The Getter (Serialization)
+    public long[] getRudderLocations() {
+        return rudderLocations.toLongArray();
+    }
+
+    @JsonProperty("rudderLocations") //The Setter/Constructor (Deserialization)
+    public void setRudderLocations(long[] data) {
+        this.rudderLocations.clear();
+        if (data != null) {
+            for (long p : data) this.rudderLocations.add(p);
+        }
+    }
+
+    public void addRudder(BlockPos pos) {
+        rudderLocations.add(pos.asLong());
+    }
+
+    public void removeRudder(BlockPos pos) {
+        rudderLocations.remove(pos.asLong());
+    }
+
+    public void updateRudderForces() {
+        rudderForce.set(0, 0, 0);
+
+//        final ShipTransform transform = physShip.getTransform();
+//        final org.joml.primitives.AABBdc aabb = this.ship.getWorldAABB();
+//        final Vector3dc center = transform.getPositionInWorld();
+
+        // 1. Calculate Largest Distance for Turn Penalty
+//        double dist1 = center.distance(aabb.minX(), center.y(), aabb.minZ());
+//        double dist2 = center.distance(aabb.minX(), center.y(), aabb.maxZ());
+//        double dist3 = center.distance(aabb.maxX(), center.y(), aabb.minZ());
+//        double dist4 = center.distance(aabb.maxX(), center.y(), aabb.maxZ());
+
+//        double largestDistance = Math.max(Math.max(dist1, dist2), Math.max(dist3, dist4));
+
+        // Equivalent to .coerceIn(0.5, maxSize)
+        double maxSize = KineticConfig.maxSizeForTurnSpeedPenalty;
+//        largestDistance = Math.max(0.5, Math.min(largestDistance, maxSize));
+
+        // 2. Physics Constants
+//        final Matrix3dc moiTensor = physShip.getMomentOfInertia();
+//        final Vector3dc omega = physShip.getAngularVelocity();
+
+//        double maxAlphaY = KineticConfig.turnAcceleration / largestDistance;
+
+        for (long location : rudderLocations) {
+            BlockPos pos = BlockPos.of(location);
+            BlockEntity blockEntity = level.getBlockEntity(pos);
+            if (blockEntity instanceof RudderBlockEntity tbe) {
+                Direction value = tbe.getBlockState().getValue(BlockStateProperties.FACING);
+                double forceScalar = tbe.getForce() / 256.0; //We get a number from -1 to 1
+
+                double idealAlphaX =forceScalar;// omega2(KineticConfig.turnSpeed, maxAlphaY, largestDistance, omega.x(), forceScalar);
+                double idealAlphaY =forceScalar;// omega2(KineticConfig.turnSpeed, maxAlphaY, largestDistance, omega.y(), forceScalar);
+                double idealAlphaZ =forceScalar;// omega2(KineticConfig.turnSpeed, maxAlphaY, largestDistance, omega.z(), forceScalar);
+
+                switch (value) {
+                    case UP -> rudderForce.add(0, idealAlphaY, 0);
+                    case DOWN -> rudderForce.add(0, -idealAlphaY, 0);
+                    case NORTH -> rudderForce.add(0, 0, -idealAlphaZ);
+                    case SOUTH -> rudderForce.add(0, 0, idealAlphaZ);
+                    case EAST -> rudderForce.add(idealAlphaX, 0, 0);
+                    case WEST -> rudderForce.add(-idealAlphaX, 0, 0);
+                }
+            }
+        }
+        LOGGER.debug("Forces of {} rudders: {}",rudderLocations.size(), rudderForce);
+    }
+
+    private double omega2(double maxLinearSpeed, double maxAlpha, double largestDistance, double omega, double impulse) {
+        // 1. Constrain distance and calculate theoretical speed limit
+        double maxSize = KineticConfig.maxSizeForTurnSpeedPenalty;
+        double effectiveDist = Mth.clamp(largestDistance, 0.5, maxSize);
+        double maxOmega = maxLinearSpeed / effectiveDist;
+
+        // 2. Decide: Are we manually steering within safety limits?
+        // If not steering (impulse == 0) or over speed, we switch to stabilization.
+        boolean canSteer = impulse != 0.0f && Math.abs(omega) < maxOmega;
+        double multiplier = canSteer ? impulse : -Mth.clamp(omega, -1.0, 1.0);
+        return multiplier * maxAlpha;
+    }
+
+    /**
      * BALLAST / BUOY WEIGHT
      */
     //Each tank ballast can be at a different location or can change locations, we use a set to store all the locations
@@ -123,7 +217,7 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
         tankBallastWeight = 0;
         for (long location : tankBallastLocations) {
             BlockPos pos = BlockPos.of(location);
-            BlockEntity blockEntity = world.getBlockEntity(pos);
+            BlockEntity blockEntity = level.getBlockEntity(pos);
             if (blockEntity instanceof BallastTankBlockEntity tbe) {
                 tankBallastWeight += tbe.getWeight();
             }
@@ -237,7 +331,7 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
 
     //TODO: There isnt a good way of getting the world (We can't just get it upon initialization) so perhaps it should be removed
     @JsonIgnore
-    public ServerLevel world = null;
+    public ServerLevel level = null;
 
     @JsonIgnore
     public Player seatedPlayer = null;
@@ -300,7 +394,7 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
             assert controller != null;
             controller.ship = ship;
             if (world != null) {
-                controller.world = world;
+                controller.level = world;
             }
 
             if (ship.getShipAABB() != null) {
@@ -333,6 +427,13 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
         }
         PhysShipImpl physShip1 = (PhysShipImpl) physShip;
         physShip1.setDoFluidDrag(true);
+
+
+        if (level != null) {
+            updateRudderForces();
+        }
+        physShip.applyWorldTorque(rudderForce);
+
         boolean validPlayer = isPlayerValid();
         if (validPlayer) {
             // Manually extract the inputs from the Minecraft Player object
@@ -340,6 +441,7 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
             // zza = forward/backward (W/S)
             // jja = up/down (Space/Shift)
 
+            //ALL impulses are either -1 or 1 or 0
             float leftImpulse = seatedPlayer.xxa;
             float forwardImpulse = seatedPlayer.zza;
             float upImpulse = seatedPlayer.yya;
@@ -632,9 +734,8 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
                         calculateIdealAlpha(
                                 KineticConfig.diveSpeed, maxAlphaZX, largestDistance, omega.z(), control.getForwardImpulse()));
 
-        moiTensor.transform(torque); // Applies the Moment of Inertia tensor to the vector
-
         // Add banking effect (leaning into the turn)
+        moiTensor.transform(torque); // Applies the Moment of Inertia tensor to the vector
         torque.add(getPlayerControlledBanking(control, physShip, moiTensor, -idealAlphaY));
 
         LOGGER.debug("Torque={}; ControlData={}", torque, this.controlData);

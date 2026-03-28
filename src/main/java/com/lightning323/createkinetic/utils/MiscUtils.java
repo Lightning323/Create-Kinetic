@@ -11,4 +11,8 @@ public class MiscUtils {
                 .collect(Collectors.joining());
     }
 
+    public static float mapFloat(float input, float min, float max, float outMin, float outMax){
+        return (input - min) / (max - min) * (outMax - outMin) + outMin;
+    }
+
 }
