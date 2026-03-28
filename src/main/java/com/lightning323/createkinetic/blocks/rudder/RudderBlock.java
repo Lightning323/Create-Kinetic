@@ -25,7 +25,8 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelFile;
 
-public class RudderBlock extends DirectionalKineticBlock implements IBE<RudderBlockEntity>, TransformableBlock {
+public class RudderBlock extends DirectionalKineticBlock implements IBE<RudderBlockEntity> {
+    //, TransformableBlock {
     public RudderBlock(Properties properties) {
         super(properties);
     }
@@ -41,13 +42,18 @@ public class RudderBlock extends DirectionalKineticBlock implements IBE<RudderBl
         return KineticBlockEntities.RUDDER.get();
     }
 
+    @Override
+    public Direction.Axis getRotationAxis(BlockState state) {
+        return state.getValue(FACING).getAxis();
+    }
+
 
     /**
      * Rotation / orientation related stuff
-     * Taken from directionalAxisKinetic block
      * <p>
-     * The reason why we implement this ourselves
-     * 1) We need direction long first coordinate instead of an axis
+     * DIRECTION - tells us the direction of the block
+     * FACE_ANGLE - tells us the angle of the block on the face, this is purely aesthetic and serves no functional purpose
+     *
      */
     public static NonNullBiConsumer<DataGenContext<Block, RudderBlock>, RegistrateBlockstateProvider> getBlockstateDefinition() {
         return (c, p) -> {
@@ -56,10 +62,28 @@ public class RudderBlock extends DirectionalKineticBlock implements IBE<RudderBl
 
             p.getVariantBuilder(c.get()).forAllStates(state -> {
                 Direction facing = state.getValue(DirectionalKineticBlock.FACING);
-                boolean alongFirst = state.getValue(DirectionalAxisKineticBlock.AXIS_ALONG_FIRST_COORDINATE);
+//                boolean alongFirst = state.getValue(DirectionalAxisKineticBlock.AXIS_ALONG_FIRST_COORDINATE);
 
                 int xRot = 0;
-                int yRot = (int) facing.toYRot();
+                int yRot = 0;
+
+                switch (facing) {
+                    case SOUTH:
+                        yRot = 180;
+                        break;
+                    case WEST:
+                        yRot = 270;
+                        break;
+                    case EAST:
+                        yRot = 90;
+                        break;
+                    case UP:
+                        xRot = 270;
+                        break;
+                    case DOWN:
+                        xRot = 90;
+                        break;
+                }
 
                 return ConfiguredModel.builder()
                         .modelFile(model)
@@ -70,125 +94,47 @@ public class RudderBlock extends DirectionalKineticBlock implements IBE<RudderBl
         };
     }
 
-    public static final BooleanProperty AXIS_ALONG_FIRST_COORDINATE = BooleanProperty.create("axis_along_first");
+//    /**
+//     * This is for transformable blocks, it changes the block state based on the transform
+//     * We use this to wrench the block in different directions
+//     *
+//     * @param state
+//     * @param transform
+//     * @return
+//     */
+//    @Override
+//    public BlockState transform(BlockState state, StructureTransform transform) {
+//        if (transform.mirror != null) {
+//            state = mirror(state, transform.mirror);
+//        }
+//
+//        if (transform.rotationAxis == Direction.Axis.Y) {
+//            return rotate(state, transform.rotation);
+//        }
+//
+//        Direction newFacing = transform.rotateFacing(state.getValue(FACING));
+////        if (transform.rotationAxis == newFacing.getAxis() && transform.rotation.ordinal() % 2 == 1) {
+////            state = state.cycle(AXIS_ALONG_FIRST_COORDINATE);
+////        }
+//        return state.setValue(FACING, newFacing);
+//    }
 
-    @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(AXIS_ALONG_FIRST_COORDINATE);
-        super.createBlockStateDefinition(builder);
-    }
+    //TODO: ADD LATER
+//    public static final BooleanProperty AXIS_ALONG_FIRST_COORDINATE = BooleanProperty.create("axis_along_first");
+//
+//    @Override
+//    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+//        builder.add(AXIS_ALONG_FIRST_COORDINATE);
+//        super.createBlockStateDefinition(builder);
+//    }
 
-    protected Direction getFacingForPlacement(BlockPlaceContext context) {
-        Direction facing = context.getNearestLookingDirection()
-                .getOpposite();
-        if (context.getPlayer() != null && context.getPlayer()
-                .isShiftKeyDown())
-            facing = facing.getOpposite();
-        return facing;
-    }
 
-    protected boolean getAxisAlignmentForPlacement(BlockPlaceContext context) {
-        return context.getHorizontalDirection()
-                .getAxis() == Direction.Axis.X;
-    }
+//    @Override
+//    public BlockState rotate(BlockState state, Rotation rot) {
+//        if (rot.ordinal() % 2 == 1)
+//            state = state.cycle(AXIS_ALONG_FIRST_COORDINATE);
+//        return super.rotate(state, rot);
+//    }
+//
 
-    @Override
-    public BlockState getStateForPlacement(BlockPlaceContext context) {
-        Direction facing = getFacingForPlacement(context);
-        BlockPos pos = context.getClickedPos();
-        Level world = context.getLevel();
-        boolean alongFirst = false;
-        Direction.Axis faceAxis = facing.getAxis();
-
-        if (faceAxis.isHorizontal()) {
-            alongFirst = faceAxis == Direction.Axis.Z;
-            Direction positivePerpendicular = faceAxis == Direction.Axis.X ? Direction.SOUTH : Direction.EAST;
-
-            boolean shaftAbove = prefersConnectionTo(world, pos, Direction.UP, true);
-            boolean shaftBelow = prefersConnectionTo(world, pos, Direction.DOWN, true);
-            boolean preferLeft = prefersConnectionTo(world, pos, positivePerpendicular, false);
-            boolean preferRight = prefersConnectionTo(world, pos, positivePerpendicular.getOpposite(), false);
-
-            if (shaftAbove || shaftBelow || preferLeft || preferRight)
-                alongFirst = faceAxis == Direction.Axis.X;
-        }
-
-        if (faceAxis.isVertical()) {
-            alongFirst = getAxisAlignmentForPlacement(context);
-            Direction prefferedSide = null;
-
-            for (Direction side : Iterate.horizontalDirections) {
-                if (!prefersConnectionTo(world, pos, side, true)
-                        && !prefersConnectionTo(world, pos, side.getClockWise(), false))
-                    continue;
-                if (prefferedSide != null && prefferedSide.getAxis() != side.getAxis()) {
-                    prefferedSide = null;
-                    break;
-                }
-                prefferedSide = side;
-            }
-
-            if (prefferedSide != null)
-                alongFirst = prefferedSide.getAxis() == Direction.Axis.X;
-        }
-
-        return this.defaultBlockState()
-                .setValue(FACING, facing)
-                .setValue(AXIS_ALONG_FIRST_COORDINATE, alongFirst);
-    }
-
-    protected boolean prefersConnectionTo(LevelReader reader, BlockPos pos, Direction facing, boolean shaftAxis) {
-        if (!shaftAxis)
-            return false;
-        BlockPos neighbourPos = pos.relative(facing);
-        BlockState blockState = reader.getBlockState(neighbourPos);
-        Block block = blockState.getBlock();
-        return block instanceof IRotate
-                && ((IRotate) block).hasShaftTowards(reader, neighbourPos, blockState, facing.getOpposite());
-    }
-
-    @Override
-    public Direction.Axis getRotationAxis(BlockState state) {
-        Direction.Axis pistonAxis = state.getValue(FACING)
-                .getAxis();
-        boolean alongFirst = state.getValue(AXIS_ALONG_FIRST_COORDINATE);
-
-        if (pistonAxis == Direction.Axis.X)
-            return alongFirst ? Direction.Axis.Y : Direction.Axis.Z;
-        if (pistonAxis == Direction.Axis.Y)
-            return alongFirst ? Direction.Axis.X : Direction.Axis.Z;
-        if (pistonAxis == Direction.Axis.Z)
-            return alongFirst ? Direction.Axis.X : Direction.Axis.Y;
-
-        throw new IllegalStateException("Unknown axis??");
-    }
-
-    @Override
-    public BlockState rotate(BlockState state, Rotation rot) {
-        if (rot.ordinal() % 2 == 1)
-            state = state.cycle(AXIS_ALONG_FIRST_COORDINATE);
-        return super.rotate(state, rot);
-    }
-
-    @Override
-    public BlockState transform(BlockState state, StructureTransform transform) {
-        if (transform.mirror != null) {
-            state = mirror(state, transform.mirror);
-        }
-
-        if (transform.rotationAxis == Direction.Axis.Y) {
-            return rotate(state, transform.rotation);
-        }
-
-        Direction newFacing = transform.rotateFacing(state.getValue(FACING));
-        if (transform.rotationAxis == newFacing.getAxis() && transform.rotation.ordinal() % 2 == 1) {
-            state = state.cycle(AXIS_ALONG_FIRST_COORDINATE);
-        }
-        return state.setValue(FACING, newFacing);
-    }
-
-    @Override
-    public boolean hasShaftTowards(LevelReader world, BlockPos pos, BlockState state, Direction face) {
-        return face.getAxis() == getRotationAxis(state);
-    }
 }

@@ -10,6 +10,10 @@ import dev.engine_room.flywheel.api.visualization.VisualizationContext;
 import dev.engine_room.flywheel.lib.instance.InstanceTypes;
 import dev.engine_room.flywheel.lib.instance.OrientedInstance;
 import dev.engine_room.flywheel.lib.model.Models;
+import dev.engine_room.flywheel.lib.model.baked.PartialModel;
+import dev.engine_room.flywheel.lib.visual.SimpleDynamicVisual;
+import dev.engine_room.flywheel.lib.visual.util.SmartRecycler;
+import net.createmod.catnip.math.AngleHelper;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -18,7 +22,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.function.Consumer;
 
 
-public class RudderVisual extends KineticBlockEntityVisual<RudderBlockEntity> {
+public class RudderVisual extends KineticBlockEntityVisual<RudderBlockEntity> implements SimpleDynamicVisual {
 
     protected final OrientedInstance blade;
     protected final RotatingInstance shaft;
@@ -26,62 +30,53 @@ public class RudderVisual extends KineticBlockEntityVisual<RudderBlockEntity> {
 
     public RudderVisual(VisualizationContext context, RudderBlockEntity blockEntity, float partialTicks) {
         super(context, blockEntity, partialTicks);
+        this.facing = blockState.getValue(BlockStateProperties.FACING);
 
-        BlockState state = blockEntity.getBlockState();
-        this.facing = state.getValue(BlockStateProperties.FACING);
-
-        // 1. The Shaft (Static, pointing into the wall)
-        // We use RotatingInstance but set speed to 0 so it stays still like a normal shaft
-        this.shaft = instancerProvider()
-                .instancer(AllInstanceTypes.ROTATING, Models.partial(AllPartialModels.SHAFT_HALF))
+        this.shaft = instancerProvider().instancer(AllInstanceTypes.ROTATING, Models.partial(AllPartialModels.SHAFT_HALF))
                 .createInstance();
-
         shaft.setup(blockEntity)
-                .rotateToFace(Direction.SOUTH, facing.getOpposite()) // South is the "back" of the shaft model
                 .setPosition(getVisualPosition())
+                .rotateToFace(Direction.SOUTH, facing.getOpposite())
                 .setChanged();
 
-        // 2. The Blade (The part that actually moves)
-        this.blade = instancerProvider()
-                .instancer(InstanceTypes.ORIENTED, Models.partial(KineticPartialModels.RUDDER_COPPER_BLADE))
+        this.blade = instancerProvider().instancer(InstanceTypes.ORIENTED, Models.partial(KineticPartialModels.RUDDER_COPPER_BLADE))
                 .createInstance();
-
         blade.position(getVisualPosition())
                 .setChanged();
 
-        updateRotation(partialTicks);
+        animate();
     }
 
     @Override
-    public void update(float partialTicks) {
-        super.update(partialTicks);
-        updateRotation(partialTicks);
+    public void beginFrame(Context ctx) {
+        animate();
     }
 
-    private void updateRotation(float partialTicks) {
-//        BlockState blockState = movementContext.state;
-//        float angle =  KineticBlockEntityVisual.rotationAxis(blockState);
+    private void animate() {
+//        var facing = blockState.getValue(BlockStateProperties.FACING);
+//        float angle = blockEntity.getSpeed();
+//        blade.rotate(angle, facing).setChanged();
+    }
 
-        // Align the blade rotation to the block's facing axis
-        blade.rotation(facing.getRotation().rotateAxis((float) Math.toRadians(0), 0, 1, 0))
+    @Override
+    public void update(float pt) {
+        shaft.setup(blockEntity)
                 .setChanged();
     }
 
     @Override
-    public void updateLight(float partialTicks) {
-
-        relight(blade, shaft);
+    public void updateLight(float partialTick) {
+        relight(shaft, blade);
     }
 
     @Override
     protected void _delete() {
-
         blade.delete();
         shaft.delete();
     }
 
     @Override
-    public void collectCrumblingInstances(Consumer<@Nullable Instance> consumer) {
-
+    public void collectCrumblingInstances(Consumer<Instance> consumer) {
+        consumer.accept(shaft);
     }
 }
