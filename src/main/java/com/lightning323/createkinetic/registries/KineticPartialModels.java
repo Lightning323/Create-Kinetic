@@ -3,6 +3,7 @@ package com.lightning323.createkinetic.registries;
 import com.lightning323.createkinetic.CreateKinetic;
 import com.lightning323.createkinetic.blocks.helm.WoodTypeEnum;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.EnumMap;
@@ -42,6 +43,7 @@ public class KineticPartialModels {
     private static PartialModel block(String path) {
         return PartialModel.of(new ResourceLocation(MOD_ID, "block/" + path));
     }
+
 
     private static PartialModel entity(String path) {
         return PartialModel.of(new ResourceLocation(MOD_ID, "entity/" + path));

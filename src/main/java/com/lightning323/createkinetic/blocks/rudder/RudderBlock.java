@@ -47,6 +47,10 @@ public class RudderBlock extends DirectionalKineticBlock implements IBE<RudderBl
         return state.getValue(FACING).getAxis();
     }
 
+    @Override
+    public boolean hasShaftTowards(LevelReader world, BlockPos pos, BlockState state, Direction face) {
+        return face == state.getValue(FACING).getOpposite();
+    }
 
     /**
      * Rotation / orientation related stuff
@@ -64,7 +68,7 @@ public class RudderBlock extends DirectionalKineticBlock implements IBE<RudderBl
                 Direction facing = state.getValue(DirectionalKineticBlock.FACING);
 //                boolean alongFirst = state.getValue(DirectionalAxisKineticBlock.AXIS_ALONG_FIRST_COORDINATE);
 
-                int xRot = 0;
+                int xRot = 90;
                 int yRot = 0;
 
                 switch (facing) {
@@ -78,10 +82,10 @@ public class RudderBlock extends DirectionalKineticBlock implements IBE<RudderBl
                         yRot = 90;
                         break;
                     case UP:
-                        xRot = 270;
+                        xRot = 270+90;
                         break;
                     case DOWN:
-                        xRot = 90;
+                        xRot = 90+90;
                         break;
                 }
 

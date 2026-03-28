@@ -4,17 +4,14 @@ import com.lightning323.createkinetic.registries.KineticPartialModels;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.AllPartialModels;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
-import com.simibubi.create.content.kinetics.crank.HandCrankBlockEntity;
 import dev.engine_room.flywheel.api.visualization.VisualizationManager;
 import net.createmod.catnip.render.CachedBuffers;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import org.joml.Vector3f;
 
 
 public class RudderRenderer extends KineticBlockEntityRenderer<RudderBlockEntity> {
@@ -25,6 +22,11 @@ public class RudderRenderer extends KineticBlockEntityRenderer<RudderBlockEntity
     @Override
     protected void renderSafe(RudderBlockEntity be, float partialTicks, PoseStack ms, MultiBufferSource buffer,
                               int light, int overlay) {
+        // 2. Skip manual blade rendering if Flywheel is handling it
+        if (VisualizationManager.supportsVisualization(be.getLevel()))
+            return;
+
+
         BlockState state = be.getBlockState();
         // Use your custom property to find the attachment direction
         Direction facing = state.getValue(BlockStateProperties.FACING);
@@ -36,9 +38,6 @@ public class RudderRenderer extends KineticBlockEntityRenderer<RudderBlockEntity
                 .light(light)
                 .renderInto(ms, buffer.getBuffer(RenderType.solid()));
 
-        // 2. Skip manual blade rendering if Flywheel is handling it
-        if (VisualizationManager.supportsVisualization(be.getLevel()))
-            return;
 
         // 3. Render the Flap/Blade
         // Use the actual kinetic angle from the BE
