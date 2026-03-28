@@ -57,7 +57,7 @@ public class KineticBlocks {
             .block("rudder", RudderBlock::new)
             .initialProperties(SharedProperties::wooden)
             .properties(p -> p.noOcclusion())
-            .blockstate((c, p) -> p.horizontalFaceBlock(c.get(), p.models().getExistingFile(p.modLoc("block/rudder/base"))))
+            .blockstate(RudderBlock.getBlockstateDefinition())
             .item()
             .model((c, p) -> p.withExistingParent(c.getName(), p.modLoc("block/rudder/base")))
             .build()

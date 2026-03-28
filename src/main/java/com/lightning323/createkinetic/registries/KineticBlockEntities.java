@@ -9,15 +9,13 @@ import com.lightning323.createkinetic.blocks.helm.ShipHelmBlockEntity;
 import com.lightning323.createkinetic.blocks.helm.renderer.ShipHelmBlockEntityRenderer;
 import com.lightning323.createkinetic.blocks.rudder.RudderBlockEntity;
 import com.lightning323.createkinetic.blocks.rudder.RudderRenderer;
+import com.lightning323.createkinetic.blocks.rudder.RudderVisual;
 import com.lightning323.createkinetic.blocks.sail.RetractableSailBlockEntity;
 import com.lightning323.createkinetic.blocks.sail.SailRenderer;
 import com.lightning323.createkinetic.blocks.sail.SailVisual;
 import com.lightning323.createkinetic.blocks.sail.sailPulley.SailPulleyBlockEntity;
 import com.lightning323.createkinetic.blocks.sail.sailPulley.SailPulleyRenderer;
 import com.lightning323.createkinetic.blocks.sail.sailPulley.SailPulleyVisual;
-import com.simibubi.create.content.kinetics.crank.HandCrankBlockEntity;
-import com.simibubi.create.content.kinetics.crank.HandCrankRenderer;
-import com.simibubi.create.content.kinetics.crank.HandCrankVisual;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
 
 import static com.lightning323.createkinetic.CreateKinetic.REGISTRATE;
@@ -74,8 +72,9 @@ public class KineticBlockEntities {
             .renderer(() -> KCrankRenderer::new)
             .register();
 
-    public static final BlockEntityEntry<RudderBlockEntity> RUDDER_BE = REGISTRATE
+    public static final BlockEntityEntry<RudderBlockEntity> RUDDER = REGISTRATE
             .blockEntity("rudder", RudderBlockEntity::new)
+            .visual(() -> RudderVisual::new)
             .validBlocks(KineticBlocks.RUDDER)
             .renderer(() -> RudderRenderer::new) // This links the BER automatically
             .register();

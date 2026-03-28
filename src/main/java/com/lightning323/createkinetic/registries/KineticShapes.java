@@ -17,7 +17,8 @@ public class KineticShapes {
             SAIL_CLOTH = shape(7, 0, 0, 9, 16, 16).forAxis(),
             SAIL_MAGNET = shape(3, 0, 10, 13, 16, 16)//bar
                     .add(shape(7, 0, 0, 9, 16, 16).build())//cloth
-                    .forAxis();
+                    .forAxis(),
+            RUDDER_BASE = shape(3, 0, 0, 13, 16, 16).forAxis();
 
     private static AllShapes.Builder shape(VoxelShape shape) {
         return new AllShapes.Builder(shape);

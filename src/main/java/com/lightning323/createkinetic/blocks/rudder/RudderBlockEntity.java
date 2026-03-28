@@ -11,6 +11,9 @@ public class RudderBlockEntity extends KineticBlockEntity {
     public RudderBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
     }
-
-    // You can update flapRotation here in a tick method if needed
+    @Override
+    public void tick() {
+        super.tick();
+        System.out.println("TICK");
+    }
 }
