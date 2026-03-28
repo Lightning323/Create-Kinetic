@@ -9,6 +9,7 @@ import dev.engine_room.flywheel.api.instance.Instance;
 import dev.engine_room.flywheel.api.visualization.VisualizationContext;
 import dev.engine_room.flywheel.lib.instance.InstanceTypes;
 import dev.engine_room.flywheel.lib.instance.OrientedInstance;
+import dev.engine_room.flywheel.lib.material.Materials;
 import dev.engine_room.flywheel.lib.model.Models;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import dev.engine_room.flywheel.lib.visual.SimpleDynamicVisual;
@@ -41,6 +42,7 @@ public class RudderVisual extends KineticBlockEntityVisual<RudderBlockEntity> im
                 .rotateToFace(Direction.SOUTH, facing.getOpposite())
                 .setChanged();
 
+        //We set the rendertype to "render_type": "minecraft:cutout", in the model json file
         this.blade = instancerProvider().instancer(InstanceTypes.ORIENTED, Models.partial(KineticPartialModels.RUDDER_COPPER_BLADE))
                 .createInstance();
 
@@ -76,21 +78,8 @@ public class RudderVisual extends KineticBlockEntityVisual<RudderBlockEntity> im
 
         float time = net.createmod.catnip.animation.AnimationTickHolder.getRenderTime();
         float testAngle = time * 0.001f;
-//        org.joml.Quaternionf q = new org.joml.Quaternionf();
-//        q.rotationY((float) Math.toRadians(facing.toYRot()));
-//        q.rotateX((float) Math.toRadians(90));
-//        q.rotateY(testAngle);
         blade.rotate(testAngle, Direction.Axis.Y).setChanged();
-//        blade.rotation(q.x, q.y, q.z, q.w)
-//                .setChanged();
     }
-
-//    private void animate() {
-//        shaft.setup(blockEntity).setChanged();
-//        var facing = blockState.getValue(BlockStateProperties.FACING);
-//        float angle = blockEntity.getSpeed();
-//        blade.rotate((float) Math.toRadians(angle), Direction.Axis.X);
-//    }
 
 //    @Override
 //    public void update(float pt) {
