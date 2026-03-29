@@ -1,19 +1,14 @@
 package com.lightning323.createkinetic.blocks.rudder;
 
 import com.lightning323.createkinetic.ship.KineticShipControl;
-import com.lightning323.createkinetic.ship.ShipUtils;
-import com.lightning323.createkinetic.utils.VSUtils;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import org.joml.Quaternionf;
-import org.joml.Quaternionfc;
-import org.valkyrienskies.physics_api.voxel.updates.VoxelShapeUpdateIterator;
 
 public class RudderBlockEntity extends KineticBlockEntity {
 
@@ -46,7 +41,7 @@ public class RudderBlockEntity extends KineticBlockEntity {
             rudderIdentityRotation.rotationY((float) Math.toRadians(yRot));
             rudderIdentityRotation.rotateX((float) Math.toRadians(xRot));
         } else {
-            KineticShipControl controller = ShipUtils.getOrAddShipController((ServerLevel) level, getBlockPos());
+            KineticShipControl controller = KineticShipControl.getOrAddController((ServerLevel) level, getBlockPos());
             if (controller != null) controller.addRudder(getBlockPos());
         }
     }
@@ -54,19 +49,19 @@ public class RudderBlockEntity extends KineticBlockEntity {
     public void remove() {
         super.remove();
         if (!level.isClientSide) {
-            KineticShipControl controller = ShipUtils.getOrAddShipController((ServerLevel) level, getBlockPos());
+            KineticShipControl controller = KineticShipControl.getOrAddController((ServerLevel) level, getBlockPos());
             if (controller != null) controller.removeRudder(getBlockPos());
         }
     }
 
-    @Override
-    public void tick() {
-        super.tick();
-        if (!level.isClientSide) {//TODO: Could update logic have something to do with where it happens that makes it not work?
-            KineticShipControl controller = ShipUtils.getOrAddShipController((ServerLevel) level, getBlockPos());
-            if (controller != null) controller.updateRudderForces();
-        }
-    }
+//    @Override
+//    public void tick() {
+//        super.tick();
+//        if (!level.isClientSide) {//TODO: Could update logic have something to do with where it happens that makes it not work?
+//            KineticShipControl controller = ShipUtils.getOrAddShipController((ServerLevel) level, getBlockPos());
+//            if (controller != null) controller.updateRudderForces();
+//        }
+//    }
 
     public float getForce() {
         return getSpeed();

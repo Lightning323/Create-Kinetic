@@ -1,7 +1,6 @@
 package com.lightning323.createkinetic.blocks;
 
 import com.lightning323.createkinetic.ship.KineticShipControl;
-import com.lightning323.createkinetic.ship.ShipUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
@@ -13,26 +12,23 @@ public abstract class CountableBlock extends Block {
         super(p_49795_);
     }
 
-    @SuppressWarnings("deprecation")
     public void onPlace(BlockState state, Level world, BlockPos pos, BlockState oldState, boolean notify) {
-        if (world.isClientSide) {
-            return;
+        if (!world.isClientSide) {
+            addToShip(state, world, pos, KineticShipControl.getOrAddController((ServerLevel) world, pos));
         }
-        addToShip(ShipUtils.getOrAddShipController((ServerLevel) world, pos));
     }
 
-    abstract void addToShip(KineticShipControl controller);
-
-    abstract void removeFromShip(KineticShipControl controller);
-
-
-    @SuppressWarnings({"deprecation", "UnstableApiUsage"})
     public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean moved) {
-        if (world.isClientSide) {
-            return;
-        }
-        if (newState.isAir() || !newState.is(state.getBlock())) {
-            removeFromShip(ShipUtils.getOrAddShipController((ServerLevel) world, pos));
+        if (!world.isClientSide) {
+            if (newState.isAir() || !newState.is(state.getBlock())) {
+                removeFromShip(state, world, pos, KineticShipControl.getOrAddController((ServerLevel) world, pos));
+            }
         }
     }
+
+    abstract void addToShip(BlockState state, Level level, BlockPos pos, KineticShipControl controller);
+
+    abstract void removeFromShip(BlockState state, Level level, BlockPos pos, KineticShipControl controller);
+
+
 }

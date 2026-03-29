@@ -249,7 +249,7 @@ public class KineticCommands {
 
     private static boolean setShipStatic(ServerLevel level, LoadedServerShip ship, boolean isStatic) {
         if (ship != null) {
-            KineticShipControl control = KineticShipControl.getOrCreate(ship, level);
+            KineticShipControl control = KineticShipControl.getOrAddController(level, ship);
             if (control != null) {
                 control.setStatic(isStatic);
                 return true;

@@ -50,7 +50,7 @@ public class CreateKinetic {
                 .newAttachmentRegistrationBuilder(KineticShipControl.class).build()
         );
         ValkyrienSkies.api().getShipLoadEvent().on(ship -> {
-            KineticShipControl.getOrCreate(ship.getShip(), null);
+            KineticShipControl.getOrAddController(null, ship.getShip());
         });
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, KineticConfig.SPEC);

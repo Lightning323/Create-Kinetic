@@ -1,7 +1,7 @@
 package com.lightning323.createkinetic.blocks
 
 import com.lightning323.createkinetic.registries.KineticShapes
-import com.lightning323.createkinetic.ship.ShipUtils
+import com.lightning323.createkinetic.ship.KineticShipControl
 import net.minecraft.world.level.block.HorizontalDirectionalBlock
 
 import net.minecraft.core.BlockPos
@@ -79,7 +79,7 @@ class AnchorBlock(properties: BlockBehaviour.Properties) : HorizontalDirectional
 
         val bl = state.getValue(BlockStateProperties.POWERED)
 
-        val controller = ShipUtils.getOrAddShipController(level, pos);
+        val controller = KineticShipControl.getOrAddController(level, pos);
         if(controller!=null) {
             controller.anchors += 1
             controller.anchorsActive += if (bl) 1 else 0
@@ -94,7 +94,7 @@ class AnchorBlock(properties: BlockBehaviour.Properties) : HorizontalDirectional
         level as ServerLevel
         val bl = state.getValue(BlockStateProperties.POWERED)
 
-        val controller = ShipUtils.getShipController(level, pos);
+        val controller = KineticShipControl.getController(level, pos);
         if(controller!=null) {
             controller.anchors -= 1
             controller.anchorsActive -= if (bl) 1 else 0

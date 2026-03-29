@@ -2,7 +2,6 @@ package com.lightning323.createkinetic.blocks.ballastTank;
 
 import com.lightning323.createkinetic.CreateKinetic;
 import com.lightning323.createkinetic.ship.KineticShipControl;
-import com.lightning323.createkinetic.ship.ShipUtils;
 import com.simibubi.create.api.connectivity.ConnectivityHandler;
 import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.content.fluids.tank.FluidTankBlock;
@@ -81,25 +80,24 @@ public class BallastTankBlockEntity extends SmartBlockEntity implements IHaveGog
     public void onLoad() {
         super.onLoad();
         if (level.isClientSide()) return;
-        KineticShipControl controller = ShipUtils.getOrAddShipController((ServerLevel) level, getBlockPos());
-        if (controller != null) controller.addTankBallastLocation(getBlockPos());
-        updateWeight();
+        KineticShipControl controller = KineticShipControl.getOrAddController((ServerLevel) level, getBlockPos());
+        if (controller != null) controller.addTankBallastLocation(getBlockPos(), (ServerLevel) level);
+
     }
 
     @Override
     public void remove() {
         super.remove();
         if (level.isClientSide()) return;
-        KineticShipControl controller = ShipUtils.getShipController((ServerLevel) level, getBlockPos());
-        if (controller != null) controller.removeTankBallastLocation(getBlockPos());
-        updateWeight();
+        KineticShipControl controller = KineticShipControl.getController((ServerLevel) level, getBlockPos());
+        if (controller != null) controller.removeTankBallastLocation(getBlockPos(), (ServerLevel) level);
     }
 
     private void onPositionChanged() {
         removeController(true);
 
         if (!level.isClientSide()) {//Update our block entity location on the ship controller
-            KineticShipControl controller = ShipUtils.getOrAddShipController((ServerLevel) level, getBlockPos());
+            KineticShipControl controller = KineticShipControl.getOrAddController((ServerLevel) level, getBlockPos());
             if (controller != null) controller.reassignTankBallastLocation(lastKnownPos, worldPosition);
         }
 
@@ -121,10 +119,10 @@ public class BallastTankBlockEntity extends SmartBlockEntity implements IHaveGog
         if (level.getGameTime() - lastControllerUpdate > 20) {
             CreateKinetic.LOGGER.debug("Fluid changed {} {}", getBlockPos(), getWeight());
             lastControllerUpdate = level.getGameTime();
-            KineticShipControl control = ShipUtils.getOrAddShipController((ServerLevel) level, getBlockPos());
+            KineticShipControl control = KineticShipControl.getOrAddController((ServerLevel) level, getBlockPos());
             //Update the controller
             if (control != null) {
-                control.updateBallastWeights();
+                control.updateBallastWeights((ServerLevel) level);
             }
         }
     }

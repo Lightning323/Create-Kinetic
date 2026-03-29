@@ -17,7 +17,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -29,6 +28,7 @@ import org.valkyrienskies.core.api.ships.*;
 import org.valkyrienskies.core.api.ships.properties.ShipTransform;
 import org.valkyrienskies.core.api.world.PhysLevel;
 import org.valkyrienskies.core.impl.game.ships.PhysShipImpl;
+import org.valkyrienskies.mod.common.VSGameUtilsKt;
 import org.valkyrienskies.mod.common.entity.ShipMountingEntity;
 
 import static java.lang.Math.*;
@@ -41,6 +41,85 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 public final class KineticShipControl implements ShipPhysicsListener, ServerTickListener {
     @JsonIgnore
     public static final Logger LOGGER = CreateKinetic.LOGGER;
+
+
+    /**
+     *
+     * @param world the Server Level
+     * @param pos   the block position
+     * @return the ship controller, or null if the block is not in a ship
+     */
+    @JsonIgnore
+    public static KineticShipControl getController(ServerLevel world, BlockPos pos) {
+        if (VSGameUtilsKt.isBlockInShipyard(world, pos)) {
+            LoadedServerShip ship = VSGameUtilsKt.getShipObjectManagingPos(world, pos);
+            if (ship != null) {
+                KineticShipControl controller = ship.getAttachment(KineticShipControl.class);
+                return controller;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Gets or creates a ship controller for the block (Creates the ship controler on a vs ship if needed)
+     *
+     * @param world the Server Level
+     * @param pos   the block position
+     * @return the ship controller, or null if the block is not in a ship
+     */
+    @JsonIgnore
+    public static KineticShipControl getOrAddController(ServerLevel world, BlockPos pos) {
+        if (VSGameUtilsKt.isBlockInShipyard(world, pos)) {
+            ServerShip ship = VSGameUtilsKt.getShipObjectManagingPos((ServerLevel) world, pos);
+            if (ship != null) {
+                KineticShipControl controller = getOrAddController((ServerLevel) world, (LoadedServerShip) ship);
+                return controller;
+            } else {
+                ship = VSGameUtilsKt.getShipManagingPos(world, pos);
+                if (ship instanceof LoadedServerShip) {
+                    KineticShipControl controller = getOrAddController((ServerLevel) world, (LoadedServerShip) ship);
+                    return controller;
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Gets or creates a ship controller for the block (Creates the ship controler on a vs ship if needed)
+     *
+     * @param world the Server Level
+     * @param ship  the ship
+     * @return the ship controller, or null if the block is not in a ship
+     */
+    @JsonIgnore
+    public static KineticShipControl getOrAddController(ServerLevel world, LoadedServerShip ship) {
+        if (ship != null) {
+            if (ship.getAttachment(KineticShipControl.class) == null) {
+                ship.setAttachment(KineticShipControl.class, new KineticShipControl());
+            }
+            KineticShipControl controller = ship.getAttachment(KineticShipControl.class);
+            assert controller != null;
+            controller.ship = ship;
+            if (world != null) {
+                controller.level = world;
+            }
+
+            if (ship.getShipAABB() != null) {
+                controller.updateShipBounds();
+            } else {
+                controller.boundx = 0;
+                controller.boundz = 0;
+            }
+            controller.updateShipDirection();
+            return controller;
+        } else {
+            return null;
+        }
+    }
+
+
 //    public static void deferUntilLoaded(ServerShip ship, Level level, Consumer<KineticShipControl> consumer) {
 //        if(ship instanceof LoadedServerShip) {
 //            consumer.accept(getOrCreate(ship, level));
@@ -90,6 +169,7 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
     private LongSet rudderLocations = new LongOpenHashSet();
     public Vector3d rudderForce = new Vector3d(0, 0, 0);
 
+
     @JsonProperty("rudderLocations") //The Getter (Serialization)
     public long[] getRudderLocations() {
         return rudderLocations.toLongArray();
@@ -105,20 +185,22 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
 
     public void addRudder(BlockPos pos) {
         rudderLocations.add(pos.asLong());
+        updateRudderForces(this.level);
     }
 
     public void removeRudder(BlockPos pos) {
         rudderLocations.remove(pos.asLong());
+        updateRudderForces(this.level);
     }
 
-    public void updateRudderForces() {
+    public void updateRudderForces(ServerLevel level) {
         rudderForce.set(0, 0, 0);
-
         LongIterator iterator = rudderLocations.iterator();
         while (iterator.hasNext()) {
             long packedPos = iterator.nextLong();
             BlockPos pos = BlockPos.of(packedPos);
             BlockEntity blockEntity = level.getBlockEntity(pos);
+            System.out.println(level.getBlockState(pos).getBlock());
             if (blockEntity instanceof RudderBlockEntity tbe) {
                 Direction value = tbe.getBlockState().getValue(BlockStateProperties.FACING);
                 double forceScalar = tbe.getForce() / 256.0; //We get a number from -1 to 1
@@ -139,7 +221,7 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
                 iterator.remove();
             }
         }
-//        LOGGER.debug("Forces of {} rudders: {}", rudderLocations.size(), rudderForce);
+        if (!rudderLocations.isEmpty()) LOGGER.debug("Forces of {} rudders: {}", rudderLocations.size(), rudderForce);
     }
 
     /**
@@ -163,12 +245,14 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
         }
     }
 
-    public void addTankBallastLocation(BlockPos pos) {
+    public void addTankBallastLocation(BlockPos pos, ServerLevel level) {
         tankBallastLocations.add(pos.asLong());
+        updateBallastWeights(level);
     }
 
-    public void removeTankBallastLocation(BlockPos pos) {
+    public void removeTankBallastLocation(BlockPos pos, ServerLevel level) {
         tankBallastLocations.remove(pos.asLong());
+        updateBallastWeights(level);
     }
 
     public void reassignTankBallastLocation(BlockPos lastKnownPos, BlockPos newLoc) {
@@ -182,7 +266,7 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
     public int numBuoys = 0;
     public float tankBallastWeight = 0;
 
-    public void updateBallastWeights() {
+    public void updateBallastWeights(ServerLevel level) {
         tankBallastWeight = 0;
         for (long location : tankBallastLocations) {
             BlockPos pos = BlockPos.of(location);
@@ -238,6 +322,24 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
     public int numSquareSails = 0; //Square sails are across the width of the ship, they catch wind from the front and back
 
 
+    public void addSail(ServerLevel world, BlockPos pos, Direction.Axis sailAxis) {
+        if (sailAxis == Direction.Axis.X) {
+            sailsX.add(pos.asLong());
+        } else if (sailAxis == Direction.Axis.Z) {
+            sailsZ.add(pos.asLong());
+        }
+        updateSailCount((ServerLevel) level);
+    }
+
+    public void removeSail(ServerLevel world, BlockPos pos, Direction.Axis sailAxis) {
+        if (sailAxis == Direction.Axis.X) {
+            sailsX.remove(pos.asLong());
+        } else if (sailAxis == Direction.Axis.Z) {
+            sailsZ.remove(pos.asLong());
+        }
+        updateSailCount((ServerLevel) level);
+    }
+
     public void updateSailCount(ServerLevel world) {
         //North = -Z (Direction.AxisDirection.NEGATIVE, Direction.Axis.Z)
         //South = +Z (Direction.AxisDirection.POSITIVE, Direction.Axis.Z)
@@ -278,21 +380,12 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
         while (iterator.hasNext()) {
             long packedPos = iterator.nextLong();
             BlockPos pos = BlockPos.of(packedPos);
-//            BlockEntity blockEntity = world.getBlockEntity(pos);
             Block block = world.getBlockState(pos).getBlock();
             if (isValidSailBlock(block)) { //Valid sail blocks
                 count++;
             } else {
                 iterator.remove();
             }
-
-            //We no longer need to check block entities because the actual pulley sail block can tell us how many sails we have
-            /*
-             else if (blockEntity != null && !blockEntity.isRemoved()) {
-                //Valid sail block entities
-                if (blockEntity instanceof SailPulleyBlockEntity sbe) count += sbe.getTotalSails();
-                else if (blockEntity instanceof SailBlockEntity sbe) count += sbe.getTotalSails();
-            } */
         }
         return count;
     }
@@ -310,8 +403,6 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
 
     @JsonIgnore
     public LoadedServerShip ship = null;
-    @JsonIgnore
-    private static final Vector3d up = new Vector3d(0.0, 1.0, 0.0);
 
     private void updateShipBounds() {
         boundx = ship.getShipAABB().maxX() - ship.getShipAABB().minX();
@@ -353,31 +444,6 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
         LOGGER.debug("Ship direction = {}; Ship ratio = {}", shipDirection.toString(), ratio);
     }
 
-    @JsonIgnore
-    public static KineticShipControl getOrCreate(LoadedServerShip ship, ServerLevel world) {
-        if (ship != null) {
-            if (ship.getAttachment(KineticShipControl.class) == null) {
-                ship.setAttachment(KineticShipControl.class, new KineticShipControl());
-            }
-            KineticShipControl controller = ship.getAttachment(KineticShipControl.class);
-            assert controller != null;
-            controller.ship = ship;
-            if (world != null) {
-                controller.level = world;
-            }
-
-            if (ship.getShipAABB() != null) {
-                controller.updateShipBounds();
-            } else {
-                controller.boundx = 0;
-                controller.boundz = 0;
-            }
-            controller.updateShipDirection();
-            return controller;
-        } else {
-            return null;
-        }
-    }
 
     public boolean isPlayerValid() {
         // Check if we have a player and if they are still riding a mounting entity
@@ -428,7 +494,7 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
         double seatedPlayerLeftImpulse = 0;
         double seatedPlayerForwardImpulse = 0;
         double seatedPlayerUpImpulse = 0;
-        if ( isPlayerValid()) {
+        if (isPlayerValid()) {
             this.controlData = new ControlData(
                     Direction.NORTH, // Or get the seat's direction
                     //ALL impulses are either -1 or 1 or 0
@@ -437,22 +503,24 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
                     seatedPlayer.yya,// jja = up/down (Space/Shift)
                     seatedPlayer.isSprinting()
             );
-            seatedPlayerLeftImpulse  =controlData.getLeftImpulse();
-            seatedPlayerForwardImpulse =controlData.getForwardImpulse();
-            seatedPlayerUpImpulse =controlData.getUpImpulse();
+            seatedPlayerLeftImpulse = controlData.getLeftImpulse();
+            seatedPlayerForwardImpulse = controlData.getForwardImpulse();
+            seatedPlayerUpImpulse = controlData.getUpImpulse();
         }
 
-        double idealAlphaX = calculateIdealAlpha(KineticConfig.turnSpeed, maxAlphaZX, largestDistance, omega.x(),  rudderForce.x() + seatedPlayerForwardImpulse);
-        double idealAlphaY = calculateIdealAlpha(KineticConfig.turnSpeed, maxAlphaY, largestDistance, omega.y(),  rudderForce.y() + seatedPlayerLeftImpulse);
-        double idealAlphaZ = calculateIdealAlpha(KineticConfig.turnSpeed, maxAlphaZX, largestDistance, omega.z(), rudderForce.z() + seatedPlayerUpImpulse);
+        double idealAlphaX = calculateIdealAlpha(KineticConfig.diveSpeed, maxAlphaZX, largestDistance, omega.x(), rudderForce.x() + seatedPlayerForwardImpulse);
+        double idealAlphaY = calculateIdealAlpha(KineticConfig.turnSpeed, maxAlphaY, largestDistance, omega.y(), rudderForce.y() + seatedPlayerLeftImpulse);
+        double idealAlphaZ = calculateIdealAlpha(KineticConfig.diveSpeed, maxAlphaZX, largestDistance, omega.z(), rudderForce.z() + seatedPlayerUpImpulse);
         Vector3d torque = new Vector3d(idealAlphaX, idealAlphaY, idealAlphaZ);
 
-        if (controlData != null) {
-            // Add banking effect (leaning into the turn)
-            moiTensor.transform(torque); // Applies the Moment of Inertia tensor to the vector
-            torque.add(getPlayerControlledBanking(controlData, physShip, moiTensor, -idealAlphaY));
-        }
-        LOGGER.debug("Torque={}", torque);
+        // Add banking effect (leaning into the turn)
+        moiTensor.transform(torque);
+        // Applies the Moment of Inertia tensor to the vector
+//        Vec3i normal = controlData.getSeatInDirection().getNormal();
+        Vector3d north = new Vector3d(0, 0, -1);
+        torque.add(getPlayerControlledBanking(north, physShip, moiTensor, -idealAlphaY));
+
+//        LOGGER.debug("Torque={}", torque);
         physShip.applyWorldTorque(torque);
         // 5. Apply Force (Forward/Backward)
 //        physShip.applyWorldForce(getPlayerForwardVel(control, physShip));
@@ -636,10 +704,6 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
         //LOGGER.info("applyrotforceTOPOS called");
     }
 
-    public void updateRudderAngle(double angle) {
-
-    }
-
     private double calculateWindAngleModifier(double windAngle, double noSail) {
         // Prevent division by zero
         if (noSail == 0) return 1.0;
@@ -708,12 +772,15 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
         return normalizedAlphaMultiplier * maxAlpha;
     }
 
-    private Vector3d getPlayerControlledBanking(ControlData control, PhysShip physShip, Matrix3dc moiTensor, double strength) {
-        // 1. Get the direction the seat is facing (e.g., North, East)
-        // Assuming toJOMLD() converted a Vector3i or Direction.Normal to a Vector3d
-        Vec3i normal = control.getSeatInDirection().getNormal();
-        Vector3d rotationVector = new Vector3d(normal.getX(), normal.getY(), normal.getZ());
-
+    /**
+     *
+     * @param rotationVector  1. Get the direction the seat is facing (e.g., North, East)
+     * @param physShip
+     * @param moiTensor
+     * @param strength
+     * @return
+     */
+    private Vector3d getPlayerControlledBanking(Vector3d rotationVector, PhysShip physShip, Matrix3dc moiTensor, double strength) {
         // 2. Transform the local seat direction to world rotation
         physShip.getTransform().getShipToWorldRotation().transform(rotationVector);
 
@@ -736,17 +803,14 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
 
     @Override
     public void onServerTick() {
-//        Createkinetic.LOGGER.debug("SERVER TICK");
-    }
-
-    public void countAndRemoveSails() {
-        CreateKinetic.LOGGER.debug("SAIL COUNT Square: {}, FNA: {}", numSquareSails, numFnASails);
+        if (this.level != null) {
+            updateRudderForces(this.level);
+        }
     }
 
     public void setStatic(boolean frozen) {
         this.frozen = frozen;
     }
-
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     private static class ForceAtPos {

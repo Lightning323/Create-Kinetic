@@ -4,7 +4,7 @@ import com.lightning323.createkinetic.ship.KineticShipControl;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class BuoyBlock extends CountableBlock {
@@ -13,12 +13,12 @@ public class BuoyBlock extends CountableBlock {
     }
 //
     @Override
-    void addToShip(KineticShipControl controller) {
+    void addToShip(BlockState state, Level level, BlockPos pos, KineticShipControl controller) {
         controller.numBuoys++;
     }
 
     @Override
-    void removeFromShip(KineticShipControl controller) {
+    void removeFromShip(BlockState state, Level level, BlockPos pos, KineticShipControl controller) {
         controller.numBuoys--;
     }
 

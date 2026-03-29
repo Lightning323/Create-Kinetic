@@ -1,5 +1,6 @@
 package com.lightning323.createkinetic.blocks.sail.sailPulley;
 
+import com.lightning323.createkinetic.blocks.CountableBlock;
 import com.lightning323.createkinetic.blocks.sail.RetractableSailBlock;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 
@@ -40,7 +41,8 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class SailBlockBase extends Block implements SimpleWaterloggedBlock {
+public abstract class SailBlockBase extends Block implements SimpleWaterloggedBlock {
+
 
     public SailBlockBase(Properties properties) {
         super(properties);
@@ -80,7 +82,6 @@ public class SailBlockBase extends Block implements SimpleWaterloggedBlock {
     @Override
     public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
         if (!isMoving) {
-
             if (state.getBlock() == newState.getBlock()
                     && newState.hasProperty(COLOR)
                     && newState.getValue(COLOR) != state.getValue(COLOR)) {
@@ -114,6 +115,7 @@ public class SailBlockBase extends Block implements SimpleWaterloggedBlock {
         if (state.hasBlockEntity() && state.getBlock() != newState.getBlock()) {
             worldIn.removeBlockEntity(pos);
         }
+        super.onRemove(state, worldIn, pos, newState, isMoving);
     }
 
     private static void onRopeBroken(Level world, BlockPos sailPos) {

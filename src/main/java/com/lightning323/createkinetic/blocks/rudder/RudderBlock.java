@@ -2,29 +2,19 @@ package com.lightning323.createkinetic.blocks.rudder;
 
 import com.lightning323.createkinetic.registries.KineticBlockEntities;
 import com.lightning323.createkinetic.ship.KineticShipControl;
-import com.lightning323.createkinetic.ship.ShipUtils;
-import com.simibubi.create.api.contraption.transformable.TransformableBlock;
-import com.simibubi.create.content.contraptions.StructureTransform;
-import com.simibubi.create.content.kinetics.base.DirectionalAxisKineticBlock;
 import com.simibubi.create.content.kinetics.base.DirectionalKineticBlock;
-import com.simibubi.create.content.kinetics.base.IRotate;
 import com.simibubi.create.foundation.block.IBE;
 import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
-import net.createmod.catnip.data.Iterate;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelFile;
 
@@ -38,7 +28,7 @@ public class RudderBlock extends DirectionalKineticBlock implements IBE<RudderBl
         if (world.isClientSide) {
             return;
         }
-        KineticShipControl controller = ShipUtils.getOrAddShipController((ServerLevel) world, pos);
+        KineticShipControl controller = KineticShipControl.getOrAddController((ServerLevel) world, pos);
         if (controller != null) controller.addRudder(pos);
     }
 
@@ -47,7 +37,7 @@ public class RudderBlock extends DirectionalKineticBlock implements IBE<RudderBl
             return;
         }
         if (newState.isAir() || !newState.is(state.getBlock())) {
-            KineticShipControl controller = ShipUtils.getOrAddShipController((ServerLevel) world, pos);
+            KineticShipControl controller = KineticShipControl.getOrAddController((ServerLevel) world, pos);
             if (controller != null) controller.removeRudder(pos);
         }
     }

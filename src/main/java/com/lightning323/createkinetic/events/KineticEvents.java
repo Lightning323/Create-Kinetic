@@ -1,30 +1,19 @@
 package com.lightning323.createkinetic.events;
 
-import com.lightning323.createkinetic.CreateKinetic;
-import com.lightning323.createkinetic.KineticConfig;
-import com.lightning323.createkinetic.registries.KineticParticles;
 import com.lightning323.createkinetic.ship.KineticShipControl;
-import com.lightning323.createkinetic.ship.ShipUtils;
 import com.lightning323.createkinetic.ship.WindManager;
-import com.simibubi.create.Create;
-import com.simibubi.create.content.contraptions.bearing.SailBlock;
-import com.simibubi.create.content.kinetics.drill.CobbleGenOptimisation;
-import net.createmod.catnip.data.WorldAttached;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import org.joml.Vector3dc;
-import org.valkyrienskies.core.api.ships.LoadedServerShip;
 import org.valkyrienskies.mod.common.VSGameUtilsKt;
-import org.valkyrienskies.mod.common.util.IEntityDraggingInformationProvider;
 
 import static com.lightning323.createkinetic.CreateKinetic.MOD_ID;
 
@@ -55,8 +44,10 @@ public class KineticEvents {
         if (event.getLevel().isClientSide()) return;
 
         if (state.getBlock() instanceof com.simibubi.create.content.contraptions.bearing.SailBlock) {
+            Level level = event.getEntity().level();
             Direction value = state.getValue(BlockStateProperties.FACING);
-            ShipUtils.addSail(event.getEntity().level(), event.getPos(), value.getAxis());
+            KineticShipControl controller = KineticShipControl.getOrAddController((ServerLevel) level, event.getPos());
+            if (controller != null) controller.addSail((ServerLevel) level, event.getPos(), value.getAxis());
         }
     }
 
@@ -66,8 +57,10 @@ public class KineticEvents {
         if (event.getLevel().isClientSide()) return;
 
         if (state.getBlock() instanceof com.simibubi.create.content.contraptions.bearing.SailBlock) {
+            Level level = event.getPlayer().level();
             Direction value = state.getValue(BlockStateProperties.FACING);
-            ShipUtils.removeSail(event.getPlayer().level(), event.getPos(), value.getAxis());
+            KineticShipControl controller = KineticShipControl.getOrAddController((ServerLevel) level, event.getPos());
+            if (controller != null) controller.addSail((ServerLevel) level, event.getPos(), value.getAxis());
         }
     }
 
@@ -77,21 +70,9 @@ public class KineticEvents {
         //Server side tick
         if (event.phase == TickEvent.Phase.START && !event.level.isClientSide) {
             WindManager.updateWind(event.level);
-        }
-    }
+            kineticWorldTick((ServerLevel) event.level);
 
-    private static void kineticWorldTick(ServerLevel world) {
-//        VSGameUtilsKt.getShipObjectWorld(world).getLoadedShips().forEach(ship -> {
-//            if (ship != null) {
-//                KineticShipControl controller = ship.getAttachment(KineticShipControl.class);
-//                if (controller != null) {
-//                    controller.world = world; //TODO: Not sure why this is needed
-//                    controller.periodicUpdate();
-//                }
-//            }
-//        });
-
-        //TODO: Add wind particles?
+            //TODO: Add wind particles?
 //        if (KineticConfig.windParticles && KineticConfig.windStrengthMultiplier > 0) {
 //            //Spawn wind particles for all players being dragged by ships with a SailsShipControl attachment
 //            world.players().forEach(serverPlayerEntity -> {
@@ -117,5 +98,18 @@ public class KineticEvents {
 //                }
 //            });
 //        }
+        }
+    }
+
+    private static void kineticWorldTick(ServerLevel world) {
+        //TODO: Find a better way to access level
+        VSGameUtilsKt.getShipObjectWorld(world).getLoadedShips().forEach(ship -> {
+            if (ship != null) {
+                KineticShipControl controller = ship.getAttachment(KineticShipControl.class);
+                if (controller != null && controller.level == null) {
+                    controller.level = world;
+                }
+            }
+        });
     }
 }
