@@ -52,11 +52,11 @@ public class RudderBlockEntity extends KineticBlockEntity {
     }
 
     public void remove() {
+        super.remove();
         if (!level.isClientSide) {
             KineticShipControl controller = ShipUtils.getOrAddShipController((ServerLevel) level, getBlockPos());
             if (controller != null) controller.removeRudder(getBlockPos());
         }
-        super.remove();
     }
 
     @Override

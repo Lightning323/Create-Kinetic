@@ -38,8 +38,8 @@ public class RudderBlock extends DirectionalKineticBlock implements IBE<RudderBl
         if (world.isClientSide) {
             return;
         }
-//        KineticShipControl controller = ShipUtils.getOrAddShipController((ServerLevel) world, pos);
-//        if (controller != null) controller.rudderLocations.add(pos.asLong());
+        KineticShipControl controller = ShipUtils.getOrAddShipController((ServerLevel) world, pos);
+        if (controller != null) controller.addRudder(pos);
     }
 
     public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean moved) {
@@ -47,8 +47,8 @@ public class RudderBlock extends DirectionalKineticBlock implements IBE<RudderBl
             return;
         }
         if (newState.isAir() || !newState.is(state.getBlock())) {
-//            KineticShipControl controller = ShipUtils.getOrAddShipController((ServerLevel) world, pos);
-//            if (controller != null) controller.rudderLocations.remove(pos.asLong());
+            KineticShipControl controller = ShipUtils.getOrAddShipController((ServerLevel) world, pos);
+            if (controller != null) controller.removeRudder(pos);
         }
     }
 

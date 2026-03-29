@@ -114,38 +114,18 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
     public void updateRudderForces() {
         rudderForce.set(0, 0, 0);
 
-//        final ShipTransform transform = physShip.getTransform();
-//        final org.joml.primitives.AABBdc aabb = this.ship.getWorldAABB();
-//        final Vector3dc center = transform.getPositionInWorld();
-
-        // 1. Calculate Largest Distance for Turn Penalty
-//        double dist1 = center.distance(aabb.minX(), center.y(), aabb.minZ());
-//        double dist2 = center.distance(aabb.minX(), center.y(), aabb.maxZ());
-//        double dist3 = center.distance(aabb.maxX(), center.y(), aabb.minZ());
-//        double dist4 = center.distance(aabb.maxX(), center.y(), aabb.maxZ());
-
-//        double largestDistance = Math.max(Math.max(dist1, dist2), Math.max(dist3, dist4));
-
-        // Equivalent to .coerceIn(0.5, maxSize)
-        double maxSize = KineticConfig.maxSizeForTurnSpeedPenalty;
-//        largestDistance = Math.max(0.5, Math.min(largestDistance, maxSize));
-
-        // 2. Physics Constants
-//        final Matrix3dc moiTensor = physShip.getMomentOfInertia();
-//        final Vector3dc omega = physShip.getAngularVelocity();
-
-//        double maxAlphaY = KineticConfig.turnAcceleration / largestDistance;
-
-        for (long location : rudderLocations) {
-            BlockPos pos = BlockPos.of(location);
+        LongIterator iterator = rudderLocations.iterator();
+        while (iterator.hasNext()) {
+            long packedPos = iterator.nextLong();
+            BlockPos pos = BlockPos.of(packedPos);
             BlockEntity blockEntity = level.getBlockEntity(pos);
             if (blockEntity instanceof RudderBlockEntity tbe) {
                 Direction value = tbe.getBlockState().getValue(BlockStateProperties.FACING);
                 double forceScalar = tbe.getForce() / 256.0; //We get a number from -1 to 1
 
-                double idealAlphaX =forceScalar;// omega2(KineticConfig.turnSpeed, maxAlphaY, largestDistance, omega.x(), forceScalar);
-                double idealAlphaY =forceScalar;// omega2(KineticConfig.turnSpeed, maxAlphaY, largestDistance, omega.y(), forceScalar);
-                double idealAlphaZ =forceScalar;// omega2(KineticConfig.turnSpeed, maxAlphaY, largestDistance, omega.z(), forceScalar);
+                double idealAlphaX = forceScalar;
+                double idealAlphaY = forceScalar;
+                double idealAlphaZ = forceScalar;
 
                 switch (value) {
                     case UP -> rudderForce.add(0, idealAlphaY, 0);
@@ -155,22 +135,11 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
                     case EAST -> rudderForce.add(idealAlphaX, 0, 0);
                     case WEST -> rudderForce.add(-idealAlphaX, 0, 0);
                 }
+            } else {
+                iterator.remove();
             }
         }
-        LOGGER.debug("Forces of {} rudders: {}",rudderLocations.size(), rudderForce);
-    }
-
-    private double omega2(double maxLinearSpeed, double maxAlpha, double largestDistance, double omega, double impulse) {
-        // 1. Constrain distance and calculate theoretical speed limit
-        double maxSize = KineticConfig.maxSizeForTurnSpeedPenalty;
-        double effectiveDist = Mth.clamp(largestDistance, 0.5, maxSize);
-        double maxOmega = maxLinearSpeed / effectiveDist;
-
-        // 2. Decide: Are we manually steering within safety limits?
-        // If not steering (impulse == 0) or over speed, we switch to stabilization.
-        boolean canSteer = impulse != 0.0f && Math.abs(omega) < maxOmega;
-        double multiplier = canSteer ? impulse : -Mth.clamp(omega, -1.0, 1.0);
-        return multiplier * maxAlpha;
+//        LOGGER.debug("Forces of {} rudders: {}", rudderLocations.size(), rudderForce);
     }
 
     /**
@@ -429,11 +398,35 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
         physShip1.setDoFluidDrag(true);
 
 
-        if (level != null) {
-            updateRudderForces();
-        }
-        physShip.applyWorldTorque(rudderForce);
+        /**
+         * Calculate steering constants
+         */
+        final ShipTransform transform = physShip.getTransform();
+        final org.joml.primitives.AABBdc aabb = this.ship.getWorldAABB();
+        final Vector3dc center = transform.getPositionInWorld();
 
+        // 1. Calculate Largest Distance for Turn Penalty
+        double dist1 = center.distance(aabb.minX(), center.y(), aabb.minZ());
+        double dist2 = center.distance(aabb.minX(), center.y(), aabb.maxZ());
+        double dist3 = center.distance(aabb.maxX(), center.y(), aabb.minZ());
+        double dist4 = center.distance(aabb.maxX(), center.y(), aabb.maxZ());
+
+        double largestDistance = Math.max(Math.max(dist1, dist2), Math.max(dist3, dist4));
+
+        // Equivalent to .coerceIn(0.5, maxSize)
+        double maxSize = KineticConfig.maxSizeForTurnSpeedPenalty;
+        largestDistance = Math.max(0.5, Math.min(largestDistance, maxSize));
+
+        // 2. Physics Constants
+        final Matrix3dc moiTensor = physShip.getMomentOfInertia();
+        final Vector3dc omega = physShip.getAngularVelocity();
+
+
+        double maxAlphaZX = KineticConfig.diveAcceleration / largestDistance;
+        double maxAlphaY = KineticConfig.turnAcceleration / largestDistance;
+        //-----------------------------------
+
+        double idealAlphaY = 0;
         boolean validPlayer = isPlayerValid();
         if (validPlayer) {
             // Manually extract the inputs from the Minecraft Player object
@@ -454,10 +447,22 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
                     upImpulse,
                     seatedPlayer.isSprinting()
             );
-
-
-            applyPlayerControl(this.controlData, physShip);
+            idealAlphaY = calculateIdealAlpha(KineticConfig.turnSpeed, maxAlphaY, largestDistance, omega.y(), controlData.getLeftImpulse());
+        } else {
+            idealAlphaY = calculateIdealAlpha(KineticConfig.turnSpeed, maxAlphaY, largestDistance, omega.y(), (float) rudderForce.y());
         }
+        Vector3d torque = new Vector3d(0.0, idealAlphaY, 0.0);
+
+        if (controlData != null) {
+            // Add banking effect (leaning into the turn)
+            moiTensor.transform(torque); // Applies the Moment of Inertia tensor to the vector
+            torque.add(getPlayerControlledBanking(controlData, physShip, moiTensor, -idealAlphaY));
+        }
+        LOGGER.debug("Torque={}", torque);
+        physShip.applyWorldTorque(torque);
+        // 5. Apply Force (Forward/Backward)
+//        physShip.applyWorldForce(getPlayerForwardVel(control, physShip));
+
 
         while (!invForces.isEmpty()) {
             physShip1.applyInvariantForce(Objects.requireNonNull(invForces.poll()));
@@ -692,59 +697,6 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
                 && helms == 0 && !frozen && tankBallastWeight <= 0;
     }
 
-    @SuppressWarnings("unchecked")
-    private void applyPlayerControl(ControlData control, PhysShip physShip) {
-        if (this.ship == null) return;
-
-        final ShipTransform transform = physShip.getTransform();
-        final org.joml.primitives.AABBdc aabb = this.ship.getWorldAABB();
-        final Vector3dc center = transform.getPositionInWorld();
-
-        // 1. Calculate Largest Distance for Turn Penalty
-        double dist1 = center.distance(aabb.minX(), center.y(), aabb.minZ());
-        double dist2 = center.distance(aabb.minX(), center.y(), aabb.maxZ());
-        double dist3 = center.distance(aabb.maxX(), center.y(), aabb.minZ());
-        double dist4 = center.distance(aabb.maxX(), center.y(), aabb.maxZ());
-
-        double largestDistance = Math.max(Math.max(dist1, dist2), Math.max(dist3, dist4));
-
-        // Equivalent to .coerceIn(0.5, maxSize)
-        double maxSize = KineticConfig.maxSizeForTurnSpeedPenalty;
-        largestDistance = Math.max(0.5, Math.min(largestDistance, maxSize));
-
-        // 2. Physics Constants
-        final Matrix3dc moiTensor = physShip.getMomentOfInertia();
-        final Vector3dc omega = physShip.getAngularVelocity();
-
-
-        double maxAlphaZX = KineticConfig.diveAcceleration / largestDistance;
-        double maxAlphaY = KineticConfig.turnAcceleration / largestDistance;
-
-
-        double idealAlphaY = calculateIdealAlpha(KineticConfig.turnSpeed, maxAlphaY, largestDistance, omega.y(), control.getLeftImpulse());
-
-        Vector3d torque = shipDirection == Direction.NORTH || shipDirection == Direction.SOUTH ?
-                new Vector3d(calculateIdealAlpha(
-                        KineticConfig.diveSpeed, maxAlphaZX, largestDistance, omega.x(), control.getForwardImpulse()),
-                        idealAlphaY,
-                        0.0) :
-
-                new Vector3d(0.0,
-                        idealAlphaY,
-                        calculateIdealAlpha(
-                                KineticConfig.diveSpeed, maxAlphaZX, largestDistance, omega.z(), control.getForwardImpulse()));
-
-        // Add banking effect (leaning into the turn)
-        moiTensor.transform(torque); // Applies the Moment of Inertia tensor to the vector
-        torque.add(getPlayerControlledBanking(control, physShip, moiTensor, -idealAlphaY));
-
-        LOGGER.debug("Torque={}; ControlData={}", torque, this.controlData);
-        physShip.applyWorldTorque(torque);
-
-        // 5. Apply Force (Forward/Backward)
-//        physShip.applyWorldForce(getPlayerForwardVel(control, physShip));
-//        LOGGER.debug("Turn rotation: {}; ControlData: {}", idealAlphaY, this.controlData);
-    }
 
     private double calculateIdealAlpha(double maxLinearSpeed, double maxAlpha, double largestDistance, double omega, float impulse) {
         // Equivalent to .coerceIn(0.5, maxSize)
