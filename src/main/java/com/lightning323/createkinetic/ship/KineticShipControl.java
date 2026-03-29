@@ -410,7 +410,6 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
         double dist2 = center.distance(aabb.minX(), center.y(), aabb.maxZ());
         double dist3 = center.distance(aabb.maxX(), center.y(), aabb.minZ());
         double dist4 = center.distance(aabb.maxX(), center.y(), aabb.maxZ());
-
         double largestDistance = Math.max(Math.max(dist1, dist2), Math.max(dist3, dist4));
 
         // Equivalent to .coerceIn(0.5, maxSize)
@@ -426,32 +425,27 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
         double maxAlphaY = KineticConfig.turnAcceleration / largestDistance;
         //-----------------------------------
 
-        double idealAlphaY = 0;
-        boolean validPlayer = isPlayerValid();
-        if (validPlayer) {
-            // Manually extract the inputs from the Minecraft Player object
-            // xxa = left/right (A/D)
-            // zza = forward/backward (W/S)
-            // jja = up/down (Space/Shift)
-
-            //ALL impulses are either -1 or 1 or 0
-            float leftImpulse = seatedPlayer.xxa;
-            float forwardImpulse = seatedPlayer.zza;
-            float upImpulse = seatedPlayer.yya;
-
-            // Pass these values into your applyPlayerControl method
+        double seatedPlayerLeftImpulse = 0;
+        double seatedPlayerForwardImpulse = 0;
+        double seatedPlayerUpImpulse = 0;
+        if ( isPlayerValid()) {
             this.controlData = new ControlData(
                     Direction.NORTH, // Or get the seat's direction
-                    forwardImpulse,
-                    leftImpulse,
-                    upImpulse,
+                    //ALL impulses are either -1 or 1 or 0
+                    seatedPlayer.zza,// xxa = left/right (A/D)
+                    seatedPlayer.xxa, // zza = forward/backward (W/S)
+                    seatedPlayer.yya,// jja = up/down (Space/Shift)
                     seatedPlayer.isSprinting()
             );
-            idealAlphaY = calculateIdealAlpha(KineticConfig.turnSpeed, maxAlphaY, largestDistance, omega.y(), controlData.getLeftImpulse());
-        } else {
-            idealAlphaY = calculateIdealAlpha(KineticConfig.turnSpeed, maxAlphaY, largestDistance, omega.y(), (float) rudderForce.y());
+            seatedPlayerLeftImpulse  =controlData.getLeftImpulse();
+            seatedPlayerForwardImpulse =controlData.getForwardImpulse();
+            seatedPlayerUpImpulse =controlData.getUpImpulse();
         }
-        Vector3d torque = new Vector3d(0.0, idealAlphaY, 0.0);
+
+        double idealAlphaX = calculateIdealAlpha(KineticConfig.turnSpeed, maxAlphaZX, largestDistance, omega.x(),  rudderForce.x() + seatedPlayerForwardImpulse);
+        double idealAlphaY = calculateIdealAlpha(KineticConfig.turnSpeed, maxAlphaY, largestDistance, omega.y(),  rudderForce.y() + seatedPlayerLeftImpulse);
+        double idealAlphaZ = calculateIdealAlpha(KineticConfig.turnSpeed, maxAlphaZX, largestDistance, omega.z(), rudderForce.z() + seatedPlayerUpImpulse);
+        Vector3d torque = new Vector3d(idealAlphaX, idealAlphaY, idealAlphaZ);
 
         if (controlData != null) {
             // Add banking effect (leaning into the turn)
@@ -698,7 +692,7 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
     }
 
 
-    private double calculateIdealAlpha(double maxLinearSpeed, double maxAlpha, double largestDistance, double omega, float impulse) {
+    private double calculateIdealAlpha(double maxLinearSpeed, double maxAlpha, double largestDistance, double omega, double impulse) {
         // Equivalent to .coerceIn(0.5, maxSize)
         double maxSize = KineticConfig.maxSizeForTurnSpeedPenalty;
         largestDistance = Math.max(0.5, Math.min(largestDistance, maxSize));

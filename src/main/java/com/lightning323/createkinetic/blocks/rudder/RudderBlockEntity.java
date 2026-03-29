@@ -62,10 +62,12 @@ public class RudderBlockEntity extends KineticBlockEntity {
     @Override
     public void tick() {
         super.tick();
-        if(!level.isClientSide){//TODO: Could update logic have something to do with where it happens that makes it not work?
-        KineticShipControl controller = ShipUtils.getOrAddShipController((ServerLevel) level, getBlockPos());
-        if (controller != null) controller.updateRudderForces();}
+        if (!level.isClientSide) {//TODO: Could update logic have something to do with where it happens that makes it not work?
+            KineticShipControl controller = ShipUtils.getOrAddShipController((ServerLevel) level, getBlockPos());
+            if (controller != null) controller.updateRudderForces();
+        }
     }
+
     public float getForce() {
         return getSpeed();
     }
