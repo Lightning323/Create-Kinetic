@@ -446,11 +446,10 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
     }
 
 
-    public boolean isPlayerValid() {
+    public static boolean isPlayerValid(Player seatedPlayer) {
         // Check if we have a player and if they are still riding a mounting entity
         return seatedPlayer != null &&
-                seatedPlayer.getVehicle() instanceof ShipMountingEntity &&
-                !isAnchored(); // Use your own anchor logic
+                seatedPlayer.getVehicle() instanceof ShipMountingEntity;
     }
 
     @Override
@@ -492,7 +491,7 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
         double maxAlphaY = KineticConfig.turnAcceleration / largestDistance;
         //-----------------------------------
 
-        if (isPlayerValid()) {
+        if (isPlayerValid(seatedPlayer) && !isAnchored()) {
             this.controlData = new ControlData(
                     Direction.NORTH, // Or get the seat's direction
                     //ALL impulses are either -1 or 1 or 0

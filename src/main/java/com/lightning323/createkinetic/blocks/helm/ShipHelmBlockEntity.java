@@ -2,6 +2,7 @@ package com.lightning323.createkinetic.blocks.helm;
 
 import com.lightning323.createkinetic.CreateKinetic;
 import com.lightning323.createkinetic.registries.KineticBlocks;
+import com.lightning323.createkinetic.ship.ControlData;
 import com.lightning323.createkinetic.ship.KineticShipControl;
 import com.simibubi.create.content.kinetics.base.GeneratingKineticBlockEntity;
 import com.simibubi.create.content.kinetics.motor.CreativeMotorBlock;
@@ -35,6 +36,8 @@ public class ShipHelmBlockEntity extends GeneratingKineticBlockEntity {
 
     // For the renderer
     public double smoothedHelmRotation = 0.0;
+
+    double lastImpulse = 0;
     public double controlImpulse = 0.0;
 
     private final List<ShipMountingEntity> seats = new ArrayList<>();
@@ -52,7 +55,7 @@ public class ShipHelmBlockEntity extends GeneratingKineticBlockEntity {
 
     @Override
     public float getGeneratedSpeed() {
-        return convertToDirection(128, getBlockState().getValue(ShipHelmBlock.HORIZONTAL_FACING));
+        return convertToDirection((float) (controlImpulse * 128), getBlockState().getValue(ShipHelmBlock.HORIZONTAL_FACING));
     }
 
     private LoadedServerShip getShip() {
@@ -119,6 +122,23 @@ public class ShipHelmBlockEntity extends GeneratingKineticBlockEntity {
     public void tick() {
         KineticShipControl control = getControl();
         if (control != null) control.ship = getShip();
+
+        if (KineticShipControl.isPlayerValid(seatedPlayer)) {
+            ControlData controlData = new ControlData(
+                    Direction.NORTH, // Or get the seat's direction
+                    //ALL impulses are either -1 or 1 or 0
+                    seatedPlayer.zza,// xxa = left/right (A/D)
+                    seatedPlayer.xxa, // zza = forward/backward (W/S)
+                    seatedPlayer.yya,// jja = up/down (Space/Shift)
+                    seatedPlayer.isSprinting()
+            );
+            controlImpulse = controlData.getLeftImpulse();
+            if (controlImpulse != lastImpulse) {
+                lastImpulse = controlImpulse;
+                updateGeneratedRotation();
+            }
+        }
+
         super.tick();
     }
 
@@ -133,9 +153,11 @@ public class ShipHelmBlockEntity extends GeneratingKineticBlockEntity {
         super.remove();
     }
 
+    Player seatedPlayer;
+
     public boolean sit(Player player, boolean force) {
         ShipMountingEntity seat = spawnSeat(getBlockPos(), getBlockState(), (ServerLevel) level);
-
+        this.seatedPlayer = player;
         Direction direction = getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING);
         CreateKinetic.LOGGER.debug("Helm seating direction: {}", direction);
 
@@ -143,6 +165,7 @@ public class ShipHelmBlockEntity extends GeneratingKineticBlockEntity {
         if (control != null) {
             control.preferredDirection = direction;
             control.updateShipDirection();
+
             control.seatedPlayer = player;
         }
 
