@@ -6,7 +6,8 @@ import com.lightning323.createkinetic.blocks.crank.KCrankBlockEntity;
 import com.lightning323.createkinetic.blocks.crank.KCrankRenderer;
 import com.lightning323.createkinetic.blocks.crank.KCrankVisual;
 import com.lightning323.createkinetic.blocks.helm.ShipHelmBlockEntity;
-import com.lightning323.createkinetic.blocks.helm.renderer.ShipHelmBlockEntityRenderer;
+import com.lightning323.createkinetic.blocks.helm.renderer.ShipHelmRenderer;
+import com.lightning323.createkinetic.blocks.helm.renderer.ShipHelmVisual;
 import com.lightning323.createkinetic.blocks.rudder.RudderBlockEntity;
 import com.lightning323.createkinetic.blocks.rudder.RudderRenderer;
 import com.lightning323.createkinetic.blocks.rudder.RudderVisual;
@@ -42,6 +43,7 @@ public class KineticBlockEntities {
 
     public static final BlockEntityEntry<ShipHelmBlockEntity> SHIP_HELM = REGISTRATE
             .<ShipHelmBlockEntity>blockEntity("ship_helm", ShipHelmBlockEntity::new)
+            .visual(() -> ShipHelmVisual::new)
             .validBlocks(
                     KineticBlocks.OAK_SHIP_HELM,
                     KineticBlocks.BIRCH_SHIP_HELM,
@@ -55,8 +57,7 @@ public class KineticBlockEntities {
                     KineticBlocks.SPRUCE_SHIP_HELM,
                     KineticBlocks.CHERRY_SHIP_HELM
             )
-            //TODO: Add visual for ship helm for better performance
-            .renderer(() -> ShipHelmBlockEntityRenderer::new)
+            .renderer(() -> ShipHelmRenderer::new)
             .register();
 
     public static final BlockEntityEntry<BallastTankBlockEntity> FLUID_TANK = REGISTRATE

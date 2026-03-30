@@ -1,22 +1,13 @@
 package com.lightning323.createkinetic.blocks.helm
 
 import com.lightning323.createkinetic.CreateKinetic
-import com.lightning323.createkinetic.registries.KineticBlockEntities
 import com.lightning323.createkinetic.ship.KineticShipControl
+import com.simibubi.create.content.kinetics.base.KineticBlockEntity
 import net.minecraft.commands.arguments.EntityAnchorArgument
 import net.minecraft.core.BlockPos
-import net.minecraft.core.Direction
 import net.minecraft.core.Direction.Axis
-import net.minecraft.core.registries.Registries
-import net.minecraft.network.chat.Component
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.tags.TagKey
-import net.minecraft.world.MenuProvider
-import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
-import net.minecraft.world.inventory.AbstractContainerMenu
-import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.HorizontalDirectionalBlock
 import net.minecraft.world.level.block.StairBlock
 import net.minecraft.world.level.block.entity.BlockEntity
@@ -28,23 +19,19 @@ import net.minecraft.world.phys.Vec3
 import org.joml.Vector3d
 import org.joml.Vector3dc
 import org.valkyrienskies.core.api.VsBeta
-import org.valkyrienskies.core.api.attachment.getAttachment
 import org.valkyrienskies.core.api.ships.LoadedServerShip
 import org.valkyrienskies.core.api.util.GameTickOnly
 import org.valkyrienskies.mod.common.ValkyrienSkiesMod
-import org.valkyrienskies.mod.common.assembly.ShipAssembler
 import org.valkyrienskies.mod.common.entity.ShipMountingEntity
 import org.valkyrienskies.mod.common.getLoadedShipManagingPos
 import org.valkyrienskies.mod.common.util.toDoubles
-import org.valkyrienskies.mod.common.util.toJOMLD
-import org.valkyrienskies.mod.util.logger
 
 
 class ShipHelmBlockEntity(
     type: BlockEntityType<*>, // Add this
     pos: BlockPos,
     state: BlockState
-) : BlockEntity(type, pos, state) {
+) : KineticBlockEntity(type, pos, state) {
 
     //For the renderer
     var smoothedHelmRotation = 0.0
@@ -137,11 +124,12 @@ class ShipHelmBlockEntity(
     }
 
     @OptIn(VsBeta::class, GameTickOnly::class)
-    fun tick() {
+    override fun tick() {
         control?.ship = ship
+        super.tick()
     }
 
-    override fun setRemoved() {
+    override fun remove() {
         if (level?.isClientSide == false) {
             for (i in seats.indices) {
                 seats[i].kill()
@@ -149,7 +137,7 @@ class ShipHelmBlockEntity(
             seats.clear()
         }
 
-        super.setRemoved()
+        super.remove()
     }
 
     fun sit(player: Player, force: Boolean = false): Boolean {
