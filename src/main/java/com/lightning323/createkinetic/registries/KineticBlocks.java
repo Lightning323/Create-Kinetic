@@ -40,6 +40,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
+import net.minecraftforge.client.model.generators.ModelFile;
 
 import java.util.List;
 
@@ -105,17 +106,27 @@ public class KineticBlocks {
                     .build()
                     .register();
 
+
     public static BlockEntry<ShipHelmBlock> registerShipHelm(String name, WoodType woodType) {
         return REGISTRATE
                 .block(name, p -> new ShipHelmBlock(p, woodType)) // Manual constructor call
                 .initialProperties(SharedProperties::wooden)
                 .properties(p -> p.noOcclusion())
-                .blockstate((c, p) ->
-                        //Base model doesnt have the wheel since we add it in our renderer
-                        p.horizontalBlock(c.get(), p.models().getExistingFile(p.modLoc("block/helm/" + name + "_base"))))
+                .blockstate((c, p) -> {
+                    // Blockstate always points to a single base model.
+                    // This model can be a generic base without wheel.
+                    ModelFile.ExistingModelFile base = p.models().getExistingFile(
+                            p.modLoc("block/helm/ship_helm_base") // single generic model
+                    );
+                    p.horizontalBlock(c.get(), base);
+                })
                 .item()
-                //Complete helm model for the item
-                .model((c, p) -> p.withExistingParent(c.getName(), p.modLoc("block/helm/" + name)))
+                .model((c, p) -> {
+                    // Item model references the same generic model but swaps textures dynamically
+                     p.withExistingParent(c.getName(), p.modLoc("block/helm/ship_helm_base"))
+                            .texture("wheel", p.modLoc("block/wheels/" + woodType.name().toLowerCase() + "_ship_wheel"))
+                            .texture("base", p.modLoc("block/bases/" + woodType.name().toLowerCase() + "_ship_base"));
+                })
                 .build()
                 .register();
     }
