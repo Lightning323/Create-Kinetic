@@ -17,6 +17,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
@@ -27,6 +28,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.BlockHitResult;
@@ -37,6 +39,7 @@ import org.valkyrienskies.mod.common.ValkyrienSkiesMod;
 import org.valkyrienskies.mod.common.VSGameUtilsKt;
 
 public class ShipHelmBlock extends KineticBlock implements IBE<ShipHelmBlockEntity> {
+    public static final Property<Direction> HORIZONTAL_FACING = BlockStateProperties.HORIZONTAL_FACING;
     public final WoodType woodType;
     private final WoodTypeEnum woodTypeEnum;
     public static final VoxelShape SIMPLE_SHAPE = Block.box(1.0, 0.0, 1.0, 15.0, 16.0, 15.0);
@@ -45,7 +48,7 @@ public class ShipHelmBlock extends KineticBlock implements IBE<ShipHelmBlockEnti
         super(properties);
         this.woodType = woodType;
         this.woodTypeEnum = WoodTypeEnum.fromVanilla(woodType);
-        this.registerDefaultState(this.stateDefinition.any().setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH));
+        this.registerDefaultState(this.stateDefinition.any().setValue(HORIZONTAL_FACING, Direction.NORTH));
     }
 
     public WoodTypeEnum getWoodTypeEnum() {
@@ -73,7 +76,7 @@ public class ShipHelmBlock extends KineticBlock implements IBE<ShipHelmBlockEnti
         if (VSGameUtilsKt.getShipManagingPos(serverLevel, pos) != null) {
             KineticShipControl control = KineticShipControl.getOrAddController(serverLevel, pos);
             if (control != null) {
-                Direction direction = state.getValue(BlockStateProperties.HORIZONTAL_FACING);
+                Direction direction = state.getValue(HORIZONTAL_FACING);
                 control.preferredDirection = (direction);
                 control.helms = (control.helms + 1);
                 control.updateShipDirection();
@@ -127,12 +130,12 @@ public class ShipHelmBlock extends KineticBlock implements IBE<ShipHelmBlockEnti
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext ctx) {
-        return this.defaultBlockState().setValue(BlockStateProperties.HORIZONTAL_FACING, ctx.getHorizontalDirection().getOpposite());
+        return this.defaultBlockState().setValue(HORIZONTAL_FACING, ctx.getHorizontalDirection().getOpposite());
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(BlockStateProperties.HORIZONTAL_FACING);
+        builder.add(HORIZONTAL_FACING);
     }
 
     @Override
@@ -152,7 +155,7 @@ public class ShipHelmBlock extends KineticBlock implements IBE<ShipHelmBlockEnti
 
     @Override
     public BlockState rotate(BlockState state, Rotation rotation) {
-        return state.setValue(BlockStateProperties.HORIZONTAL_FACING, rotation.rotate(state.getValue(BlockStateProperties.HORIZONTAL_FACING)));
+        return state.setValue(HORIZONTAL_FACING, rotation.rotate(state.getValue(HORIZONTAL_FACING)));
     }
 
     @Nullable
@@ -164,7 +167,10 @@ public class ShipHelmBlock extends KineticBlock implements IBE<ShipHelmBlockEnti
             }
         };
     }
-
+    @Override
+    public boolean hasShaftTowards(LevelReader world, BlockPos pos, BlockState state, Direction face) {
+        return face == Direction.DOWN;
+    }
     @Override
     public Direction.Axis getRotationAxis(BlockState state) {
         return Direction.Axis.Y;

@@ -120,6 +120,12 @@ public class KineticBlocks {
                     );
                     p.horizontalBlock(c.get(), base);
                 })
+                .transform(builder -> {
+                    ResourceLocation id = CreateKinetic.resource(builder.getName());
+                    // Access the private map through the Accessor
+                    CStressAccessor.getCapacities().put(id, 8.0);
+                    return builder;
+                })
                 .item()
                 .model((c, p) -> {
                     // Item model references the same generic model but swaps textures dynamically

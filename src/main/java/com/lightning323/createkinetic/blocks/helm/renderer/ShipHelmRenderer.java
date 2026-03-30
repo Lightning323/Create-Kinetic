@@ -50,8 +50,8 @@ public class ShipHelmRenderer implements BlockEntityRenderer<ShipHelmBlockEntity
             Ship ship = VSGameUtilsKt.getShipManagingPos(level, blockEntity.getBlockPos());
             if (ship != null) {
                 // Update the smoothed rotation based on ship angular velocity
-                blockEntity.setSmoothedHelmRotation(lerp(
-                    blockEntity.getSmoothedHelmRotation(),
+                blockEntity.smoothedHelmRotation = (lerp(
+                    blockEntity.smoothedHelmRotation,
                     ship.getAngularVelocity().y() * 100.0,
                     0.1
                 ));
@@ -62,7 +62,7 @@ public class ShipHelmRenderer implements BlockEntityRenderer<ShipHelmBlockEntity
         matrixStack.translate(0.0, 0.0, 0.19);
 
         // Rotate the wheel based on the ship omega
-        float rotationRad = (float) (blockEntity.getSmoothedHelmRotation() / 20.0f * Math.PI);
+        float rotationRad = (float) (blockEntity.smoothedHelmRotation / 20.0f * Math.PI);
         matrixStack.mulPose(new Quaternionf(new AxisAngle4f(rotationRad, 0.0f, 0.0f, 1.0f)));
 
         // Render the wheel

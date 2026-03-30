@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.lightning323.createkinetic.CreateKinetic;
 import com.lightning323.createkinetic.KineticConfig;
 import com.lightning323.createkinetic.blocks.ballastTank.BallastTankBlockEntity;
+import com.lightning323.createkinetic.blocks.helm.ShipHelmBlockEntity;
 import com.lightning323.createkinetic.blocks.rudder.RudderBlockEntity;
 import com.lightning323.createkinetic.blocks.sail.SailClothBlock;
 import it.unimi.dsi.fastutil.longs.LongIterator;
@@ -491,9 +492,6 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
         double maxAlphaY = KineticConfig.turnAcceleration / largestDistance;
         //-----------------------------------
 
-        double seatedPlayerLeftImpulse = 0;
-        double seatedPlayerForwardImpulse = 0;
-        double seatedPlayerUpImpulse = 0;
         if (isPlayerValid()) {
             this.controlData = new ControlData(
                     Direction.NORTH, // Or get the seat's direction
@@ -503,14 +501,12 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
                     seatedPlayer.yya,// jja = up/down (Space/Shift)
                     seatedPlayer.isSprinting()
             );
-            seatedPlayerLeftImpulse = controlData.getLeftImpulse();
-            seatedPlayerForwardImpulse = controlData.getForwardImpulse();
-            seatedPlayerUpImpulse = controlData.getUpImpulse();
+            System.out.println("IMPULSE: " + controlData.getLeftImpulse());
         }
 
-        double idealAlphaX = calculateIdealAlpha(KineticConfig.diveSpeed, maxAlphaZX, largestDistance, omega.x(), rudderForce.x() + seatedPlayerForwardImpulse);
-        double idealAlphaY = calculateIdealAlpha(KineticConfig.turnSpeed, maxAlphaY, largestDistance, omega.y(), rudderForce.y() + seatedPlayerLeftImpulse);
-        double idealAlphaZ = calculateIdealAlpha(KineticConfig.diveSpeed, maxAlphaZX, largestDistance, omega.z(), rudderForce.z() + seatedPlayerUpImpulse);
+        double idealAlphaX = calculateIdealAlpha(KineticConfig.diveSpeed, maxAlphaZX, largestDistance, omega.x(), rudderForce.x());
+        double idealAlphaY = calculateIdealAlpha(KineticConfig.turnSpeed, maxAlphaY, largestDistance, omega.y(), rudderForce.y());
+        double idealAlphaZ = calculateIdealAlpha(KineticConfig.diveSpeed, maxAlphaZX, largestDistance, omega.z(), rudderForce.z());
         Vector3d torque = new Vector3d(idealAlphaX, idealAlphaY, idealAlphaZ);
 
         // Add banking effect (leaning into the turn)
@@ -774,7 +770,7 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
 
     /**
      *
-     * @param rotationVector  1. Get the direction the seat is facing (e.g., North, East)
+     * @param rotationVector 1. Get the direction the seat is facing (e.g., North, East)
      * @param physShip
      * @param moiTensor
      * @param strength
