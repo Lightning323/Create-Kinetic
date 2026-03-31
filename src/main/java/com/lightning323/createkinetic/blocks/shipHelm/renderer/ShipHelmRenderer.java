@@ -11,7 +11,7 @@ import org.joml.AxisAngle4f;
 import org.joml.Quaternionf;
 
 public class ShipHelmRenderer implements BlockEntityRenderer<ShipHelmBlockEntity> {
-
+    public static final int SIXTEENTH = 1 / 16;
     private final BlockEntityRendererProvider.Context ctx;
 
     public ShipHelmRenderer(BlockEntityRendererProvider.Context ctx) {
@@ -30,7 +30,7 @@ public class ShipHelmRenderer implements BlockEntityRenderer<ShipHelmBlockEntity
         matrixStack.pushPose();
 
         // Wheel offset of the base
-        matrixStack.translate(0.5, 0.60, 0.5);
+        matrixStack.translate(0.5, .8, 0.5);
 
         // Rotate wheel towards the direction it's facing
         float yRot = blockEntity.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot();

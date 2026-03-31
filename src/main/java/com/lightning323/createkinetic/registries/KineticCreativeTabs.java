@@ -16,7 +16,7 @@ public class KineticCreativeTabs {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MOD_ID);
 
     public static final RegistryObject<CreativeModeTab> CREATIVE_TAB = CREATIVE_MODE_TABS.register("createkinetic_tab",
-            () -> CreativeModeTab.builder().withTabsBefore(CreativeModeTabs.COMBAT)
+            () -> CreativeModeTab.builder()//.withTabsBefore(CreativeModeTabs.COMBAT)
                     .title(Component.translatable("itemGroup." + MOD_ID + ".tab"))
                     .icon(() -> KineticItems.SHIP_TOTEM.get().getDefaultInstance())
                     .displayItems((parameters, output) -> {
