@@ -62,7 +62,7 @@ public class ShipHelmRenderer implements BlockEntityRenderer<ShipHelmBlockEntity
         //We have to use blockenity speed because its available on the client side
         blockEntity.renderHelmRotation = (float) lerp(blockEntity.renderHelmRotation,
                 (blockEntity.getSpeed() / ShipHelmBlockEntity.SPEED) * Mth.PI,
-                0.05f);
+                0.01f);
         matrixStack.mulPose(new Quaternionf(new AxisAngle4f(blockEntity.renderHelmRotation, 0.0f, 0.0f, 1.0f)));
 
         // Render the wheel
