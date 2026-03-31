@@ -199,7 +199,6 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
             long packedPos = iterator.nextLong();
             BlockPos pos = BlockPos.of(packedPos);
             BlockEntity blockEntity = level.getBlockEntity(pos);
-            System.out.println(level.getBlockState(pos).getBlock());
             if (blockEntity instanceof RudderBlockEntity tbe) {
                 Direction value = tbe.getBlockState().getValue(BlockStateProperties.FACING);
                 double forceScalar = tbe.getForce(); //We get a number from -1 to 1
@@ -220,7 +219,7 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
                 iterator.remove();
             }
         }
-        if (!rudderLocations.isEmpty()) LOGGER.debug("Forces of {} rudders: {}", rudderLocations.size(), rudderForce);
+//        if (!rudderLocations.isEmpty()) LOGGER.debug("Forces of {} rudders: {}", rudderLocations.size(), rudderForce);
     }
 
     /**
@@ -513,7 +512,7 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
         torque.add(getPlayerControlledBanking(north, physShip, moiTensor, -idealAlphaY));
         torque.add(new Vector3d(idealAlphaX, 0, idealAlphaZ));
 
-        LOGGER.debug("Torque={}", torque);
+//        LOGGER.debug("Torque={}", torque);
         physShip.applyWorldTorque(torque);
         // 5. Apply Force (Forward/Backward)
 //        physShip.applyWorldForce(getPlayerForwardVel(control, physShip));

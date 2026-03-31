@@ -2,6 +2,7 @@ package com.lightning323.createkinetic.blocks.rudder;
 
 import com.lightning323.createkinetic.registries.KineticBlockEntities;
 import com.lightning323.createkinetic.ship.KineticShipControl;
+import com.simibubi.create.AllItems;
 import com.simibubi.create.content.kinetics.base.DirectionalKineticBlock;
 import com.simibubi.create.foundation.block.IBE;
 import com.tterrag.registrate.providers.DataGenContext;
@@ -10,11 +11,20 @@ import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelFile;
 
@@ -22,14 +32,16 @@ public class RudderBlock extends DirectionalKineticBlock implements IBE<RudderBl
     //, TransformableBlock {
     public RudderBlock(Properties properties) {
         super(properties);
+        this.registerDefaultState(this.stateDefinition.any()
+                .setValue(PLANE_ROTATION, 0) // Set default direction
+        );
     }
 
     public void onPlace(BlockState state, Level world, BlockPos pos, BlockState oldState, boolean notify) {
-        if (world.isClientSide) {
-            return;
+        if (!world.isClientSide) {//Always is server side when rotating the block
+            KineticShipControl controller = KineticShipControl.getOrAddController((ServerLevel) world, pos);
+            if (controller != null) controller.addRudder(pos);
         }
-        KineticShipControl controller = KineticShipControl.getOrAddController((ServerLevel) world, pos);
-        if (controller != null) controller.addRudder(pos);
     }
 
     public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean moved) {
@@ -73,12 +85,12 @@ public class RudderBlock extends DirectionalKineticBlock implements IBE<RudderBl
      */
     public static NonNullBiConsumer<DataGenContext<Block, RudderBlock>, RegistrateBlockstateProvider> getBlockstateDefinition() {
         return (c, p) -> {
-            // Reference your base model
             ModelFile model = p.models().getExistingFile(p.modLoc("block/rudder/base"));
+            ModelFile modelRotated = p.models().getExistingFile(p.modLoc("block/rudder/base90"));
 
             p.getVariantBuilder(c.get()).forAllStates(state -> {
                 Direction facing = state.getValue(DirectionalKineticBlock.FACING);
-//                boolean alongFirst = state.getValue(DirectionalAxisKineticBlock.AXIS_ALONG_FIRST_COORDINATE);
+                int planeRot = state.getValue(RudderBlock.PLANE_ROTATION); // 0, 1, 2, 3
 
                 int xRot = 90;
                 int yRot = 0;
@@ -101,56 +113,67 @@ public class RudderBlock extends DirectionalKineticBlock implements IBE<RudderBl
                         break;
                 }
 
-                return ConfiguredModel.builder()
-                        .modelFile(model)
-                        .rotationX(xRot)
-                        .rotationY(yRot)
-                        .build();
+                if (planeRot == 1 || planeRot == 3) {
+                    return ConfiguredModel.builder()
+                            .modelFile(modelRotated)
+                            .rotationX(xRot)
+                            .rotationY(yRot)
+                            .build();
+                } else {
+                    return ConfiguredModel.builder()
+                            .modelFile(model)
+                            .rotationX(xRot)
+                            .rotationY(yRot)
+                            .build();
+                }
             });
         };
     }
 
-//    /**
-//     * This is for transformable blocks, it changes the block state based on the transform
-//     * We use this to wrench the block in different directions
-//     *
-//     * @param state
-//     * @param transform
-//     * @return
-//     */
-//    @Override
-//    public BlockState transform(BlockState state, StructureTransform transform) {
-//        if (transform.mirror != null) {
-//            state = mirror(state, transform.mirror);
-//        }
-//
-//        if (transform.rotationAxis == Direction.Axis.Y) {
-//            return rotate(state, transform.rotation);
-//        }
-//
-//        Direction newFacing = transform.rotateFacing(state.getValue(FACING));
-////        if (transform.rotationAxis == newFacing.getAxis() && transform.rotation.ordinal() % 2 == 1) {
-////            state = state.cycle(AXIS_ALONG_FIRST_COORDINATE);
-////        }
-//        return state.setValue(FACING, newFacing);
-//    }
+    //Aesthetic only property to tell the block which direction to be on a face
+    public static final IntegerProperty PLANE_ROTATION = IntegerProperty.create("plane_rot", 0, 3);
 
-    //TODO: ADD LATER
-//    public static final BooleanProperty AXIS_ALONG_FIRST_COORDINATE = BooleanProperty.create("axis_along_first");
-//
-//    @Override
-//    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-//        builder.add(AXIS_ALONG_FIRST_COORDINATE);
-//        super.createBlockStateDefinition(builder);
-//    }
+    @Override
+    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn,
+                                 BlockHitResult hit) {
+        super.use(state, worldIn, pos, player, handIn, hit);
+
+        BlockEntity blockEntity = worldIn.getBlockEntity(pos);
+
+        if (blockEntity instanceof RudderBlockEntity rbe) {
+            ItemStack heldItem = player.getItemInHand(handIn);
+            boolean isHand = heldItem.isEmpty() && handIn == InteractionHand.MAIN_HAND;
+            boolean wrenched = AllItems.WRENCH.isIn(heldItem);
+
+            if (hit.getDirection() == state.getValue(FACING)) {
+
+            }
+        }
+        return InteractionResult.PASS;
+    }
 
 
-//    @Override
-//    public BlockState rotate(BlockState state, Rotation rot) {
-//        if (rot.ordinal() % 2 == 1)
-//            state = state.cycle(AXIS_ALONG_FIRST_COORDINATE);
-//        return super.rotate(state, rot);
-//    }
-//
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(PLANE_ROTATION);
+        super.createBlockStateDefinition(builder);
+    }
+
+
+    @Override
+    public BlockState getRotatedBlockState(BlockState originalState, Direction targetedFace) {
+        Direction currentFacing = originalState.getValue(FACING);
+
+        // HOOK: If clicking the face the block is pointing at (or the back of it)
+        if (targetedFace.getAxis() == currentFacing.getAxis()) {
+            int currentPlane = originalState.getValue(PLANE_ROTATION);
+            int nextPlane = (currentPlane + 1) % 4; // Cycles 0, 1, 2, 3, 0...
+            System.out.println("Rotating plane from " + currentPlane + " to " + nextPlane);
+            return originalState.setValue(PLANE_ROTATION, nextPlane);
+        }
+
+        // Otherwise, perform the standard Create rotation (switching North to East, etc.)
+        return super.getRotatedBlockState(originalState, targetedFace);
+    }
 
 }
