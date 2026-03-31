@@ -20,110 +20,123 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class KCrankBlockEntity extends GeneratingKineticBlockEntity {
 
-	public int inUse;
-	public boolean backwards;
-	/**
-	 * In degrees
-	 */
-	public float independentAngle;
-	public float chasingAngularVelocity;
+    public int inUse;
+    public boolean backwards;
+    /**
+     * In degrees
+     */
+    public float independentAngle;
+    public float chasingAngularVelocity;
+    private float automaticImpulse;
 
-	public KCrankBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
-		super(type, pos, state);
-	}
+    public ControlMode getControlMode() {
+        return ((KCrankBlock) getBlockState().getBlock()).controlMode;
+    }
 
-	public void turn(boolean back) {
-		boolean update = false;
+    public void setAutomaticImpulse(float value) {
+        if (automaticImpulse != value) {
+            automaticImpulse = value;
+            updateGeneratedRotation();
+        }
+    }
 
-		if (getGeneratedSpeed() == 0 || back != backwards)
-			update = true;
+    public KCrankBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+        super(type, pos, state);
+    }
 
-		inUse = 10;
-		this.backwards = back;
-		if (update && !level.isClientSide)
-			updateGeneratedRotation();
-	}
+    public void turn(boolean back) {
+        boolean update = false;
 
-	/**
-	 * In degrees
-	 */
-	public float getIndependentAngle(float partialTicks) {
-		return independentAngle + partialTicks * chasingAngularVelocity;
-	}
+        if (getGeneratedSpeed() == 0 || back != backwards)
+            update = true;
 
-	@Override
-	public float getGeneratedSpeed() {
-		Block block = getBlockState().getBlock();
-		if (!(block instanceof KCrankBlock crank))
-			return 0;
-		int speed = (inUse == 0 ? 0 : clockwise() ? -1 : 1) * crank.getRotationSpeed();
-		return convertToDirection(speed, getBlockState().getValue(KCrankBlock.FACING));
-	}
+        inUse = 10;
+        this.backwards = back;
+        if (update && !level.isClientSide)
+            updateGeneratedRotation();
+    }
 
-	protected boolean clockwise() {
-		return backwards;
-	}
+    /**
+     * In degrees
+     */
+    public float getIndependentAngle(float partialTicks) {
+        return independentAngle + partialTicks * chasingAngularVelocity;
+    }
 
-	@Override
-	public void write(CompoundTag compound, boolean clientPacket) {
-		compound.putInt("InUse", inUse);
-		compound.putBoolean("Backwards", backwards);
-		super.write(compound, clientPacket);
-	}
+    @Override
+    public float getGeneratedSpeed() {
+        Block block = getBlockState().getBlock();
+        if (!(block instanceof KCrankBlock crank))
+            return 0;
+        int manualMovement = (inUse == 0 ? 0 : clockwise() ? -1 : 1);
+        float speed = (manualMovement + automaticImpulse) * crank.getRotationSpeed();
+        return convertToDirection(speed, getBlockState().getValue(KCrankBlock.FACING));
+    }
 
-	@Override
-	protected void read(CompoundTag compound, boolean clientPacket) {
-		inUse = compound.getInt("InUse");
-		backwards = compound.getBoolean("Backwards");
-		super.read(compound, clientPacket);
-	}
+    protected boolean clockwise() {
+        return backwards;
+    }
 
-	@Override
-	public void tick() {
-		super.tick();
+    @Override
+    public void write(CompoundTag compound, boolean clientPacket) {
+        compound.putInt("InUse", inUse);
+        compound.putBoolean("Backwards", backwards);
+        super.write(compound, clientPacket);
+    }
 
-		float actualAngularSpeed = KineticBlockEntity.convertToAngular(getSpeed());
-		chasingAngularVelocity += (actualAngularSpeed - chasingAngularVelocity) / 4f;
-		independentAngle += chasingAngularVelocity;
+    @Override
+    protected void read(CompoundTag compound, boolean clientPacket) {
+        inUse = compound.getInt("InUse");
+        backwards = compound.getBoolean("Backwards");
+        super.read(compound, clientPacket);
+    }
 
-		if (inUse > 0) {
-			inUse--;
+    @Override
+    public void tick() {
+        super.tick();
 
-			if (inUse == 0 && !level.isClientSide) {
-				sequenceContext = null;
-				updateGeneratedRotation();
-			}
-		}
-	}
+        float actualAngularSpeed = KineticBlockEntity.convertToAngular(getSpeed());
+        chasingAngularVelocity += (actualAngularSpeed - chasingAngularVelocity) / 4f;
+        independentAngle += chasingAngularVelocity;
 
-	@OnlyIn(Dist.CLIENT)
-	public SuperByteBuffer getRenderedHandle() {
-		BlockState blockState = getBlockState();
-		Direction facing = blockState.getOptionalValue(KCrankBlock.FACING)
-			.orElse(Direction.UP);
-		return CachedBuffers.partialFacing(AllPartialModels.HAND_CRANK_HANDLE, blockState, facing.getOpposite());
-	}
+        if (inUse > 0) {
+            inUse--;
 
-	@OnlyIn(Dist.CLIENT)
-	public boolean shouldRenderShaft() {
-		return true;
-	}
+            if (inUse == 0 && !level.isClientSide) {
+                sequenceContext = null;
+                updateGeneratedRotation();
+            }
+        }
+    }
 
-	@Override
-	protected Block getStressConfigKey() {
-		return KineticBlocks.FORWARD_CRANK.has(getBlockState()) ? KineticBlocks.FORWARD_CRANK.get()
-			: AllBlocks.COPPER_VALVE_HANDLE.get();
-	}
+    @OnlyIn(Dist.CLIENT)
+    public SuperByteBuffer getRenderedHandle() {
+        BlockState blockState = getBlockState();
+        Direction facing = blockState.getOptionalValue(KCrankBlock.FACING)
+                .orElse(Direction.UP);
+        return CachedBuffers.partialFacing(AllPartialModels.HAND_CRANK_HANDLE, blockState, facing.getOpposite());
+    }
 
-	@Override
-	@OnlyIn(Dist.CLIENT)
-	public void tickAudio() {
-		super.tickAudio();
-		if (inUse > 0 && AnimationTickHolder.getTicks() % 10 == 0) {
-			if (!KineticBlocks.FORWARD_CRANK.has(getBlockState()))
-				return;
-			AllSoundEvents.CRANKING.playAt(level, worldPosition, (inUse) / 2.5f, .65f + (10 - inUse) / 10f, true);
-		}
-	}
+    @OnlyIn(Dist.CLIENT)
+    public boolean shouldRenderShaft() {
+        return true;
+    }
+
+    @Override
+    protected Block getStressConfigKey() {
+        return KineticBlocks.FORWARD_CRANK.has(getBlockState()) ? KineticBlocks.FORWARD_CRANK.get()
+                : AllBlocks.COPPER_VALVE_HANDLE.get();
+    }
+
+    @Override
+    @OnlyIn(Dist.CLIENT)
+    public void tickAudio() {
+        super.tickAudio();
+        if (inUse > 0 && AnimationTickHolder.getTicks() % 10 == 0) {
+            if (!KineticBlocks.FORWARD_CRANK.has(getBlockState()))
+                return;
+            AllSoundEvents.CRANKING.playAt(level, worldPosition, (inUse) / 2.5f, .65f + (10 - inUse) / 10f, true);
+        }
+    }
 
 }

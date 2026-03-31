@@ -1,4 +1,4 @@
-package com.lightning323.createkinetic.blocks.helm
+package com.lightning323.createkinetic.blocks.shipHelm
 
 import net.minecraft.util.StringRepresentable
 import net.minecraft.world.level.block.state.properties.WoodType

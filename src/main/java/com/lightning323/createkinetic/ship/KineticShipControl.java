@@ -8,14 +8,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.lightning323.createkinetic.CreateKinetic;
 import com.lightning323.createkinetic.KineticConfig;
 import com.lightning323.createkinetic.blocks.ballastTank.BallastTankBlockEntity;
-import com.lightning323.createkinetic.blocks.helm.ShipHelmBlockEntity;
 import com.lightning323.createkinetic.blocks.rudder.RudderBlockEntity;
 import com.lightning323.createkinetic.blocks.sail.SailClothBlock;
 import it.unimi.dsi.fastutil.longs.LongIterator;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import it.unimi.dsi.fastutil.longs.LongSet;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Vec3i;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
@@ -204,7 +202,7 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
             System.out.println(level.getBlockState(pos).getBlock());
             if (blockEntity instanceof RudderBlockEntity tbe) {
                 Direction value = tbe.getBlockState().getValue(BlockStateProperties.FACING);
-                double forceScalar = tbe.getForce() / 256.0; //We get a number from -1 to 1
+                double forceScalar = tbe.getForce(); //We get a number from -1 to 1
 
                 double idealAlphaX = forceScalar;
                 double idealAlphaY = forceScalar;
@@ -491,22 +489,21 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
         double maxAlphaY = KineticConfig.turnAcceleration / largestDistance;
         //-----------------------------------
 
-        if (isPlayerValid(seatedPlayer) && !isAnchored()) {
-            this.controlData = new ControlData(
-                    Direction.NORTH, // Or get the seat's direction
-                    //ALL impulses are either -1 or 1 or 0
-                    seatedPlayer.zza,// xxa = left/right (A/D)
-                    seatedPlayer.xxa, // zza = forward/backward (W/S)
-                    seatedPlayer.yya,// jja = up/down (Space/Shift)
-                    seatedPlayer.isSprinting()
-            );
-            System.out.println("IMPULSE: " + controlData.getLeftImpulse());
-        }
+//        if (isPlayerValid(seatedPlayer) && !isAnchored()) {
+//            this.controlData = new ControlData(
+//                    Direction.NORTH, // Or get the seat's direction
+//                    //ALL impulses are either -1 or 1 or 0
+//                    seatedPlayer.zza,// xxa = left/right (A/D)
+//                    seatedPlayer.xxa, // zza = forward/backward (W/S)
+//                    seatedPlayer.yya,// jja = up/down (Space/Shift)
+//                    seatedPlayer.isSprinting()
+//            );
+//        }
 
-        double idealAlphaX = calculateIdealAlpha(KineticConfig.diveSpeed, maxAlphaZX, largestDistance, omega.x(), rudderForce.x());
+        double idealAlphaX = calculateIdealAlpha(KineticConfig.turnSpeed, maxAlphaY, largestDistance, omega.x(), rudderForce.x()) * 100000;
         double idealAlphaY = calculateIdealAlpha(KineticConfig.turnSpeed, maxAlphaY, largestDistance, omega.y(), rudderForce.y());
-        double idealAlphaZ = calculateIdealAlpha(KineticConfig.diveSpeed, maxAlphaZX, largestDistance, omega.z(), rudderForce.z());
-        Vector3d torque = new Vector3d(idealAlphaX, idealAlphaY, idealAlphaZ);
+        double idealAlphaZ = calculateIdealAlpha(KineticConfig.turnSpeed, maxAlphaY, largestDistance, omega.z(), rudderForce.z()) * 100000;
+        Vector3d torque = new Vector3d(0, idealAlphaY, 0);
 
         // Add banking effect (leaning into the turn)
         moiTensor.transform(torque);
@@ -514,8 +511,9 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
 //        Vec3i normal = controlData.getSeatInDirection().getNormal();
         Vector3d north = new Vector3d(0, 0, -1);
         torque.add(getPlayerControlledBanking(north, physShip, moiTensor, -idealAlphaY));
+        torque.add(new Vector3d(idealAlphaX, 0, idealAlphaZ));
 
-//        LOGGER.debug("Torque={}", torque);
+        LOGGER.debug("Torque={}", torque);
         physShip.applyWorldTorque(torque);
         // 5. Apply Force (Forward/Backward)
 //        physShip.applyWorldForce(getPlayerForwardVel(control, physShip));

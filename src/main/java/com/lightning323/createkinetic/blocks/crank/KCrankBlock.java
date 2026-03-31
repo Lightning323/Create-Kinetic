@@ -36,8 +36,11 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 public class KCrankBlock extends DirectionalKineticBlock
 	implements IBE<KCrankBlockEntity>, ProperWaterloggedBlock {
 
-	public KCrankBlock(Properties properties) {
+	public final ControlMode controlMode;
+
+	public KCrankBlock(Properties properties, ControlMode controlMode) {
 		super(properties);
+		this.controlMode = controlMode;
 		registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false));
 	}
 
@@ -52,7 +55,7 @@ public class KCrankBlock extends DirectionalKineticBlock
 	}
 
 	public int getRotationSpeed() {
-		return 32;
+		return 64;
 	}
 
 	@Override

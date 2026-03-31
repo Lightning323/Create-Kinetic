@@ -1,7 +1,7 @@
 package com.lightning323.createkinetic.datagen;
 
 import com.lightning323.createkinetic.CreateKinetic;
-import com.lightning323.createkinetic.blocks.helm.ShipHelmBlock;
+import com.lightning323.createkinetic.blocks.shipHelm.ShipHelmBlock;
 import com.lightning323.createkinetic.registries.KineticBlocks;
 import com.lightning323.createkinetic.registries.KineticItems;
 import com.simibubi.create.AllBlocks;

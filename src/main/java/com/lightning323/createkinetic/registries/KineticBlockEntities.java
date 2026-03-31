@@ -5,9 +5,9 @@ import com.lightning323.createkinetic.blocks.ballastTank.BallastTankRenderer;
 import com.lightning323.createkinetic.blocks.crank.KCrankBlockEntity;
 import com.lightning323.createkinetic.blocks.crank.KCrankRenderer;
 import com.lightning323.createkinetic.blocks.crank.KCrankVisual;
-import com.lightning323.createkinetic.blocks.helm.ShipHelmBlockEntity;
-import com.lightning323.createkinetic.blocks.helm.renderer.ShipHelmRenderer;
-import com.lightning323.createkinetic.blocks.helm.renderer.ShipHelmVisual;
+import com.lightning323.createkinetic.blocks.shipHelm.ShipHelmBlockEntity;
+import com.lightning323.createkinetic.blocks.shipHelm.renderer.ShipHelmRenderer;
+import com.lightning323.createkinetic.blocks.shipHelm.renderer.ShipHelmVisual;
 import com.lightning323.createkinetic.blocks.rudder.RudderBlockEntity;
 import com.lightning323.createkinetic.blocks.rudder.RudderRenderer;
 import com.lightning323.createkinetic.blocks.rudder.RudderVisual;
@@ -69,7 +69,10 @@ public class KineticBlockEntities {
     public static final BlockEntityEntry<KCrankBlockEntity> HAND_CRANK = REGISTRATE
             .blockEntity("hand_crank", KCrankBlockEntity::new)
             .visual(() -> KCrankVisual::new)
-            .validBlocks(KineticBlocks.FORWARD_CRANK)
+            .validBlocks(
+                    KineticBlocks.FORWARD_CRANK,
+                    KineticBlocks.ELEVATOR_CRANK
+            )
             .renderer(() -> KCrankRenderer::new)
             .register();
 

@@ -6,8 +6,9 @@ import com.lightning323.createkinetic.blocks.BallastBlock;
 import com.lightning323.createkinetic.blocks.BuoyBlock;
 import com.lightning323.createkinetic.blocks.EnchantedBallastBlock;
 import com.lightning323.createkinetic.blocks.ballastTank.BallastTankBlock;
+import com.lightning323.createkinetic.blocks.crank.ControlMode;
 import com.lightning323.createkinetic.blocks.crank.KCrankBlock;
-import com.lightning323.createkinetic.blocks.helm.ShipHelmBlock;
+import com.lightning323.createkinetic.blocks.shipHelm.ShipHelmBlock;
 import com.lightning323.createkinetic.blocks.rudder.RudderBlock;
 import com.lightning323.createkinetic.blocks.sail.RetractableSailBlock;
 import com.lightning323.createkinetic.blocks.sail.SailClothBlock;
@@ -65,7 +66,26 @@ public class KineticBlocks {
             .register();
 
     public static final BlockEntry<KCrankBlock> FORWARD_CRANK =
-            REGISTRATE.block("hand_crank", KCrankBlock::new)
+            REGISTRATE.block("forward_crank", (p) -> new KCrankBlock(p, ControlMode.FORWARD_BACKWARD))
+                    .initialProperties(SharedProperties::wooden)
+                    .properties(p -> p.mapColor(MapColor.PODZOL))
+                    .transform(axeOrPickaxe())
+                    .blockstate(BlockStateGen.directionalBlockProvider(true))
+                    .transform(builder -> {
+                        ResourceLocation id = CreateKinetic.resource(builder.getName());
+                        // Access the private map through the Accessor
+                        CStressAccessor.getCapacities().put(id, 8.0);
+                        return builder;
+                    })
+                    .onRegister(BlockStressValues.setGeneratorSpeed(32))
+                    .tag(AllTags.AllBlockTags.BRITTLE.tag)
+                    .onRegister(ItemUseOverrides::addBlock)
+                    .item()
+                    .transform(customItemModel())
+                    .register();
+
+    public static final BlockEntry<KCrankBlock> ELEVATOR_CRANK =
+            REGISTRATE.block("elevator_crank", (p) -> new KCrankBlock(p, ControlMode.UP_DOWN))
                     .initialProperties(SharedProperties::wooden)
                     .properties(p -> p.mapColor(MapColor.PODZOL))
                     .transform(axeOrPickaxe())
@@ -123,13 +143,13 @@ public class KineticBlocks {
                 .transform(builder -> {
                     ResourceLocation id = CreateKinetic.resource(builder.getName());
                     // Access the private map through the Accessor
-                    CStressAccessor.getCapacities().put(id, 8.0);
+                    CStressAccessor.getCapacities().put(id, 128.0);
                     return builder;
                 })
                 .item()
                 .model((c, p) -> {
                     // Item model references the same generic model but swaps textures dynamically
-                     p.withExistingParent(c.getName(), p.modLoc("block/helm/ship_helm_base"))
+                    p.withExistingParent(c.getName(), p.modLoc("block/helm/ship_helm_base"))
                             .texture("wheel", p.modLoc("block/wheels/" + woodType.name().toLowerCase() + "_ship_wheel"))
                             .texture("base", p.modLoc("block/bases/" + woodType.name().toLowerCase() + "_ship_base"));
                 })

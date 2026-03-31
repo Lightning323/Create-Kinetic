@@ -1,5 +1,6 @@
 package com.lightning323.createkinetic.blocks.rudder;
 
+import com.lightning323.createkinetic.blocks.shipHelm.ShipHelmBlockEntity;
 import com.lightning323.createkinetic.ship.KineticShipControl;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import net.minecraft.core.BlockPos;
@@ -63,7 +64,11 @@ public class RudderBlockEntity extends KineticBlockEntity {
 //        }
 //    }
 
+    /**
+     *
+     * @return the force between -1 and 1
+     */
     public float getForce() {
-        return getSpeed();
+        return getSpeed() / ShipHelmBlockEntity.SPEED;
     }
 }

@@ -1,6 +1,6 @@
-package com.lightning323.createkinetic.blocks.helm.renderer;
+package com.lightning323.createkinetic.blocks.shipHelm.renderer;
 
-import com.lightning323.createkinetic.blocks.helm.ShipHelmBlock;
+import com.lightning323.createkinetic.blocks.shipHelm.ShipHelmBlock;
 import com.lightning323.createkinetic.registries.KineticPartialModels;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;

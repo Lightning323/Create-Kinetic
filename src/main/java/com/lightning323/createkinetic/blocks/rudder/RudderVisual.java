@@ -67,7 +67,7 @@ public class RudderVisual extends KineticBlockEntityVisual<RudderBlockEntity> im
 //        float time = net.createmod.catnip.animation.AnimationTickHolder.getRenderTime();
 //        float testAngle = time * 0.001f;
         blockEntity.renderAngle = Mth.lerp(0.05f, blockEntity.renderAngle,
-                Mth.map(blockEntity.getForce(), -256, 256, -Mth.HALF_PI/2, Mth.HALF_PI/2));//Delta,start,end
+                blockEntity.getForce() * (Mth.HALF_PI/2));//Delta,start,end
         blade.rotation(blockEntity.rudderIdentityRotation);//set to identity
         blade.rotate(blockEntity.renderAngle, Direction.Axis.Y);//rotate
         blade.setChanged();

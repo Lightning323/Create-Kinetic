@@ -1,10 +1,8 @@
-package com.lightning323.createkinetic.blocks.helm;
+package com.lightning323.createkinetic.blocks.shipHelm;
 
 import com.lightning323.createkinetic.CreateKinetic;
-import com.lightning323.createkinetic.blocks.rudder.RudderBlockEntity;
 import com.lightning323.createkinetic.registries.KineticBlockEntities;
 import com.lightning323.createkinetic.ship.KineticShipControl;
-import com.simibubi.create.content.kinetics.base.DirectionalKineticBlock;
 import com.simibubi.create.content.kinetics.base.KineticBlock;
 import com.simibubi.create.foundation.block.IBE;
 import net.minecraft.core.BlockPos;
@@ -18,7 +16,6 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.Rotation;
@@ -115,7 +112,7 @@ public class ShipHelmBlock extends KineticBlock implements IBE<ShipHelmBlockEnti
         if (VSGameUtilsKt.getShipManagingPos(level, pos) == null) {
             player.displayClientMessage(Component.translatable("info." + CreateKinetic.MOD_ID + ".needs_ship"), true);
             return InteractionResult.CONSUME;
-        } else if (blockEntity.sit(player, false)) {
+        } else if (blockEntity.sit(player, state, level, pos, false)) {
             return InteractionResult.CONSUME;
         }
 
@@ -167,10 +164,12 @@ public class ShipHelmBlock extends KineticBlock implements IBE<ShipHelmBlockEnti
             }
         };
     }
+
     @Override
     public boolean hasShaftTowards(LevelReader world, BlockPos pos, BlockState state, Direction face) {
         return face == Direction.DOWN;
     }
+
     @Override
     public Direction.Axis getRotationAxis(BlockState state) {
         return Direction.Axis.Y;

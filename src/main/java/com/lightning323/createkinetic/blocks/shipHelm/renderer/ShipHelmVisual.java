@@ -1,7 +1,6 @@
-package com.lightning323.createkinetic.blocks.helm.renderer;
+package com.lightning323.createkinetic.blocks.shipHelm.renderer;
 
-import com.lightning323.createkinetic.blocks.helm.ShipHelmBlockEntity;
-import com.lightning323.createkinetic.blocks.rudder.RudderBlockEntity;
+import com.lightning323.createkinetic.blocks.shipHelm.ShipHelmBlockEntity;
 import com.simibubi.create.AllPartialModels;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityVisual;
 import com.simibubi.create.content.kinetics.base.RotatingInstance;
@@ -11,7 +10,6 @@ import dev.engine_room.flywheel.api.visualization.VisualizationContext;
 import dev.engine_room.flywheel.lib.model.Models;
 import dev.engine_room.flywheel.lib.visual.SimpleDynamicVisual;
 import net.minecraft.core.Direction;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
 import java.util.function.Consumer;
 

@@ -1,20 +1,21 @@
-package com.lightning323.createkinetic.blocks.helm;
+package com.lightning323.createkinetic.blocks.shipHelm;
 
 import com.lightning323.createkinetic.CreateKinetic;
-import com.lightning323.createkinetic.registries.KineticBlocks;
+import com.lightning323.createkinetic.blocks.crank.KCrankBlockEntity;
 import com.lightning323.createkinetic.ship.ControlData;
 import com.lightning323.createkinetic.ship.KineticShipControl;
 import com.simibubi.create.content.kinetics.base.GeneratingKineticBlockEntity;
-import com.simibubi.create.content.kinetics.motor.CreativeMotorBlock;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.StairBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -35,12 +36,16 @@ import static org.valkyrienskies.mod.common.util.VectorConversionsMCKt.toDoubles
 public class ShipHelmBlockEntity extends GeneratingKineticBlockEntity {
 
     // For the renderer
-    public double smoothedHelmRotation = 0.0;
+    public float renderHelmRotation = 0.0f;
 
     double lastImpulse = 0;
     public double controlImpulse = 0.0;
 
+    public static final float SPEED = 64;
+
     private final List<ShipMountingEntity> seats = new ArrayList<>();
+    private final List<GeneratingKineticBlockEntity> controls_forwardBackward = new ArrayList<>();
+    private final List<GeneratingKineticBlockEntity> controls_upDown = new ArrayList<>();
 
     public ShipHelmBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
@@ -55,7 +60,7 @@ public class ShipHelmBlockEntity extends GeneratingKineticBlockEntity {
 
     @Override
     public float getGeneratedSpeed() {
-        return convertToDirection((float) (controlImpulse * 128), getBlockState().getValue(ShipHelmBlock.HORIZONTAL_FACING));
+        return convertToDirection((float) (controlImpulse * SPEED), getBlockState().getValue(ShipHelmBlock.HORIZONTAL_FACING));
     }
 
     private LoadedServerShip getShip() {
@@ -119,9 +124,38 @@ public class ShipHelmBlockEntity extends GeneratingKineticBlockEntity {
     }
 
     @Override
+    public void write(CompoundTag compound, boolean clientPacket) {
+        List<Long> additionalControls = new ArrayList<Long>();
+        for (GeneratingKineticBlockEntity be : controls_forwardBackward) {
+            additionalControls.add(be.getBlockPos().asLong());
+        }
+        for (GeneratingKineticBlockEntity be : controls_upDown) {
+            additionalControls.add(be.getBlockPos().asLong());
+        }
+        compound.putLongArray("additionalControls", additionalControls);
+        super.write(compound, clientPacket);
+    }
+
+    @Override
+    protected void read(CompoundTag compound, boolean clientPacket) {
+        if (compound.contains("additionalControls")) {
+            long[] controlPositions = compound.getLongArray("additionalControls");
+            controls_forwardBackward.clear();
+            controls_upDown.clear();
+            for (long p : controlPositions) {
+                BlockPos pos = BlockPos.of(p);
+                checkAndAddControls(level, pos, 0, 0, 0);
+                checkAndAddControls(level, pos, 0, 0, 0);
+            }
+        }
+        super.read(compound, clientPacket);
+    }
+
+    @Override
     public void tick() {
         KineticShipControl control = getControl();
         if (control != null) control.ship = getShip();
+
 
         if (KineticShipControl.isPlayerValid(seatedPlayer)) {
             ControlData controlData = new ControlData(
@@ -133,6 +167,16 @@ public class ShipHelmBlockEntity extends GeneratingKineticBlockEntity {
                     seatedPlayer.isSprinting()
             );
             controlImpulse = controlData.getLeftImpulse();
+            for (GeneratingKineticBlockEntity be : controls_forwardBackward) {
+                if (be instanceof KCrankBlockEntity kbe) {
+                    kbe.setAutomaticImpulse(controlData.getForwardImpulse());
+                }
+            }
+            for (GeneratingKineticBlockEntity be : controls_upDown) {
+                if (be instanceof KCrankBlockEntity kbe) {
+                    kbe.setAutomaticImpulse(controlData.getUpImpulse());
+                }
+            }
             if (controlImpulse != lastImpulse) {
                 lastImpulse = controlImpulse;
                 updateGeneratedRotation();
@@ -155,7 +199,7 @@ public class ShipHelmBlockEntity extends GeneratingKineticBlockEntity {
 
     Player seatedPlayer;
 
-    public boolean sit(Player player, boolean force) {
+    public boolean sit(Player player, BlockState state, Level level, BlockPos pos, boolean force) {
         ShipMountingEntity seat = spawnSeat(getBlockPos(), getBlockState(), (ServerLevel) level);
         this.seatedPlayer = player;
         Direction direction = getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING);
@@ -169,6 +213,26 @@ public class ShipHelmBlockEntity extends GeneratingKineticBlockEntity {
             control.seatedPlayer = player;
         }
 
+        controls_forwardBackward.clear();
+        controls_upDown.clear();
+        for (int x = -1; x <= 1; x++) {
+            for (int z = -1; z <= 1; z++) {
+                checkAndAddControls(level, pos, x, 0, z);
+                checkAndAddControls(level, pos, x, 1, z);
+            }
+        }
+
         return player.startRiding(seat, force);
+    }
+
+    private void checkAndAddControls(Level level, BlockPos pos, int x, int y, int z) {
+        BlockPos pos2 = new BlockPos(pos.getX() + x, pos.getY() + y, pos.getZ() + z);
+        BlockEntity e = level.getBlockEntity(pos2);
+        if (e instanceof KCrankBlockEntity kbe) {
+            switch (kbe.getControlMode()) {
+                case FORWARD_BACKWARD -> controls_forwardBackward.add(kbe);
+                case UP_DOWN -> controls_upDown.add(kbe);
+            }
+        }
     }
 }

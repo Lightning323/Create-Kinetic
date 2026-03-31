@@ -1,9 +1,8 @@
 package com.lightning323.createkinetic.registries;
 
 import com.lightning323.createkinetic.CreateKinetic;
-import com.lightning323.createkinetic.blocks.helm.WoodTypeEnum;
+import com.lightning323.createkinetic.blocks.shipHelm.WoodTypeEnum;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.EnumMap;
