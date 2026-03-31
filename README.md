@@ -19,7 +19,9 @@ Contributions are welcome, pull requests should follow the following format
 * Anchor
 * Ship helm
   * New control system similar to redstone links, but with rotational force and better aesthetics for ships!
+<!--
 -----------------------------------------------------------
-## TODO / notes
+## TODO / notes)
+-->
 
 
