@@ -2,6 +2,7 @@ package com.lightning323.createkinetic.blocks.rudder;
 
 import com.lightning323.createkinetic.blocks.shipHelm.ShipHelmBlockEntity;
 import com.lightning323.createkinetic.ship.KineticShipControl;
+import com.lightning323.createkinetic.ship.ShipUtils;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -19,6 +20,12 @@ public class RudderBlockEntity extends KineticBlockEntity {
     public final Quaternionf rudderRotation = new Quaternionf();
     public final Quaternionf rudderIdentityRotation = new Quaternionf();
     float renderAngle;
+    float lastForce;
+
+    public void animateRenderAngle(){
+        renderAngle = Mth.lerp(0.05f, renderAngle,
+                getForce() * (-Mth.HALF_PI/2));//Delta,start,end
+    }
 
     public RudderBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
@@ -56,12 +63,30 @@ public class RudderBlockEntity extends KineticBlockEntity {
             float yRot = 0;
 
             switch (facing) {
-                case NORTH -> { xRot = 90;  yRot = -180;   }
-                case SOUTH -> { xRot = 90;  yRot = 0; }
-                case EAST  -> { xRot = 90;  yRot = 90;  }
-                case WEST  -> { xRot = 90;  yRot = 270; }
-                case UP    -> { xRot = 0;   yRot = 0;   }
-                case DOWN  -> { xRot = 180; yRot = 0;   }
+                case NORTH -> {
+                    xRot = 90;
+                    yRot = -180;
+                }
+                case SOUTH -> {
+                    xRot = 90;
+                    yRot = 0;
+                }
+                case EAST -> {
+                    xRot = 90;
+                    yRot = 90;
+                }
+                case WEST -> {
+                    xRot = 90;
+                    yRot = 270;
+                }
+                case UP -> {
+                    xRot = 0;
+                    yRot = 0;
+                }
+                case DOWN -> {
+                    xRot = 180;
+                    yRot = 0;
+                }
             }
 
             // 3. THE MAGIC ORDER
@@ -85,14 +110,20 @@ public class RudderBlockEntity extends KineticBlockEntity {
         }
     }
 
-//    @Override
-//    public void tick() {
-//        super.tick();
-//        if (!level.isClientSide) {//TODO: Could update logic have something to do with where it happens that makes it not work?
-//            KineticShipControl controller = ShipUtils.getOrAddShipController((ServerLevel) level, getBlockPos());
-//            if (controller != null) controller.updateRudderForces();
-//        }
-//    }
+    @Override
+    public void tick() {
+        super.tick();
+
+        //If the force has changed, mark the rudder forces as dirty
+        if (level instanceof ServerLevel serverLevel &&
+                getForce() != lastForce
+//                && level.getGameTime() % 5 == 0
+                ) {
+            lastForce = getForce();
+            KineticShipControl controller = KineticShipControl.getOrAddController(serverLevel, getBlockPos());
+            if (controller != null) controller.mustUpdateRudders = true;
+        }
+    }
 
     /**
      *

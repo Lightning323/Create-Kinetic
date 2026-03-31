@@ -43,19 +43,6 @@ public class ShipHelmRenderer implements BlockEntityRenderer<ShipHelmBlockEntity
                 )
         );
 
-//        Level level = blockEntity.getLevel();
-//        if (level != null) {
-//            Ship ship = VSGameUtilsKt.getShipManagingPos(level, blockEntity.getBlockPos());
-//            if (ship != null) {
-//                // Update the smoothed rotation based on ship angular velocity
-//                blockEntity.smoothedHelmRotation = (lerp(
-//                    blockEntity.smoothedHelmRotation,
-//                    ship.getAngularVelocity().y() * 100.0,
-//                    0.1
-//                ));
-//            }
-//        }
-
         // Add offset of the base based on rotation
         matrixStack.translate(0.0, 0.0, 0.19);
 

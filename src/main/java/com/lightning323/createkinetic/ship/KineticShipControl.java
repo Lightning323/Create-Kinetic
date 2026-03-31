@@ -166,6 +166,9 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
 //    public float Vector3 rudderForce = new Vector3(0,0,0);
     @JsonIgnore
     private LongSet rudderLocations = new LongOpenHashSet();
+    @JsonIgnore
+    public boolean mustUpdateRudders = false;
+
     public Vector3d rudderForce = new Vector3d(0, 0, 0);
 
 
@@ -219,7 +222,7 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
                 iterator.remove();
             }
         }
-//        if (!rudderLocations.isEmpty()) LOGGER.debug("Forces of {} rudders: {}", rudderLocations.size(), rudderForce);
+        if (!rudderLocations.isEmpty()) LOGGER.debug("Forces of {} rudders: {}", rudderLocations.size(), rudderForce);
     }
 
     /**
@@ -795,8 +798,9 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
 
     @Override
     public void onServerTick() {
-        if (this.level != null) {
+        if (this.level != null && mustUpdateRudders) {
             updateRudderForces(this.level);
+            mustUpdateRudders = false;
         }
     }
 

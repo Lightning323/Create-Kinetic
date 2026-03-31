@@ -21,16 +21,12 @@ public class ShipHelmVisual extends KineticBlockEntityVisual<ShipHelmBlockEntity
     public ShipHelmVisual(VisualizationContext context, ShipHelmBlockEntity blockEntity, float partialTicks) {
         super(context, blockEntity, partialTicks);
 
-
         this.shaft = instancerProvider().instancer(AllInstanceTypes.ROTATING, Models.partial(AllPartialModels.SHAFT_HALF))
                 .createInstance();
         shaft.setup(blockEntity)
                 .setPosition(getVisualPosition())
                 .rotateToFace(Direction.SOUTH, Direction.DOWN)
                 .setChanged();
-
-
-
         animate();
     }
 
