@@ -193,8 +193,9 @@ public class KineticBlocks {
                 .blockstate((c, p) -> {
                     // Blockstate always points to a single base model.
                     // This model can be a generic base without wheel.
+                    String woodName = woodType.name().toLowerCase();
                     ModelFile.ExistingModelFile base = p.models().getExistingFile(
-                            p.modLoc("block/helm/ship_helm_base") // single generic model
+                            p.modLoc("block/helm/" + woodName + "_helm_base") // single generic model
                     );
                     p.horizontalBlock(c.get(), base);
                 })

@@ -158,18 +158,18 @@ public class RudderBlock extends DirectionalKineticBlock implements IBE<RudderBl
             // 1. Placing a blade
             if (heldItem.getItem() instanceof RudderBladeItem rb) {
 
-                RudderSpatialHandler.ObstructionCheckLogic logic = PropulsionConfig.PROPELLER_OBSTRUCTION_LOGIC.get();
-                if (logic != RudderSpatialHandler.ObstructionCheckLogic.OFF) {
-                    Set<BlockPos> obstructions = propellerBE.getSpatialHandler().getObstructionsFor(bladeItem);
-
-                    if (!obstructions.isEmpty()) {
-                        if (level.isClientSide) {
-                            showBounds(pos, state, player, bladeItem);
-                            return InteractionResult.SUCCESS; //While this is for fail case - only SUCCESS causes arm swing animation
-                        }
-                        return InteractionResult.FAIL;
-                    }
-                }
+//                RudderSpatialHandler.ObstructionCheckLogic logic = PropulsionConfig.PROPELLER_OBSTRUCTION_LOGIC.get();
+//                if (logic != RudderSpatialHandler.ObstructionCheckLogic.OFF) {
+//                    Set<BlockPos> obstructions = propellerBE.getSpatialHandler().getObstructionsFor(bladeItem);
+//
+//                    if (!obstructions.isEmpty()) {
+//                        if (level.isClientSide) {
+//                            showBounds(pos, state, player, bladeItem);
+//                            return InteractionResult.SUCCESS; //While this is for fail case - only SUCCESS causes arm swing animation
+//                        }
+//                        return InteractionResult.FAIL;
+//                    }
+//                }
 
                 if (worldIn.isClientSide) return InteractionResult.SUCCESS;
 
@@ -228,25 +228,25 @@ public class RudderBlock extends DirectionalKineticBlock implements IBE<RudderBl
     }
     private static final int ERROR_MESSAGE_COLOR = 0xFF_ff5d6c;
 
-    private void showBounds(BlockPos pos, BlockState state, Player player, RudderBladeItem blade) {
-        if (!player.level().isClientSide) return;
-        RudderSpatialHandler.ObstructionCheckLogic logic = PropulsionConfig.PROPELLER_OBSTRUCTION_LOGIC.get();
-        AABB outlineAABB;
-
-        if (logic == RudderSpatialHandler.ObstructionCheckLogic.PRECISE && blade != null) {
-            outlineAABB = RudderSpatialHandler.getPreciseBladeAABB(pos, state.getValue(DirectionalKineticBlock.FACING), blade);
-        } else {
-            Vec3 contract = Vec3.atLowerCornerOf(state.getValue(DirectionalKineticBlock.FACING).getNormal());
-            outlineAABB = new AABB(pos).inflate(1).deflate(contract.x, contract.y, contract.z);
-        }
-
-        Outliner.getInstance().showAABB(Pair.of("propeller", pos), outlineAABB)
-                .colored(AssemblyUtility.CANCEL_COLOR)
-                .lineWidth(1/16f);
-
-        player.displayClientMessage(
-                Component.translatable("createpropulsion.propeller.not_enough_space")
-                        .withStyle(s -> s.withColor(ERROR_MESSAGE_COLOR)), true);
-    }
+//    private void showBounds(BlockPos pos, BlockState state, Player player, RudderBladeItem blade) {
+//        if (!player.level().isClientSide) return;
+//        RudderSpatialHandler.ObstructionCheckLogic logic = PropulsionConfig.PROPELLER_OBSTRUCTION_LOGIC.get();
+//        AABB outlineAABB;
+//
+//        if (logic == RudderSpatialHandler.ObstructionCheckLogic.PRECISE && blade != null) {
+//            outlineAABB = RudderSpatialHandler.getPreciseBladeAABB(pos, state.getValue(DirectionalKineticBlock.FACING), blade);
+//        } else {
+//            Vec3 contract = Vec3.atLowerCornerOf(state.getValue(DirectionalKineticBlock.FACING).getNormal());
+//            outlineAABB = new AABB(pos).inflate(1).deflate(contract.x, contract.y, contract.z);
+//        }
+//
+//        Outliner.getInstance().showAABB(Pair.of("propeller", pos), outlineAABB)
+//                .colored(AssemblyUtility.CANCEL_COLOR)
+//                .lineWidth(1/16f);
+//
+//        player.displayClientMessage(
+//                Component.translatable("createpropulsion.propeller.not_enough_space")
+//                        .withStyle(s -> s.withColor(ERROR_MESSAGE_COLOR)), true);
+//    }
 
 }

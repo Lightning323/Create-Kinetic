@@ -1,0 +1,6 @@
+{
+	"parent": "createkinetic:block/helm/ship_helm_base",
+	"textures": {
+		"3": "createkinetic:block/bases/jungle_ship_base"
+	}
+}
