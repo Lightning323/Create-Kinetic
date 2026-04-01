@@ -30,6 +30,7 @@ public class RudderBlockEntity extends KineticBlockEntity {
     public final Quaternionf rudderIdentityRotation = new Quaternionf();
     float renderAngle;
     float lastForce;
+    public RudderSpatialHandler spatialHandler;
 
     public void animateRenderAngle() {
         renderAngle = Mth.lerp(0.05f, renderAngle,
@@ -38,6 +39,7 @@ public class RudderBlockEntity extends KineticBlockEntity {
 
     public RudderBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
+        spatialHandler = new RudderSpatialHandler(this);
     }
 
     @Override

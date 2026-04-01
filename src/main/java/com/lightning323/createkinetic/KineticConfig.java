@@ -1,5 +1,6 @@
 package com.lightning323.createkinetic;
 
+import com.lightning323.createkinetic.blocks.rudder.RudderSpatialHandler;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -60,6 +61,10 @@ public class KineticConfig {
             = BUILDER.comment("The maximum dive speed at any point on the ship caused by helm torque")
             .defineInRange("dive_speed", 100.0, 0.0, Double.MAX_VALUE);
 
+    private static final ForgeConfigSpec.EnumValue<RudderSpatialHandler.ObstructionCheckLogic> RUDDER_OBSTRUCTION_LOGIC
+            = BUILDER.comment("Should rudder obstruction logic be enabled?")
+            .defineEnum("rudder_obstruction_logic", RudderSpatialHandler.ObstructionCheckLogic.APPROXIMATE);
+
 //    private static final ForgeConfigSpec.BooleanValue WIND_PARTICLES
 //            = BUILDER.comment("Should wind particles be enabled?")
 //            .define("wind_particles", true);
@@ -74,6 +79,7 @@ public class KineticConfig {
     public static double noSailZone;
     public static double sailSpeed;
     public static double minWindSpeed;
+    public static RudderSpatialHandler.ObstructionCheckLogic rudderObstructionLogic;
 
     public static double turnAcceleration;
     public static double diveAcceleration;
@@ -99,6 +105,7 @@ public class KineticConfig {
         turnSpeed = TURN_SPEED.get();
         turnAcceleration = DIVE_ACCELERATION.get();
         diveSpeed = DIVE_SPEED.get();
+        rudderObstructionLogic = RUDDER_OBSTRUCTION_LOGIC.get();
 //        windParticles = WIND_PARTICLES.get();
 
 //        magicNumberIntroduction = MAGIC_NUMBER_INTRODUCTION.get();

@@ -1,6 +1,7 @@
 package com.lightning323.createkinetic.blocks.rudder;
 
 import com.ibm.icu.impl.Pair;
+import com.lightning323.createkinetic.KineticConfig;
 import com.lightning323.createkinetic.items.RudderBladeItem;
 import com.lightning323.createkinetic.physics_assembler.AssemblyUtility;
 import com.lightning323.createkinetic.registries.KineticBlockEntities;
@@ -34,6 +35,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelFile;
 
+import javax.annotation.Nonnull;
 import java.util.Set;
 
 public class RudderBlock extends DirectionalKineticBlock implements IBE<RudderBlockEntity> {
@@ -148,37 +150,44 @@ public class RudderBlock extends DirectionalKineticBlock implements IBE<RudderBl
     //Aesthetic only property to tell the block which direction to be on a face
     public static final IntegerProperty PLANE_ROTATION = IntegerProperty.create("plane_rot", 0, 3);
 
+    @SuppressWarnings("deprecation")
     @Override
-    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
-        BlockEntity blockEntity = worldIn.getBlockEntity(pos);
+    public void neighborChanged(@Nonnull BlockState state, @Nonnull Level level, @Nonnull BlockPos pos, @Nonnull Block block, @Nonnull BlockPos fromPos, boolean isMoving) {
+        super.neighborChanged(state, level, pos, block, fromPos, isMoving);
+        if (level.isClientSide()) return;
+
+        withBlockEntityDo(level, pos, (be) -> be.spatialHandler.triggerImmediateScan());
+    }
+
+
+    @Override
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
+        BlockEntity blockEntity = level.getBlockEntity(pos);
 
         if (blockEntity instanceof RudderBlockEntity rbe) {
             ItemStack heldItem = player.getItemInHand(handIn);
 
             // 1. Placing a blade
-            if (heldItem.getItem() instanceof RudderBladeItem rb) {
+            if (heldItem.getItem() instanceof RudderBladeItem bladeItem) {
+                if (KineticConfig.rudderObstructionLogic != RudderSpatialHandler.ObstructionCheckLogic.OFF) {
+                    Set<BlockPos> obstructions = rbe.spatialHandler.getObstructionsFor(bladeItem);
+                    if (!obstructions.isEmpty()) {
+                        if (level.isClientSide) {
+                            showBounds(pos, state, player, bladeItem);
+                            return InteractionResult.SUCCESS; //While this is for fail case - only SUCCESS causes arm swing animation
+                        }
+                        return InteractionResult.FAIL;
+                    }
+                }
 
-//                RudderSpatialHandler.ObstructionCheckLogic logic = PropulsionConfig.PROPELLER_OBSTRUCTION_LOGIC.get();
-//                if (logic != RudderSpatialHandler.ObstructionCheckLogic.OFF) {
-//                    Set<BlockPos> obstructions = propellerBE.getSpatialHandler().getObstructionsFor(bladeItem);
-//
-//                    if (!obstructions.isEmpty()) {
-//                        if (level.isClientSide) {
-//                            showBounds(pos, state, player, bladeItem);
-//                            return InteractionResult.SUCCESS; //While this is for fail case - only SUCCESS causes arm swing animation
-//                        }
-//                        return InteractionResult.FAIL;
-//                    }
-//                }
-
-                if (worldIn.isClientSide) return InteractionResult.SUCCESS;
+                if (level.isClientSide) return InteractionResult.SUCCESS;
 
                 // If there's already a blade, drop it first (or swap it)
                 if (rbe.rudderBlade != null) {
                     player.getInventory().placeItemBackInInventory(new ItemStack(rbe.rudderBlade));
                 }
 
-                rbe.rudderBlade = rb;
+                rbe.rudderBlade = bladeItem;
                 heldItem.shrink(1);
 
                 // CRITICAL: Notify the world and Flywheel that data changed
@@ -189,7 +198,7 @@ public class RudderBlock extends DirectionalKineticBlock implements IBE<RudderBl
 
             // 2. Removing a blade (Empty hand or Wrench logic)
             else if (heldItem.isEmpty() && rbe.rudderBlade != null) {
-                if (worldIn.isClientSide) return InteractionResult.SUCCESS;
+                if (level.isClientSide) return InteractionResult.SUCCESS;
 
                 player.getInventory().placeItemBackInInventory(new ItemStack(rbe.rudderBlade));
                 rbe.rudderBlade = null;
@@ -200,7 +209,7 @@ public class RudderBlock extends DirectionalKineticBlock implements IBE<RudderBl
                 return InteractionResult.SUCCESS;
             }
         }
-        return super.use(state, worldIn, pos, player, handIn, hit);
+        return super.use(state, level, pos, player, handIn, hit);
     }
 
 
@@ -228,25 +237,24 @@ public class RudderBlock extends DirectionalKineticBlock implements IBE<RudderBl
     }
     private static final int ERROR_MESSAGE_COLOR = 0xFF_ff5d6c;
 
-//    private void showBounds(BlockPos pos, BlockState state, Player player, RudderBladeItem blade) {
-//        if (!player.level().isClientSide) return;
-//        RudderSpatialHandler.ObstructionCheckLogic logic = PropulsionConfig.PROPELLER_OBSTRUCTION_LOGIC.get();
-//        AABB outlineAABB;
-//
-//        if (logic == RudderSpatialHandler.ObstructionCheckLogic.PRECISE && blade != null) {
+    private void showBounds(BlockPos pos, BlockState state, Player player, RudderBladeItem blade) {
+        if (!player.level().isClientSide) return;
+        AABB outlineAABB;
+
+//        if (KineticConfig.rudderObstructionLogic == RudderSpatialHandler.ObstructionCheckLogic.PRECISE && blade != null) {
 //            outlineAABB = RudderSpatialHandler.getPreciseBladeAABB(pos, state.getValue(DirectionalKineticBlock.FACING), blade);
 //        } else {
-//            Vec3 contract = Vec3.atLowerCornerOf(state.getValue(DirectionalKineticBlock.FACING).getNormal());
-//            outlineAABB = new AABB(pos).inflate(1).deflate(contract.x, contract.y, contract.z);
+            Vec3 contract = Vec3.atLowerCornerOf(state.getValue(DirectionalKineticBlock.FACING).getNormal());
+            outlineAABB = new AABB(pos).inflate(1).deflate(Math.abs(contract.x), Math.abs(contract.y), Math.abs(contract.z));
 //        }
-//
-//        Outliner.getInstance().showAABB(Pair.of("propeller", pos), outlineAABB)
-//                .colored(AssemblyUtility.CANCEL_COLOR)
-//                .lineWidth(1/16f);
-//
-//        player.displayClientMessage(
-//                Component.translatable("createpropulsion.propeller.not_enough_space")
-//                        .withStyle(s -> s.withColor(ERROR_MESSAGE_COLOR)), true);
-//    }
+
+        Outliner.getInstance().showAABB(Pair.of("rudder", pos), outlineAABB)
+                .colored(AssemblyUtility.CANCEL_COLOR)
+                .lineWidth(1/16f);
+
+        player.displayClientMessage(
+                Component.translatable("createkinetic.rudder.not_enough_space")
+                        .withStyle(s -> s.withColor(ERROR_MESSAGE_COLOR)), true);
+    }
 
 }
