@@ -155,6 +155,7 @@ public class RudderBlock extends DirectionalKineticBlock implements IBE<RudderBl
                 heldItem.shrink(1);
 
                 // CRITICAL: Notify the world and Flywheel that data changed
+                rbe.setChanged();
                 rbe.notifyUpdate();
                 return InteractionResult.SUCCESS;
             }
@@ -167,6 +168,7 @@ public class RudderBlock extends DirectionalKineticBlock implements IBE<RudderBl
                 rbe.rudderBlade = null;
 
                 // CRITICAL: Notify the world and Flywheel that data changed
+                rbe.setChanged();
                 rbe.notifyUpdate();
                 return InteractionResult.SUCCESS;
             }

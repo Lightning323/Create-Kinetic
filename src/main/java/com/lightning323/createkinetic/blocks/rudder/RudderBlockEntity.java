@@ -66,8 +66,8 @@ public class RudderBlockEntity extends KineticBlockEntity {
 
     @Override
     protected void read(CompoundTag compound, boolean clientPacket) {
-        super.read(compound, clientPacket);
         updateRenderOrientation();
+        //TODO: Figure out why this isnt being saved
 
         // Read the ItemStack back from the tag
         if (compound.contains("blade", Tag.TAG_INT)) {
@@ -75,10 +75,18 @@ public class RudderBlockEntity extends KineticBlockEntity {
         } else {
             this.rudderBlade = null;
         }
+        super.read(compound, clientPacket);
+    }
+
+    @Override
+    public CompoundTag getUpdateTag() {
+        CompoundTag tag = super.getUpdateTag();
+        write(tag, true); // This ensures our 'blade' tag is included in the sync packet
+        return tag;
     }
 
     protected void updateRenderOrientation() {
-        if (level.isClientSide) {
+        if (level != null && level.isClientSide) {
             Direction facing = getBlockState().getValue(BlockStateProperties.FACING);
             int planeRot = getBlockState().getValue(RudderBlock.PLANE_ROTATION);
 
@@ -131,8 +139,8 @@ public class RudderBlockEntity extends KineticBlockEntity {
 
     public void remove() {
         super.remove();
-        if (!level.isClientSide) {
-            KineticShipControl controller = KineticShipControl.getOrAddController((ServerLevel) level, getBlockPos());
+        if (level instanceof ServerLevel serverLevel) {
+            KineticShipControl controller = KineticShipControl.getOrAddController(serverLevel, getBlockPos());
             if (controller != null) controller.removeRudder(getBlockPos());
         }
     }
