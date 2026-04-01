@@ -1,5 +1,8 @@
-- Fix elevator crank
 - windmill sails may continue to propel the ship even after removal
+- Fix elevator crank
+    - the player control happens server side because we dont have a seated player on the client
+    - We need to control all impulses on the client, but handle all the movement logic on the server
+
 
 - aesthetic changes to cranks
 - aesthetic changes to helms for copyright reasons

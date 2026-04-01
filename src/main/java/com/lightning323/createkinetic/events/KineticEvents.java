@@ -20,49 +20,48 @@ import static com.lightning323.createkinetic.CreateKinetic.MOD_ID;
 @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class KineticEvents {
 
-    @SubscribeEvent
-    public static void onLoadWorld(LevelEvent.Load event) {
-        LevelAccessor world = event.getLevel();
-//        CreateKinetic.REDSTONE_LINK_NETWORK_HANDLER.onLoadWorld(world);
-//        Create.TORQUE_PROPAGATOR.onLoadWorld(world);
-//        Create.RAILWAYS.levelLoaded(world);
-//        Create.LOGISTICS.levelLoaded(world);
-    }
-
-    @SubscribeEvent
-    public static void onUnloadWorld(LevelEvent.Unload event) {
-        LevelAccessor world = event.getLevel();
-//        CreateKinetic.REDSTONE_LINK_NETWORK_HANDLER.onUnloadWorld(world);
-//        Create.TORQUE_PROPAGATOR.onUnloadWorld(world);
-//        WorldAttached.invalidateWorld(world);
-//        CobbleGenOptimisation.invalidateWorld(world);
-    }
-
-    @SubscribeEvent
-    public static void onBlockPlaced(BlockEvent.EntityPlaceEvent event) {
-        BlockState state = event.getPlacedBlock();
-        if (event.getLevel().isClientSide()) return;
-
-        if (state.getBlock() instanceof com.simibubi.create.content.contraptions.bearing.SailBlock) {
-            Level level = event.getEntity().level();
-            Direction value = state.getValue(BlockStateProperties.FACING);
-            KineticShipControl controller = KineticShipControl.getOrAddController((ServerLevel) level, event.getPos());
-            if (controller != null) controller.addSail((ServerLevel) level, event.getPos(), value.getAxis());
-        }
-    }
-
-    @SubscribeEvent
-    public static void onBlockBroken(BlockEvent.BreakEvent event) {
-        BlockState state = event.getState();
-        if (event.getLevel().isClientSide()) return;
-
-        if (state.getBlock() instanceof com.simibubi.create.content.contraptions.bearing.SailBlock) {
-            Level level = event.getPlayer().level();
-            Direction value = state.getValue(BlockStateProperties.FACING);
-            KineticShipControl controller = KineticShipControl.getOrAddController((ServerLevel) level, event.getPos());
-            if (controller != null) controller.addSail((ServerLevel) level, event.getPos(), value.getAxis());
-        }
-    }
+    //TODO: The method for updating sail count for create sails hurts performance unless done on a mixin (which isnt possible)
+//    @SubscribeEvent
+//    public static void onLoadWorld(LevelEvent.Load event) {
+//        LevelAccessor world = event.getLevel();
+////        CreateKinetic.REDSTONE_LINK_NETWORK_HANDLER.onLoadWorld(world);
+////        Create.TORQUE_PROPAGATOR.onLoadWorld(world);
+////        Create.RAILWAYS.levelLoaded(world);
+////        Create.LOGISTICS.levelLoaded(world);
+//    }
+//
+//    @SubscribeEvent
+//    public static void onUnloadWorld(LevelEvent.Unload event) {
+//        LevelAccessor world = event.getLevel();
+////        CreateKinetic.REDSTONE_LINK_NETWORK_HANDLER.onUnloadWorld(world);
+////        Create.TORQUE_PROPAGATOR.onUnloadWorld(world);
+////        WorldAttached.invalidateWorld(world);
+////        CobbleGenOptimisation.invalidateWorld(world);
+//    }
+//
+//    @SubscribeEvent
+//    public static void onBlockPlaced(BlockEvent.EntityPlaceEvent event) {
+//        BlockState state = event.getPlacedBlock();
+//        if (event.getLevel().isClientSide()) return;
+//
+//        if (state.getBlock() instanceof com.simibubi.create.content.contraptions.bearing.SailBlock) {
+//            Level level = event.getEntity().level();
+//            Direction value = state.getValue(BlockStateProperties.FACING);
+//            KineticShipControl controller = KineticShipControl.getOrAddController((ServerLevel) level, event.getPos());
+//            if (controller != null) controller.addSail((ServerLevel) level, event.getPos(), value.getAxis());
+//        }
+//    }
+//
+//    @SubscribeEvent
+//    public static void onBlockChanged(BlockEvent.EntityPlaceEvent event) {
+//        if (event.getLevel() instanceof ServerLevel serverLevel) {
+//            if (event.getState().getBlock() instanceof com.simibubi.create.content.contraptions.bearing.SailBlock) {
+//                Direction value = event.getState().getValue(BlockStateProperties.FACING);
+//                KineticShipControl controller = KineticShipControl.getOrAddController(serverLevel, event.getPos());
+//                if (controller != null) controller.addSail(serverLevel, event.getPos(), value.getAxis());
+//            }
+//        }
+//    }
 
 
     @SubscribeEvent
