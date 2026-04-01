@@ -26,9 +26,9 @@ public abstract class CountableBlock extends Block {
         }
     }
 
-    abstract void addToShip(BlockState state, Level level, BlockPos pos, KineticShipControl controller);
+    public abstract void addToShip(BlockState state, Level level, BlockPos pos, KineticShipControl controller);
 
-    abstract void removeFromShip(BlockState state, Level level, BlockPos pos, KineticShipControl controller);
+    public abstract void removeFromShip(BlockState state, Level level, BlockPos pos, KineticShipControl controller);
 
 
 }

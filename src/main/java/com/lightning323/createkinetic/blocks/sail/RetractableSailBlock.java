@@ -94,7 +94,6 @@ public class RetractableSailBlock extends HorizontalAxisKineticBlock implements 
             Direction.Axis axis = state.getValue(BlockStateProperties.HORIZONTAL_AXIS);
             return KineticShapes.SAIL_MAGNET.get(axis);
         }
-
     }
 
 

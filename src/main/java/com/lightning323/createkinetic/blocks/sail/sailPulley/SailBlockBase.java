@@ -41,8 +41,7 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public abstract class SailBlockBase extends Block implements SimpleWaterloggedBlock {
-
+public class SailBlockBase extends CountableBlock implements SimpleWaterloggedBlock {
 
     public SailBlockBase(Properties properties) {
         super(properties);
@@ -79,8 +78,14 @@ public abstract class SailBlockBase extends Block implements SimpleWaterloggedBl
         return KineticBlocks.SAIL_PULLEY.asStack();
     }
 
+    public void addToShip(BlockState state, Level level, BlockPos pos, KineticShipControl controller) {
+    }
+
+    public void removeFromShip(BlockState state, Level level, BlockPos pos, KineticShipControl controller) {
+    }
+
     @Override
-    public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+    public final void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
         if (!isMoving) {
             if (state.getBlock() == newState.getBlock()
                     && newState.hasProperty(COLOR)

@@ -1,6 +1,7 @@
 {
 	"format_version": "1.20.1",
 	"credit": "Made with Blockbench",
+	"parent": "minecraft:block/block",
 	"texture_size": [64, 64],
 	"textures": {
 		"0": "createkinetic:block/rudder/rudder_base",

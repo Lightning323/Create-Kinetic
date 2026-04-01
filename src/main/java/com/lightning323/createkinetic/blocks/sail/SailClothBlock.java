@@ -24,12 +24,21 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class SailClothBlock extends SailBlockBase {
 
-    public SailClothBlock(Properties properties) {
-        super(properties);
+    public void addToShip(BlockState state, Level world, BlockPos pos, KineticShipControl controller) {
+        Direction.Axis axis = state.getValue(BlockStateProperties.HORIZONTAL_AXIS);
+        Direction.Axis flippedAxis = (axis == Direction.Axis.X) ? Direction.Axis.Z : Direction.Axis.X;
+        controller.addSail((ServerLevel) world, pos, flippedAxis);
+    }
+
+    public void removeFromShip(BlockState state, Level world, BlockPos pos, KineticShipControl controller) {
+        Direction.Axis axis = state.getValue(BlockStateProperties.HORIZONTAL_AXIS);
+        Direction.Axis flippedAxis = (axis == Direction.Axis.X) ? Direction.Axis.Z : Direction.Axis.X;
+        controller.removeSail((ServerLevel) world, pos, flippedAxis);
     }
 
 
-    public void removeFromShip(KineticShipControl controller) {
+    public SailClothBlock(Properties properties) {
+        super(properties);
     }
 
 
@@ -60,29 +69,6 @@ public class SailClothBlock extends SailBlockBase {
         }
 
         return InteractionResult.PASS;
-    }
-
-    @Override
-    public void onPlace(BlockState state, Level world, BlockPos pos, BlockState oldState, boolean isMoving) {
-        super.onPlace(state, world, pos, oldState, isMoving);
-
-        // Check if it's actually a new block type (not just a state change like a property update)
-        if (!state.is(oldState.getBlock())) {
-            Direction.Axis axis = state.getValue(BlockStateProperties.HORIZONTAL_AXIS);
-            Direction.Axis flippedAxis = (axis == Direction.Axis.X) ? Direction.Axis.Z : Direction.Axis.X;
-            KineticShipControl controller = KineticShipControl.getOrAddController((ServerLevel) world, pos);
-            if (controller != null) controller.addSail((ServerLevel) world, pos, flippedAxis);
-        }
-    }
-
-    @Override
-    public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
-        super.onRemove(state, world, pos, newState, isMoving);
-
-        Direction.Axis axis = state.getValue(BlockStateProperties.HORIZONTAL_AXIS);
-        Direction.Axis flippedAxis = (axis == Direction.Axis.X) ? Direction.Axis.Z : Direction.Axis.X;
-        KineticShipControl controller = KineticShipControl.getOrAddController((ServerLevel) world, pos);
-        if (controller != null) controller.removeSail((ServerLevel) world, pos, flippedAxis);
     }
 
     @Override

@@ -13,12 +13,12 @@ public class BuoyBlock extends CountableBlock {
     }
 //
     @Override
-    void addToShip(BlockState state, Level level, BlockPos pos, KineticShipControl controller) {
+    public void addToShip(BlockState state, Level level, BlockPos pos, KineticShipControl controller) {
         controller.numBuoys++;
     }
 
     @Override
-    void removeFromShip(BlockState state, Level level, BlockPos pos, KineticShipControl controller) {
+    public void removeFromShip(BlockState state, Level level, BlockPos pos, KineticShipControl controller) {
         controller.numBuoys--;
     }
 

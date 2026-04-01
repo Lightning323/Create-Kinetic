@@ -11,12 +11,12 @@ public class EnchantedBallastBlock extends CountableBlock {
     }
 
     @Override
-    void addToShip(BlockState state, Level level, BlockPos pos, KineticShipControl controller) {
+    public void addToShip(BlockState state, Level level, BlockPos pos, KineticShipControl controller) {
         controller.numEnchantedBallast++;
     }
 
     @Override
-    void removeFromShip(BlockState state, Level level, BlockPos pos, KineticShipControl controller) {
+    public void removeFromShip(BlockState state, Level level, BlockPos pos, KineticShipControl controller) {
         controller.numEnchantedBallast--;
     }
 }

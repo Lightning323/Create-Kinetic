@@ -6,6 +6,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import org.valkyrienskies.core.api.ships.Ship;
 
 @Mod.EventBusSubscriber(modid = CreateKinetic.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class DataGenerators {
@@ -19,5 +20,6 @@ public class DataGenerators {
         if (event.includeServer()) {
             gen.addProvider(true, new KineticRecipes(gen));
         }
+        ShipBlocks.register();
     }
 }

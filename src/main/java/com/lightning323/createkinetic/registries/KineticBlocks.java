@@ -30,6 +30,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
@@ -62,6 +63,17 @@ public class KineticBlocks {
             .blockstate(RudderBlock.getBlockstateDefinition())
             .item()
             .model((c, p) -> p.withExistingParent(c.getName(), p.modLoc("block/rudder/base")))
+            .recipe((ctx, prov) -> {
+                ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, ctx.getEntry())
+                        .pattern(" B ")
+                        .pattern(" P ")
+                        .pattern(" S ")
+                        .define('S', AllBlocks.SHAFT.get())
+                        .define('P', AllBlocks.ANDESITE_CASING)
+                        .define('B', AllItems.STURDY_SHEET.get())
+                        .unlockedBy("has_sail", prov.has(AllBlocks.SAIL.get()))
+                        .save(prov);
+            })
             .build()
             .register();
 
@@ -82,6 +94,24 @@ public class KineticBlocks {
                     .onRegister(ItemUseOverrides::addBlock)
                     .item()
                     .transform(customItemModel())
+                    .recipe((ctx, prov) -> {
+                        ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, ctx.getEntry())
+                                .pattern("   ")
+                                .pattern("ICI")
+                                .pattern("   ")
+                                .define('C', AllBlocks.HAND_CRANK)
+                                .define('I', AllItems.BRASS_INGOT)
+                                .unlockedBy("has_sail", prov.has(AllBlocks.SAIL.get()))
+                                // Give it a specific suffix
+                                .save(prov, prov.safeId(ctx.getEntry()) + "_from_crank2");
+                    })
+                    .recipe((ctx, prov) -> {
+                        ShapelessRecipeBuilder.shapeless(RecipeCategory.TRANSPORTATION, ctx.getEntry(), 1)
+                                .requires(KineticBlocks.ELEVATOR_CRANK.get())
+                                .unlockedBy("has_sail", prov.has(AllBlocks.SAIL.get()))
+                                // Give this one a different suffix
+                                .save(prov, prov.safeId(ctx.getEntry()) + "_from_elevator_crank");
+                    })
                     .register();
 
     public static final BlockEntry<KCrankBlock> ELEVATOR_CRANK =
@@ -101,6 +131,24 @@ public class KineticBlocks {
                     .onRegister(ItemUseOverrides::addBlock)
                     .item()
                     .transform(customItemModel())
+                    .recipe((ctx, prov) -> {
+                        ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, ctx.getEntry())
+                                .pattern(" I ")
+                                .pattern(" C ")
+                                .pattern(" I ")
+                                .define('C', AllBlocks.HAND_CRANK)
+                                .define('I', AllItems.BRASS_INGOT)
+                                .unlockedBy("has_sail", prov.has(AllBlocks.SAIL.get()))
+                                // Give it a specific suffix
+                                .save(prov, prov.safeId(ctx.getEntry()) + "_from_crank");
+                    })
+                    .recipe((ctx, prov) -> {
+                        ShapelessRecipeBuilder.shapeless(RecipeCategory.TRANSPORTATION, ctx.getEntry(), 1)
+                                .requires(KineticBlocks.FORWARD_CRANK.get())
+                                .unlockedBy("has_sail", prov.has(AllBlocks.SAIL.get()))
+                                // Give this one a different suffix
+                                .save(prov, prov.safeId(ctx.getEntry()) + "_from_forward_crank");
+                    })
                     .register();
 
     public static final BlockEntry<BallastTankBlock> BALLAST_TANK =
@@ -123,6 +171,16 @@ public class KineticBlocks {
                         }
                     })
                     .model(AssetLookup.customBlockItemModel("_", "block_single_window"))
+                    .recipe((ctx, prov) -> {
+                        ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, ctx.getEntry())
+                                .pattern(" I ")
+                                .pattern(" B ")
+                                .pattern(" I ")
+                                .define('I', AllBlocks.INDUSTRIAL_IRON_BLOCK)
+                                .define('B', Items.BARREL)
+                                .unlockedBy("has_sail", prov.has(AllBlocks.SAIL.get()))
+                                .save(prov);
+                    })
                     .build()
                     .register();
 
@@ -149,9 +207,9 @@ public class KineticBlocks {
                 .item()
                 .model((c, p) -> {
                     // Item model references the same generic model but swaps textures dynamically
-                    p.withExistingParent(c.getName(), p.modLoc("block/helm/ship_helm_base"))
-                            .texture("wheel", p.modLoc("block/wheels/" + woodType.name().toLowerCase() + "_ship_wheel"))
-                            .texture("base", p.modLoc("block/bases/" + woodType.name().toLowerCase() + "_ship_base"));
+                    String woodName = woodType.name().toLowerCase();
+                    p.withExistingParent(c.getName(), p.modLoc("block/helm/ship_helm"));
+//                    p.withExistingParent(c.getName(), p.modLoc("block/helm/" + woodName + "_ship_helm"));
                 })
                 .build()
                 .register();
@@ -332,12 +390,11 @@ public class KineticBlocks {
                     )))
             .simpleItem() // Automatically registers the BlockItem for you
             .recipe((ctx, prov) -> {
-                ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ctx.getEntry())
+                ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ctx.getEntry(), 2)
                         .pattern(" I ")
-                        .pattern("ISI")
+                        .pattern("I I")
                         .pattern(" I ")
                         .define('I', AllBlocks.INDUSTRIAL_IRON_BLOCK)
-                        .define('S', Items.WATER_BUCKET)
                         .unlockedBy("has_iron", prov.has(AllBlocks.INDUSTRIAL_IRON_BLOCK))
                         // Use prov.getConsumer() to save the recipe
                         .save(prov);
