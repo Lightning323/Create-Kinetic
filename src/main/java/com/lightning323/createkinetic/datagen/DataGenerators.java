@@ -20,6 +20,5 @@ public class DataGenerators {
         if (event.includeServer()) {
             gen.addProvider(true, new KineticRecipes(gen));
         }
-        ShipBlocks.register();
     }
 }

@@ -208,8 +208,8 @@ public class KineticBlocks {
                 .model((c, p) -> {
                     // Item model references the same generic model but swaps textures dynamically
                     String woodName = woodType.name().toLowerCase();
-                    p.withExistingParent(c.getName(), p.modLoc("block/helm/ship_helm"));
-//                    p.withExistingParent(c.getName(), p.modLoc("block/helm/" + woodName + "_ship_helm"));
+//                    p.withExistingParent(c.getName(), p.modLoc("block/helm/ship_helm"));
+                    p.withExistingParent(c.getName(), p.modLoc("block/helm/" + woodName + "_ship_helm"));
                 })
                 .build()
                 .register();

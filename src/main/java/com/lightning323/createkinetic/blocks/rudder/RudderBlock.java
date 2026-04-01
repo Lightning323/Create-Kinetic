@@ -1,6 +1,8 @@
 package com.lightning323.createkinetic.blocks.rudder;
 
+import com.ibm.icu.impl.Pair;
 import com.lightning323.createkinetic.items.RudderBladeItem;
+import com.lightning323.createkinetic.physics_assembler.AssemblyUtility;
 import com.lightning323.createkinetic.registries.KineticBlockEntities;
 import com.lightning323.createkinetic.ship.KineticShipControl;
 import com.simibubi.create.content.kinetics.base.DirectionalKineticBlock;
@@ -8,8 +10,10 @@ import com.simibubi.create.foundation.block.IBE;
 import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
+import net.createmod.catnip.outliner.Outliner;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
@@ -24,9 +28,13 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelFile;
+
+import java.util.Set;
 
 public class RudderBlock extends DirectionalKineticBlock implements IBE<RudderBlockEntity> {
     //, TransformableBlock {
@@ -149,6 +157,20 @@ public class RudderBlock extends DirectionalKineticBlock implements IBE<RudderBl
 
             // 1. Placing a blade
             if (heldItem.getItem() instanceof RudderBladeItem rb) {
+
+                RudderSpatialHandler.ObstructionCheckLogic logic = PropulsionConfig.PROPELLER_OBSTRUCTION_LOGIC.get();
+                if (logic != RudderSpatialHandler.ObstructionCheckLogic.OFF) {
+                    Set<BlockPos> obstructions = propellerBE.getSpatialHandler().getObstructionsFor(bladeItem);
+
+                    if (!obstructions.isEmpty()) {
+                        if (level.isClientSide) {
+                            showBounds(pos, state, player, bladeItem);
+                            return InteractionResult.SUCCESS; //While this is for fail case - only SUCCESS causes arm swing animation
+                        }
+                        return InteractionResult.FAIL;
+                    }
+                }
+
                 if (worldIn.isClientSide) return InteractionResult.SUCCESS;
 
                 // If there's already a blade, drop it first (or swap it)
@@ -203,6 +225,28 @@ public class RudderBlock extends DirectionalKineticBlock implements IBE<RudderBl
 
         // Otherwise, perform the standard Create rotation (switching North to East, etc.)
         return super.getRotatedBlockState(originalState, targetedFace);
+    }
+    private static final int ERROR_MESSAGE_COLOR = 0xFF_ff5d6c;
+
+    private void showBounds(BlockPos pos, BlockState state, Player player, RudderBladeItem blade) {
+        if (!player.level().isClientSide) return;
+        RudderSpatialHandler.ObstructionCheckLogic logic = PropulsionConfig.PROPELLER_OBSTRUCTION_LOGIC.get();
+        AABB outlineAABB;
+
+        if (logic == RudderSpatialHandler.ObstructionCheckLogic.PRECISE && blade != null) {
+            outlineAABB = RudderSpatialHandler.getPreciseBladeAABB(pos, state.getValue(DirectionalKineticBlock.FACING), blade);
+        } else {
+            Vec3 contract = Vec3.atLowerCornerOf(state.getValue(DirectionalKineticBlock.FACING).getNormal());
+            outlineAABB = new AABB(pos).inflate(1).deflate(contract.x, contract.y, contract.z);
+        }
+
+        Outliner.getInstance().showAABB(Pair.of("propeller", pos), outlineAABB)
+                .colored(AssemblyUtility.CANCEL_COLOR)
+                .lineWidth(1/16f);
+
+        player.displayClientMessage(
+                Component.translatable("createpropulsion.propeller.not_enough_space")
+                        .withStyle(s -> s.withColor(ERROR_MESSAGE_COLOR)), true);
     }
 
 }
