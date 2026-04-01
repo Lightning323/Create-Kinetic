@@ -166,9 +166,7 @@ public class ShipHelmBlockEntity extends GeneratingKineticBlockEntity {
                         control.seatedPlayer.isSprinting()
                 );
                 if (controlData.getLeftImpulse() != controlImpulse
-                        && (level.getGameTime() - impulseTime > 20
-                        || controlData.getLeftImpulse() == 0
-                        || controlImpulse == 0)) { //We cant change the impulse too often
+                        && (level.getGameTime() - impulseTime > 5)) { //We cant change the impulse too often
                     impulseTime = level.getGameTime();
                     controlImpulse = controlData.getLeftImpulse();
                     updateGeneratedRotation();

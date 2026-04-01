@@ -1,12 +1,14 @@
 package com.lightning323.createkinetic.blocks.rudder;
 
 import com.lightning323.createkinetic.blocks.shipHelm.ShipHelmBlockEntity;
+import com.lightning323.createkinetic.items.RudderBladeItem;
 import com.lightning323.createkinetic.ship.KineticShipControl;
 import com.lightning323.createkinetic.ship.ShipUtils;
 import com.simibubi.create.content.kinetics.base.GeneratingKineticBlockEntity;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerLevel;
@@ -51,24 +53,25 @@ public class RudderBlockEntity extends KineticBlockEntity {
         }
     }
 
-    Item rudderBlade = null; // Use ItemStack instead of Item for safety
+    RudderBladeItem rudderBlade = null; // Use ItemStack instead of Item for safety
 
     @Override
     public void write(CompoundTag compound, boolean clientPacket) {
-        // Save the ItemStack to a nested tag
+        super.write(compound, clientPacket); // Always call super first or last consistently
+
         if (rudderBlade != null) {
-            compound.put("blade", new ItemStack(rudderBlade).save(new CompoundTag()));
+            compound.putInt("blade", RudderBladeItem.BladeType.toInt(rudderBlade));
         }
-        super.write(compound, clientPacket);
     }
 
     @Override
     protected void read(CompoundTag compound, boolean clientPacket) {
         super.read(compound, clientPacket);
         updateRenderOrientation();
+
         // Read the ItemStack back from the tag
-        if (compound.contains("blade", Tag.TAG_COMPOUND)) {
-            this.rudderBlade = ItemStack.of(compound.getCompound("blade")).getItem();
+        if (compound.contains("blade", Tag.TAG_INT)) {
+            this.rudderBlade = RudderBladeItem.BladeType.toItem(compound.getInt("blade"));
         } else {
             this.rudderBlade = null;
         }
@@ -148,7 +151,6 @@ public class RudderBlockEntity extends KineticBlockEntity {
             if (controller != null) controller.mustUpdateRudders = true;
         }
     }
-
 
 
     /**

@@ -1,5 +1,6 @@
 package com.lightning323.createkinetic.blocks.rudder;
 
+import com.lightning323.createkinetic.items.RudderBladeItem;
 import com.lightning323.createkinetic.registries.KineticPartialModels;
 import com.lightning323.createkinetic.utils.MiscUtils;
 import com.simibubi.create.AllPartialModels;
@@ -25,12 +26,18 @@ import org.jetbrains.annotations.Nullable;
 import org.joml.Quaternionf;
 import org.lwjgl.system.MathUtil;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Consumer;
+
+import static oshi.util.platform.windows.WmiQueryHandler.createInstance;
 
 
 public class RudderVisual extends KineticBlockEntityVisual<RudderBlockEntity> implements SimpleDynamicVisual {
 
-    protected final OrientedInstance blade;
+    protected OrientedInstance blade;
+    private RudderBladeItem bladeItem;
+
     protected final RotatingInstance shaft;
     protected final Direction facing;
 
@@ -44,18 +51,9 @@ public class RudderVisual extends KineticBlockEntityVisual<RudderBlockEntity> im
                 .setPosition(getVisualPosition())
                 .rotateToFace(Direction.SOUTH, facing.getOpposite())
                 .setChanged();
-
-        //We set the rendertype to "render_type": "minecraft:cutout", in the model json file
-        this.blade = instancerProvider().instancer(InstanceTypes.ORIENTED, Models.partial(KineticPartialModels.RUDDER_COPPER_BLADE))
-                .createInstance();
-
-        // 1. Replicate your blockstate logic using JOML
-        blade.position(getVisualPosition())
-                .rotation(blockEntity.rudderIdentityRotation)
-                .setChanged();
-
         animate();
     }
+
 
     @Override
     public void beginFrame(Context ctx) {
@@ -64,29 +62,54 @@ public class RudderVisual extends KineticBlockEntityVisual<RudderBlockEntity> im
 
     private void animate() {
         shaft.setup(blockEntity).setChanged();
-//        float time = net.createmod.catnip.animation.AnimationTickHolder.getRenderTime();
-//        float testAngle = time * 0.001f;
-        blockEntity.animateRenderAngle();
-        blade.rotation(blockEntity.rudderIdentityRotation);//set to identity
-        blade.rotate(blockEntity.renderAngle, Direction.Axis.Y);//rotate
-        blade.setVisible(blockEntity.rudderBlade != null);
-        blade.setChanged();
+
+        if (blade != null) {
+            blockEntity.animateRenderAngle();
+            blade.rotation(blockEntity.rudderIdentityRotation);//set to identity
+            blade.rotate(blockEntity.renderAngle, Direction.Axis.Y);//rotate
+            blade.setChanged();
+        }
     }
 
-//    @Override
-//    public void update(float pt) {
-//        shaft.setup(blockEntity)
-//                .setChanged();
-//    }
+    @Override
+    public void update(float pt) {
+        super.update(pt);
+        // Check if the item in the BlockEntity changed
+        if (blockEntity.rudderBlade != bladeItem) {
+            // 1. ALWAYS delete the old instance if it exists
+            if (blade != null) {
+                blade.delete();
+                blade = null; // Clear reference
+            }
+            if (blockEntity.rudderBlade != null) {
+                //We set the rendertype to "render_type": "minecraft:cutout", in the model json file
+                PartialModel model = KineticPartialModels.RUDDER_COPPER_BLADE;
+                if (blockEntity.rudderBlade.type == RudderBladeItem.BladeType.IRON) {
+                    model = KineticPartialModels.RUDDER_IRON_BLADE;
+                }
+
+                blade = instancerProvider().instancer(InstanceTypes.ORIENTED, Models.partial(model))
+                        .createInstance();
+                blade.position(getVisualPosition())
+                        .rotation(blockEntity.rudderIdentityRotation)
+                        .setChanged();
+                relight(blade);
+            }
+            bladeItem = blockEntity.rudderBlade;
+        }
+    }
 
     @Override
     public void updateLight(float partialTick) {
-        relight(shaft, blade);
+        relight(shaft);
+        if (blade != null) {
+            relight(blade);
+        }
     }
 
     @Override
     protected void _delete() {
-        blade.delete();
+        if (blade != null) blade.delete();
         shaft.delete();
     }
 

@@ -136,28 +136,42 @@ public class RudderBlock extends DirectionalKineticBlock implements IBE<RudderBl
     public static final IntegerProperty PLANE_ROTATION = IntegerProperty.create("plane_rot", 0, 3);
 
     @Override
-    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn,
-                                 BlockHitResult hit) {
-        super.use(state, worldIn, pos, player, handIn, hit);
-
+    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
         BlockEntity blockEntity = worldIn.getBlockEntity(pos);
 
         if (blockEntity instanceof RudderBlockEntity rbe) {
             ItemStack heldItem = player.getItemInHand(handIn);
-            boolean isHand = heldItem.isEmpty() && handIn == InteractionHand.MAIN_HAND;
-//            boolean wrenched = AllItems.WRENCH.isIn(heldItem);
+
+            // 1. Placing a blade
             if (heldItem.getItem() instanceof RudderBladeItem rb) {
+                if (worldIn.isClientSide) return InteractionResult.SUCCESS;
+
+                // If there's already a blade, drop it first (or swap it)
+                if (rbe.rudderBlade != null) {
+                    player.getInventory().placeItemBackInInventory(new ItemStack(rbe.rudderBlade));
+                }
+
                 rbe.rudderBlade = rb;
                 heldItem.shrink(1);
-            } else if (rbe.rudderBlade != null) {
-                ItemStack stack = new ItemStack(rbe.rudderBlade);
-                player.getInventory().add(stack);
-                rbe.rudderBlade = null;
+
+                // CRITICAL: Notify the world and Flywheel that data changed
+                rbe.notifyUpdate();
+                return InteractionResult.SUCCESS;
             }
 
+            // 2. Removing a blade (Empty hand or Wrench logic)
+            else if (heldItem.isEmpty() && rbe.rudderBlade != null) {
+                if (worldIn.isClientSide) return InteractionResult.SUCCESS;
 
+                player.getInventory().placeItemBackInInventory(new ItemStack(rbe.rudderBlade));
+                rbe.rudderBlade = null;
+
+                // CRITICAL: Notify the world and Flywheel that data changed
+                rbe.notifyUpdate();
+                return InteractionResult.SUCCESS;
+            }
         }
-        return InteractionResult.PASS;
+        return super.use(state, worldIn, pos, player, handIn, hit);
     }
 
 
