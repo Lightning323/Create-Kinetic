@@ -52,12 +52,14 @@ public class KineticItems {
             .register();
 
     public static final ItemEntry<RudderBladeItem> COPPER_RUDDER_BLADE = REGISTRATE.item("copper_rudder_blade",
-                    p -> new RudderBladeItem(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON), RudderBladeItem.BladeType.COPPER))
+                    p -> new RudderBladeItem(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON),
+                            RudderBladeItem.BladeType.COPPER, new RudderBladeItem.BladeProperties(0.9f)))
             .register();
 
     public static final ItemEntry<RudderBladeItem> IRON_RUDDER_BLADE = REGISTRATE.item("iron_rudder_blade",
-                    p -> new RudderBladeItem(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON), RudderBladeItem.BladeType.IRON))
-            .register();
+            p -> new RudderBladeItem(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON),
+                    RudderBladeItem.BladeType.IRON, new RudderBladeItem.BladeProperties(1.5f)))
+                    .register();
 
     public static void shiftForTooltip(List<Component> tooltip, Component... addedTooltip) {
         if (Screen.hasShiftDown()) {

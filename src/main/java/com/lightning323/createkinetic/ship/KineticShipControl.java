@@ -400,9 +400,6 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
     public Player seatedPlayer = null;
 
     @JsonIgnore
-    private ControlData controlData = null;
-
-    @JsonIgnore
     public LoadedServerShip ship = null;
 
     private void updateShipBounds() {

@@ -166,6 +166,8 @@ public class RudderBlockEntity extends KineticBlockEntity {
      * @return the force between -1 and 1
      */
     public float getForce() {
-        return getSpeed() / ShipHelmBlockEntity.SPEED;
+        if (rudderBlade != null)
+            return (getSpeed() / ShipHelmBlockEntity.SPEED) * rudderBlade.bladeProperties.forceMultiplier;
+        return 0;
     }
 }
