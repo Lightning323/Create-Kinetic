@@ -1,6 +1,8 @@
 package com.lightning323.createkinetic.blocks.rudder;
 
+import com.lightning323.createkinetic.items.RudderBladeItem;
 import com.lightning323.createkinetic.registries.KineticBlockEntities;
+import com.lightning323.createkinetic.registries.KineticItems;
 import com.lightning323.createkinetic.ship.KineticShipControl;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.content.kinetics.base.DirectionalKineticBlock;
@@ -143,11 +145,17 @@ public class RudderBlock extends DirectionalKineticBlock implements IBE<RudderBl
         if (blockEntity instanceof RudderBlockEntity rbe) {
             ItemStack heldItem = player.getItemInHand(handIn);
             boolean isHand = heldItem.isEmpty() && handIn == InteractionHand.MAIN_HAND;
-            boolean wrenched = AllItems.WRENCH.isIn(heldItem);
-
-            if (hit.getDirection() == state.getValue(FACING)) {
-
+//            boolean wrenched = AllItems.WRENCH.isIn(heldItem);
+            if (heldItem.getItem() instanceof RudderBladeItem rb) {
+                rbe.rudderBlade = rb;
+                heldItem.shrink(1);
+            } else if (rbe.rudderBlade != null) {
+                ItemStack stack = new ItemStack(rbe.rudderBlade);
+                player.getInventory().add(stack);
+                rbe.rudderBlade = null;
             }
+
+
         }
         return InteractionResult.PASS;
     }

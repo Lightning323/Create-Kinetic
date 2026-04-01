@@ -69,6 +69,7 @@ public class RudderVisual extends KineticBlockEntityVisual<RudderBlockEntity> im
         blockEntity.animateRenderAngle();
         blade.rotation(blockEntity.rudderIdentityRotation);//set to identity
         blade.rotate(blockEntity.renderAngle, Direction.Axis.Y);//rotate
+        blade.setVisible(blockEntity.rudderBlade != null);
         blade.setChanged();
     }
 

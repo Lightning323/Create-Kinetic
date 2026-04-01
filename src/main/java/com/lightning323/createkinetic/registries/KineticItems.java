@@ -1,5 +1,6 @@
 package com.lightning323.createkinetic.registries;
 
+import com.lightning323.createkinetic.items.RudderBladeItem;
 import com.lightning323.createkinetic.items.frequencyFilter.FrequencyFilterItem;
 import com.lightning323.createkinetic.items.ShipTotemItem;
 import com.simibubi.create.AllBlocks;
@@ -48,6 +49,10 @@ public class KineticItems {
     public static final ItemEntry<FrequencyFilterItem> FREQUENCY_FILTER = REGISTRATE.item("frequency_filter",
                     p -> new FrequencyFilterItem(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)))//FilterItem::regular
             .lang("Frequency Filter")
+            .register();
+
+    public static final ItemEntry<RudderBladeItem> COPPER_RUDDER_BLADE = REGISTRATE.item("copper_rudder_blade",
+                    p -> new RudderBladeItem(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)))
             .register();
 
     public static void shiftForTooltip(List<Component> tooltip, Component... addedTooltip) {

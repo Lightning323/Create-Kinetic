@@ -3,16 +3,23 @@ package com.lightning323.createkinetic.blocks.rudder;
 import com.lightning323.createkinetic.blocks.shipHelm.ShipHelmBlockEntity;
 import com.lightning323.createkinetic.ship.KineticShipControl;
 import com.lightning323.createkinetic.ship.ShipUtils;
+import com.simibubi.create.content.kinetics.base.GeneratingKineticBlockEntity;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import org.joml.Quaternionf;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RudderBlockEntity extends KineticBlockEntity {
 
@@ -22,9 +29,9 @@ public class RudderBlockEntity extends KineticBlockEntity {
     float renderAngle;
     float lastForce;
 
-    public void animateRenderAngle(){
+    public void animateRenderAngle() {
         renderAngle = Mth.lerp(0.05f, renderAngle,
-                getForce() * (-Mth.HALF_PI/2));//Delta,start,end
+                getForce() * (-Mth.HALF_PI / 2));//Delta,start,end
     }
 
     public RudderBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
@@ -44,10 +51,27 @@ public class RudderBlockEntity extends KineticBlockEntity {
         }
     }
 
+    Item rudderBlade = null; // Use ItemStack instead of Item for safety
+
+    @Override
+    public void write(CompoundTag compound, boolean clientPacket) {
+        // Save the ItemStack to a nested tag
+        if (rudderBlade != null) {
+            compound.put("blade", new ItemStack(rudderBlade).save(new CompoundTag()));
+        }
+        super.write(compound, clientPacket);
+    }
+
     @Override
     protected void read(CompoundTag compound, boolean clientPacket) {
         super.read(compound, clientPacket);
         updateRenderOrientation();
+        // Read the ItemStack back from the tag
+        if (compound.contains("blade", Tag.TAG_COMPOUND)) {
+            this.rudderBlade = ItemStack.of(compound.getCompound("blade")).getItem();
+        } else {
+            this.rudderBlade = null;
+        }
     }
 
     protected void updateRenderOrientation() {
@@ -118,12 +142,14 @@ public class RudderBlockEntity extends KineticBlockEntity {
         if (level instanceof ServerLevel serverLevel &&
                 getForce() != lastForce
 //                && level.getGameTime() % 5 == 0
-                ) {
+        ) {
             lastForce = getForce();
             KineticShipControl controller = KineticShipControl.getOrAddController(serverLevel, getBlockPos());
             if (controller != null) controller.mustUpdateRudders = true;
         }
     }
+
+
 
     /**
      *

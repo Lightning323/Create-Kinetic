@@ -16,7 +16,6 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
-
 public class RudderRenderer extends KineticBlockEntityRenderer<RudderBlockEntity> {
     public RudderRenderer(BlockEntityRendererProvider.Context context) {
         super(context);
@@ -25,44 +24,39 @@ public class RudderRenderer extends KineticBlockEntityRenderer<RudderBlockEntity
     @Override
     protected void renderSafe(RudderBlockEntity be, float partialTicks, PoseStack ms, MultiBufferSource buffer,
                               int light, int overlay) {
-        //If visualization is enabled, skip rendering
         if (VisualizationManager.supportsVisualization(be.getLevel()))
             return;
 
         BlockState state = be.getBlockState();
-        Direction facing = state.getValue(BlockStateProperties.FACING);
 
-        // 1. Render the Shaft (Static base)
-        // Note: rotateToFace usually handles the orientation based on SOUTH as default
-        CachedBuffers.partial(AllPartialModels.SHAFT_HALF, state)
-                .rotateToFace(Direction.SOUTH)
-                .light(light)
-                .renderInto(ms, buffer.getBuffer(RenderType.solid()));
-
-        // 2. Render the Blade (Dynamic/Animated)
+        // 1. Setup the shared base orientation
         ms.pushPose();
-
-// 1. Move to the center of the block (8, 8, 8 in pixels)
         ms.translate(0.5f, 0.5f, 0.5f);
+        ms.mulPose(be.rudderIdentityRotation); // This puts 'Local Up' where it needs to be
 
-// 2. Apply the Identity Orientation (Facing + Plane Rotation)
-// Since rudderIdentityRotation is a Quaternionf, use mulPose:
-        ms.mulPose(be.rudderIdentityRotation);
+//        // --- RENDER SHAFT ---//TODO: Fix this
+//        // We push another pose so the shaft doesn't get the blade's swing
+//        ms.pushPose();
+//        // If your SHAFT_HALF model is designed to point UP by default:
+//        CachedBuffers.partial(AllPartialModels.SHAFT_HALF, state)
+//                .center() // Centers the buffer relative to (0,0,0)
+//
+//                .light(light)
+//                .renderInto(ms, buffer.getBuffer(RenderType.solid()));
+//        ms.popPose();
 
-// 3. Apply the Animation (The Y-axis swing)
-// We lerp the angle to keep it smooth between ticks
-        be.animateRenderAngle();
+        // --- RENDER BLADE ---
+        ms.pushPose();
+        be.animateRenderAngle(); // Note: Ideally lerp this with partialTicks for smoothness
         ms.mulPose(com.mojang.math.Axis.YP.rotation(be.renderAngle));
 
-// 4. Move back from the center
         ms.translate(-0.5f, -0.5f, -0.5f);
-
-// 5. Render the model
         CachedBuffers.partial(KineticPartialModels.RUDDER_COPPER_BLADE, state)
                 .light(light)
                 .overlay(overlay)
                 .renderInto(ms, buffer.getBuffer(RenderType.cutout()));
-
         ms.popPose();
+
+        ms.popPose(); // Final pop
     }
 }
