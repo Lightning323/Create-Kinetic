@@ -1,0 +1,9 @@
+- Fix elevator crank
+- windmill sails may continue to propel the ship even after removal
+
+- aesthetic changes to cranks
+- aesthetic changes to helms for copyright reasons
+- enchanted buoy can be disabled with redstone
+- better hitboxes for models
+- pondering for ship helm?
+- Rudders should only work in water?

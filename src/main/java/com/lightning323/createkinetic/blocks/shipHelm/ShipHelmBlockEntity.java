@@ -5,6 +5,7 @@ import com.lightning323.createkinetic.blocks.crank.KCrankBlockEntity;
 import com.lightning323.createkinetic.ship.ControlData;
 import com.lightning323.createkinetic.ship.KineticShipControl;
 import com.simibubi.create.content.kinetics.base.GeneratingKineticBlockEntity;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -68,7 +69,7 @@ public class ShipHelmBlockEntity extends GeneratingKineticBlockEntity {
         return VSGameUtilsKt.getLoadedShipManagingPos(serverLevel, getBlockPos());
     }
 
-    private KineticShipControl getControl() {
+    private KineticShipControl getShipController() {
         LoadedServerShip ship = getShip();
         if (ship == null) return null;
         return ship.getAttachment(KineticShipControl.class);
@@ -153,17 +154,18 @@ public class ShipHelmBlockEntity extends GeneratingKineticBlockEntity {
 
     @Override
     public void tick() {
-        KineticShipControl control = getControl();
-        if (control != null) {
-            control.ship = getShip();
-            if (KineticShipControl.isPlayerValid(control.seatedPlayer)) {
+        KineticShipControl controller = getShipController();
+        //TODO: I bet we can still control the seated player on the client side
+        if (controller != null) {
+            controller.ship = getShip();
+            if (KineticShipControl.isPlayerValid(controller.seatedPlayer)) {
                 ControlData controlData = new ControlData(
                         Direction.NORTH, // Or get the seat's direction
                         //ALL impulses are either -1 or 1 or 0
-                        control.seatedPlayer.zza,// xxa = left/right (A/D)
-                        control.seatedPlayer.xxa, // zza = forward/backward (W/S)
-                        control.seatedPlayer.yya,// jja = up/down (Space/Shift)
-                        control.seatedPlayer.isSprinting()
+                        controller.seatedPlayer.zza,// xxa = left/right (A/D)
+                        controller.seatedPlayer.xxa, // zza = forward/backward (W/S)
+                        controller.seatedPlayer.yya,// jja = up/down (Space/Shift)
+                        controller.seatedPlayer.isSprinting()
                 );
                 if (controlData.getLeftImpulse() != controlImpulse
                         && (level.getGameTime() - impulseTime > 5)) { //We cant change the impulse too often
@@ -183,10 +185,8 @@ public class ShipHelmBlockEntity extends GeneratingKineticBlockEntity {
                         kbe.setAutomaticImpulse(controlData.getUpImpulse());
                     }
                 }
-
             }
         }
-
         super.tick();
     }
 
@@ -206,7 +206,7 @@ public class ShipHelmBlockEntity extends GeneratingKineticBlockEntity {
         Direction direction = getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING);
         CreateKinetic.LOGGER.debug("Helm seating direction: {}", direction);
 
-        KineticShipControl control = getControl();
+        KineticShipControl control = getShipController();
         if (control != null) {
             control.preferredDirection = direction;
             control.updateShipDirection();

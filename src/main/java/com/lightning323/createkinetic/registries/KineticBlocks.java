@@ -61,7 +61,13 @@ public class KineticBlocks {
             .initialProperties(SharedProperties::wooden)
             .properties(p -> p.noOcclusion())
             .blockstate(RudderBlock.getBlockstateDefinition())
-            .item()
+            .item((block, props) -> new BlockItem(block, props) {
+                @Override
+                public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flag) {
+                    KineticItems.shiftForTooltip(tooltip,
+                            Component.translatable("tooltip.createkinetic.rudder").withStyle(ChatFormatting.GRAY));
+                }
+            })
             .model((c, p) -> p.withExistingParent(c.getName(), p.modLoc("block/rudder/base")))
             .recipe((ctx, prov) -> {
                 ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, ctx.getEntry())
@@ -92,7 +98,13 @@ public class KineticBlocks {
                     .onRegister(BlockStressValues.setGeneratorSpeed(32))
                     .tag(AllTags.AllBlockTags.BRITTLE.tag)
                     .onRegister(ItemUseOverrides::addBlock)
-                    .item()
+                    .item((block, props) -> new BlockItem(block, props) {
+                        @Override
+                        public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flag) {
+                            KineticItems.shiftForTooltip(tooltip,
+                                    Component.translatable("tooltip.createkinetic.forward_crank").withStyle(ChatFormatting.GRAY));
+                        }
+                    })
                     .transform(customItemModel())
                     .recipe((ctx, prov) -> {
                         ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, ctx.getEntry())
@@ -129,7 +141,13 @@ public class KineticBlocks {
                     .onRegister(BlockStressValues.setGeneratorSpeed(32))
                     .tag(AllTags.AllBlockTags.BRITTLE.tag)
                     .onRegister(ItemUseOverrides::addBlock)
-                    .item()
+                    .item((block, props) -> new BlockItem(block, props) {
+                        @Override
+                        public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flag) {
+                            KineticItems.shiftForTooltip(tooltip,
+                                    Component.translatable("tooltip.createkinetic.elevator_crank").withStyle(ChatFormatting.GRAY));
+                        }
+                    })
                     .transform(customItemModel())
                     .recipe((ctx, prov) -> {
                         ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, ctx.getEntry())
@@ -205,7 +223,13 @@ public class KineticBlocks {
                     CStressAccessor.getCapacities().put(id, 128.0);
                     return builder;
                 })
-                .item()
+                .item((block, props) -> new BlockItem(block, props) {
+                    @Override
+                    public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flag) {
+                        KineticItems.shiftForTooltip(tooltip,
+                                Component.translatable("tooltip.createkinetic.helm").withStyle(ChatFormatting.GRAY));
+                    }
+                })
                 .model((c, p) -> {
                     // Item model references the same generic model but swaps textures dynamically
                     String woodName = woodType.name().toLowerCase();
@@ -236,7 +260,13 @@ public class KineticBlocks {
             .transform(axeOrPickaxe())
             .tag(AllTags.AllBlockTags.SAFE_NBT.tag)
             .blockstate(BlockStateGen.horizontalAxisBlockProvider(true))
-            .item()
+            .item((block, props) -> new BlockItem(block, props) {
+                @Override
+                public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flag) {
+                    KineticItems.shiftForTooltip(tooltip,
+                            Component.translatable("tooltip.createkinetic.retractable_sail").withStyle(ChatFormatting.GRAY));
+                }
+            })
             .transform(customItemModel())
             .recipe((ctx, prov) -> {
                 ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, ctx.getEntry())
@@ -278,7 +308,13 @@ public class KineticBlocks {
             .transform(axeOrPickaxe())
             .tag(AllTags.AllBlockTags.SAFE_NBT.tag)
             .blockstate(BlockStateGen.horizontalAxisBlockProvider(true))
-            .item()
+            .item((block, props) -> new BlockItem(block, props) {
+                @Override
+                public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flag) {
+                    KineticItems.shiftForTooltip(tooltip,
+                            Component.translatable("tooltip.createkinetic.sail_pulley").withStyle(ChatFormatting.GRAY));
+                }
+            })
             .transform(customItemModel())
             .recipe((ctx, prov) -> {
                 ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, ctx.getEntry())

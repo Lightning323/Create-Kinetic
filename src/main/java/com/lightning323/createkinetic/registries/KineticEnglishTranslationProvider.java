@@ -16,5 +16,11 @@ public class KineticEnglishTranslationProvider {
         provider.add("tooltip.createkinetic.frequency_filter","Matches redstone signals against their corresponding address (frequency). Used in Smart Redstone Links");
         provider.add("tooltip.createkinetic.redstone_link","Like a redstone link but uses frequency filters instead of items to send/receive signals");
         provider.add("createkinetic.rudder.not_enough_space", "The area must be clear in order to place a rudder blade!");
+        provider.add("tooltip.createkinetic.helm", "Provides rotational power to rudders and other steering devices; Can be used alongside other controls");
+        provider.add("tooltip.createkinetic.retractable_sail", "A retractable sail, useful for propelling a ship");
+        provider.add("tooltip.createkinetic.sail_pulley", "A pulley with sails instead of rope, useful for propelling a ship");
+        provider.add("tooltip.createkinetic.rudder", "A rudder blade, used to steer or dive a ship");
+        provider.add("tooltip.createkinetic.forward_crank", "A crank that can be used to propel a ship");
+        provider.add("tooltip.createkinetic.elevator_crank", "A crank that can be used to propel a ship");
     }
 }

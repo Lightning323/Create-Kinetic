@@ -1,7 +1,14 @@
 package com.lightning323.createkinetic.items;
 
 import com.lightning323.createkinetic.registries.KineticItems;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
+
+import java.util.List;
 
 
 public class RudderBladeItem extends Item {
@@ -21,8 +28,13 @@ public class RudderBladeItem extends Item {
             this.forceMultiplier = forceMultiplier;
         }
         public final float forceMultiplier;
-
     }
+
+//    @Override
+//    public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flag) {
+//        KineticItems.shiftForTooltip(tooltip,
+//                Component.translatable("tooltip.createkinetic.rudder_blade").withStyle(ChatFormatting.GRAY));
+//    }
 
     public static enum BladeType {
         COPPER, IRON;
