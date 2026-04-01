@@ -78,12 +78,12 @@ public class RudderBlockEntity extends KineticBlockEntity {
         super.read(compound, clientPacket);
     }
 
-    @Override
-    public CompoundTag getUpdateTag() {
-        CompoundTag tag = super.getUpdateTag();
-        write(tag, true); // This ensures our 'blade' tag is included in the sync packet
-        return tag;
-    }
+//    @Override //Not needed
+//    public CompoundTag getUpdateTag() {
+//        CompoundTag tag = super.getUpdateTag();
+//        write(tag, true); // This ensures our 'blade' tag is included in the sync packet
+//        return tag;
+//    }
 
     protected void updateRenderOrientation() {
         if (level != null && level.isClientSide) {
