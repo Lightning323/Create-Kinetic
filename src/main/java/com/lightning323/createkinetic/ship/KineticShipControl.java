@@ -8,9 +8,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.lightning323.createkinetic.CreateKinetic;
 import com.lightning323.createkinetic.KineticConfig;
 import com.lightning323.createkinetic.blocks.ballastTank.BallastTankBlockEntity;
+import com.lightning323.createkinetic.blocks.rudder.RudderBlock;
 import com.lightning323.createkinetic.blocks.rudder.RudderBlockEntity;
 import com.lightning323.createkinetic.blocks.sail.SailClothBlock;
 import com.lightning323.createkinetic.blocks.shipHelm.ShipHelmBlockEntity;
+import com.simibubi.create.content.kinetics.base.DirectionalKineticBlock;
 import it.unimi.dsi.fastutil.longs.LongIterator;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import it.unimi.dsi.fastutil.longs.LongSet;
@@ -42,7 +44,6 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 public final class KineticShipControl implements ShipPhysicsListener, ServerTickListener {
     @JsonIgnore
     public static final Logger LOGGER = CreateKinetic.LOGGER;
-
 
 
     /**
@@ -206,21 +207,15 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
             BlockPos pos = BlockPos.of(packedPos);
             BlockEntity blockEntity = level.getBlockEntity(pos);
             if (blockEntity instanceof RudderBlockEntity tbe) {
-                Direction value = tbe.getBlockState().getValue(BlockStateProperties.FACING);
+                //TODO: Make sure we check this everywhere to prevent crashes
+                if (!tbe.getBlockState().hasProperty(DirectionalKineticBlock.FACING)) continue;
+                Direction dir = tbe.getBlockState().getValue(DirectionalKineticBlock.FACING);
                 double forceScalar = tbe.getForce(); //We get a number from -1 to 1
+                rudderForce.add(
+                        dir.getNormal().getX() * forceScalar,
+                        dir.getNormal().getY() * forceScalar,
+                        dir.getNormal().getZ() * forceScalar);
 
-                double idealAlphaX = forceScalar;
-                double idealAlphaY = forceScalar;
-                double idealAlphaZ = forceScalar;
-
-                switch (value) {
-                    case UP -> rudderForce.add(0, idealAlphaY, 0);
-                    case DOWN -> rudderForce.add(0, -idealAlphaY, 0);
-                    case NORTH -> rudderForce.add(0, 0, -idealAlphaZ);
-                    case SOUTH -> rudderForce.add(0, 0, idealAlphaZ);
-                    case EAST -> rudderForce.add(idealAlphaX, 0, 0);
-                    case WEST -> rudderForce.add(-idealAlphaX, 0, 0);
-                }
             } else {
                 iterator.remove();
             }
@@ -615,6 +610,7 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
         }
 
         if (numBallast > 0 || numBuoys > 0 || tankBallastWeight > 0) {
+            //TODO: Achieve neutral buoyancy
             physShip1.setBuoyantFactor(0.0//1.0
                     + (numBuoys * KineticConfig.buoyFloatStrength)
                     + (numBallast * KineticConfig.ballastFloatStrength)

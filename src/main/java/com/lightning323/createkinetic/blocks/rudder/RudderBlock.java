@@ -45,6 +45,9 @@ public class RudderBlock extends DirectionalKineticBlock implements IBE<RudderBl
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(PLANE_ROTATION, 0) // Set default direction
         );
+        this.registerDefaultState(this.stateDefinition.any()
+                .setValue(FACING, Direction.NORTH) // Set default direction
+        );
     }
 
     public void onPlace(BlockState state, Level world, BlockPos pos, BlockState oldState, boolean notify) {

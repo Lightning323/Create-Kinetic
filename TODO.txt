@@ -1,17 +1,3 @@
-- Fix elevator crank
-    - the player control happens server side because we dont have a seated player on the client
-    - We need to control all impulses on the client, but handle all the movement logic on the server\
-
-
-WHen the player sits down
-- send a packet to the client, giving them the seated player and all controls that are attatched to the ship helm
-(The block entity already saves controls, so we just have to call onChanged to sync it with the client)
-(We may not have to send a packet to client at all, We just need to save player UUID to entity to keep track of them)
-
-When the player sends controls on the client side
-- send a packet to the server, giving them the controls pressed or released
-
-
 - aesthetic changes to helms for copyright reasons
 
 - aesthetic changes to cranks
