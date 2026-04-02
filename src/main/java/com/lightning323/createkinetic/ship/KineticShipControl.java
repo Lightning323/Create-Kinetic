@@ -10,6 +10,7 @@ import com.lightning323.createkinetic.KineticConfig;
 import com.lightning323.createkinetic.blocks.ballastTank.BallastTankBlockEntity;
 import com.lightning323.createkinetic.blocks.rudder.RudderBlockEntity;
 import com.lightning323.createkinetic.blocks.sail.SailClothBlock;
+import com.lightning323.createkinetic.blocks.shipHelm.ShipHelmBlockEntity;
 import it.unimi.dsi.fastutil.longs.LongIterator;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import it.unimi.dsi.fastutil.longs.LongSet;
@@ -34,12 +35,14 @@ import static java.lang.Math.*;
 
 import java.lang.Math;
 import java.util.Objects;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 
 public final class KineticShipControl implements ShipPhysicsListener, ServerTickListener {
     @JsonIgnore
     public static final Logger LOGGER = CreateKinetic.LOGGER;
+
 
 
     /**
@@ -398,6 +401,16 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
 
     @JsonIgnore
     public Player seatedPlayer = null;
+
+//    @JsonProperty("seatedPlayer")
+//    public UUID getSeatedPlayerUUID() {
+//        return seatedPlayer.getUUID();
+//    }
+//
+//    @JsonProperty("seatedPlayer")
+//    public void setSeatedPlayer(UUID seatedPlayer) {
+//        this.seatedPlayer = level.getPlayerByUUID(seatedPlayer);
+//    }
 
     @JsonIgnore
     public LoadedServerShip ship = null;

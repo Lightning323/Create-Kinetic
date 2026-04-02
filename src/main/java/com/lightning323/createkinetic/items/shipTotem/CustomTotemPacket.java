@@ -1,5 +1,6 @@
-package com.lightning323.createkinetic.network;
+package com.lightning323.createkinetic.items.shipTotem;
 
+import com.simibubi.create.foundation.networking.SimplePacketBase;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.ItemStack;
@@ -7,15 +8,16 @@ import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-public class CustomTotemPacket {
+public class CustomTotemPacket extends SimplePacketBase {
     private final ItemStack item;
 
     public CustomTotemPacket(ItemStack item) {
         this.item = item;
     }
 
-    public static void encode(CustomTotemPacket msg, FriendlyByteBuf buf) {
-        buf.writeItem(msg.item);
+    @Override
+    public void write(FriendlyByteBuf buf) {
+        buf.writeItem(item);
     }
 
     public static CustomTotemPacket decode(FriendlyByteBuf buf) {
@@ -23,11 +25,12 @@ public class CustomTotemPacket {
         return new CustomTotemPacket(item);
     }
 
-    public static void handle(CustomTotemPacket msg, Supplier<NetworkEvent.Context> ctx) {
-        ctx.get().enqueueWork(() -> {
+    @Override
+    public boolean handle(NetworkEvent.Context ctx) {
+        ctx.enqueueWork(() -> {
             Minecraft mc = Minecraft.getInstance();
-            if (mc.player != null && msg.item != null) {
-                ItemStack stack = msg.item;
+            if (mc.player != null && item != null) {
+                ItemStack stack = item;
                 stack.setCount(1);
 
                 //If we play the sound here, it will only sound for this player
@@ -37,6 +40,7 @@ public class CustomTotemPacket {
                 Minecraft.getInstance().gameRenderer.displayItemActivation(stack);
             }
         });
-        ctx.get().setPacketHandled(true);
+        ctx.setPacketHandled(true);
+        return true;
     }
 }

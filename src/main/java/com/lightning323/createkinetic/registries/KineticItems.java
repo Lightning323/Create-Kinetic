@@ -2,20 +2,16 @@ package com.lightning323.createkinetic.registries;
 
 import com.lightning323.createkinetic.items.RudderBladeItem;
 import com.lightning323.createkinetic.items.frequencyFilter.FrequencyFilterItem;
-import com.lightning323.createkinetic.items.ShipTotemItem;
-import com.simibubi.create.AllBlocks;
+import com.lightning323.createkinetic.items.shipTotem.ShipTotemItem;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.content.processing.sequenced.SequencedAssemblyItem;
 import com.simibubi.create.foundation.item.TooltipHelper;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import net.createmod.catnip.lang.FontHelper;
-import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.data.recipes.RecipeCategory;
-import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.network.chat.Component;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
 

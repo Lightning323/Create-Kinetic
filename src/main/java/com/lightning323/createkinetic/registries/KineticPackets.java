@@ -1,11 +1,15 @@
 package com.lightning323.createkinetic.registries;
 
 import com.lightning323.createkinetic.CreateKinetic;
+import com.lightning323.createkinetic.blocks.shipHelm.HelmControlPacket;
+import com.lightning323.createkinetic.blocks.shipHelm.PlayerRidingPacket;
 import com.lightning323.createkinetic.items.frequencyFilter.KFilterScreenPacket;
+import com.lightning323.createkinetic.items.shipTotem.CustomTotemPacket;
 import com.simibubi.create.foundation.networking.SimplePacketBase;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkEvent.Context;
@@ -18,10 +22,14 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+import static net.minecraftforge.network.NetworkDirection.PLAY_TO_CLIENT;
 import static net.minecraftforge.network.NetworkDirection.PLAY_TO_SERVER;
 
 public enum KineticPackets {
-    CONFIGURE_FILTER(KFilterScreenPacket.class, KFilterScreenPacket::new, PLAY_TO_SERVER);
+    CONFIGURE_FILTER(KFilterScreenPacket.class, KFilterScreenPacket::new, PLAY_TO_SERVER),
+    HELM_CONTROL(HelmControlPacket.class, HelmControlPacket::decode, PLAY_TO_SERVER),
+    PLAYER_RIDING(PlayerRidingPacket.class, PlayerRidingPacket::decode, PLAY_TO_CLIENT),
+    CUSTOM_TOTEM(CustomTotemPacket.class, CustomTotemPacket::decode, PLAY_TO_CLIENT);
 //    FILTER_NAME(KFilterNamePacket.class, KFilterNamePacket::new, PLAY_TO_CLIENT);
 
     public static final ResourceLocation CHANNEL_NAME = CreateKinetic.resource("main");
@@ -55,6 +63,14 @@ public enum KineticPackets {
         getChannel().send(
                 PacketDistributor.NEAR.with(TargetPoint.p(pos.getX(), pos.getY(), pos.getZ(), range, world.dimension())),
                 message);
+    }
+
+    public static void sendToClient(Object packet, ServerPlayer player) {
+        getChannel().sendTo(packet, player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+    }
+
+    public static void sendToServer(Object packet) {
+        getChannel().sendToServer(packet);
     }
 
     private static class PacketType<T extends SimplePacketBase> {

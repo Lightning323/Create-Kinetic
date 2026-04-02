@@ -18,7 +18,6 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.RegisterEvent;
 import org.slf4j.Logger;
-import com.lightning323.createkinetic.network.NetworkHandler;
 import org.slf4j.LoggerFactory;
 import org.valkyrienskies.mod.api.ValkyrienSkies;
 
@@ -34,7 +33,6 @@ public class CreateKinetic {
     public CreateKinetic() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-        modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::gatherData);
         modEventBus.addListener(KineticCreativeTabs::addCreative);
         modEventBus.addListener(this::onRegister);
@@ -77,9 +75,6 @@ public class CreateKinetic {
         DataGenerator generator = event.getGenerator();
     }
 
-    private void commonSetup(final FMLCommonSetupEvent event) {
-        NetworkHandler.registerMessages();
-    }
 
     public static ResourceLocation resource(String path) {
         return ResourceLocation.fromNamespaceAndPath(MOD_ID, path);

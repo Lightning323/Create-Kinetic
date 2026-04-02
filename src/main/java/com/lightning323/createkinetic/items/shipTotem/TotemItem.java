@@ -1,6 +1,7 @@
-package com.lightning323.createkinetic.items;
+package com.lightning323.createkinetic.items.shipTotem;
 
 
+import com.lightning323.createkinetic.registries.KineticPackets;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -11,8 +12,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.Level;
-import com.lightning323.createkinetic.network.CustomTotemPacket;
-import com.lightning323.createkinetic.network.NetworkHandler;
 
 import java.util.function.BiPredicate;
 
@@ -33,7 +32,7 @@ public class TotemItem extends Item {
         ItemStack itemStack = player.getItemInHand(hand);
         if (!world.isClientSide()) {
             if (_onUse != null && _onUse.test((ServerPlayer) player, itemStack)){//Trigger the animation and sound
-                NetworkHandler.sendToClient(new CustomTotemPacket(itemStack), (ServerPlayer) player);
+                KineticPackets.sendToClient(new CustomTotemPacket(itemStack), (ServerPlayer) player);
 
                 //Set player to null to play for everyone
                 world.playSound(null, player.blockPosition(), SoundEvents.TOTEM_USE, SoundSource.PLAYERS, 0.2f, 1f);

@@ -1,6 +1,6 @@
 package com.lightning323.createkinetic.commands;
 
-import com.lightning323.createkinetic.items.ShipTotemItem;
+import com.lightning323.createkinetic.items.shipTotem.ShipTotemItem;
 import com.lightning323.createkinetic.ship.KineticShipControl;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;

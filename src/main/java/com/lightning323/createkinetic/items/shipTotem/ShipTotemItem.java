@@ -1,8 +1,7 @@
-package com.lightning323.createkinetic.items;
+package com.lightning323.createkinetic.items.shipTotem;
 
 import com.lightning323.createkinetic.CreateKinetic;
 import com.lightning323.createkinetic.commands.KineticCommands;
-import com.lightning323.createkinetic.registries.KineticItems;
 import com.lightning323.createkinetic.utils.VSUtils;
 import com.simibubi.create.foundation.item.TooltipHelper;
 import net.createmod.catnip.lang.FontHelper;

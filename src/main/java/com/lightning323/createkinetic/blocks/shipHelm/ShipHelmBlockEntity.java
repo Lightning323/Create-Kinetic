@@ -2,9 +2,10 @@ package com.lightning323.createkinetic.blocks.shipHelm;
 
 import com.lightning323.createkinetic.CreateKinetic;
 import com.lightning323.createkinetic.blocks.crank.KCrankBlockEntity;
-import com.lightning323.createkinetic.ship.ControlData;
+import com.lightning323.createkinetic.registries.KineticPackets;
 import com.lightning323.createkinetic.ship.KineticShipControl;
 import com.simibubi.create.content.kinetics.base.GeneratingKineticBlockEntity;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.core.BlockPos;
@@ -12,6 +13,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
@@ -31,6 +33,7 @@ import org.valkyrienskies.mod.common.entity.ShipMountingEntity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static org.valkyrienskies.mod.common.util.VectorConversionsMCKt.toDoubles;
 
@@ -38,8 +41,6 @@ public class ShipHelmBlockEntity extends GeneratingKineticBlockEntity {
 
     // For the renderer
     public float renderHelmRotation = 0.0f;
-
-    long impulseTime = 0;
     public double controlImpulse = 0.0;
 
     public static final float SPEED = 64;
@@ -124,6 +125,8 @@ public class ShipHelmBlockEntity extends GeneratingKineticBlockEntity {
         return entity;
     }
 
+    Player seatedPlayer;
+
     @Override
     public void write(CompoundTag compound, boolean clientPacket) {
         List<Long> additionalControls = new ArrayList<Long>();
@@ -134,12 +137,18 @@ public class ShipHelmBlockEntity extends GeneratingKineticBlockEntity {
             additionalControls.add(be.getBlockPos().asLong());
         }
         compound.putLongArray("additionalControls", additionalControls);
+
+        if (seatedPlayer != null) {
+            compound.putUUID("seatedPlayer", seatedPlayer.getUUID());
+        }
+
         super.write(compound, clientPacket);
     }
 
     @Override
     protected void read(CompoundTag compound, boolean clientPacket) {
         if (compound.contains("additionalControls")) {
+            if(level==null) return;
             long[] controlPositions = compound.getLongArray("additionalControls");
             controls_forwardBackward.clear();
             controls_upDown.clear();
@@ -149,45 +158,33 @@ public class ShipHelmBlockEntity extends GeneratingKineticBlockEntity {
                 checkAndAddControls(level, pos, 0, 0, 0);
             }
         }
+        if (compound.contains("seatedPlayer")) {
+            UUID uuid = compound.getUUID("seatedPlayer");
+            if (level instanceof ServerLevel serverLevel) {
+                seatedPlayer = serverLevel.getPlayerByUUID(uuid);
+            } else if (level instanceof ClientLevel clientLevel) {
+                seatedPlayer = Minecraft.getInstance().level.getPlayerByUUID(uuid);
+            }
+        }
         super.read(compound, clientPacket);
     }
 
-    @Override
-    public void tick() {
-        KineticShipControl controller = getShipController();
-        //TODO: I bet we can still control the seated player on the client side
-        if (controller != null) {
-            controller.ship = getShip();
-            if (KineticShipControl.isPlayerValid(controller.seatedPlayer)) {
-                ControlData controlData = new ControlData(
-                        Direction.NORTH, // Or get the seat's direction
-                        //ALL impulses are either -1 or 1 or 0
-                        controller.seatedPlayer.zza,// xxa = left/right (A/D)
-                        controller.seatedPlayer.xxa, // zza = forward/backward (W/S)
-                        controller.seatedPlayer.yya,// jja = up/down (Space/Shift)
-                        controller.seatedPlayer.isSprinting()
-                );
-                if (controlData.getLeftImpulse() != controlImpulse
-                        && (level.getGameTime() - impulseTime > 5)) { //We cant change the impulse too often
-                    impulseTime = level.getGameTime();
-                    controlImpulse = controlData.getLeftImpulse();
-                    updateGeneratedRotation();
-                }
+    public void updateControl(HelmControlData controlData) {
+        if (controlData != null) {
+            controlImpulse = controlData.leftImpulse;
+            updateGeneratedRotation();
 
-
-                for (GeneratingKineticBlockEntity be : controls_forwardBackward) {
-                    if (be instanceof KCrankBlockEntity kbe) {
-                        kbe.setAutomaticImpulse(controlData.getForwardImpulse());
-                    }
+            for (GeneratingKineticBlockEntity be : controls_forwardBackward) {
+                if (be instanceof KCrankBlockEntity kbe) {
+                    kbe.setAutomaticImpulse(controlData.forwardImpulse);
                 }
-                for (GeneratingKineticBlockEntity be : controls_upDown) {
-                    if (be instanceof KCrankBlockEntity kbe) {
-                        kbe.setAutomaticImpulse(controlData.getUpImpulse());
-                    }
+            }
+            for (GeneratingKineticBlockEntity be : controls_upDown) {
+                if (be instanceof KCrankBlockEntity kbe) {
+                    kbe.setAutomaticImpulse(controlData.upImpulse);
                 }
             }
         }
-        super.tick();
     }
 
     @Override
@@ -201,7 +198,8 @@ public class ShipHelmBlockEntity extends GeneratingKineticBlockEntity {
         super.remove();
     }
 
-    public boolean sit(Player player, BlockState state, Level level, BlockPos pos, boolean force) {
+    public boolean sit(ServerPlayer player, BlockState state, Level level, BlockPos pos, boolean force) {
+        //Runs on server
         ShipMountingEntity seat = spawnSeat(getBlockPos(), getBlockState(), (ServerLevel) level);
         Direction direction = getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING);
         CreateKinetic.LOGGER.debug("Helm seating direction: {}", direction);
@@ -210,7 +208,6 @@ public class ShipHelmBlockEntity extends GeneratingKineticBlockEntity {
         if (control != null) {
             control.preferredDirection = direction;
             control.updateShipDirection();
-
             control.seatedPlayer = player;
         }
 
@@ -223,6 +220,8 @@ public class ShipHelmBlockEntity extends GeneratingKineticBlockEntity {
             }
         }
 
+        //Send a packet to the client
+        KineticPackets.PLAYER_RIDING.sendToClient(new PlayerRidingPacket(pos), player);
         return player.startRiding(seat, force);
     }
 
