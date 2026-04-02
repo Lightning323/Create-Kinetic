@@ -1,6 +1,6 @@
 {
 	"parent": "createkinetic:block/helm/ship_helm_wheel",
 	"textures": {
-		"3": "createkinetic:block/wheels/crimson_ship_wheel"
+		"4": "createkinetic:block/helm/variants/crimson_ship_base"
 	}
 }
