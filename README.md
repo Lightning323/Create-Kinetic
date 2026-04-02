@@ -4,9 +4,6 @@ An addon mod for VS2 and Create! Use alongside your other favorite VS2/Create mo
 
 [Modrinth](https://modrinth.com/mod/create-kinetic), [Curseforge](https://www.curseforge.com/minecraft/mc-mods/create-kinetic)
 
-## License
-All rights reserved.
-
 ## Contributions
 Contributions are welcome, pull requests should follow the following format
 * Clearly state what you are changing
