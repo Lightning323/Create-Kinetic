@@ -496,17 +496,6 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
         double maxAlphaY = KineticConfig.turnAcceleration / largestDistance;
         //-----------------------------------
 
-//        if (isPlayerValid(seatedPlayer) && !isAnchored()) {
-//            this.controlData = new ControlData(
-//                    Direction.NORTH, // Or get the seat's direction
-//                    //ALL impulses are either -1 or 1 or 0
-//                    seatedPlayer.zza,// xxa = left/right (A/D)
-//                    seatedPlayer.xxa, // zza = forward/backward (W/S)
-//                    seatedPlayer.yya,// jja = up/down (Space/Shift)
-//                    seatedPlayer.isSprinting()
-//            );
-//        }
-
         double idealAlphaX = calculateIdealAlpha(KineticConfig.turnSpeed, maxAlphaY, largestDistance, omega.x(), rudderForce.x()) * 100000;
         double idealAlphaY = calculateIdealAlpha(KineticConfig.turnSpeed, maxAlphaY, largestDistance, omega.y(), rudderForce.y());
         double idealAlphaZ = calculateIdealAlpha(KineticConfig.turnSpeed, maxAlphaY, largestDistance, omega.z(), rudderForce.z()) * 100000;
@@ -610,6 +599,7 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
         }
 
         if (numBallast > 0 || numBuoys > 0 || tankBallastWeight > 0) {
+//            physShip1.getMass()
             //TODO: Achieve neutral buoyancy
             physShip1.setBuoyantFactor(0.0//1.0
                     + (numBuoys * KineticConfig.buoyFloatStrength)

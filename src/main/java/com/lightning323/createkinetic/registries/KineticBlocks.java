@@ -117,13 +117,13 @@ public class KineticBlocks {
                                 // Give it a specific suffix
                                 .save(prov, prov.safeId(ctx.getEntry()) + "_from_crank2");
                     })
-                    .recipe((ctx, prov) -> {
-                        ShapelessRecipeBuilder.shapeless(RecipeCategory.TRANSPORTATION, ctx.getEntry(), 1)
-                                .requires(KineticBlocks.ELEVATOR_CRANK.get())
-                                .unlockedBy("has_sail", prov.has(AllBlocks.SAIL.get()))
-                                // Give this one a different suffix
-                                .save(prov, prov.safeId(ctx.getEntry()) + "_from_elevator_crank");
-                    })
+//                    .recipe((ctx, prov) -> {
+//                        ShapelessRecipeBuilder.shapeless(RecipeCategory.TRANSPORTATION, ctx.getEntry(), 1)
+//                                .requires(KineticBlocks.ELEVATOR_CRANK.get())
+//                                .unlockedBy("has_sail", prov.has(AllBlocks.SAIL.get()))
+//                                // Give this one a different suffix
+//                                .save(prov, prov.safeId(ctx.getEntry()) + "_from_elevator_crank");
+//                    })
                     .register();
 
     public static final BlockEntry<KCrankBlock> ELEVATOR_CRANK =
@@ -160,13 +160,13 @@ public class KineticBlocks {
                                 // Give it a specific suffix
                                 .save(prov, prov.safeId(ctx.getEntry()) + "_from_crank");
                     })
-                    .recipe((ctx, prov) -> {
-                        ShapelessRecipeBuilder.shapeless(RecipeCategory.TRANSPORTATION, ctx.getEntry(), 1)
-                                .requires(KineticBlocks.FORWARD_CRANK.get())
-                                .unlockedBy("has_sail", prov.has(AllBlocks.SAIL.get()))
-                                // Give this one a different suffix
-                                .save(prov, prov.safeId(ctx.getEntry()) + "_from_forward_crank");
-                    })
+//                    .recipe((ctx, prov) -> {
+//                        ShapelessRecipeBuilder.shapeless(RecipeCategory.TRANSPORTATION, ctx.getEntry(), 1)
+//                                .requires(KineticBlocks.FORWARD_CRANK.get())
+//                                .unlockedBy("has_sail", prov.has(AllBlocks.SAIL.get()))
+//                                // Give this one a different suffix
+//                                .save(prov, prov.safeId(ctx.getEntry()) + "_from_forward_crank");
+//                    })
                     .register();
 
     public static final BlockEntry<BallastTankBlock> BALLAST_TANK =

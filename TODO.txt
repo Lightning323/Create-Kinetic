@@ -1,5 +1,5 @@
 - aesthetic changes to helms for copyright reasons
-
+- neutral buoyancy with tank ballast
 - aesthetic changes to cranks
 - enchanted buoy can be disabled with redstone
 - better hitboxes for models

@@ -19,7 +19,7 @@ public class KineticEnglishTranslationProvider {
         provider.add("tooltip.createkinetic.helm", "Provides rotational power to rudders and other steering devices; Can be used alongside other controls");
         provider.add("tooltip.createkinetic.retractable_sail", "A retractable sail, useful for propelling a ship");
         provider.add("tooltip.createkinetic.sail_pulley", "A pulley with sails instead of rope, useful for propelling a ship");
-        provider.add("tooltip.createkinetic.rudder", "A rudder blade, used to steer or dive a ship");
+        provider.add("tooltip.createkinetic.rudder", "Can be used to steer or dive a ship");
         provider.add("tooltip.createkinetic.forward_crank", "A crank that can be used to propel a ship");
         provider.add("tooltip.createkinetic.elevator_crank", "A crank that can be used to propel a ship");
     }
