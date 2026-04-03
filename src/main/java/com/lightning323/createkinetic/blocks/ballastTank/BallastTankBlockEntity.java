@@ -117,7 +117,7 @@ public class BallastTankBlockEntity extends SmartBlockEntity implements IHaveGog
     protected void updateWeight() {
         //Only send controller updates every 20 ticks
         if (level.getGameTime() - lastControllerUpdate > 20) {
-            CreateKinetic.LOGGER.debug("Fluid changed {} {}", getBlockPos(), getWeight());
+//            CreateKinetic.LOGGER.debug("Fluid changed {} {}", getBlockPos(), getWeight());
             lastControllerUpdate = level.getGameTime();
             KineticShipControl control = KineticShipControl.getOrAddController((ServerLevel) level, getBlockPos());
             //Update the controller

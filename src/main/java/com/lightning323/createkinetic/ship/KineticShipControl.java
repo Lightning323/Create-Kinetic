@@ -145,6 +145,23 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
      * Jackson (the library VS2 uses for JSON) has no idea how to turn complex Minecraft objects into text and back again.
      */
 
+    public boolean shouldDispose() {
+        //TODO: MAKE SURE EVERY SINGLE POSSIBILITY IS COVERED
+        return
+                //Counters
+                numBallast <= 0
+                        && helms <= 0
+                        && numEnchantedBallast <= 0
+                        && numBuoys <= 0
+                        //Lists / sets
+                        && sailsX.isEmpty()
+                        && sailsZ.isEmpty()
+                        && rudderLocations.isEmpty()
+                        && tankBallastLocations.isEmpty()
+                        //Booleans
+                        && !frozen;
+    }
+
     private ConcurrentLinkedQueue<Vector3dc> invForces = new ConcurrentLinkedQueue<Vector3dc>();
     private ConcurrentLinkedQueue<Vector3dc> rotForces = new ConcurrentLinkedQueue<Vector3dc>();
     private ConcurrentLinkedQueue<ForceAtPos> invPosForces = new ConcurrentLinkedQueue<ForceAtPos>();
@@ -274,7 +291,7 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
                 tankBallastWeight += tbe.getWeight();
             }
         }
-        LOGGER.debug("Tank ballast weight: {}", tankBallastWeight);
+        LOGGER.debug("Tank ballast weight: {}; tanks: {}", tankBallastWeight, tankBallastLocations.size());
     }
 
     /**
@@ -413,7 +430,7 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
     private void updateShipBounds() {
         boundx = ship.getShipAABB().maxX() - ship.getShipAABB().minX();
         boundz = ship.getShipAABB().maxZ() - ship.getShipAABB().minZ();
-        LOGGER.debug("Bounds X={} Z={}", boundx, boundz);
+//        LOGGER.debug("Bounds X={} Z={}", boundx, boundz);
     }
 
     public void updateShipDirection() {
@@ -447,7 +464,7 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
             }
             shipDirection = preferredDirection == Direction.NORTH ? Direction.NORTH : Direction.SOUTH;
         }
-        LOGGER.debug("Ship direction = {}; Ship ratio = {}", shipDirection.toString(), ratio);
+//        LOGGER.debug("Ship direction = {}; Ship ratio = {}", shipDirection, ratio);
     }
 
 
@@ -496,17 +513,19 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
         double maxAlphaY = KineticConfig.turnAcceleration / largestDistance;
         //-----------------------------------
 
-        double idealAlphaX = calculateIdealAlpha(KineticConfig.turnSpeed, maxAlphaY, largestDistance, omega.x(), rudderForce.x()) * 100000;
+        double idealAlphaX = rudderForce.x() * 100000;
         double idealAlphaY = calculateIdealAlpha(KineticConfig.turnSpeed, maxAlphaY, largestDistance, omega.y(), rudderForce.y());
-        double idealAlphaZ = calculateIdealAlpha(KineticConfig.turnSpeed, maxAlphaY, largestDistance, omega.z(), rudderForce.z()) * 100000;
+        double idealAlphaZ = rudderForce.z() * 100000;
         Vector3d torque = new Vector3d(0, idealAlphaY, 0);
 
         // Add banking effect (leaning into the turn)
         moiTensor.transform(torque);
-        // Applies the Moment of Inertia tensor to the vector
-//        Vec3i normal = controlData.getSeatInDirection().getNormal();
-        Vector3d north = new Vector3d(0, 0, -1);
-        torque.add(getPlayerControlledBanking(north, physShip, moiTensor, -idealAlphaY));
+
+        Vector3d directionVector = new Vector3d(
+                shipDirection.getNormal().getX(),
+                shipDirection.getNormal().getY(),
+                shipDirection.getNormal().getZ());
+        torque.add(getPlayerControlledBanking(directionVector, physShip, moiTensor, -idealAlphaY));
         torque.add(new Vector3d(idealAlphaX, 0, idealAlphaZ));
 
 //        LOGGER.debug("Torque={}", torque);
@@ -605,7 +624,7 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
                     + (numBallast * KineticConfig.ballastFloatStrength)
                     - (tankBallastWeight * KineticConfig.tankBallastWeight);
 
-            if (Math.abs(add) < 0.1) add = 0;
+            if (Math.abs(add) < 0.15) add = 0;
             physShip1.setBuoyantFactor(1.0 + add);
         }
 
@@ -663,6 +682,7 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
         waterAmount = physShip1.getLiquidOverlap();
         if (shouldDispose()) {//Dispose of this ship if its no longer needed
             ship.removeAttachment(KineticShipControl.class);
+            LOGGER.debug("Disposing of kinetic ship control!");
         }
     }
 
@@ -740,11 +760,6 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
 
     public int getNumBallast() {
         return numBallast;
-    }
-
-    public boolean shouldDispose() {
-        return numBallast <= 0 && numFnASails <= 0 && numSquareSails <= 0 && numEnchantedBallast <= 0 && numBuoys <= 0
-                && helms == 0 && !frozen && tankBallastWeight <= 0;
     }
 
 
