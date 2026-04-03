@@ -1,8 +1,8 @@
 package com.lightning323.createkinetic.blocks.crank;
 
 import com.lightning323.createkinetic.registries.KineticBlocks;
+import com.lightning323.createkinetic.registries.KineticPartialModels;
 import com.simibubi.create.AllBlocks;
-import com.simibubi.create.AllPartialModels;
 import com.simibubi.create.AllSoundEvents;
 import com.simibubi.create.content.kinetics.base.GeneratingKineticBlockEntity;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
@@ -114,7 +114,7 @@ public class KCrankBlockEntity extends GeneratingKineticBlockEntity {
         BlockState blockState = getBlockState();
         Direction facing = blockState.getOptionalValue(KCrankBlock.FACING)
                 .orElse(Direction.UP);
-        return CachedBuffers.partialFacing(AllPartialModels.HAND_CRANK_HANDLE, blockState, facing.getOpposite());
+        return CachedBuffers.partialFacing(KineticPartialModels.BRASS_CRANK_HANDLE, blockState, facing.getOpposite());
     }
 
     @OnlyIn(Dist.CLIENT)

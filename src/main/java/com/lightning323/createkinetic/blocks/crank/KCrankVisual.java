@@ -1,5 +1,6 @@
 package com.lightning323.createkinetic.blocks.crank;
 
+import com.lightning323.createkinetic.registries.KineticPartialModels;
 import com.simibubi.create.AllPartialModels;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityVisual;
 import com.simibubi.create.content.kinetics.base.RotatingInstance;
@@ -24,7 +25,7 @@ public class KCrankVisual extends KineticBlockEntityVisual<KCrankBlockEntity> im
 	public KCrankVisual(VisualizationContext modelManager, KCrankBlockEntity blockEntity, float partialTick) {
 		super(modelManager, blockEntity, partialTick);
 
-		crank = instancerProvider().instancer(InstanceTypes.TRANSFORMED, Models.partial(AllPartialModels.HAND_CRANK_HANDLE))
+		crank = instancerProvider().instancer(InstanceTypes.TRANSFORMED, Models.partial(KineticPartialModels.BRASS_CRANK_HANDLE))
 				.createInstance();
 
 		rotateCrank(partialTick);

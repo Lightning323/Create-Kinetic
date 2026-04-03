@@ -20,6 +20,7 @@ public class KineticPartialModels {
             ROPE_HALF_WEIGHT = block("retractable_sail/rope_half_weight"),
             PULLEY_WEIGHT = block("retractable_sail/pulley_weight"),
             HELM_WHEEL = block("helm/ship_helm_wheel"),
+            BRASS_CRANK_HANDLE = block("brass_crank_handle"),
             RUDDER_COPPER_BLADE = block("rudder/copper_blade"),
             RUDDER_IRON_BLADE = block("rudder/iron_blade");
 
