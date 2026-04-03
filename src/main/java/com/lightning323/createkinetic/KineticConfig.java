@@ -42,9 +42,9 @@ public class KineticConfig {
             = BUILDER.comment("The maximum linear acceleration at any point on the ship caused by helm torque")
             .defineInRange("turn_acceleration", 10.0, 0.0, Double.MAX_VALUE);
 
-    private static final ForgeConfigSpec.DoubleValue DIVE_ACCELERATION
-            = BUILDER.comment("The maximum diving acceleration at any point on the ship caused by helm torque")
-            .defineInRange("dive_acceleration", 100.0, 0.0, Double.MAX_VALUE);
+    private static final ForgeConfigSpec.DoubleValue DIVE_FORCE
+            = BUILDER.comment("The maximum diving force at any point on the ship caused by helm torque")
+            .defineInRange("dive_force", 30000.0, 0.0, Double.MAX_VALUE);
 
     private static final ForgeConfigSpec.DoubleValue MAX_SIZE_FOR_TURN_SPEED_PENALTY
             = BUILDER.comment("The maximum distance from center of mass to one end of the ship considered by " +
@@ -56,10 +56,6 @@ public class KineticConfig {
     private static final ForgeConfigSpec.DoubleValue TURN_SPEED
             = BUILDER.comment("The maximum linear speed at any point on the ship caused by helm torque")
             .defineInRange("turn_speed", 3.0, 0.0, Double.MAX_VALUE);
-
-    private static final ForgeConfigSpec.DoubleValue DIVE_SPEED
-            = BUILDER.comment("The maximum dive speed at any point on the ship caused by helm torque")
-            .defineInRange("dive_speed", 100.0, 0.0, Double.MAX_VALUE);
 
     private static final ForgeConfigSpec.EnumValue<RudderSpatialHandler.ObstructionCheckLogic> RUDDER_OBSTRUCTION_LOGIC
             = BUILDER.comment("Should rudder obstruction logic be enabled?")
@@ -82,11 +78,9 @@ public class KineticConfig {
     public static RudderSpatialHandler.ObstructionCheckLogic rudderObstructionLogic;
 
     public static double turnAcceleration;
-    public static double diveAcceleration;
     public static double maxSizeForTurnSpeedPenalty;
     public static double turnSpeed;
-    public static double diveSpeed;
-    public static boolean windParticles;
+    public static double diveForce;
     public static double tankBallastWeight;
 
     @SubscribeEvent
@@ -103,8 +97,7 @@ public class KineticConfig {
         turnAcceleration = TURN_ACCELERATION.get();
         maxSizeForTurnSpeedPenalty = MAX_SIZE_FOR_TURN_SPEED_PENALTY.get();
         turnSpeed = TURN_SPEED.get();
-        turnAcceleration = DIVE_ACCELERATION.get();
-        diveSpeed = DIVE_SPEED.get();
+        diveForce = DIVE_FORCE.get();
         rudderObstructionLogic = RUDDER_OBSTRUCTION_LOGIC.get();
 //        windParticles = WIND_PARTICLES.get();
 

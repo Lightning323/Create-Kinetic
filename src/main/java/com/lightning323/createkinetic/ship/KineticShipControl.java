@@ -474,6 +474,13 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
                 seatedPlayer.getVehicle() instanceof ShipMountingEntity;
     }
 
+    private double calculateIdealAlpha(double maxLinearSpeed, double maxAlpha, double largestDistance, double omega, double impulse) {
+        double maxOmega = maxLinearSpeed / largestDistance;
+        boolean isBelowMaxTurnSpeed = Math.abs(omega) < maxOmega;
+        double normalizedAlphaMultiplier = (isBelowMaxTurnSpeed && impulse != 0.0f) ? impulse : -Math.max(-1.0, Math.min(1.0, omega));
+        return normalizedAlphaMultiplier * maxAlpha;
+    }
+
     @Override
     public void physTick(@NotNull PhysShip physShip, @NotNull PhysLevel physLevel) {
         if (isAnchored()) {
@@ -501,21 +508,19 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
         double largestDistance = Math.max(Math.max(dist1, dist2), Math.max(dist3, dist4));
 
         // Equivalent to .coerceIn(0.5, maxSize)
-        double maxSize = KineticConfig.maxSizeForTurnSpeedPenalty;
-        largestDistance = Math.max(0.5, Math.min(largestDistance, maxSize));
+        largestDistance = Math.max(0.5, Math.min(largestDistance, KineticConfig.maxSizeForTurnSpeedPenalty));
 
         // 2. Physics Constants
         final Matrix3dc moiTensor = physShip.getMomentOfInertia();
         final Vector3dc omega = physShip.getAngularVelocity();
 
-
-        double maxAlphaZX = KineticConfig.diveAcceleration / largestDistance;
         double maxAlphaY = KineticConfig.turnAcceleration / largestDistance;
         //-----------------------------------
 
-        double idealAlphaX = rudderForce.x() * 100000;
+        double idealAlphaX = rudderForce.x() * KineticConfig.diveForce;
         double idealAlphaY = calculateIdealAlpha(KineticConfig.turnSpeed, maxAlphaY, largestDistance, omega.y(), rudderForce.y());
-        double idealAlphaZ = rudderForce.z() * 100000;
+        double idealAlphaZ = rudderForce.z() * KineticConfig.diveForce;
+
         Vector3d torque = new Vector3d(0, idealAlphaY, 0);
 
         // Add banking effect (leaning into the turn)
@@ -758,26 +763,6 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
         buoyForces.add(buoyancy);
     }
 
-    public int getNumBallast() {
-        return numBallast;
-    }
-
-
-    private double calculateIdealAlpha(double maxLinearSpeed, double maxAlpha, double largestDistance, double omega, double impulse) {
-        // Equivalent to .coerceIn(0.5, maxSize)
-        double maxSize = KineticConfig.maxSizeForTurnSpeedPenalty;
-        largestDistance = Math.max(0.5, Math.min(largestDistance, maxSize));
-        double maxOmega = maxLinearSpeed / largestDistance;
-        boolean isBelowMaxTurnSpeed = Math.abs(omega) < maxOmega;
-        double normalizedAlphaMultiplier;
-        if (isBelowMaxTurnSpeed && impulse != 0.0f) {
-            normalizedAlphaMultiplier = (double) impulse;
-        } else {
-            // If not turning or over speed, apply counter-torque to stabilize
-            normalizedAlphaMultiplier = -Math.max(-1.0, Math.min(1.0, omega));
-        }
-        return normalizedAlphaMultiplier * maxAlpha;
-    }
 
     /**
      *
