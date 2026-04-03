@@ -19,6 +19,7 @@ import it.unimi.dsi.fastutil.longs.LongSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -237,7 +238,7 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
                 iterator.remove();
             }
         }
-        if (!rudderLocations.isEmpty()) LOGGER.debug("Forces of {} rudders: {}", rudderLocations.size(), rudderForce);
+//        if (!rudderLocations.isEmpty()) LOGGER.debug("Forces of {} rudders: {}", rudderLocations.size(), rudderForce);
     }
 
     /**
@@ -537,30 +538,24 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
         /**
          * Calculate steering constants
          */
-        final ShipTransform transform = physShip.getTransform();
-        final org.joml.primitives.AABBdc aabb = this.ship.getWorldAABB();
-        final Vector3dc center = transform.getPositionInWorld();
 
-        // 1. Calculate Largest Distance for Turn Penalty
-        double dist1 = center.distance(aabb.minX(), center.y(), aabb.minZ());
-        double dist2 = center.distance(aabb.minX(), center.y(), aabb.maxZ());
-        double dist3 = center.distance(aabb.maxX(), center.y(), aabb.minZ());
-        double dist4 = center.distance(aabb.maxX(), center.y(), aabb.maxZ());
-        double largestDistance = Math.max(Math.max(dist1, dist2), Math.max(dist3, dist4));
-
-        // Equivalent to .coerceIn(0.5, maxSize)
-        largestDistance = Math.max(0.5, Math.min(largestDistance, KineticConfig.maxSizeForTurnSpeedPenalty));
+        //There are 2 ways we can determine how much force rudders can dive with, size or mass
+        double diveForceMultiplier = physShip1.getMass();
+//        double diveForceMultiplier = Math.max(boundx, boundz) * 1000;
+        //3800.0 ----- 4
+        //12680.0 ----- 6
+//        System.out.println( physShip1.getMass() + " ----- " + Math.max(boundx, boundz));
+        double turnSize = Mth.clamp((double) Math.max(boundx, boundz) / 2, 0.5, KineticConfig.maxSizeForTurnSpeedPenalty);
 
         // 2. Physics Constants
         final Matrix3dc moiTensor = physShip.getMomentOfInertia();
         final Vector3dc omega = physShip.getAngularVelocity();
 
-        double maxAlphaY = KineticConfig.turnAcceleration / largestDistance;
-        //-----------------------------------
+        double maxAlphaY = KineticConfig.turnAcceleration / turnSize;
+        double idealAlphaY = calculateIdealAlpha(KineticConfig.turnSpeed, maxAlphaY, turnSize, omega.y(), rudderForce.y());
 
-        double idealAlphaX = rudderForce.x() * KineticConfig.diveForce;
-        double idealAlphaY = calculateIdealAlpha(KineticConfig.turnSpeed, maxAlphaY, largestDistance, omega.y(), rudderForce.y());
-        double idealAlphaZ = rudderForce.z() * KineticConfig.diveForce;
+        double idealAlphaX = rudderForce.x() * KineticConfig.diveForce * diveForceMultiplier;
+        double idealAlphaZ = rudderForce.z() * KineticConfig.diveForce * diveForceMultiplier;
 
         rudderTorque.set(0, idealAlphaY, 0);
 
@@ -568,7 +563,13 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
         moiTensor.transform(rudderTorque);
 
         rudderTorque.add(getPlayerControlledBanking(shipDirection, physShip, moiTensor, -idealAlphaY));
-        rudderTorque.add(new Vector3d(idealAlphaX, 0, idealAlphaZ));
+        rudderTorque.add(idealAlphaX, 0, idealAlphaZ); //TODO: Figure out why rudder dive forces keep changing directions. Sometimes they shift the ship in the X axis instead of Z and vice versa
+
+//        rudderTorque.add(shipDirection.getNormal().getX() * idealAlphaZ,
+//                0, shipDirection.getNormal().getZ() * idealAlphaZ);
+//
+//        rudderTorque.add(shipDirection.getClockWise().getNormal().getX() * idealAlphaX,
+//                0, shipDirection.getClockWise().getNormal().getZ() * idealAlphaX);
 
 //        LOGGER.debug("Torque={}", torque);
         physShip.applyWorldTorque(rudderTorque);

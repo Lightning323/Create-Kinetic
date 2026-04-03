@@ -191,7 +191,7 @@ public class RudderBlock extends DirectionalKineticBlock implements IBE<RudderBl
                 }
 
                 rbe.rudderBlade = bladeItem;
-                heldItem.shrink(1);
+                if (!player.isCreative()) heldItem.shrink(1);
 
                 // CRITICAL: Notify the world and Flywheel that data changed
                 rbe.setChanged();
@@ -238,6 +238,7 @@ public class RudderBlock extends DirectionalKineticBlock implements IBE<RudderBl
         // Otherwise, perform the standard Create rotation (switching North to East, etc.)
         return super.getRotatedBlockState(originalState, targetedFace);
     }
+
     private static final int ERROR_MESSAGE_COLOR = 0xFF_ff5d6c;
 
     private void showBounds(BlockPos pos, BlockState state, Player player, RudderBladeItem blade) {
@@ -247,13 +248,13 @@ public class RudderBlock extends DirectionalKineticBlock implements IBE<RudderBl
 //        if (KineticConfig.rudderObstructionLogic == RudderSpatialHandler.ObstructionCheckLogic.PRECISE && blade != null) {
 //            outlineAABB = RudderSpatialHandler.getPreciseBladeAABB(pos, state.getValue(DirectionalKineticBlock.FACING), blade);
 //        } else {
-            Vec3 contract = Vec3.atLowerCornerOf(state.getValue(DirectionalKineticBlock.FACING).getNormal());
-            outlineAABB = new AABB(pos).inflate(1).deflate(Math.abs(contract.x), Math.abs(contract.y), Math.abs(contract.z));
+        Vec3 contract = Vec3.atLowerCornerOf(state.getValue(DirectionalKineticBlock.FACING).getNormal());
+        outlineAABB = new AABB(pos).inflate(1).deflate(Math.abs(contract.x), Math.abs(contract.y), Math.abs(contract.z));
 //        }
 
         Outliner.getInstance().showAABB(Pair.of("rudder", pos), outlineAABB)
                 .colored(AssemblyUtility.CANCEL_COLOR)
-                .lineWidth(1/16f);
+                .lineWidth(1 / 16f);
 
         player.displayClientMessage(
                 Component.translatable("createkinetic.rudder.not_enough_space")

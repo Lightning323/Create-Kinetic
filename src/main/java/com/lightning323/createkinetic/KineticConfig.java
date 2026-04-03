@@ -61,7 +61,7 @@ public class KineticConfig {
 
     private static final ForgeConfigSpec.DoubleValue DIVE_FORCE
             = BUILDER.comment("The maximum diving force at any point on the ship caused by rudders")
-            .defineInRange("dive_force", 30000.0, 0.0, Double.MAX_VALUE);
+            .defineInRange("dive_force", 20.0, 0.0, Double.MAX_VALUE);
 
     private static final ForgeConfigSpec.EnumValue<RudderSpatialHandler.ObstructionCheckLogic> RUDDER_OBSTRUCTION_LOGIC
             = BUILDER.comment("Should rudder obstruction logic be enabled?")

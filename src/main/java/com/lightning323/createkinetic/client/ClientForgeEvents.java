@@ -46,7 +46,7 @@ public class ClientForgeEvents {
                 controlData.upImpulse = elevatorImpulse;
                 controlData.sprintOn = mc.player.isSprinting();
 
-                if (!lastControlData.equals(controlData) && time - ticksSinceLastControl > 4) {
+                if (!lastControlData.equals(controlData) && time - ticksSinceLastControl > 6) {
                     lastControlData.set(controlData);
                     ticksSinceLastControl = time;
                     KineticPackets.HELM_CONTROL.sendToServer(

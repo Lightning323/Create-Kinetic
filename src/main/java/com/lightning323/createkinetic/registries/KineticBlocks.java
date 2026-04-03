@@ -271,8 +271,8 @@ public class KineticBlocks {
             .recipe((ctx, prov) -> {
                 ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, ctx.getEntry())
                         .pattern(" P ")
-                        .pattern("SSS")
-                        .pattern("AAA")
+                        .pattern(" S ")
+                        .pattern(" A ")
                         .define('S', AllBlocks.SAIL.get()) // Using Create's Sail block
                         .define('P', AllBlocks.ANDESITE_CASING)
                         .define('A', AllItems.ANDESITE_ALLOY.get())
@@ -321,9 +321,9 @@ public class KineticBlocks {
                         .pattern("P")
                         .pattern("S")
                         .pattern("A")
-                        .define('S', KineticBlocks.RETRACTABLE_SAIL.get()) // Using Create's Sail block
+                        .define('S', AllBlocks.SAIL.get()) // Using Create's Sail block
                         .define('P', AllBlocks.BRASS_CASING)
-                        .define('A', AllItems.IRON_SHEET)
+                        .define('A', AllItems.ANDESITE_ALLOY.get())
                         .unlockedBy("has_sail", prov.has(AllBlocks.SAIL.get()))
                         .save(prov);
             })

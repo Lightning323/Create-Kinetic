@@ -10,6 +10,7 @@ import com.simibubi.create.api.data.recipe.MechanicalCraftingRecipeBuilder;
 import com.simibubi.create.content.kinetics.deployer.DeployerApplicationRecipe;
 import com.simibubi.create.content.kinetics.mixer.MixingRecipe;
 import com.simibubi.create.content.kinetics.press.PressingRecipe;
+import com.simibubi.create.content.kinetics.saw.CuttingRecipe;
 import com.simibubi.create.content.processing.recipe.HeatCondition;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder;
 import com.simibubi.create.content.processing.sequenced.SequencedAssemblyRecipeBuilder;
@@ -88,16 +89,16 @@ public class KineticRecipes extends RecipeProvider {
         ResourceLocation id = CreateKinetic.resource("mechanical_sail_assembly");
 
         new SequencedAssemblyRecipeBuilder(id)
-                .require(AllItems.BRASS_SHEET) // <--- ADD THIS: The base item to start the process
+                .require(AllItems.ELECTRON_TUBE) // <--- ADD THIS: The base item to start the process
                 .transitionTo(KineticItems.INCOMPLETE_STEERING_MECHANISM.get())
                 .addOutput(KineticItems.STEERING_MECHANISM.get(), 1)
                 // 20% chance to fail and get a "failed" variant or scrap
-                .addOutput(AllBlocks.COGWHEEL.get(), 0.1f)
-                .addOutput(Items.IRON_NUGGET, 0.1f)
-                .loops(3)
-                .addStep(DeployerApplicationRecipe::new, b -> b.require(AllItems.ELECTRON_TUBE))
+//                .addOutput(AllBlocks.COGWHEEL.get(), 0.1f)
+                .loops(2)
                 .addStep(DeployerApplicationRecipe::new, b -> b.require(AllBlocks.LARGE_COGWHEEL))
-                .addStep(DeployerApplicationRecipe::new, b -> b.require(Items.IRON_NUGGET))
+                .addStep(DeployerApplicationRecipe::new, b -> b.require(AllItems.BRASS_NUGGET))
+                .addStep(CuttingRecipe::new, b -> b)
+//                .addStep(DeployerApplicationRecipe::new, b -> b.require(AllItems.ELECTRON_TUBE))
                 .addStep(PressingRecipe::new, b -> b)
                 .build(consumer);
     }
