@@ -14,6 +14,7 @@ import net.minecraft.core.Direction.Axis;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
@@ -238,4 +239,16 @@ public class ShipHelmBlockEntity extends GeneratingKineticBlockEntity {
             }
         }
     }
+
+    public void animateHelmRotation() {
+        //We have to use blockenity speed because its available on the client side
+        renderHelmRotation = (float) lerp(renderHelmRotation,
+                (getSpeed() / ShipHelmBlockEntity.SPEED) * Mth.PI,
+                0.01f);
+    }
+
+    private double lerp(double start, double end, double factor) {
+        return start + factor * (end - start);
+    }
+
 }

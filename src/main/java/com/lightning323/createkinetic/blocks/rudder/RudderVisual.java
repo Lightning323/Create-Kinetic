@@ -2,7 +2,6 @@ package com.lightning323.createkinetic.blocks.rudder;
 
 import com.lightning323.createkinetic.items.RudderBladeItem;
 import com.lightning323.createkinetic.registries.KineticPartialModels;
-import com.lightning323.createkinetic.utils.MiscUtils;
 import com.simibubi.create.AllPartialModels;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityVisual;
 import com.simibubi.create.content.kinetics.base.RotatingInstance;
@@ -11,26 +10,13 @@ import dev.engine_room.flywheel.api.instance.Instance;
 import dev.engine_room.flywheel.api.visualization.VisualizationContext;
 import dev.engine_room.flywheel.lib.instance.InstanceTypes;
 import dev.engine_room.flywheel.lib.instance.OrientedInstance;
-import dev.engine_room.flywheel.lib.material.Materials;
 import dev.engine_room.flywheel.lib.model.Models;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import dev.engine_room.flywheel.lib.visual.SimpleDynamicVisual;
-import dev.engine_room.flywheel.lib.visual.util.SmartRecycler;
-import net.createmod.catnip.math.AngleHelper;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
-import net.minecraft.util.Mth;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import org.jetbrains.annotations.Nullable;
-import org.joml.Quaternionf;
-import org.lwjgl.system.MathUtil;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Consumer;
-
-import static oshi.util.platform.windows.WmiQueryHandler.createInstance;
 
 
 public class RudderVisual extends KineticBlockEntityVisual<RudderBlockEntity> implements SimpleDynamicVisual {
@@ -83,12 +69,7 @@ public class RudderVisual extends KineticBlockEntityVisual<RudderBlockEntity> im
             }
             if (blockEntity.rudderBlade != null) {
                 //We set the rendertype to "render_type": "minecraft:cutout", in the model json file
-                PartialModel model = KineticPartialModels.RUDDER_COPPER_BLADE;
-                if (blockEntity.rudderBlade.type == RudderBladeItem.BladeType.IRON) {
-                    model = KineticPartialModels.RUDDER_IRON_BLADE;
-                }
-
-                blade = instancerProvider().instancer(InstanceTypes.ORIENTED, Models.partial(model))
+                blade = instancerProvider().instancer(InstanceTypes.ORIENTED, Models.partial(getBladePartial(blockEntity)))
                         .createInstance();
                 blade.position(getVisualPosition())
                         .rotation(blockEntity.rudderIdentityRotation)
@@ -97,6 +78,14 @@ public class RudderVisual extends KineticBlockEntityVisual<RudderBlockEntity> im
             }
             bladeItem = blockEntity.rudderBlade;
         }
+    }
+
+    protected static PartialModel getBladePartial(RudderBlockEntity blockEntity) {
+        PartialModel model = KineticPartialModels.RUDDER_COPPER_BLADE;
+        if (blockEntity.rudderBlade.type == RudderBladeItem.BladeType.IRON) {
+            model = KineticPartialModels.RUDDER_IRON_BLADE;
+        }
+        return model;
     }
 
     @Override

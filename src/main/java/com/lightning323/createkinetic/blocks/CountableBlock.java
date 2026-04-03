@@ -14,14 +14,16 @@ public abstract class CountableBlock extends Block {
 
     public void onPlace(BlockState state, Level world, BlockPos pos, BlockState oldState, boolean notify) {
         if (!world.isClientSide) {
-            addToShip(state, world, pos, KineticShipControl.getOrAddController((ServerLevel) world, pos));
+            KineticShipControl controller = KineticShipControl.getOrAddController((ServerLevel) world, pos);
+            if (controller != null) addToShip(state, world, pos, controller);
         }
     }
 
     public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean moved) {
         if (!world.isClientSide) {
             if (newState.isAir() || !newState.is(state.getBlock())) {
-                removeFromShip(state, world, pos, KineticShipControl.getOrAddController((ServerLevel) world, pos));
+                KineticShipControl controller = KineticShipControl.getController((ServerLevel) world, pos);
+                if (controller != null) removeFromShip(state, world, pos, controller);
             }
         }
     }
