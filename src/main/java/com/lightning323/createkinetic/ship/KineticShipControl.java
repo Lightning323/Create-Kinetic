@@ -601,11 +601,12 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
         if (numBallast > 0 || numBuoys > 0 || tankBallastWeight > 0) {
 //            physShip1.getMass()
             //TODO: Achieve neutral buoyancy
-            physShip1.setBuoyantFactor(0.0//1.0
-                    + (numBuoys * KineticConfig.buoyFloatStrength)
+            double add = (numBuoys * KineticConfig.buoyFloatStrength)
                     + (numBallast * KineticConfig.ballastFloatStrength)
-                    - (tankBallastWeight * KineticConfig.tankBallastWeight) //Negative boyancy results in increased mass
-            );
+                    - (tankBallastWeight * KineticConfig.tankBallastWeight);
+
+            if (Math.abs(add) < 0.1) add = 0;
+            physShip1.setBuoyantFactor(1.0 + add);
         }
 
         //sail force implementation
