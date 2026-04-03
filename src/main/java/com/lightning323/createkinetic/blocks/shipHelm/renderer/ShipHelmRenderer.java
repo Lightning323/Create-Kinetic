@@ -4,6 +4,7 @@ import com.lightning323.createkinetic.blocks.shipHelm.ShipHelmBlock;
 import com.lightning323.createkinetic.blocks.shipHelm.ShipHelmBlockEntity;
 import com.lightning323.createkinetic.registries.KineticPartialModels;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Axis;
 import dev.engine_room.flywheel.api.visualization.VisualizationManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -22,45 +23,37 @@ import org.joml.AxisAngle4f;
 import org.joml.Quaternionf;
 
 public class ShipHelmRenderer implements BlockEntityRenderer<ShipHelmBlockEntity> {
-    public static final int SIXTEENTH = 1 / 16;
-    private final BlockEntityRendererProvider.Context ctx;
+     private final BlockEntityRendererProvider.Context ctx;
 
     public ShipHelmRenderer(BlockEntityRendererProvider.Context ctx) {
         this.ctx = ctx;
     }
 
     @Override
-    public void render(
-            ShipHelmBlockEntity blockEntity,
-            float partialTicks,
-            PoseStack matrixStack,
-            MultiBufferSource buffer,
-            int combinedLight,
-            int combinedOverlay
-    ) {
+    public void render(ShipHelmBlockEntity blockEntity, float partialTicks, PoseStack matrixStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
         if (VisualizationManager.supportsVisualization(blockEntity.getLevel()))
             return;
 
         matrixStack.pushPose();
 
-        // Wheel offset of the base
-        matrixStack.translate(0.5, 1.125, 0.5);
+        // 1. Move to the CENTER of the block (the pivot point)
+        float heightAdjustment = 0.625f;
+        matrixStack.translate(0.5, heightAdjustment, 0.5);
 
-        // Rotate wheel towards the direction it's facing
+        // 2. Rotate the coordinate space for facing
         float yRot = blockEntity.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot();
-        matrixStack.mulPose(
-                new Quaternionf(
-                        new AxisAngle4f(
-                                (float) (-yRot * Math.PI / 180.0),
-                                0.0f, 1.0f, 0.0f
-                        )
-                )
-        );
+        matrixStack.mulPose(Axis.YP.rotationDegrees(-yRot));
 
+        // 3. Apply the steering rotation (Z-axis spin)
         blockEntity.animateHelmRotation();
-        matrixStack.mulPose(new Quaternionf(new AxisAngle4f(blockEntity.renderHelmRotation, 0.0f, 0.0f, 1.0f)));
+        matrixStack.mulPose(Axis.ZP.rotation(blockEntity.renderHelmRotation));
 
-        // Render the wheel
+        // 4. Translate BACK to align the model's internal coordinates
+        // If you shifted your model in Blockbench as discussed earlier,
+        // these numbers should match that shift relative to the center.
+        matrixStack.translate(-0.5, -heightAdjustment, -0.5);
+
+        // 5. Render
         renderWheel(matrixStack, blockEntity, buffer, combinedLight, combinedOverlay);
 
         matrixStack.popPose();
@@ -87,11 +80,6 @@ public class ShipHelmRenderer implements BlockEntityRenderer<ShipHelmBlockEntity
 
         var woodType = helmBlock.getWoodTypeEnum();
 
-        matrixStack.pushPose();
-
-        // Model isn't centered: calculated and need to use 0.625 on y and z 0.25
-        matrixStack.translate(-0.5, -0.625, -0.25);
-
         BlockPos blockPos = blockEntity.getBlockPos();
         BakedModel bakedModel = KineticPartialModels.getHelmWheel(woodType).get();
 
@@ -108,6 +96,5 @@ public class ShipHelmRenderer implements BlockEntityRenderer<ShipHelmBlockEntity
                 combinedOverlay
         );
 
-        matrixStack.popPose();
     }
 }

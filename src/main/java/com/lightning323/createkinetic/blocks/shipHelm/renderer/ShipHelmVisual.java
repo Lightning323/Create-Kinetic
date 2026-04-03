@@ -78,7 +78,7 @@ public class ShipHelmVisual extends KineticBlockEntityVisual<ShipHelmBlockEntity
         }
 
 
-        Vector3f pos = new Vector3f(getVisualPosition().getX(), getVisualPosition().getY(), getVisualPosition().getZ());
+        Vector3f pos = new Vector3f(getVisualPosition().getX(), getVisualPosition().getY()+0.625f, getVisualPosition().getZ());
         wheel.position(pos).rotation(rotation)
                 .setChanged();
     }
