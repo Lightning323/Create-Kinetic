@@ -623,16 +623,22 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
         }
 
         if (numBallast > 0 || numBuoys > 0 || tankBallastWeight > 0) {
-//            physShip1.getMass()
-            //TODO: Achieve neutral buoyancy
             double add = (numBuoys * KineticConfig.buoyFloatStrength)
                     + (numBallast * KineticConfig.ballastFloatStrength)
                     - (tankBallastWeight * KineticConfig.tankBallastWeight);
 
-            if (Math.abs(add) < 0.15) add = 0;
-
-            physShip1.setBuoyantFactor(1.0f + add);
-
+            /**
+             * https://discord.com/channels/244934352092397568/1473172030424612936/1489696178365792507
+             * 1.0 means all blocks are buoyant a normal amount
+             * As in Their mass and their shape shape are combined to calculate their water displacement and buoyant force
+             * 2.0 would be like if all blocks are half their weight for buoyancy calculations
+             * 0.5 = doubled weight for buoyancy calculations
+             */
+            double yVel = ((Vector3d)physShip1.getVelocity()).y; //negative is down, positive is up
+            //If we are going up, increase the weight (reduce buoyancy)
+            //We can control the strength to which we resist rising and sinking via buoyancyVelocityFactor
+            double yVelocityOffset = yVel * - KineticConfig.buoyancyVelocityFactor; //This is how we can achieve near neutral buoyancy!
+            physShip1.setBuoyantFactor(1.0f + add + yVelocityOffset);
         }
 
         //sail force implementation

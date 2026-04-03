@@ -26,7 +26,13 @@ public class KineticConfig {
             = BUILDER.comment("Buoy Float Strength").defineInRange("buoy_strength", 0.125, 0.0, Double.MAX_VALUE);
 
     private static final ForgeConfigSpec.DoubleValue TANK_BALLAST_WEIGHT
-            = BUILDER.comment("Tank Ballast Weight").defineInRange("tank_ballast_weight", 0.2, 0.0, Double.MAX_VALUE);
+            //Lower tank ballast weight = more control of ship buoyancy
+            = BUILDER.comment("Tank Ballast Weight").defineInRange("tank_ballast_weight", 0.05, 0.0, Double.MAX_VALUE);
+
+    private static final ForgeConfigSpec.DoubleValue BUOYANCY_VELOCITY_FACTOR
+            //Lower tank ballast weight = more control of ship buoyancy
+            = BUILDER.comment("How hard should it be to float or sink? 2.0 = very hard, 0.0 = no resistance")
+            .defineInRange("buoyancy_velocity_factor", 0.85, 0.0, 100.0);
 
     private static final ForgeConfigSpec.DoubleValue NO_SAIL_ZONE
             = BUILDER.comment("No sail zone (in degrees)")
@@ -57,7 +63,6 @@ public class KineticConfig {
             = BUILDER.comment("The maximum diving force at any point on the ship caused by rudders")
             .defineInRange("dive_force", 30000.0, 0.0, Double.MAX_VALUE);
 
-
     private static final ForgeConfigSpec.EnumValue<RudderSpatialHandler.ObstructionCheckLogic> RUDDER_OBSTRUCTION_LOGIC
             = BUILDER.comment("Should rudder obstruction logic be enabled?")
             .defineEnum("rudder_obstruction_logic", RudderSpatialHandler.ObstructionCheckLogic.APPROXIMATE);
@@ -83,6 +88,7 @@ public class KineticConfig {
     public static double turnSpeed;
     public static double diveForce;
     public static double tankBallastWeight;
+    public static double buoyancyVelocityFactor;
 
     @SubscribeEvent
     static void onLoad(final ModConfigEvent event) {
@@ -100,6 +106,7 @@ public class KineticConfig {
         turnSpeed = TURN_SPEED.get();
         diveForce = DIVE_FORCE.get();
         rudderObstructionLogic = RUDDER_OBSTRUCTION_LOGIC.get();
+        buoyancyVelocityFactor = BUOYANCY_VELOCITY_FACTOR.get();
 //        windParticles = WIND_PARTICLES.get();
 
 //        magicNumberIntroduction = MAGIC_NUMBER_INTRODUCTION.get();
