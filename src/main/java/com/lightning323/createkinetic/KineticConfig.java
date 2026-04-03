@@ -31,8 +31,8 @@ public class KineticConfig {
 
     private static final ForgeConfigSpec.DoubleValue BUOYANCY_VELOCITY_FACTOR
             //Lower tank ballast weight = more control of ship buoyancy
-            = BUILDER.comment("How hard should it be to float or sink? 2.0 = very hard, 0.0 = no resistance")
-            .defineInRange("buoyancy_velocity_factor", 0.85, 0.0, 100.0);
+            = BUILDER.comment("How hard should it be to float or sink? 1.0 = very hard, 0.0 = no resistance")
+            .defineInRange("buoyancy_velocity_factor", 0.6, 0.0, 1.5);
 
     private static final ForgeConfigSpec.DoubleValue NO_SAIL_ZONE
             = BUILDER.comment("No sail zone (in degrees)")

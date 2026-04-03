@@ -468,17 +468,58 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
     }
 
 
-    public static boolean isPlayerValid(Player seatedPlayer) {
-        // Check if we have a player and if they are still riding a mounting entity
-        return seatedPlayer != null &&
-                seatedPlayer.getVehicle() instanceof ShipMountingEntity;
-    }
+//------------------------------------------------------------------------
+    /**
+     * The cached vectors used for calculations
+     */
+
+    @JsonIgnore
+    final Vector3d rudderTorque = new Vector3d();
+
+    @JsonIgnore
+    final Vector3d rotationVector = new Vector3d();
+
+    @JsonIgnore
+    final Vector3d keelForce = new Vector3d();
+
+    @JsonIgnore
+    final static Vector3d worldUp = new Vector3d(0, 1, 0);
 
     private double calculateIdealAlpha(double maxLinearSpeed, double maxAlpha, double largestDistance, double omega, double impulse) {
         double maxOmega = maxLinearSpeed / largestDistance;
         boolean isBelowMaxTurnSpeed = Math.abs(omega) < maxOmega;
         double normalizedAlphaMultiplier = (isBelowMaxTurnSpeed && impulse != 0.0f) ? impulse : -Math.max(-1.0, Math.min(1.0, omega));
         return normalizedAlphaMultiplier * maxAlpha;
+    }
+
+
+    /**
+     *
+     * @param seatDirection 1. Get the direction the seat is facing (e.g., North, East)
+     * @param physShip
+     * @param moiTensor
+     * @param strength
+     * @return
+     */
+    private Vector3d getPlayerControlledBanking(Direction seatDirection, PhysShip physShip, Matrix3dc moiTensor, double strength) {
+        // 2. Transform the local seat direction to world rotation
+        rotationVector.set(seatDirection.getNormal().getX(), seatDirection.getNormal().getY(), seatDirection.getNormal().getZ());
+        physShip.getTransform().getShipToWorldRotation().transform(rotationVector);
+
+        // 3. Project onto the horizontal plane and apply strength
+        rotationVector.y = 0.0;
+        rotationVector.mul(strength * 1.5);
+
+        // 4. Transform into Ship Space, apply Moment of Inertia, and transform back to World Space
+        // This is the JOML equivalent of the nested Kotlin calls
+        Quaterniondc shipToWorld = physShip.getTransform().getShipToWorldRotation();
+
+        // transformInverse -> moiTensor.transform -> transform
+        shipToWorld.transformInverse(rotationVector);
+        moiTensor.transform(rotationVector);
+        shipToWorld.transform(rotationVector);
+
+        return rotationVector;
     }
 
     @Override
@@ -521,20 +562,16 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
         double idealAlphaY = calculateIdealAlpha(KineticConfig.turnSpeed, maxAlphaY, largestDistance, omega.y(), rudderForce.y());
         double idealAlphaZ = rudderForce.z() * KineticConfig.diveForce;
 
-        Vector3d torque = new Vector3d(0, idealAlphaY, 0);
+        rudderTorque.set(0, idealAlphaY, 0);
 
         // Add banking effect (leaning into the turn)
-        moiTensor.transform(torque);
+        moiTensor.transform(rudderTorque);
 
-        Vector3d directionVector = new Vector3d(
-                shipDirection.getNormal().getX(),
-                shipDirection.getNormal().getY(),
-                shipDirection.getNormal().getZ());
-        torque.add(getPlayerControlledBanking(directionVector, physShip, moiTensor, -idealAlphaY));
-        torque.add(new Vector3d(idealAlphaX, 0, idealAlphaZ));
+        rudderTorque.add(getPlayerControlledBanking(shipDirection, physShip, moiTensor, -idealAlphaY));
+        rudderTorque.add(new Vector3d(idealAlphaX, 0, idealAlphaZ));
 
 //        LOGGER.debug("Torque={}", torque);
-        physShip.applyWorldTorque(torque);
+        physShip.applyWorldTorque(rudderTorque);
         // 5. Apply Force (Forward/Backward)
 //        physShip.applyWorldForce(getPlayerForwardVel(control, physShip));
 
@@ -576,17 +613,16 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
 
         force = physShip1.getTransform().getWorldToShip().transformDirection(force);
 
-        Vector3d keelForce; //todo perhaps make this based on length/width ratio?
+        //todo perhaps make this based on length/width ratio?
         if (shipDirection == Direction.NORTH || shipDirection == Direction.SOUTH) {
-            keelForce = new Vector3d(force.x() * KineticConfig.keelStrength, 0, 0);
+            keelForce.set(force.x() * KineticConfig.keelStrength, 0, 0);
         } else {
-            keelForce = new Vector3d(0, 0, force.z() * KineticConfig.keelStrength);
+            keelForce.set(0, 0, force.z() * KineticConfig.keelStrength);
         }
-
         if (helms > 0) physShip.applyRotDependentForce(keelForce);
 
         if (numEnchantedBallast > 0) {
-            Vector3d worldUp = new Vector3d(0, 1, 0);
+
             Vector3d shipUp = new Vector3d(0, 1, 0);
             physShip1.getTransform().getShipToWorldRotation().transform(shipUp);
 
@@ -634,10 +670,10 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
              * 2.0 would be like if all blocks are half their weight for buoyancy calculations
              * 0.5 = doubled weight for buoyancy calculations
              */
-            double yVel = ((Vector3d)physShip1.getVelocity()).y; //negative is down, positive is up
+            double yVel = ((Vector3d) physShip1.getVelocity()).y; //negative is down, positive is up
             //If we are going up, increase the weight (reduce buoyancy)
             //We can control the strength to which we resist rising and sinking via buoyancyVelocityFactor
-            double yVelocityOffset = yVel * - KineticConfig.buoyancyVelocityFactor; //This is how we can achieve near neutral buoyancy!
+            double yVelocityOffset = yVel * -KineticConfig.buoyancyVelocityFactor; //This is how we can achieve near neutral buoyancy!
             physShip1.setBuoyantFactor(1.0f + add + yVelocityOffset);
         }
 
@@ -769,35 +805,6 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
 
     public void addBuoyancy(double buoyancy) {
         buoyForces.add(buoyancy);
-    }
-
-
-    /**
-     *
-     * @param rotationVector 1. Get the direction the seat is facing (e.g., North, East)
-     * @param physShip
-     * @param moiTensor
-     * @param strength
-     * @return
-     */
-    private Vector3d getPlayerControlledBanking(Vector3d rotationVector, PhysShip physShip, Matrix3dc moiTensor, double strength) {
-        // 2. Transform the local seat direction to world rotation
-        physShip.getTransform().getShipToWorldRotation().transform(rotationVector);
-
-        // 3. Project onto the horizontal plane and apply strength
-        rotationVector.y = 0.0;
-        rotationVector.mul(strength * 1.5);
-
-        // 4. Transform into Ship Space, apply Moment of Inertia, and transform back to World Space
-        // This is the JOML equivalent of the nested Kotlin calls
-        Quaterniondc shipToWorld = physShip.getTransform().getShipToWorldRotation();
-
-        // transformInverse -> moiTensor.transform -> transform
-        shipToWorld.transformInverse(rotationVector);
-        moiTensor.transform(rotationVector);
-        shipToWorld.transform(rotationVector);
-
-        return rotationVector;
     }
 
 
