@@ -3,9 +3,9 @@
 	"credit": "Made with Blockbench",
 	"textures": {
 		"4": "createkinetic:block/helm/variants/acacia_ship_base",
-		"base": "createkinetic:block/helm/helm_base",
 		"5": "create:block/pulley_rope",
-		"particle": "create:block/pulley_rope"
+		"particle": "create:block/pulley_rope",
+		"base": "createkinetic:block/helm/helm_base"
 	},
 	"elements": [
 		{
@@ -23,15 +23,15 @@
 		},
 		{
 			"from": [2, 1, 2],
-			"to": [14, 8, 14],
+			"to": [14, 8.05, 14],
 			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0, 17]},
 			"faces": {
 				"north": {"uv": [9, 0, 15, 3.5], "texture": "#4"},
 				"east": {"uv": [9, 0, 15, 3.5], "texture": "#4"},
 				"south": {"uv": [15, 0, 9, 3.5], "texture": "#4"},
 				"west": {"uv": [9, 0, 15, 3.5], "texture": "#4"},
-				"up": {"uv": [15, 7, 9, 1], "rotation": 270, "texture": "#4"},
-				"down": {"uv": [1, 1, 7, 7], "rotation": 270, "texture": "#4"}
+				"up": {"uv": [15, 7, 9, 1], "rotation": 270, "texture": "#base"},
+				"down": {"uv": [1, 1, 7, 7], "rotation": 270, "texture": "#base"}
 			}
 		},
 		{

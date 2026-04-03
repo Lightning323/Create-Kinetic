@@ -30,7 +30,7 @@ public class ShipHelmRenderer implements BlockEntityRenderer<ShipHelmBlockEntity
         matrixStack.pushPose();
 
         // Wheel offset of the base
-        matrixStack.translate(0.5, .8, 0.5);
+        matrixStack.translate(0.5, 1.1875, 0.5);
 
         // Rotate wheel towards the direction it's facing
         float yRot = blockEntity.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot();

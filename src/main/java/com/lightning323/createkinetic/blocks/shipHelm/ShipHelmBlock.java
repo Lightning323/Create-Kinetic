@@ -46,7 +46,9 @@ public class ShipHelmBlock extends KineticBlock implements IBE<ShipHelmBlockEnti
     public static final Property<Direction> HORIZONTAL_FACING = BlockStateProperties.HORIZONTAL_FACING;
     public final WoodType woodType;
     private final WoodTypeEnum woodTypeEnum;
-    public static final VoxelShape SIMPLE_SHAPE = Block.box(1.0, 0.0, 1.0, 15.0, 16.0, 15.0);
+    public static final VoxelShape SIMPLE_SHAPE = Block.box(
+            1.0, 0.0, 1.0,
+            15.0, 20.0, 15.0);
 
     public ShipHelmBlock(Properties properties, WoodType woodType) {
         super(properties);
