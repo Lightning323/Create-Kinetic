@@ -62,7 +62,7 @@ public class ShipHelmBlockEntity extends GeneratingKineticBlockEntity {
 
     @Override
     public float getGeneratedSpeed() {
-        return convertToDirection((float) (controlImpulse * SPEED), getBlockState().getValue(ShipHelmBlock.HORIZONTAL_FACING));
+        return convertToDirection((float) (-controlImpulse * SPEED), getBlockState().getValue(ShipHelmBlock.HORIZONTAL_FACING));
     }
 
     private LoadedServerShip getShip() {
@@ -200,7 +200,10 @@ public class ShipHelmBlockEntity extends GeneratingKineticBlockEntity {
 
     public boolean sit(ServerPlayer player, BlockState state, Level level, BlockPos pos, boolean force) {
         //Runs on server
-        ShipMountingEntity seat = spawnSeat(getBlockPos(), getBlockState(), (ServerLevel) level);
+        BlockPos seatPos = getBlockPos();
+        ShipMountingEntity seat = spawnSeat(seatPos, getBlockState(), (ServerLevel) level);
+        seat.setPos(seat.getX(), seat.getY() + 0.25, seat.getZ());
+
         Direction direction = getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING);
         CreateKinetic.LOGGER.debug("Helm seating direction: {}", direction);
 
