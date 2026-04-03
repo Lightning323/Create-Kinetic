@@ -38,13 +38,13 @@ public class KineticConfig {
     private static final ForgeConfigSpec.DoubleValue MIN_WIND_SPEED
             = BUILDER.defineInRange("min_wind", 0.5, 0, 1);
 
-    private static final ForgeConfigSpec.DoubleValue TURN_ACCELERATION
-            = BUILDER.comment("The maximum linear acceleration at any point on the ship caused by helm torque")
-            .defineInRange("turn_acceleration", 10.0, 0.0, Double.MAX_VALUE);
+    private static final ForgeConfigSpec.DoubleValue TURN_SPEED
+            = BUILDER.comment("The maximum linear speed at any point on the ship caused by rudders")
+            .defineInRange("turn_speed", 3.0, 0.0, Double.MAX_VALUE);
 
-    private static final ForgeConfigSpec.DoubleValue DIVE_FORCE
-            = BUILDER.comment("The maximum diving force at any point on the ship caused by helm torque")
-            .defineInRange("dive_force", 30000.0, 0.0, Double.MAX_VALUE);
+    private static final ForgeConfigSpec.DoubleValue TURN_ACCELERATION
+            = BUILDER.comment("The maximum linear acceleration at any point on the ship caused by rudders")
+            .defineInRange("turn_acceleration", 10.0, 0.0, Double.MAX_VALUE);
 
     private static final ForgeConfigSpec.DoubleValue MAX_SIZE_FOR_TURN_SPEED_PENALTY
             = BUILDER.comment("The maximum distance from center of mass to one end of the ship considered by " +
@@ -53,9 +53,10 @@ public class KineticConfig {
                     "That way, large ships do not turn painfully slowly")
             .defineInRange("max_size_for_turn_speed_penalty", 16.0, 0.0, Double.MAX_VALUE);
 
-    private static final ForgeConfigSpec.DoubleValue TURN_SPEED
-            = BUILDER.comment("The maximum linear speed at any point on the ship caused by helm torque")
-            .defineInRange("turn_speed", 3.0, 0.0, Double.MAX_VALUE);
+    private static final ForgeConfigSpec.DoubleValue DIVE_FORCE
+            = BUILDER.comment("The maximum diving force at any point on the ship caused by rudders")
+            .defineInRange("dive_force", 30000.0, 0.0, Double.MAX_VALUE);
+
 
     private static final ForgeConfigSpec.EnumValue<RudderSpatialHandler.ObstructionCheckLogic> RUDDER_OBSTRUCTION_LOGIC
             = BUILDER.comment("Should rudder obstruction logic be enabled?")

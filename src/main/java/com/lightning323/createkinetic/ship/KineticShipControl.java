@@ -630,7 +630,9 @@ public final class KineticShipControl implements ShipPhysicsListener, ServerTick
                     - (tankBallastWeight * KineticConfig.tankBallastWeight);
 
             if (Math.abs(add) < 0.15) add = 0;
-            physShip1.setBuoyantFactor(1.0 + add);
+
+            physShip1.setBuoyantFactor(1.0f + add);
+
         }
 
         //sail force implementation
