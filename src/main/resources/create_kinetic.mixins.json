@@ -1,7 +1,7 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "org.lightning323.creative_mode_tweaks.mixin",
+  "package": "org.lightning323.create_kinetic.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
   ],

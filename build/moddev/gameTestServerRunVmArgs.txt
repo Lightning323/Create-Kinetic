@@ -16,5 +16,5 @@ jdk.naming.dns/com.sun.jndi.dns=java.naming
 -DlegacyClassPath.file=/mnt/SharedVolume/Documents/GitHub/Create-Kinetic/build/moddev/gameTestServerLegacyClasspath.txt
 -Dneoforge.enableGameTest=true
 -Dneoforge.gameTestServer=true
--Dneoforge.enabledGameTestNamespaces=creative_mode_tweaks
+-Dneoforge.enabledGameTestNamespaces=create_kinetic
 -Dforge.logging.markers=REGISTRIES
