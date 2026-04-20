@@ -1,0 +1,29 @@
+# Main Class
+cpw.mods.bootstraplauncher.BootstrapLauncher
+
+# NeoForge Run-Type Program Arguments
+--launchTarget
+forgedatadev
+--assetIndex
+17
+--assetsDir
+/mnt/SharedVolume/.gradle/caches/neoformruntime/assets
+--gameDir
+.
+--fml.fmlVersion
+4.0.42
+--fml.mcVersion
+1.21.1
+--fml.neoForgeVersion
+21.1.227
+--fml.neoFormVersion
+20240808.144430
+
+# User Supplied Program Arguments
+--mod
+creative_mode_tweaks
+--all
+--output
+/mnt/SharedVolume/Documents/GitHub/Create-Kinetic/src/generated/resources
+--existing
+/mnt/SharedVolume/Documents/GitHub/Create-Kinetic/src/main/resources

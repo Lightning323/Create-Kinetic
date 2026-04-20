@@ -1,6 +1,0 @@
-- neutral buoyancy with tank ballast
-- aesthetic changes to cranks
-- enchanted buoy can be disabled with redstone
-- better hitboxes for models
-- pondering for ship helm?
-- Rudders should only work in water?
