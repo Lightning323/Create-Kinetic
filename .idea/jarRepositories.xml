@@ -31,5 +31,45 @@
       <option name="name" value="MavenLocal" />
       <option name="url" value="file:$MAVEN_REPOSITORY$/" />
     </remote-repository>
+    <remote-repository>
+      <option name="id" value="BlameJared Maven" />
+      <option name="name" value="BlameJared Maven" />
+      <option name="url" value="https://maven.blamejared.com" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="createmod Maven" />
+      <option name="name" value="createmod Maven" />
+      <option name="url" value="https://maven.createmod.net/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="Registrate" />
+      <option name="name" value="Registrate" />
+      <option name="url" value="https://mvn.devos.one/snapshots" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="Ryan's Public Maven" />
+      <option name="name" value="Ryan's Public Maven" />
+      <option name="url" value="https://maven.ryanhcode.dev/releases/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven" />
+      <option name="name" value="maven" />
+      <option name="url" value="https://raw.githubusercontent.com/Fuzss/modresources/main/maven/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven2" />
+      <option name="name" value="maven2" />
+      <option name="url" value="https://maven.theillusivec4.top/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="Modrinth" />
+      <option name="name" value="Modrinth" />
+      <option name="url" value="https://api.modrinth.com/maven" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="SquidDev" />
+      <option name="name" value="SquidDev" />
+      <option name="url" value="https://maven.squiddev.cc" />
+    </remote-repository>
   </component>
 </project>

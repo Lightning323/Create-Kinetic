@@ -1,0 +1,25 @@
+{
+	"format_version": "1.21.11",
+	"credit": "Made with Blockbench",
+	"render_type": "minecraft:cutout",
+	"textures": {
+		"0": "createkinetic:block/rudder/blades",
+		"particle": "createkinetic:block/rudder/blades"
+	},
+	"elements": [
+		{
+			"name": "rudder",
+			"from": [7.75, 2, -16],
+			"to": [8.25, 22, 26],
+			"rotation": {"angle": 0, "axis": "y", "origin": [9, 9, 0]},
+			"faces": {
+				"north": {"uv": [0, 4, 0.25, 9], "texture": "#0"},
+				"east": {"uv": [10.5, 4, 0, 9], "texture": "#0"},
+				"south": {"uv": [10.25, 4, 10.5, 9], "texture": "#0"},
+				"west": {"uv": [0, 4, 10.5, 9], "texture": "#0"},
+				"up": {"uv": [0, 4.25, 10.5, 4], "rotation": 90, "texture": "#0"},
+				"down": {"uv": [0, 8.75, 10.5, 9], "rotation": 270, "texture": "#0"}
+			}
+		}
+	]
+}

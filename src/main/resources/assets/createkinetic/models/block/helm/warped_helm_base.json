@@ -1,0 +1,9 @@
+{
+	"parent": "createkinetic:block/helm/ship_helm_base",
+	"textures": {
+		"4": "createkinetic:block/helm/variants/warped_ship_base",
+		"5": "create:block/pulley_rope",
+		"6": "createkinetic:block/helm/helm_base",
+		"particle": "create:block/pulley_rope"
+	}
+}

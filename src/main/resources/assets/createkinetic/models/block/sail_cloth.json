@@ -1,0 +1,25 @@
+{
+	"format_version": "1.21.11",
+	"credit": "Made with Blockbench",
+	"parent": "block/block",
+	"textures": {
+		"0": "createkinetic:block/sails/white_sail",
+		"particle": "createkinetic:block/sails/white_sail"
+	},
+	"elements": [
+		{
+			"name": "sail",
+			"from": [0.1, 0, 7],
+			"to": [15.9, 16, 9],
+			"rotation": {"angle": 0, "axis": "y", "origin": [7, 0, 8]},
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#0", "tintindex": 0},
+				"east": {"uv": [0, 0, 2, 16], "texture": "#0", "tintindex": 0},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#0", "tintindex": 0},
+				"west": {"uv": [0, 0, 2, 16], "texture": "#0", "tintindex": 0},
+				"up": {"uv": [16, 2, 0, 0], "texture": "#0", "tintindex": 0},
+				"down": {"uv": [16, 0, 0, 2], "texture": "#0", "tintindex": 0}
+			}
+		}
+	]
+}

@@ -1,0 +1,6 @@
+{
+	"parent": "createkinetic:block/helm/ship_helm_wheel",
+	"textures": {
+		"3": "createkinetic:block/wheels/oak_ship_wheel"
+	}
+}

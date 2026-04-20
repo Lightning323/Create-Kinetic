@@ -19,7 +19,7 @@ modId = "create_kinetic" #mandatory
 # The version number of the mod
 version = "1.0.0" #mandatory
 # A display name for the mod
-displayName = "Creative Mode Tweaks" #mandatory
+displayName = "Create Kinetic" #mandatory
 # A URL to query for updates for this mod. See the JSON update specification https://docs.neoforge.net/docs/misc/updatechecker/
 #updateJSONURL="https://change.me.example.invalid/updates.json" #optional
 # A URL for the "homepage" for this mod, displayed in the mod UI
@@ -29,7 +29,7 @@ displayName = "Creative Mode Tweaks" #mandatory
 # A text field displayed in the mod UI
 #credits="" #optional
 # A text field displayed in the mod UI
-authors = "" #optional
+authors = "Lightning323" #optional
 
 # The description text for the mod (multi line!) (#mandatory)
 description = ''''''

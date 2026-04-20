@@ -1,0 +1,6 @@
+{
+	"parent": "createkinetic:block/helm/ship_helm_wheel",
+	"textures": {
+		"4": "createkinetic:block/helm/variants/mangrove_ship_base"
+	}
+}

@@ -1,0 +1,51 @@
+{
+	"format_version": "1.21.11",
+	"credit": "Made with Blockbench",
+	"parent": "block/block",
+	"texture_size": [32, 32],
+	"textures": {
+		"6": "createkinetic:block/sail_magnet",
+		"particle": "createkinetic:block/sail_magnet"
+	},
+	"elements": [
+		{
+			"name": "rope",
+			"from": [-0.05, 4, 6.95],
+			"to": [16.05, 8, 9.05],
+			"rotation": {"angle": 0, "axis": "y", "origin": [7.75, 0, 8]},
+			"faces": {
+				"north": {"uv": [8, 6, 16, 8], "texture": "#6", "tintindex": 0},
+				"east": {"uv": [15, 6, 16, 8], "texture": "#6", "tintindex": 0},
+				"south": {"uv": [8, 6, 16, 8], "texture": "#6", "tintindex": 0},
+				"west": {"uv": [15, 6, 16, 8], "texture": "#6", "tintindex": 0},
+				"up": {"uv": [8, 0, 8, 0], "rotation": 90, "texture": "#6", "tintindex": 0}
+			}
+		},
+		{
+			"from": [0.05, -2.95, 3.05],
+			"to": [15.95, 1.95, 12.95],
+			"faces": {
+				"north": {"uv": [8, 8, 16, 10.5], "texture": "#6"},
+				"east": {"uv": [0, 5, 5, 7.5], "texture": "#6"},
+				"south": {"uv": [8, 8, 16, 10.5], "texture": "#6"},
+				"west": {"uv": [0, 5, 5, 7.5], "texture": "#6"},
+				"up": {"uv": [0, 0, 8, 5], "texture": "#6"},
+				"down": {"uv": [0, 0, 8, 5], "texture": "#6"}
+			}
+		},
+		{
+			"name": "magnet",
+			"from": [-0.05, 1.9, 4.95],
+			"to": [16.05, 4, 11.05],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 22, 8]},
+			"faces": {
+				"north": {"uv": [0, 7.5, 8, 8.5], "texture": "#6"},
+				"east": {"uv": [5, 6.5, 8, 7.5], "texture": "#6"},
+				"south": {"uv": [0, 7.5, 8, 8.5], "texture": "#6"},
+				"west": {"uv": [5, 6.5, 8, 7.5], "texture": "#6"},
+				"up": {"uv": [0, 8.5, 8, 11.5], "texture": "#6"},
+				"down": {"uv": [0, 0, 0, 0], "texture": "#6"}
+			}
+		}
+	]
+}

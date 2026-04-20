@@ -1,0 +1,6 @@
+{
+  "parent": "createkinetic:block/helm/ship_helm",
+  "textures": {
+    "4": "createkinetic:block/helm/variants/bamboo_ship_base"
+  }
+}
