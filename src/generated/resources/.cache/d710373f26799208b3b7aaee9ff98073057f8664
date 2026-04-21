@@ -1,0 +1,6 @@
+// 1.21.1	2026-04-20T19:43:30.265734633	Registrate Provider for createkinetic [Registries, Data Maps, Recipes, Advancements, Loot Tables, Tags (blocks), Tags (enchantments), Tags (items), Tags (fluids), Tags (entity_types), generic_server_provider, Blockstates, Item models, Lang (en_us/en_ud), generic_client_provider]
+676b5850a3fb107dcaacd2663ada7815a095276b assets/createkinetic/blockstates/thruster.json
+804772176801c6e83dc73e7eb3dcfacdcbd5e2cf assets/createkinetic/lang/en_ud.json
+bb4e44606784e848b0bfd761cc0af2383804214e assets/createkinetic/lang/en_us.json
+63800f93e2318d3937dd7a8dc2c87a8b241c3d22 assets/createkinetic/models/block/thruster.json
+773992201acc03ec9db848e1f84754413a13089c data/createkinetic/loot_table/blocks/thruster.json

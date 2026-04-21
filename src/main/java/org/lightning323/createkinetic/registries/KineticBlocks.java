@@ -21,6 +21,8 @@ import static org.lightning323.createkinetic.CreateKinetic.REGISTRATE;
 
 public class KineticBlocks {
 
+    //We CANNOT register items with registrate, we just need to use deffered register instead.
+
     public static final BlockEntry<ThrusterBlock> THRUSTER = REGISTRATE
             .block("thruster", ThrusterBlock::new)
             .initialProperties(SharedProperties::copperMetal)
@@ -29,6 +31,8 @@ public class KineticBlocks {
                     .strength(0.2f)
                     .requiresCorrectToolForDrops()
                     .sound(SoundType.COPPER))
+            .blockstate((c, p) -> p.directionalBlock(c.get(), p.models()
+                    .withExistingParent(c.getName(), p.modLoc("block/thruster/thruster"))))
             .register();
 
     public static void register() {
