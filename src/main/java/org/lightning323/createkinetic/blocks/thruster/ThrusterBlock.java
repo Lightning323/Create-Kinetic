@@ -1,4 +1,4 @@
-package org.lightning323.createkinetic.propulsion;
+package org.lightning323.createkinetic.blocks.thruster;
 
 import com.simibubi.create.foundation.block.IBE;
 import net.minecraft.core.BlockPos;

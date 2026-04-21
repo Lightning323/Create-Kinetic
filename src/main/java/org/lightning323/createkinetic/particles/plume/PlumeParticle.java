@@ -37,7 +37,7 @@ public class PlumeParticle extends SimpleAnimatedParticle {
     private ParticleState currentState;
     private float currentSpeedMultiplier;
     private float currentFriction;
-    
+
     private final int smokeTransitionAge;
     private final float smokeLift;
     private final Vec3 spreadDirection;
@@ -48,8 +48,8 @@ public class PlumeParticle extends SimpleAnimatedParticle {
     float baseSize;
 
 
-    protected PlumeParticle(ClientLevel level, double x, double y, double z, 
-                            double dxSource, double dySource, double dzSource, 
+    protected PlumeParticle(ClientLevel level, double x, double y, double z,
+                            double dxSource, double dySource, double dzSource,
                             SpriteSet spriteSet) {
         super(level, x, y, z, spriteSet, 0);
         this.spriteSet = spriteSet;
@@ -58,8 +58,8 @@ public class PlumeParticle extends SimpleAnimatedParticle {
         this.baseSize = this.quadSize;
         this.lifetime = PLUME_BASE_LIFETIME + random.nextInt(5);
         this.friction = PLUME_FRICTION;
-        this.dx = dxSource + getRandomSpread(); 
-        this.dy = dySource + getRandomSpread(); 
+        this.dx = dxSource + getRandomSpread();
+        this.dy = dySource + getRandomSpread();
         this.dz = dzSource + getRandomSpread();
         this.hasPhysics = true;
         this.currentSpeedMultiplier = PLUME_SPEED_MULTIPLIER;
@@ -90,7 +90,7 @@ public class PlumeParticle extends SimpleAnimatedParticle {
         this.yo /* gurt */ = this.y;
         this.zo = this.z;
         final double COLLISION_IGNORE_DOT_THRESHOLD = -1.0E-5D;
-        
+
         if (this.age++ >= this.lifetime) {
             this.remove();
             return;
@@ -113,10 +113,10 @@ public class PlumeParticle extends SimpleAnimatedParticle {
 
         //Determine collision and its normal
         boolean collisionDetected = false;
-        Vec3 collisionNormal = null; 
+        Vec3 collisionNormal = null;
         if (this.onGround) {
             collisionDetected = true;
-            collisionNormal = new Vec3(0, 1, 0); 
+            collisionNormal = new Vec3(0, 1, 0);
         } else {
             final float COLLISION_DETECTION_FACTOR = 0.95f;
             boolean blockedX = Math.abs(intendedMoveX) > COLLISION_DETECTION_EPSILON && Math.abs(actualMoveX) < Math.abs(intendedMoveX) * COLLISION_DETECTION_FACTOR;
@@ -124,7 +124,7 @@ public class PlumeParticle extends SimpleAnimatedParticle {
             boolean blockedYCeiling = Math.abs(intendedMoveY) > COLLISION_DETECTION_EPSILON && intendedMoveY > 0 && Math.abs(actualMoveY) < Math.abs(intendedMoveY) * COLLISION_DETECTION_FACTOR;
             if (blockedYCeiling) {
                 collisionDetected = true;
-                collisionNormal = new Vec3(0, -1, 0); 
+                collisionNormal = new Vec3(0, -1, 0);
             } else if (blockedX) {
                 collisionDetected = true;
                 collisionNormal = new Vec3(intendedMoveX < 0 ? 1 : -1, 0, 0);
@@ -157,21 +157,21 @@ public class PlumeParticle extends SimpleAnimatedParticle {
                     //Reflect + dampen
                     Vec3 desiredNormalVel;
                     if (incomingVel.dot(collisionNormal) < 0) { //Moving into the surface
-                        desiredNormalVel = V_normal_comp.scale(-COLLISION_PERPENDICULAR_DAMPEN); 
+                        desiredNormalVel = V_normal_comp.scale(-COLLISION_PERPENDICULAR_DAMPEN);
                     } else {
-                        desiredNormalVel = V_normal_comp; 
+                        desiredNormalVel = V_normal_comp;
                     }
-                    
+
                     //Calculate spread velocity
                     Vec3 spreadPlaneDirection;
                     double randomAngle = this.random.nextDouble() * Math.PI * 2.0D;
-                    
+
                     //Determine two axes perpendicular to normal
                     Vec3 axis1, axis2;
                     if (Math.abs(collisionNormal.y) > 0.9) { //Ground/Ceiling
                         axis1 = new Vec3(1, 0, 0).normalize();
                         axis2 = collisionNormal.cross(axis1).normalize();
-                    } else { //Wall 
+                    } else { //Wall
                         axis1 = new Vec3(0, 1, 0).normalize();
                         axis2 = collisionNormal.cross(axis1).normalize();
                     }
@@ -182,10 +182,10 @@ public class PlumeParticle extends SimpleAnimatedParticle {
                     }
 
                     spreadPlaneDirection = axis1.scale(Math.cos(randomAngle)).add(axis2.scale(Math.sin(randomAngle))).normalize();
-                    
+
                     Vec3 spreadComponent = spreadPlaneDirection.scale(incomingVel.length() * spreadBlendFactor);
                     Vec3 slideComponent = V_tangential_comp.scale(slideBlendFactor); //For sliding use original tangential component
-                    
+
                     Vec3 desiredTangentialVel = slideComponent.add(spreadComponent);
 
                     //Combine and apply new velocity
@@ -236,7 +236,7 @@ public class PlumeParticle extends SimpleAnimatedParticle {
         this.dx *= this.currentFriction;
         this.dy *= this.currentFriction;
         this.dz *= this.currentFriction;
-        
+
         this.pickSprite();
     }
 
@@ -258,7 +258,7 @@ public class PlumeParticle extends SimpleAnimatedParticle {
             } else {
                 smokeFrame = (ageInSmokePhase * SMOKE_SPRITE_COUNT) / smokePhaseDuration;
             }
-            
+
             smokeFrame = Mth.clamp(smokeFrame, 0, SMOKE_SPRITE_COUNT - 1);
             frameIndex = PLUME_SPRITE_COUNT + smokeFrame;
         }
@@ -283,7 +283,7 @@ public class PlumeParticle extends SimpleAnimatedParticle {
         }
 
         @Override
-        public Particle createParticle(@Nonnull PlumeParticleData data, @Nonnull ClientLevel level, 
+        public Particle createParticle(@Nonnull PlumeParticleData data, @Nonnull ClientLevel level,
         double x, double y, double z, double dx, double dy, double dz){
             return new PlumeParticle(level, x, y, z, dx, dy, dz, this.spriteSet);
         }

@@ -1,4 +1,4 @@
-    package org.lightning323.createkinetic.propulsion;
+    package org.lightning323.createkinetic.blocks.thruster;
 
     import dev.ryanhcode.sable.api.block.BlockSubLevelAssemblyListener;
     import dev.ryanhcode.sable.api.block.propeller.BlockEntityPropeller;
@@ -12,6 +12,7 @@
     import net.minecraft.world.level.block.entity.BlockEntityType;
     import net.minecraft.world.level.block.state.BlockState;
     import org.lightning323.createkinetic.Config;
+    import org.lightning323.createkinetic.registries.KineticParticles;
 
     public class ThrusterBlockEntity extends BlockEntity
             implements BlockEntitySubLevelPropellerActor, BlockSubLevelAssemblyListener, BlockEntityPropeller {
@@ -52,9 +53,6 @@
         }
 
 
-
-
-
         public Direction getFacing() {
             return facing;
         }
@@ -64,7 +62,7 @@
             float particleSpeed = 1f;
             if (level.isClientSide && state.getValue(ThrusterBlock.POWERED)) {
                 level.addParticle(
-                        ParticleTypes.CAMPFIRE_SIGNAL_SMOKE, // particle type
+                        KineticParticles.PLUME.get(), //ParticleTypes.CAMPFIRE_SIGNAL_SMOKE
                         pos.getX() + 0.5 + dir.getStepX(),
                         pos.getY() + 0.5 + dir.getStepY(),
                         pos.getZ() + 0.5 + dir.getStepZ(),

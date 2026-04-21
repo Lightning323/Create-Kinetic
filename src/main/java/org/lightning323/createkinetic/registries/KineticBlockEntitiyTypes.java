@@ -1,7 +1,7 @@
 package org.lightning323.createkinetic.registries;
 
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
-import org.lightning323.createkinetic.propulsion.ThrusterBlockEntity;
+import org.lightning323.createkinetic.blocks.thruster.ThrusterBlockEntity;
 
 import static org.lightning323.createkinetic.CreateKinetic.REGISTRATE;
 

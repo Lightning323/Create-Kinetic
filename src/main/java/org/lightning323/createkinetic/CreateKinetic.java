@@ -55,6 +55,7 @@ public class CreateKinetic {
         KineticBlockEntitiyTypes.register();
         KineticItems.register(modEventBus);
         KineticCreativeTabs.register(modEventBus);
+        KineticParticles.register(modEventBus);
 ////        KineticMenus.register();
 ////        KineticPackets.registerPackets();
     }
