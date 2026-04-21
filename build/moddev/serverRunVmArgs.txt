@@ -14,5 +14,5 @@ jdk.naming.dns/com.sun.jndi.dns=java.naming
 -Djava.net.preferIPv6Addresses=system
 -DignoreList=mixinextras-neoforge-0.5.3.jar,client-extra,neoforge-
 -DlegacyClassPath.file=/mnt/SharedVolume/Documents/GitHub/Create-Kinetic/build/moddev/serverLegacyClasspath.txt
--Dneoforge.enabledGameTestNamespaces=create_kinetic
+-Dneoforge.enabledGameTestNamespaces=createkinetic
 -Dforge.logging.markers=REGISTRIES

@@ -21,7 +21,7 @@ forgedatadev
 
 # User Supplied Program Arguments
 --mod
-create_kinetic
+createkinetic
 --all
 --output
 /mnt/SharedVolume/Documents/GitHub/Create-Kinetic/src/generated/resources

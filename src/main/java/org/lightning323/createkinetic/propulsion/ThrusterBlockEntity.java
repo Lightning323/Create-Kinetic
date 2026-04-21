@@ -1,4 +1,4 @@
-    package org.lightning323.create_kinetic.propulsion;
+    package org.lightning323.createkinetic.propulsion;
 
     import dev.ryanhcode.sable.api.block.BlockSubLevelAssemblyListener;
     import dev.ryanhcode.sable.api.block.propeller.BlockEntityPropeller;
@@ -9,9 +9,9 @@
     import net.minecraft.server.level.ServerLevel;
     import net.minecraft.world.level.Level;
     import net.minecraft.world.level.block.entity.BlockEntity;
+    import net.minecraft.world.level.block.entity.BlockEntityType;
     import net.minecraft.world.level.block.state.BlockState;
-    import org.lightning323.create_kinetic.Config;
-    import org.lightning323.create_kinetic.registry.KineticBlockEntities;
+    import org.lightning323.createkinetic.Config;
 
     public class ThrusterBlockEntity extends BlockEntity
             implements BlockEntitySubLevelPropellerActor, BlockSubLevelAssemblyListener, BlockEntityPropeller {
@@ -27,8 +27,8 @@
             return this;
         }
 
-        public ThrusterBlockEntity(BlockPos pos, BlockState state) {
-            super(KineticBlockEntities.THRUSTER.get(), pos, state);
+        public ThrusterBlockEntity(BlockEntityType<?> typeIn, BlockPos pos, BlockState state) {
+            super(typeIn, pos, state);
         }
 
         @Override

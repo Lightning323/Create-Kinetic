@@ -79,10 +79,8 @@ repositories {
         name = "createmod Maven"
         url = "https://maven.createmod.net/"
     }
-    maven {
-        name = "Registrate"
-        url = "https://mvn.devos.one/snapshots"
-    } // Registrate
+    maven { url = "https://mvn.devos.one/snapshots" } // Registrate
+//    maven { url = "https://maven.ithundxr.dev/snapshots" } // Registrate
     maven {
         name = "Ryan's Public Maven"
         url = "https://maven.ryanhcode.dev/releases/"
@@ -144,7 +142,7 @@ dependencies {
     localRuntime("mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}")
     localRuntime("com.simibubi.create:create-${minecraft_version}:${create_version}:slim") { transitive = false }
     localRuntime("net.createmod.ponder:ponder-neoforge:${ponder_version}+mc${minecraft_version}") { transitive = false }
-    localRuntime("com.tterrag.registrate:Registrate:${registrate_version}")
+    implementation ("com.tterrag.registrate:Registrate:${registrate_version}")
 }
 
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
