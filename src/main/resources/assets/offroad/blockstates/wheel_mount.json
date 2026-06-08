@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "facing=east,tracks_hidden=false": {
+      "model": "offroad:block/wheel_mount/block",
+      "y": 90
+    },
+    "facing=north,tracks_hidden=false": {
+      "model": "offroad:block/wheel_mount/block"
+    },
+    "facing=south,tracks_hidden=false": {
+      "model": "offroad:block/wheel_mount/block",
+      "y": 180
+    },
+    "facing=west,tracks_hidden=false": {
+      "model": "offroad:block/wheel_mount/block",
+      "y": 270
+    },
+    "facing=east,tracks_hidden=true": {
+      "model": "offroad:block/wheel_mount/block",
+      "y": 90
+    },
+    "facing=north,tracks_hidden=true": {
+      "model": "offroad:block/wheel_mount/block"
+    },
+    "facing=south,tracks_hidden=true": {
+      "model": "offroad:block/wheel_mount/block",
+      "y": 180
+    },
+    "facing=west,tracks_hidden=true": {
+      "model": "offroad:block/wheel_mount/block",
+      "y": 270
+    }
+  }
+}

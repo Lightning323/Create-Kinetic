@@ -1,0 +1,64 @@
+﻿{
+  "variants": {
+    "facing=east,hidden=false,suspension_model=false": {
+      "model": "offroad:block/wheel_mount/block",
+      "y": 90
+    },
+    "facing=north,hidden=false,suspension_model=false": {
+      "model": "offroad:block/wheel_mount/block"
+    },
+    "facing=south,hidden=false,suspension_model=false": {
+      "model": "offroad:block/wheel_mount/block",
+      "y": 180
+    },
+    "facing=west,hidden=false,suspension_model=false": {
+      "model": "offroad:block/wheel_mount/block",
+      "y": 270
+    },
+    "facing=east,hidden=true,suspension_model=false": {
+      "model": "offroad:block/wheel_mount/block",
+      "y": 90
+    },
+    "facing=north,hidden=true,suspension_model=false": {
+      "model": "offroad:block/wheel_mount/block"
+    },
+    "facing=south,hidden=true,suspension_model=false": {
+      "model": "offroad:block/wheel_mount/block",
+      "y": 180
+    },
+    "facing=west,hidden=true,suspension_model=false": {
+      "model": "offroad:block/wheel_mount/block",
+      "y": 270
+    },
+    "facing=east,hidden=false,suspension_model=true": {
+      "model": "tracks:block/suspension_mount",
+      "y": 90
+    },
+    "facing=north,hidden=false,suspension_model=true": {
+      "model": "tracks:block/suspension_mount"
+    },
+    "facing=south,hidden=false,suspension_model=true": {
+      "model": "tracks:block/suspension_mount",
+      "y": 180
+    },
+    "facing=west,hidden=false,suspension_model=true": {
+      "model": "tracks:block/suspension_mount",
+      "y": 270
+    },
+    "facing=east,hidden=true,suspension_model=true": {
+      "model": "tracks:block/suspension_mount",
+      "y": 90
+    },
+    "facing=north,hidden=true,suspension_model=true": {
+      "model": "tracks:block/suspension_mount"
+    },
+    "facing=south,hidden=true,suspension_model=true": {
+      "model": "tracks:block/suspension_mount",
+      "y": 180
+    },
+    "facing=west,hidden=true,suspension_model=true": {
+      "model": "tracks:block/suspension_mount",
+      "y": 270
+    }
+  }
+}

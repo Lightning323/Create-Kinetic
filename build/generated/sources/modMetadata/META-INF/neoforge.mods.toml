@@ -32,7 +32,7 @@ displayName = "Create Kinetic" #mandatory
 authors = "Lightning323" #optional
 
 # The description text for the mod (multi line!) (#mandatory)
-description = ''''''
+description = '''An Addon for Create Aeronautics, Adds various kinetic components that are missing from the mod.'''
 
 # The [[mixins]] block allows you to declare your mixin config to FML so that it gets loaded.
 [[mixins]]

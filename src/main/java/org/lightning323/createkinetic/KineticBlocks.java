@@ -8,8 +8,17 @@ import com.tterrag.registrate.builders.BlockBuilder;
 import com.tterrag.registrate.util.entry.BlockEntry;
 
 public final class KineticBlocks {
-   public static final BlockEntry<GyroscopeBlock> GYROSCOPE = ((BlockBuilder) CreateKinetic.getRegistrate().block("gyroscope", GyroscopeBlock::new).initialProperties(SharedProperties::softMetal).properties((p) -> p.noOcclusion()).onRegister((block) -> BlockStressValues.IMPACTS.register(block, Config::gyroscopeStressImpact))).simpleItem().register();
-   public static final BlockEntry<JoystickBlock> JOYSTICK = CreateKinetic.getRegistrate().block("joystick", JoystickBlock::new).initialProperties(SharedProperties::wooden).properties((p) -> p.noOcclusion()).simpleItem().register();
+
+   public static final BlockEntry<GyroscopeBlock> GYROSCOPE = ((BlockBuilder) CreateKinetic.getRegistrate()
+           .block("gyroscope", GyroscopeBlock::new).initialProperties(SharedProperties::softMetal)
+           .properties((p) -> p.noOcclusion())
+           .onRegister((block) -> BlockStressValues.IMPACTS.register(block, Config::gyroscopeStressImpact)))
+           .simpleItem().register();
+
+   public static final BlockEntry<JoystickBlock> JOYSTICK = CreateKinetic.getRegistrate()
+           .block("joystick", JoystickBlock::new).initialProperties(SharedProperties::wooden)
+           .properties((p) -> p.noOcclusion())
+           .simpleItem().register();
 
    private KineticBlocks() {
    }
