@@ -1,0 +1,39 @@
+{
+	"format_version": "1.9.0",
+	"credit": "Made with Blockbench",
+	"render_type": "minecraft:cutout_mipped",
+	"textures": {
+		"0": "createkinetic:block/joystick/brass/button",
+		"particle": "createkinetic:block/joystick/brass/button"
+	},
+	"elements": [
+		{
+			"from": [7, 21, 7],
+			"to": [9, 22, 9],
+			"rotation": {"angle": 0, "axis": "y", "origin": [7, 21, 7]},
+			"faces": {
+				"north": {"uv": [0, 2, 2, 3], "texture": "#0"},
+				"east": {"uv": [0, 2, 2, 3], "rotation": 180, "texture": "#0"},
+				"south": {"uv": [0, 2, 2, 3], "texture": "#0"},
+				"west": {"uv": [0, 2, 2, 3], "rotation": 180, "texture": "#0"},
+				"up": {"uv": [2, 2, 0, 0], "texture": "#0"},
+				"down": {"uv": [2, 0, 0, 2], "texture": "#0"}
+			}
+		}
+	],
+	"display": {
+		"ground": {
+			"translation": [0, 3, 0],
+			"scale": [0.25, 0.25, 0.25]
+		}
+	},
+	"groups": [
+		{
+			"name": "button",
+			"origin": [0, 0, 0],
+			"scope": 0,
+			"color": 0,
+			"children": [0]
+		}
+	]
+}

@@ -1,0 +1,12 @@
+{
+	"parent": "block/block",
+	"loader": "neoforge:obj",
+	"flip_v": true,
+	"automatic_culling": false,
+	"render_type": "minecraft:cutout_mipped",
+	"model": "createkinetic:models/block/gyroscope/flywheel.obj",
+	"textures": {
+		"0": "createkinetic:block/gyroscope/flywheel",
+		"particle": "createkinetic:block/gyroscope/flywheel"
+	}
+}

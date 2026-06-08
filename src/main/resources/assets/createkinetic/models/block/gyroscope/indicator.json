@@ -1,0 +1,26 @@
+{
+	"format_version": "1.9.0",
+	"render_type": "minecraft:cutout",
+	"textures": {
+		"0": "createkinetic:block/gyroscope/redstone_panel",
+		"particle": "createkinetic:block/gyroscope/redstone_panel"
+	},
+	"elements": [
+		{
+			"name": "strip_north",
+			"from": [5, 0, -0.01],
+			"to": [11, 1, 0],
+			"faces": {
+				"north": {"uv": [0, 0, 6, 1], "texture": "#0"}
+			}
+		},
+		{
+			"name": "strip_south",
+			"from": [5, 0, 16],
+			"to": [11, 1, 16.01],
+			"faces": {
+				"south": {"uv": [0, 0, 6, 1], "texture": "#0"}
+			}
+		}
+	]
+}

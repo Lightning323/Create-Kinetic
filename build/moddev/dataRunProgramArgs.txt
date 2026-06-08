@@ -24,6 +24,6 @@ forgedatadev
 createkinetic
 --all
 --output
-/mnt/SharedVolume/Documents/GitHub/Create-Kinetic/src/generated/resources
+"/mnt/SharedVolume/Documents/GitHub/Minecraft Mods/Create-Kinetic/src/generated/resources"
 --existing
-/mnt/SharedVolume/Documents/GitHub/Create-Kinetic/src/main/resources
+"/mnt/SharedVolume/Documents/GitHub/Minecraft Mods/Create-Kinetic/src/main/resources"

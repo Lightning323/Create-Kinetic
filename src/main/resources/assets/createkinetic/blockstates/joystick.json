@@ -1,0 +1,23 @@
+{
+	"variants": {
+		"facing=south,powered=false,in_use=false": { "model": "createkinetic:block/joystick/block" },
+		"facing=south,powered=false,in_use=true":  { "model": "createkinetic:block/joystick/block_in_use" },
+		"facing=south,powered=true,in_use=false":  { "model": "createkinetic:block/joystick/block_powered" },
+		"facing=south,powered=true,in_use=true":   { "model": "createkinetic:block/joystick/block_powered_in_use" },
+
+		"facing=west,powered=false,in_use=false":  { "model": "createkinetic:block/joystick/block",                "y":  90 },
+		"facing=west,powered=false,in_use=true":   { "model": "createkinetic:block/joystick/block_in_use",         "y":  90 },
+		"facing=west,powered=true,in_use=false":   { "model": "createkinetic:block/joystick/block_powered",        "y":  90 },
+		"facing=west,powered=true,in_use=true":    { "model": "createkinetic:block/joystick/block_powered_in_use", "y":  90 },
+
+		"facing=north,powered=false,in_use=false": { "model": "createkinetic:block/joystick/block",                "y": 180 },
+		"facing=north,powered=false,in_use=true":  { "model": "createkinetic:block/joystick/block_in_use",         "y": 180 },
+		"facing=north,powered=true,in_use=false":  { "model": "createkinetic:block/joystick/block_powered",        "y": 180 },
+		"facing=north,powered=true,in_use=true":   { "model": "createkinetic:block/joystick/block_powered_in_use", "y": 180 },
+
+		"facing=east,powered=false,in_use=false":  { "model": "createkinetic:block/joystick/block",                "y": 270 },
+		"facing=east,powered=false,in_use=true":   { "model": "createkinetic:block/joystick/block_in_use",         "y": 270 },
+		"facing=east,powered=true,in_use=false":   { "model": "createkinetic:block/joystick/block_powered",        "y": 270 },
+		"facing=east,powered=true,in_use=true":    { "model": "createkinetic:block/joystick/block_powered_in_use", "y": 270 }
+	}
+}

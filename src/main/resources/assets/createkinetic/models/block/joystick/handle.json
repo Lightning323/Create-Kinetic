@@ -1,0 +1,50 @@
+{
+	"format_version": "1.21.11",
+	"credit": "Made with Blockbench",
+	"render_type": "minecraft:cutout_mipped",
+	"textures": {
+		"0": "createkinetic:block/joystick/brass/handle",
+		"1": "createkinetic:block/joystick/brass/handle_stand"
+	},
+	"elements": [
+		{
+			"name": "stick",
+			"from": [7, 5, 7],
+			"to": [9, 15, 9],
+			"faces": {
+				"north": {"uv": [16, 6, 14, 16], "texture": "#0"},
+				"east": {"uv": [14, 6, 16, 16], "texture": "#0"},
+				"south": {"uv": [16, 6, 14, 16], "texture": "#0"},
+				"west": {"uv": [14, 6, 16, 16], "texture": "#0"},
+				"up": {"uv": [11, 11, 13, 13], "texture": "#0"},
+				"down": {"uv": [11, 14, 13, 16], "texture": "#0"}
+			}
+		},
+		{
+			"name": "stand",
+			"from": [6, 1, 6],
+			"to": [10, 5, 10],
+			"faces": {
+				"north": {"uv": [12, 8, 16, 4], "texture": "#1"},
+				"east": {"uv": [12, 8, 8, 4], "texture": "#1"},
+				"south": {"uv": [4, 8, 8, 4], "texture": "#1"},
+				"west": {"uv": [0, 8, 4, 4], "texture": "#1"},
+				"up": {"uv": [4, 0, 8, 4], "texture": "#1"},
+				"down": {"uv": [8, 8, 4, 12], "texture": "#1"}
+			}
+		},
+		{
+			"name": "handle",
+			"from": [6.75, 15, 6.75],
+			"to": [9.25, 21, 9.25],
+			"faces": {
+				"north": {"uv": [3, 10, 5, 16], "texture": "#0"},
+				"east": {"uv": [5, 10, 3, 16], "texture": "#0"},
+				"south": {"uv": [3, 10, 5, 16], "texture": "#0"},
+				"west": {"uv": [5, 10, 3, 16], "texture": "#0"},
+				"up": {"uv": [2, 16, 0, 14], "texture": "#0"},
+				"down": {"uv": [2, 11, 0, 13], "texture": "#0"}
+			}
+		}
+	]
+}

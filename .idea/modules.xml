@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/803489336/Create-Kinetic.main.iml" filepath="$PROJECT_DIR$/.idea/modules/803489336/Create-Kinetic.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Create-Kinetic.main.iml" filepath="$PROJECT_DIR$/.idea/modules/Create-Kinetic.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/803489336/Create-Kinetic.test.iml" filepath="$PROJECT_DIR$/.idea/modules/803489336/Create-Kinetic.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/org.lightning323.Create-Kinetic.test.iml" filepath="$PROJECT_DIR$/.idea/modules/org.lightning323.Create-Kinetic.test.iml" />
     </modules>
   </component>
 </project>

@@ -1,0 +1,7 @@
+{
+	"parent": "createkinetic:block/joystick/block",
+	"textures": {
+		"1": "createkinetic:block/joystick/brass/antenna_powered",
+		"particle": "createkinetic:block/joystick/brass/antenna_powered"
+	}
+}

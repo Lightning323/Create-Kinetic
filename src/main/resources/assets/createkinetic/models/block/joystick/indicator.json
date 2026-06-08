@@ -1,0 +1,24 @@
+{
+	"format_version": "1.9.0",
+	"credit": "Made with Blockbench",
+	"render_type": "minecraft:cutout_mipped",
+	"texture_size": [32, 32],
+	"textures": {
+		"0": "createkinetic:block/joystick/brass/indicator_empty",
+		"particle": "createkinetic:block/joystick/brass/indicator_empty"
+	},
+	"elements": [
+		{
+			"from": [7, 3.01, 4],
+			"to": [9, 4, 5],
+			"faces": {
+				"north": {"uv": [8, 8, 0, 16], "texture": "#0"},
+				"east": {"uv": [0, 0, 16, 8], "texture": "#0"},
+				"south": {"uv": [8, 0, 0, 8], "texture": "#0"},
+				"west": {"uv": [16, 0, 0, 8], "texture": "#0"},
+				"up": {"uv": [8, 0, 16, 16], "texture": "#0"},
+				"down": {"uv": [8, 16, 16, 0], "texture": "#0"}
+			}
+		}
+	]
+}

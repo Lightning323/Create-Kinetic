@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "facing=down": { "model": "createkinetic:block/gyroscope/block" },
+    "facing=up":   { "model": "createkinetic:block/gyroscope/block", "x": 180 }
+  }
+}

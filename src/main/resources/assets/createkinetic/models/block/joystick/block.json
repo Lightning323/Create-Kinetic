@@ -1,0 +1,76 @@
+{
+	"format_version": "1.9.0",
+	"credit": "Made with Blockbench",
+	"render_type": "minecraft:cutout_mipped",
+	"texture_size": [32, 32],
+	"textures": {
+		"0": "createkinetic:block/joystick/brass/block",
+		"1": "createkinetic:block/joystick/brass/antenna",
+		"particle": "createkinetic:block/joystick/brass/antenna"
+	},
+	"elements": [
+		{
+			"name": "main",
+			"from": [0, 0, 0],
+			"to": [16, 3, 16],
+			"faces": {
+				"north": {"uv": [8, 0, 16, 1.5], "texture": "#0"},
+				"east": {"uv": [8, 0, 16, 1.5], "texture": "#0"},
+				"south": {"uv": [8, 0, 16, 1.5], "texture": "#0"},
+				"west": {"uv": [8, 0, 16, 1.5], "texture": "#0"},
+				"up": {"uv": [8, 8, 0, 0], "texture": "#0"},
+				"down": {"uv": [16, 8, 8, 16], "texture": "#0"}
+			}
+		},
+		{
+			"name": "stand",
+			"from": [5, 3, 5],
+			"to": [11, 4, 11],
+			"rotation": {"angle": 0, "axis": "y", "origin": [7, 2, 7]},
+			"faces": {
+				"north": {"uv": [11.5, 1.5, 14.5, 2], "texture": "#0"},
+				"east": {"uv": [14.5, 1.5, 11.5, 2], "texture": "#0"},
+				"south": {"uv": [11.5, 1.5, 14.5, 2], "texture": "#0"},
+				"west": {"uv": [14.5, 1.5, 11.5, 2], "texture": "#0"},
+				"up": {"uv": [11, 4.5, 8, 1.5], "texture": "#0"},
+				"down": {"uv": [11, 1.5, 8, 4.5], "texture": "#0"}
+			}
+		},
+		{
+			"name": "main",
+			"from": [14, 3, 1],
+			"to": [15, 10, 2],
+			"rotation": {"angle": 0, "axis": "y", "origin": [21, 4, -7]},
+			"faces": {
+				"north": {"uv": [6.85714, 0, 9.14286, 16], "texture": "#1"},
+				"east": {"uv": [6.85714, 0, 9.14286, 16], "texture": "#1"},
+				"south": {"uv": [6.85714, 0, 9.14286, 16], "texture": "#1"},
+				"west": {"uv": [6.85714, 0, 9.14286, 16], "texture": "#1"},
+				"up": {"uv": [6.85714, 0, 9.14286, 2.28571], "texture": "#1"},
+				"down": {"uv": [6.85714, 13.71429, 9.14286, 16], "texture": "#1"}
+			}
+		}
+	],
+	"display": {
+		"ground": {
+			"translation": [0, 3, 0],
+			"scale": [0.25, 0.25, 0.25]
+		}
+	},
+	"groups": [
+		{
+			"name": "block",
+			"origin": [8, 8, 8],
+			"scope": 0,
+			"color": 0,
+			"children": [0, 1]
+		},
+		{
+			"name": "antenna",
+			"origin": [0, 0, 0],
+			"scope": 0,
+			"color": 0,
+			"children": [2]
+		}
+	]
+}
