@@ -70,34 +70,95 @@ configurations.runtimeClasspath.extendsFrom(configurations.localRuntime)
 repositories {
     mavenLocal()
 
-    //Repositories for create, sable, etc
     maven {
-        name = "BlameJared Maven"
-        url = "https://maven.blamejared.com"
+        url = "https://modmaven.dev/"
+    }
+
+    maven {
+        name = "Modrinth Maven"
+        url = "https://api.modrinth.com/maven"
+        content {
+            includeGroup("maven.modrinth")
+        }
+    }
+
+    maven {
+        name = "CurseForge Maven"
+        url = "https://cursemaven.com"
+        content {
+            includeGroup("curse.maven")
+        }
     }
     maven {
-        name = "createmod Maven"
-        url = "https://maven.createmod.net/"
+        name = "create maven"
+        url = "https://maven.tterrag.com/"
+        content {
+            includeGroup("com.simibubi.create")
+            includeGroup("com.jozufozu.flywheel")
+        }
     }
     maven { url = "https://mvn.devos.one/snapshots" } // Registrate
 //    maven { url = "https://maven.ithundxr.dev/snapshots" } // Registrate
     maven {
-        name = "Ryan's Public Maven"
-        url = "https://maven.ryanhcode.dev/releases/"
+        name = "CreateMaven"
+        url = "https://maven.createmod.net"
     }
     maven {
-        url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/"
+        name = "RyanHCode Maven"
+        url = "https://maven.ryanhcode.dev/releases"
     }
-
-    //Repositories for Aeronautics only
     maven {
         url = "https://maven.theillusivec4.top/"
-    } // Curios API
+    }
+
     maven {
-        name = "Modrinth"
-        url = "https://api.modrinth.com/maven"
+        name = "Jared's maven"
+        url = "https://maven.blamejared.com/"
+    }
+    maven {
+        name = "Latvian Maven"
+        url = "https://maven.latvian.dev/releases"
         content {
-            includeGroup "maven.modrinth"
+            includeGroup("dev.latvian.mods")
+            includeGroup("dev.latvian.apps")
+        }
+    }
+    maven {
+        name = "JitPack"
+        url = "https://jitpack.io"
+        content {
+            includeGroup("com.github.rtyley")
+        }
+    }
+    maven {
+        name = "Kotlin for Forge"
+        url = "https://thedarkcolour.github.io/KotlinForForge/"
+        content {
+            includeGroup("thedarkcolour")
+        }
+    }
+
+    maven {
+        name = "Squiddev maven cct"
+        url = "https://maven.squiddev.cc/"
+        content {
+            includeGroup("cc.tweaked")
+            includeModule("org.squiddev", "Cobalt")
+        }
+    }
+
+    //Mixin^2
+    maven {
+        url = "https://maven.bawnorton.com/releases"
+        content {
+            includeGroup("com.github.bawnorton")
+        }
+    }
+    maven {
+        url = "https://maven.enjarai.dev/mirrors"
+        content {
+            includeGroup("io.github.llamalad7")
+            includeGroup("com.github.bawnorton")
         }
     }
     maven {
@@ -110,51 +171,65 @@ repositories {
 }
 
 dependencies {
-
-    def veil = "foundry.veil:veil-neoforge-${minecraft_version}:${veil_version}"
-    compileOnly(veil)
-    implementation(veil) {
-        exclude group: 'maven.modrinth'
-        exclude group: 'me.fallenbreath'
+    //Create
+    implementation("com.simibubi.create:create-${minecraft_version}:${create_version}") {
+        exclude group: "dev.ftb.mods", module: "ftb-chunks-neoforge"
+        exclude group: "dev.ftb.mods", module: "ftb-teams-neoforge"
+        exclude group: "dev.ftb.mods", module: "ftb-library-neoforge"
+        exclude group: "info.journeymap", module: "journeymap-api-neoforge"
+        exclude group: "dev.architectury", module: "architectury-neoforge"
     }
+    implementation ("com.tterrag.registrate:Registrate:${registrate_version}")
+    implementation "net.createmod.ponder:ponder-neoforge:${ponder_version}+mc${minecraft_version}"
+    compileOnly "dev.engine-room.flywheel:flywheel-neoforge-api-${minecraft_version}:${flywheel_version}"
+    implementation "dev.engine-room.flywheel:flywheel-neoforge-${minecraft_version}:${flywheel_version}"
 
-    //Flywheel
-    def flywheelApi = "dev.engine-room.flywheel:flywheel-neoforge-api-${minecraft_version}:${flywheel_version}"
-    compileOnly(flywheelApi)
+    // Optional compat jars are Forge/older NeoForge; keep as compile-only for API references only
+    compileOnly "curse.maven:createdieselgenerators-869316:6920093"
+    compileOnly "curse.maven:createindustry-693815:7236535"
+    //CC
+    compileOnly "cc.tweaked:cc-tweaked-${minecraft_version}-forge:${cc_version}"
+    //JEI
+    runtimeOnly "mezz.jei:jei-${minecraft_version}-neoforge:19.25.0.322"
+    //KFF
+    implementation "thedarkcolour:kotlinforforge-neoforge:5.9.0"
 
-    def flywheel = "dev.engine-room.flywheel:flywheel-neoforge-${minecraft_version}:${flywheel_version}"
-    implementation(flywheel)
+    //KubeJS API (optional; used for script globals integration)
+    compileOnly "dev.latvian.mods:kubejs-neoforge:2101.7.2-build.336"
+    runtimeOnly "dev.latvian.mods:kubejs-neoforge:2101.7.2-build.336"
 
-//    //Sable
-//    compileOnly "dev.ryanhcode.sable:sable-common-${minecraft_version}:${sable_version}"
-//    runtimeOnly files("libs/sable-neoforge-${minecraft_version}-${sable_version}.jar")
-//    implementation "dev.ryanhcode.sable-companion:sable-companion-common-${minecraft_version}:${sable_companion_version}"
-
-//    //Simulated
-//    compileOnly files("libs/simulated-neoforge-${minecraft_version}-1.1.3.jar")
-//    runtimeOnly files("libs/create-aeronautics-bundled-${minecraft_version}-1.1.3.jar")
+    //Mixin Extras
+    compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.4.1"))
+    implementation "io.github.llamalad7:mixinextras-neoforge:0.4.1"
 
     //Sable
-    implementation("dev.ryanhcode.sable:sable-neoforge-${minecraft_version}:${sable_version}") {
-        exclude group: 'foundry.veil'
-    }
+//    def veil = "foundry.veil:veil-neoforge-${minecraft_version}:${veil_version}"
+//    compileOnly(veil)
+//    implementation(veil) {
+//        exclude group: 'maven.modrinth'
+//        exclude group: 'me.fallenbreath'
+//    }
+    implementation("dev.ryanhcode.sable:sable-neoforge-${minecraft_version}:${sable_version}")
+//            {
+//        exclude group: 'foundry.veil'
+//    }
     api("dev.ryanhcode.sable-companion:sable-companion-common-${minecraft_version}:${sable_companion_version}")
+//    compileOnly "dev.ryanhcode.sable:sable-common-${minecraft_version}:${sable_version}"
+//    runtimeOnly files("libs/sable-neoforge-${minecraft_version}-${sable_version}.jar")
 
     //Simulated
-    implementation "dev.eriksonn.aeronautics:aeronautics-neoforge-1.21.1:${aeronautics_version}"
-    implementation "dev.simulated_team.simulated:simulated-neoforge-1.21.1:${aeronautics_version}"
+    compileOnly files("libs/simulated-neoforge-${minecraft_version}-1.1.3.jar")
+    runtimeOnly files("libs/create-aeronautics-bundled-${minecraft_version}-1.1.3.jar")
+    implementation "dev.ryanhcode.sable-companion:sable-companion-common-${minecraft_version}:${sable_companion_version}"
 
-    //Dependencies
-    implementation "maven.modrinth:natures-compass:1.21.1-3.4.0-neoforge"
-    implementation "cc.tweaked:cc-tweaked-1.21.1-forge:1.117.1"
-
-    //JEI
-    localRuntime("mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}")
-    //Create
-    localRuntime("com.simibubi.create:create-${minecraft_version}:${create_version}:slim") { transitive = false }
-    localRuntime("net.createmod.ponder:ponder-neoforge:${ponder_version}+mc${minecraft_version}") { transitive = false }
-    implementation ("com.tterrag.registrate:Registrate:${registrate_version}")
+    //other
+    runtimeOnly files("libs/createaddition-1.5.10.jar")
+    runtimeOnly files("libs/Jade-${minecraft_version}-NeoForge-15.10.5.jar")
+    runtimeOnly "curse.maven:forge-config-api-port-547434:7213611"
+    implementation "com.fasterxml.jackson.core:jackson-annotations:2.18.2"
+    implementation "org.joml:joml-primitives:1.10.0"
 }
+
 
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
     var replaceProperties = [minecraft_version      : minecraft_version,
