@@ -4,11 +4,14 @@
   "package": "org.lightning323.createkinetic.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "tracks.WheelMountBlockMixin",
+    "tracks.WheelMountOffsetMixin"
   ],
   "client": [
     "client.MouseHandlerMixin",
     "client.KeyboardHandlerMixin",
-    "client.GameRendererMixin"
+    "client.GameRendererMixin",
+    "tracks.KineticBlockEntityRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
