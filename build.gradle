@@ -146,9 +146,12 @@ repositories {
             includeModule("org.squiddev", "Cobalt")
         }
     }
-
-    //Mixin^2
     maven {
+        name = "JMG's Maven (Journeymap)"
+        url = "https://jm.gserv.me/repository/maven-public/"
+    }
+    maven {
+        name = "Bawnorton's Maven (Mixin^2)"
         url = "https://maven.bawnorton.com/releases"
         content {
             includeGroup("com.github.bawnorton")
@@ -161,25 +164,13 @@ repositories {
             includeGroup("com.github.bawnorton")
         }
     }
-    maven {
-        name = "SquidDev"
-        url = "https://maven.squiddev.cc"
-        content {
-            includeGroup "cc.tweaked"
-        }
-    } //CC Tweaked
 }
 
 dependencies {
     //Create
-    implementation("com.simibubi.create:create-${minecraft_version}:${create_version}") {
-        exclude group: "dev.ftb.mods", module: "ftb-chunks-neoforge"
-        exclude group: "dev.ftb.mods", module: "ftb-teams-neoforge"
-        exclude group: "dev.ftb.mods", module: "ftb-library-neoforge"
-        exclude group: "info.journeymap", module: "journeymap-api-neoforge"
-        exclude group: "dev.architectury", module: "architectury-neoforge"
-    }
-    implementation ("com.tterrag.registrate:Registrate:${registrate_version}")
+    implementation("com.simibubi.create:create-${minecraft_version}:${create_version}:slim") { transitive = false }
+
+    implementation("com.tterrag.registrate:Registrate:${registrate_version}")
     implementation "net.createmod.ponder:ponder-neoforge:${ponder_version}+mc${minecraft_version}"
     compileOnly "dev.engine-room.flywheel:flywheel-neoforge-api-${minecraft_version}:${flywheel_version}"
     implementation "dev.engine-room.flywheel:flywheel-neoforge-${minecraft_version}:${flywheel_version}"
@@ -205,15 +196,23 @@ dependencies {
     //Sable
     implementation("dev.ryanhcode.sable:sable-neoforge-${minecraft_version}:${sable_version}")
     api("dev.ryanhcode.sable-companion:sable-companion-common-${minecraft_version}:${sable_companion_version}")
+    implementation "dev.ryanhcode.sable-companion:sable-companion-common-${minecraft_version}:${sable_companion_version}"
 //    compileOnly "dev.ryanhcode.sable:sable-common-${minecraft_version}:${sable_version}"
 //    runtimeOnly files("libs/sable-neoforge-${minecraft_version}-${sable_version}.jar")
 
-    //Simulated
+    //Simulated https://maven.ryanhcode.dev/#/releases/dev/ryanhcode
+    //https://maven.ryanhcode.dev/#/releases/dev/simulated_team/simulated/simulated-neoforge-1.21.1
     implementation "dev.simulated_team.simulated:simulated-neoforge-1.21.1:${simulated_version}"
-    implementation "dev.eriksonn.aeronautics:aeronautics-neoforge-1.21.1:${simulated_version}"
+
+    //https://maven.ryanhcode.dev/#/releases/dev/eriksonn/aeronautics/aeronautics-neoforge-1.21.1
+    implementation("dev.eriksonn.aeronautics:aeronautics-neoforge-1.21.1:${aeronautics_version}")
+//    implementation files("libs/create-aeronautics-bundled-${minecraft_version}-${aeronautics_version}.jar")
+
+    //https://maven.ryanhcode.dev/#/releases/dev/ryanhcode/offroad/offroad-neoforge-1.21.1/1.2.1
+    implementation "dev.ryanhcode.offroad:offroad-neoforge-1.21.1:${offroad_version}"
+
 //    compileOnly files("libs/simulated-neoforge-${minecraft_version}-${simulated_version}.jar")
-//    runtimeOnly files("libs/create-aeronautics-bundled-${minecraft_version}-${simulated_version}.jar")
-    implementation "dev.ryanhcode.sable-companion:sable-companion-common-${minecraft_version}:${sable_companion_version}"
+//
 
     //other
     runtimeOnly files("libs/createaddition-1.5.10.jar")

@@ -18,7 +18,7 @@ public final class KineticPackets {
 
    @SubscribeEvent
    public static void onRegister(RegisterPayloadHandlersEvent event) {
-      PayloadRegistrar r = event.registrar(CreateKinetic.MODID).versioned("1");
+      PayloadRegistrar r = event.registrar(CreateKinetic.MOD_ID).versioned("1");
       r.playToServer(C2SExitJoystickControl.TYPE, C2SExitJoystickControl.STREAM_CODEC, C2SExitJoystickControl::handleOnServer);
       r.playToServer(C2SJoystickTilt.TYPE, C2SJoystickTilt.STREAM_CODEC, C2SJoystickTilt::handleOnServer);
       r.playToServer(C2SJoystickShowHud.TYPE, C2SJoystickShowHud.STREAM_CODEC, C2SJoystickShowHud::handleOnServer);

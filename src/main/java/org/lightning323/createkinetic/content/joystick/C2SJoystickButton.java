@@ -13,7 +13,7 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
 import org.lightning323.createkinetic.CreateKinetic;
 
 public record C2SJoystickButton(BlockPos pos, boolean pressed) implements CustomPacketPayload {
-   public static final Type<C2SJoystickButton> TYPE = new Type(ResourceLocation.fromNamespaceAndPath(CreateKinetic.MODID, "joystick_button"));
+   public static final Type<C2SJoystickButton> TYPE = new Type(ResourceLocation.fromNamespaceAndPath(CreateKinetic.MOD_ID, "joystick_button"));
    public static final StreamCodec<FriendlyByteBuf, C2SJoystickButton> STREAM_CODEC;
 
    public Type<? extends CustomPacketPayload> type() {

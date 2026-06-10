@@ -18,6 +18,6 @@ public final class KineticPartialModels {
    }
 
    private static PartialModel block(String path) {
-      return PartialModel.of(ResourceLocation.fromNamespaceAndPath(CreateKinetic.MODID, "block/" + path));
+      return PartialModel.of(ResourceLocation.fromNamespaceAndPath(CreateKinetic.MOD_ID, "block/" + path));
    }
 }

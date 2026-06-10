@@ -2,7 +2,6 @@ package org.lightning323.createkinetic;
 
 import dev.engine_room.flywheel.lib.visualization.SimpleBlockEntityVisualizer;
 import dev.simulated_team.simulated.registrate.SimulatedRegistrate;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import org.lightning323.createkinetic.content.gyroscope.GyroscopeBlockEntity;
 import org.lightning323.createkinetic.content.gyroscope.GyroscopeItemRenderer;
@@ -37,7 +36,7 @@ import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 import org.lightning323.createkinetic.content.joystick.JoystickVisual;
 
-import static org.lightning323.createkinetic.CreateKinetic.MODID;
+import static org.lightning323.createkinetic.CreateKinetic.MOD_ID;
 import static org.lightning323.createkinetic.CreateKinetic.TAB_SECTION;
 
 public final class KineticClient {
@@ -59,19 +58,19 @@ public final class KineticClient {
                 .neverSkipVanillaRender()
                 .apply();
 
-        BaseConfigScreen.setDefaultActionFor(MODID, (base) -> base.withButtonLabels("Client Settings", "Common Settings", "Common Settings").withSpecs(Config.CLIENT_SPEC, Config.SPEC, Config.SPEC));
+        BaseConfigScreen.setDefaultActionFor(MOD_ID, (base) -> base.withButtonLabels("Client Settings", "Common Settings", "Common Settings").withSpecs(Config.CLIENT_SPEC, Config.SPEC, Config.SPEC));
     }
 
     @SubscribeEvent
     public static void onLoadComplete(FMLLoadCompleteEvent event) {
-        ModContainer container = (ModContainer) ModList.get().getModContainerById(MODID).orElseThrow(() -> new IllegalStateException("Aeroworks mod container missing on LoadComplete"));
-        Supplier<IConfigScreenFactory> factory = () -> (mc, previousScreen) -> new BaseConfigScreen(previousScreen, MODID);
+        ModContainer container = (ModContainer) ModList.get().getModContainerById(MOD_ID).orElseThrow(() -> new IllegalStateException("Aeroworks mod container missing on LoadComplete"));
+        Supplier<IConfigScreenFactory> factory = () -> (mc, previousScreen) -> new BaseConfigScreen(previousScreen, MOD_ID);
         container.registerExtensionPoint(IConfigScreenFactory.class, factory);
     }
 
     @SubscribeEvent
     public static void onRegisterGuiLayers(RegisterGuiLayersEvent event) {
-        event.registerAbove(VanillaGuiLayers.HOTBAR, ResourceLocation.fromNamespaceAndPath(MODID, "joystick_hud"), new JoystickHudOverlay());
+        event.registerAbove(VanillaGuiLayers.HOTBAR, ResourceLocation.fromNamespaceAndPath(MOD_ID, "joystick_hud"), new JoystickHudOverlay());
     }
 
     @SubscribeEvent
@@ -91,7 +90,7 @@ public final class KineticClient {
 
     @SubscribeEvent
     public static void onModelBakingComplete(ModelEvent.ModifyBakingResult event) {
-        ResourceLocation itemRl = ResourceLocation.fromNamespaceAndPath(MODID, "gyroscope");
+        ResourceLocation itemRl = ResourceLocation.fromNamespaceAndPath(MOD_ID, "gyroscope");
         ModelResourceLocation key = new ModelResourceLocation(itemRl, "inventory");
         Map<ModelResourceLocation, BakedModel> registry = event.getModels();
         BakedModel original = (BakedModel) registry.get(key);
@@ -114,7 +113,7 @@ public final class KineticClient {
 
     private static void registerSectionItem(ResourceLocation sectionId, String itemPath, Supplier<Item> itemSupplier) {
         SimulatedRegistrate.TAB_ITEMS.add(itemSupplier);
-        SimulatedRegistrate.ITEM_TO_SECTION.put(ResourceLocation.fromNamespaceAndPath(MODID, itemPath), sectionId);
+        SimulatedRegistrate.ITEM_TO_SECTION.put(ResourceLocation.fromNamespaceAndPath(MOD_ID, itemPath), sectionId);
     }
 
 }
