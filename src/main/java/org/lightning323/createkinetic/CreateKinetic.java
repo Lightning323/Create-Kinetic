@@ -34,9 +34,9 @@ public class CreateKinetic {
 
 
     private static final NonNullSupplier<SimulatedRegistrate> REGISTRATE = NonNullSupplier.lazy(() ->
-            (SimulatedRegistrate)new SimulatedRegistrate(path(MOD_ID), MOD_ID).defaultCreativeTab((ResourceKey)null));
+            (SimulatedRegistrate) new SimulatedRegistrate(path(MOD_ID), MOD_ID).defaultCreativeTab((ResourceKey) null));
 
-    static SimulatedRegistrate getRegistrate() {
+    public static SimulatedRegistrate getRegistrate() {
         return REGISTRATE.get();
     }
     public static final ResourceLocation TAB_SECTION = ResourceLocation.fromNamespaceAndPath("simulated", "simulated");
@@ -57,20 +57,6 @@ public class CreateKinetic {
             KineticPartialModels.init();
         }
 
-        //Init tracks
-        setTooltips();
-    }
-
-
-    private static void setTooltips() {
-        getRegistrate().setTooltipModifierFactory(item -> {
-            Rarity rarity = item.getDefaultInstance().getRarity();
-            FontHelper.Palette color = FontHelper.Palette.STANDARD_CREATE;
-            if (rarity == Rarity.EPIC) {
-                color = new FontHelper.Palette(TooltipHelper.styleFromColor((int) SimColors.EPIC_OURPLE), TooltipHelper.styleFromColor((ChatFormatting)rarity.color()));
-            }
-            return new ItemDescription.Modifier(item, color).andThen(TooltipModifier.mapNull((TooltipModifier)KineticStats.create((Item)item)));
-        });
     }
 
 
