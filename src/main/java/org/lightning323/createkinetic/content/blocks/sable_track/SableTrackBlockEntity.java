@@ -80,11 +80,6 @@ import com.simibubi.create.foundation.blockEntity.behaviour.ValueSettingsFormatt
 import com.simibubi.create.foundation.blockEntity.behaviour.scrollValue.ScrollValueBehaviour;
 import dev.engine_room.flywheel.lib.transform.PoseTransformStack;
 import dev.engine_room.flywheel.lib.transform.TransformStack;
-import org.lightning323.createkinetic.CreateKinetic;
-import org.lightning323.createkinetic.client.KineticClient;
-import org.lightning323.createkinetic.content.items.SuspensionKeyItem;
-import org.lightning323.createkinetic.registry.KineticItems;
-import org.lightning323.createkinetic.network.SelectTrackTuningModePayload;
 import dev.ryanhcode.sable.Sable;
 import dev.ryanhcode.sable.api.block.BlockEntitySubLevelActor;
 import dev.ryanhcode.sable.api.math.OrientedBoundingBox3d;
@@ -99,17 +94,9 @@ import dev.ryanhcode.sable.physics.config.block_properties.PhysicsBlockPropertyH
 import dev.ryanhcode.sable.sublevel.ServerSubLevel;
 import dev.ryanhcode.sable.sublevel.SubLevel;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
-
-import java.util.Collection;
-import java.util.List;
-
 import net.createmod.catnip.math.AngleHelper;
 import net.createmod.catnip.math.VecHelper;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.core.Position;
-import net.minecraft.core.Vec3i;
+import net.minecraft.core.*;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -137,6 +124,13 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3d;
 import org.joml.Vector3dc;
+import org.lightning323.createkinetic.CreateKinetic;
+import org.lightning323.createkinetic.client.KineticClient;
+import org.lightning323.createkinetic.network.SelectTrackTuningModePayload;
+import org.lightning323.createkinetic.registry.KineticItems;
+
+import java.util.Collection;
+import java.util.List;
 
 public class SableTrackBlockEntity
         extends KineticBlockEntity
@@ -1132,15 +1126,15 @@ public class SableTrackBlockEntity
             this.between(5, 180);
         }
 
-        public ValueSettingsBoard createBoard(Player player, BlockHitResult hitResult) {
-            SuspensionKeyItem.TuningMode mode = player.getMainHandItem().is(KineticItems.SUSPENSION_KEY.asItem()) ? SuspensionKeyItem.getMode(player.getMainHandItem()) : (player.getOffhandItem().is(KineticItems.SUSPENSION_KEY.asItem()) ? SuspensionKeyItem.getMode(player.getOffhandItem()) : SuspensionKeyItem.TuningMode.STRENGTH);
-            this.owner.selectScrollTuningMode(mode.key);
-            if (this.owner.level != null && ((SableTrackBlockEntity) this.owner).level.isClientSide) {
-                PacketDistributor.sendToServer((CustomPacketPayload) new SelectTrackTuningModePayload(this.owner.getBlockPos(), mode.key), (CustomPacketPayload[]) new CustomPacketPayload[0]);
-            }
-            this.value = mode == SuspensionKeyItem.TuningMode.STRENGTH ? this.owner.protectedStrengthValue : SableTrackBlockEntity.tuningToScroll(this.owner.getTuning(mode.key));
-            return new ValueSettingsBoard(mode.title(), 180, 20, (List) ImmutableList.of((Object) mode.title()), new ValueSettingsFormatter(ValueSettings::format));
-        }
+//        public ValueSettingsBoard createBoard(Player player, BlockHitResult hitResult) {
+//            SuspensionKeyItem.TuningMode mode = player.getMainHandItem().is(KineticItems.SUSPENSION_KEY.asItem()) ? SuspensionKeyItem.getMode(player.getMainHandItem()) : (player.getOffhandItem().is(KineticItems.SUSPENSION_KEY.asItem()) ? SuspensionKeyItem.getMode(player.getOffhandItem()) : SuspensionKeyItem.TuningMode.STRENGTH);
+//            this.owner.selectScrollTuningMode(mode.key);
+//            if (this.owner.level != null && ((SableTrackBlockEntity) this.owner).level.isClientSide) {
+//                PacketDistributor.sendToServer((CustomPacketPayload) new SelectTrackTuningModePayload(this.owner.getBlockPos(), mode.key), (CustomPacketPayload[]) new CustomPacketPayload[0]);
+//            }
+//            this.value = mode == SuspensionKeyItem.TuningMode.STRENGTH ? this.owner.protectedStrengthValue : SableTrackBlockEntity.tuningToScroll(this.owner.getTuning(mode.key));
+//            return new ValueSettingsBoard(mode.title(), 180, 20, (List) ImmutableList.of((Object) mode.title()), new ValueSettingsFormatter(ValueSettings::format));
+//        }
     }
 
     private static final class TrackStrengthValueBox
@@ -1154,13 +1148,13 @@ public class SableTrackBlockEntity
             ((PoseTransformStack) TransformStack.of((PoseStack) ms).rotateYDegrees(yRot)).rotateXDegrees(90.0f);
         }
 
-        public boolean testHit(LevelAccessor level, BlockPos pos, BlockState state, Vec3 localHit) {
-            if (KineticClient.holdingSuspensionKey && !KineticClient.holdingSuspensionKeyInPositionMode && !KineticClient.holdingSuspensionKeyInAllPositionMode && !KineticClient.holdingSuspensionKeyInResetMode) {
-                return true;
-            }
-            Vec3 offset = this.getLocalOffset(level, pos, state);
-            return offset != null && localHit.distanceTo(offset) < (double) (this.scale / 3.0f);
-        }
+//        public boolean testHit(LevelAccessor level, BlockPos pos, BlockState state, Vec3 localHit) {
+//            if (KineticClient.holdingSuspensionKey && !KineticClient.holdingSuspensionKeyInPositionMode && !KineticClient.holdingSuspensionKeyInAllPositionMode && !KineticClient.holdingSuspensionKeyInResetMode) {
+//                return true;
+//            }
+//            Vec3 offset = this.getLocalOffset(level, pos, state);
+//            return offset != null && localHit.distanceTo(offset) < (double) (this.scale / 3.0f);
+//        }
 
         public Vec3 getLocalOffset(LevelAccessor level, BlockPos pos, BlockState state) {
             Direction facing = (Direction) state.getValue(SableTrackBlock.HORIZONTAL_FACING);

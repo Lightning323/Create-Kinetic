@@ -46,7 +46,6 @@ import org.lightning323.createkinetic.content.blocks.wheel_mount.AdjustableWheel
 import org.lightning323.createkinetic.content.blocks.gyroscope.GyroscopeBlockEntity;
 import org.lightning323.createkinetic.content.blocks.gyroscope.GyroscopeItemRenderer;
 import org.lightning323.createkinetic.content.blocks.gyroscope.GyroscopeVisual;
-import org.lightning323.createkinetic.content.items.SuspensionKeyItem;
 import org.lightning323.createkinetic.content.blocks.joystick.*;
 import org.lightning323.createkinetic.registry.*;
 import org.lightning323.createkinetic.network.RequestOpenTuningPayload;
@@ -61,11 +60,6 @@ import static org.lightning323.createkinetic.CreateKinetic.MOD_ID;
 @Mod(value = CreateKinetic.MOD_ID, dist = {Dist.CLIENT})
 public class KineticClient {
     private static final KeyMapping OPEN_TUNING = new KeyMapping("key." + CreateKinetic.MOD_ID + ".open_tuning", InputConstants.Type.KEYSYM, 74, "key.categories." + CreateKinetic.MOD_ID);
-
-    public static boolean holdingSuspensionKey = false;
-    public static boolean holdingSuspensionKeyInPositionMode = false;
-    public static boolean holdingSuspensionKeyInAllPositionMode = false;
-    public static boolean holdingSuspensionKeyInResetMode = false;
 
 
     private static void registerClientHandlers(IEventBus modEventBus) {
@@ -115,18 +109,7 @@ public class KineticClient {
 
     private static void clientTick(ClientTickEvent.Post event) {
         Minecraft minecraft = Minecraft.getInstance();
-        boolean bl = KineticClient.holdingSuspensionKey = minecraft.player != null && (minecraft.player.getMainHandItem().is(KineticItems.SUSPENSION_KEY.asItem()) || minecraft.player.getOffhandItem().is(KineticItems.SUSPENSION_KEY.asItem()));
-        if (minecraft.player != null && KineticClient.holdingSuspensionKey) {
-            ItemStack key = minecraft.player.getMainHandItem().is(KineticItems.SUSPENSION_KEY.asItem()) ? minecraft.player.getMainHandItem() : minecraft.player.getOffhandItem();
-            SuspensionKeyItem.TuningMode mode = SuspensionKeyItem.getMode(key);
-            KineticClient.holdingSuspensionKeyInPositionMode = mode == SuspensionKeyItem.TuningMode.POSITION;
-            KineticClient.holdingSuspensionKeyInAllPositionMode = mode == SuspensionKeyItem.TuningMode.ALL_POSITION;
-            KineticClient.holdingSuspensionKeyInResetMode = mode == SuspensionKeyItem.TuningMode.RESET;
-        } else {
-            KineticClient.holdingSuspensionKeyInPositionMode = false;
-            KineticClient.holdingSuspensionKeyInAllPositionMode = false;
-            KineticClient.holdingSuspensionKeyInResetMode = false;
-        }
+
         while (OPEN_TUNING.consumeClick()) {
             if (minecraft.player == null) continue;
             PacketDistributor.sendToServer((CustomPacketPayload) new RequestOpenTuningPayload(), (CustomPacketPayload[]) new CustomPacketPayload[0]);
@@ -194,11 +177,9 @@ public class KineticClient {
 
     public static void buildContents(BuildCreativeModeTabContentsEvent event) {
         if (!built.get()) {
-            registerSectionItem(OFFROAD_CREATIVE_SECTION, "track_mount", KineticBlocks.TRACK_MOUNT::asItem);
             registerSectionItem(OFFROAD_CREATIVE_SECTION, "small_suspension_track", KineticItems.SMALL_SUSPENSION_TRACK::get);
             registerSectionItem(OFFROAD_CREATIVE_SECTION, "small_track_drive_wheel", KineticItems.SMALL_TRACK_DRIVE_WHEEL::get);
-            registerSectionItem(OFFROAD_CREATIVE_SECTION, "suspension_key", KineticItems.SUSPENSION_KEY::get);
-
+            registerSectionItem(OFFROAD_CREATIVE_SECTION, "track_mount", KineticBlocks.TRACK_MOUNT::asItem);
             registerSectionItem(SIMULATED_CREATIVE_SECTION, "gyroscope", () -> KineticBlocks.GYROSCOPE.asItem());
             registerSectionItem(SIMULATED_CREATIVE_SECTION, "joystick", () -> KineticBlocks.JOYSTICK.asItem());
             built.set(true);
