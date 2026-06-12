@@ -1,0 +1,7 @@
+{
+  "values": [
+    "createkinetic:gyroscope",
+    "createkinetic:joystick",
+    "createkinetic:track_mount"
+  ]
+}
