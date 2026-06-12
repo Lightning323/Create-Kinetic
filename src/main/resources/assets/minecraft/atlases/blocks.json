@@ -1,0 +1,136 @@
+﻿{
+    "sources":  [
+                    {
+                        "resource":  "tracks:block/belt_scroll",
+                        "type":  "single"
+                    },
+                    {
+                        "resource":  "tracks:block/belt_white",
+                        "type":  "single"
+                    },
+                    {
+                        "resource":  "tracks:block/belt_white_scroll",
+                        "type":  "single"
+                    },
+                    {
+                        "resource":  "tracks:block/belt_orange",
+                        "type":  "single"
+                    },
+                    {
+                        "resource":  "tracks:block/belt_orange_scroll",
+                        "type":  "single"
+                    },
+                    {
+                        "resource":  "tracks:block/belt_magenta",
+                        "type":  "single"
+                    },
+                    {
+                        "resource":  "tracks:block/belt_magenta_scroll",
+                        "type":  "single"
+                    },
+                    {
+                        "resource":  "tracks:block/belt_light_blue",
+                        "type":  "single"
+                    },
+                    {
+                        "resource":  "tracks:block/belt_light_blue_scroll",
+                        "type":  "single"
+                    },
+                    {
+                        "resource":  "tracks:block/belt_yellow",
+                        "type":  "single"
+                    },
+                    {
+                        "resource":  "tracks:block/belt_yellow_scroll",
+                        "type":  "single"
+                    },
+                    {
+                        "resource":  "tracks:block/belt_light_green",
+                        "type":  "single"
+                    },
+                    {
+                        "resource":  "tracks:block/belt_light_green_scroll",
+                        "type":  "single"
+                    },
+                    {
+                        "resource":  "tracks:block/belt_pink",
+                        "type":  "single"
+                    },
+                    {
+                        "resource":  "tracks:block/belt_pink_scroll",
+                        "type":  "single"
+                    },
+                    {
+                        "resource":  "tracks:block/belt_gray",
+                        "type":  "single"
+                    },
+                    {
+                        "resource":  "tracks:block/belt_gray_scroll",
+                        "type":  "single"
+                    },
+                    {
+                        "resource":  "tracks:block/belt_light_gray",
+                        "type":  "single"
+                    },
+                    {
+                        "resource":  "tracks:block/belt_light_gray_scroll",
+                        "type":  "single"
+                    },
+                    {
+                        "resource":  "tracks:block/belt_cyan",
+                        "type":  "single"
+                    },
+                    {
+                        "resource":  "tracks:block/belt_cyan_scroll",
+                        "type":  "single"
+                    },
+                    {
+                        "resource":  "tracks:block/belt_purple",
+                        "type":  "single"
+                    },
+                    {
+                        "resource":  "tracks:block/belt_purple_scroll",
+                        "type":  "single"
+                    },
+                    {
+                        "resource":  "tracks:block/belt_blue",
+                        "type":  "single"
+                    },
+                    {
+                        "resource":  "tracks:block/belt_blue_scroll",
+                        "type":  "single"
+                    },
+                    {
+                        "resource":  "tracks:block/belt_brown",
+                        "type":  "single"
+                    },
+                    {
+                        "resource":  "tracks:block/belt_brown_scroll",
+                        "type":  "single"
+                    },
+                    {
+                        "resource":  "tracks:block/belt_green",
+                        "type":  "single"
+                    },
+                    {
+                        "resource":  "tracks:block/belt_green_scroll",
+                        "type":  "single"
+                    },
+                    {
+                        "resource":  "tracks:block/belt_red",
+                        "type":  "single"
+                    },
+                    {
+                        "resource":  "tracks:block/belt_red_scroll",
+                        "type":  "single"
+                    },
+                    {
+                        "resource":  "tracks:block/belt_black",
+                        "type":  "single"
+                    },
+                    {
+                        "resource":  "tracks:block/belt_black_scroll",
+                        "type":  "single"
+                    }
+                ]
+}
