@@ -35,12 +35,7 @@ public class CreateKinetic {
 
     //Create simulated tabs can be registered in resources/createkinetic/simulated/sections/tab.json
     //We dont want to make a custom tab for our items because we are just adding new items to what aeronautic already has
-    private static final NonNullSupplier<KineticRegistrate> REGISTRATE =
-            NonNullSupplier.lazy(() -> (KineticRegistrate) ((CreateRegistrate) KineticRegistrate.create(CreateKinetic.MOD_ID)
-                    .defaultCreativeTab((ResourceKey) null)).setTooltipModifierFactory((item) ->
-                    (new ItemDescription.Modifier(item, FontHelper.Palette.STANDARD_CREATE))
-                            .andThen(TooltipModifier.mapNull(KineticStats.create(item)))));
-
+    private static final NonNullSupplier<KineticRegistrate> REGISTRATE = KineticRegistrate.getKineticRegistrate(MOD_ID);
 
     public static KineticRegistrate getRegistrate() {
         return REGISTRATE.get();
