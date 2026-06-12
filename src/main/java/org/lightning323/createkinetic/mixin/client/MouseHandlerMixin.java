@@ -2,8 +2,8 @@ package org.lightning323.createkinetic.mixin.client;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.platform.InputConstants.Type;
-import org.lightning323.createkinetic.KineticKeys;
-import org.lightning323.createkinetic.content.joystick.JoystickControlClient;
+import org.lightning323.createkinetic.client.KineticKeys;
+import org.lightning323.createkinetic.content.blocks.joystick.JoystickControlClient;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.MouseHandler;
 import org.spongepowered.asm.mixin.Mixin;

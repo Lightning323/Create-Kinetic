@@ -19,20 +19,19 @@ modId = "createkinetic" #mandatory
 # The version number of the mod
 version = "1.0.0" #mandatory
 # A display name for the mod
-displayName = "Create Kinetic" #mandatory
+displayName = "TracksPlus" #mandatory
 # A URL to query for updates for this mod. See the JSON update specification https://docs.neoforge.net/docs/misc/updatechecker/
 #updateJSONURL="https://change.me.example.invalid/updates.json" #optional
 # A URL for the "homepage" for this mod, displayed in the mod UI
 #displayURL="https://change.me.to.your.mods.homepage.example.invalid/" #optional
 # A file name (in the root of the mod JAR) containing a logo for display
-#logoFile="createkinetic.png" #optional
 # A text field displayed in the mod UI
 #credits="" #optional
 # A text field displayed in the mod UI
-authors = "Lightning323" #optional
+authors = "" #optional
 
 # The description text for the mod (multi line!) (#mandatory)
-description = '''An Addon for Create Aeronautics, Adds various kinetic components that are missing from the mod.'''
+description = ''''''
 
 # The [[mixins]] block allows you to declare your mixin config to FML so that it gets loaded.
 [[mixins]]

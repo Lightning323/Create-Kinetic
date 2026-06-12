@@ -1,7 +1,7 @@
-//package org.lightning323.createkinetic.mixin.compat.drivebywire;
+package org.lightning323.createkinetic.mixin.compat.drivebywire;//package org.lightning323.createkinetic.mixin.compat.drivebywire;
 //
 //import org.lightning323.createkinetic.compat.drivebywire.JoystickWireChannels;
-//import org.lightning323.createkinetic.content.joystick.JoystickBlock;
+//import org.lightning323.createkinetic.content.blocks.joystick.JoystickBlock;
 //import edn.stratodonut.drivebywire.wire.MultiChannelWireSource;
 //import java.util.List;
 //import org.spongepowered.asm.mixin.Mixin;

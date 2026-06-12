@@ -1,7 +1,7 @@
 package org.lightning323.createkinetic.mixin.client;
 
-import org.lightning323.createkinetic.content.joystick.JoystickBlockEntity;
-import org.lightning323.createkinetic.content.joystick.JoystickClientRaycast;
+import org.lightning323.createkinetic.content.blocks.joystick.JoystickBlockEntity;
+import org.lightning323.createkinetic.content.blocks.joystick.JoystickClientRaycast;
 import dev.ryanhcode.sable.Sable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
