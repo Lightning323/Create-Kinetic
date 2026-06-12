@@ -19,8 +19,15 @@ import org.lightning323.createkinetic.KineticRegistrate;
 public class KineticItems {
     private static final KineticRegistrate REGISTRATE = CreateKinetic.getRegistrate();
 
-    public static final ItemEntry<Item> SMALL_SUSPENSION_TRACK = REGISTRATE.item("small_suspension_track", Item::new).register();
-    public static final ItemEntry<Item> SMALL_TRACK_DRIVE_WHEEL = REGISTRATE.item("small_track_drive_wheel", Item::new).register();
+    public static final ItemEntry<Item> SMALL_SUSPENSION_TRACK =
+            REGISTRATE.item("small_suspension_track", Item::new)
+                    .model((ctx, prov) -> {})
+                    .register();
+
+    public static final ItemEntry<Item> SMALL_TRACK_DRIVE_WHEEL =
+            REGISTRATE.item("small_track_drive_wheel", Item::new)
+                    .model((ctx, prov) -> {})
+                    .register();
 
 
     public static void init() {

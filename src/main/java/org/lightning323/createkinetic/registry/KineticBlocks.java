@@ -41,12 +41,14 @@ public class KineticBlocks {
     public static final BlockEntry<GyroscopeBlock> GYROSCOPE = REGISTRATE
             .block("gyroscope", GyroscopeBlock::new).initialProperties(SharedProperties::softMetal)
             .properties((p) -> p.noOcclusion())
+            .transform(TagGen.axeOrPickaxe())
             .onRegister((block) -> BlockStressValues.IMPACTS.register(block, Config::gyroscopeStressImpact))
             .simpleItem().register();
 
     public static final BlockEntry<JoystickBlock> JOYSTICK = REGISTRATE
             .block("joystick", JoystickBlock::new).initialProperties(SharedProperties::wooden)
             .properties((p) -> p.noOcclusion())
+            .transform(TagGen.axeOrPickaxe())
             .simpleItem().register();
 
     public static final BlockEntry<SableTrackBlock> TRACK_MOUNT = REGISTRATE.block("track_mount",
@@ -56,9 +58,13 @@ public class KineticBlocks {
             .transform(TagGen.axeOrPickaxe())
             .addLayer(() -> RenderType::cutoutMipped)
             .tag(AllTags.AllBlockTags.SAFE_NBT.tag)
-            .blockstate(BlockStateGen.horizontalBlockProvider(true))
+            //We have to change this registration to tell registrate to not generate blockstate or item models for us (We already have them)
+//            .blockstate(BlockStateGen.horizontalBlockProvider(true))
+            .blockstate((ctx, prov) -> {})
             .item(TrackMountBlockItem::new)
-            .transform(ModelGen.customItemModel())
+            .model((ctx, prov) -> {})
+//            .transform(ModelGen.customItemModel())
+            .build()
             .register();
 
     public static void init() {

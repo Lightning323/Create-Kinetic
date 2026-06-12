@@ -52,6 +52,8 @@ public class JoystickRenderer extends SafeBlockEntityRenderer<JoystickBlockEntit
          int tiltX = be.getTiltX();
          int tiltY = be.getTiltY();
 
+
+         //Display the indicators
          for(JoystickDirection dir : JoystickDirection.VALUES) {
             float curved = JoystickVisual.brightnessCurve((float)dir.strengthFor(tiltX, tiltY) / 15.0F);
             int color = JoystickVisual.scaleBrightness(dir.colorRgb, curved);

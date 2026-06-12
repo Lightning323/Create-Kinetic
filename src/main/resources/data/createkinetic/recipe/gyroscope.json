@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "M": {
+      "item": "simulated:redstone_magnet"
+    },
+    "G": {
+      "item": "simulated:gimbal_sensor"
+    }
+  },
+  "pattern": [
+    " M ",
+    "MGM",
+    " M "
+  ],
+  "result": {
+    "count": 1,
+    "id": "createkinetic:gyroscope"
+  }
+}

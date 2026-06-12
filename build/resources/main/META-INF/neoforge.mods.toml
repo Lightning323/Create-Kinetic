@@ -19,7 +19,7 @@ modId = "createkinetic" #mandatory
 # The version number of the mod
 version = "1.0.0" #mandatory
 # A display name for the mod
-displayName = "TracksPlus" #mandatory
+displayName = "Create Kinetic" #mandatory
 # A URL to query for updates for this mod. See the JSON update specification https://docs.neoforge.net/docs/misc/updatechecker/
 #updateJSONURL="https://change.me.example.invalid/updates.json" #optional
 # A URL for the "homepage" for this mod, displayed in the mod UI
@@ -28,10 +28,10 @@ displayName = "TracksPlus" #mandatory
 # A text field displayed in the mod UI
 #credits="" #optional
 # A text field displayed in the mod UI
-authors = "" #optional
+authors = "Lightning323" #optional
 
 # The description text for the mod (multi line!) (#mandatory)
-description = ''''''
+description = '''An addon mod for Create Simulated; Adds new functionality in keeping with the theme of create'''
 
 # The [[mixins]] block allows you to declare your mixin config to FML so that it gets loaded.
 [[mixins]]
