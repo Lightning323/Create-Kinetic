@@ -37,7 +37,6 @@ import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 import org.lightning323.createkinetic.content.joystick.JoystickVisual;
 
 import static org.lightning323.createkinetic.CreateKinetic.MOD_ID;
-import static org.lightning323.createkinetic.CreateKinetic.TAB_SECTION;
 
 public final class KineticClient {
     private KineticClient() {
@@ -102,11 +101,15 @@ public final class KineticClient {
 
     private static AtomicBoolean built = new AtomicBoolean(false);
 
+    public static final ResourceLocation SIMULATED_CREATIVE_SECTION = ResourceLocation.fromNamespaceAndPath("simulated", "simulated");
+    public static final ResourceLocation AERONAUTICS_CREATIVE_SECTION = ResourceLocation.fromNamespaceAndPath("aeronautics", "aeronautics");
+    public static final ResourceLocation OFFROAD_CREATIVE_SECTION = ResourceLocation.fromNamespaceAndPath("offroad", "offroad");
+
     @SubscribeEvent
     public static void buildContents(BuildCreativeModeTabContentsEvent event) {
         if (!built.get()) {
-            registerSectionItem(TAB_SECTION, "gyroscope", () -> KineticBlocks.GYROSCOPE.asItem());
-            registerSectionItem(TAB_SECTION, "joystick", () -> KineticBlocks.JOYSTICK.asItem());
+            registerSectionItem(AERONAUTICS_CREATIVE_SECTION, "gyroscope", () -> KineticBlocks.GYROSCOPE.asItem());
+            registerSectionItem(AERONAUTICS_CREATIVE_SECTION, "joystick", () -> KineticBlocks.JOYSTICK.asItem());
             built.set(true);
         }
     }

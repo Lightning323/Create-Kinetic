@@ -1,0 +1,26 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:false"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "create:belt_connector"
+    },
+    "M": {
+      "item": "createkinetic:suspension_track"
+    }
+  },
+  "pattern": [
+    "B",
+    "M",
+    "B"
+  ],
+  "result": {
+    "count": 1,
+    "id": "createkinetic:large_suspension_track"
+  }
+}

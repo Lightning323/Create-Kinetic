@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "create:belt_connector"
+    },
+    "M": {
+      "item": "create:andesite_alloy"
+    }
+  },
+  "pattern": [
+    "B",
+    "M"
+  ],
+  "result": {
+    "count": 1,
+    "id": "createkinetic:small_suspension_track"
+  }
+}

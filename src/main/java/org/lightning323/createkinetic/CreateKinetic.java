@@ -1,5 +1,6 @@
 package org.lightning323.createkinetic;
 
+import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.item.ItemDescription;
 import com.simibubi.create.foundation.item.KineticStats;
 import com.simibubi.create.foundation.item.TooltipHelper;
@@ -32,14 +33,18 @@ import org.lightning323.createkinetic.content.joystick.JoystickSessions;
 public class CreateKinetic {
     public static final String MOD_ID = "createkinetic";
 
+    //Create simulated tabs can be registered in resources/createkinetic/simulated/sections/tab.json
+    //We dont want to make a custom tab for our items because we are just adding new items to what aeronautic already has
+    private static final NonNullSupplier<KineticRegistrate> REGISTRATE =
+            NonNullSupplier.lazy(() -> (KineticRegistrate) ((CreateRegistrate) KineticRegistrate.create(CreateKinetic.MOD_ID)
+                    .defaultCreativeTab((ResourceKey) null)).setTooltipModifierFactory((item) ->
+                    (new ItemDescription.Modifier(item, FontHelper.Palette.STANDARD_CREATE))
+                            .andThen(TooltipModifier.mapNull(KineticStats.create(item)))));
 
-    private static final NonNullSupplier<SimulatedRegistrate> REGISTRATE = NonNullSupplier.lazy(() ->
-            (SimulatedRegistrate) new SimulatedRegistrate(path(MOD_ID), MOD_ID).defaultCreativeTab((ResourceKey) null));
 
-    public static SimulatedRegistrate getRegistrate() {
+    public static KineticRegistrate getRegistrate() {
         return REGISTRATE.get();
     }
-    public static final ResourceLocation TAB_SECTION = ResourceLocation.fromNamespaceAndPath("simulated", "simulated");
 
     public CreateKinetic(IEventBus modEventBus, ModContainer modContainer) {
         getRegistrate().registerEventListeners(modEventBus);
