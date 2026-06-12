@@ -1,5 +1,9 @@
 package org.lightning323.createkinetic.content.blocks.joystick;
 
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.fml.common.Mod;
+import org.lightning323.createkinetic.CreateKinetic;
 import org.lightning323.createkinetic.client.KineticKeys;
 import java.util.Objects;
 import net.minecraft.client.DeltaTracker;
@@ -9,6 +13,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.LayeredDraw;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
+@OnlyIn(Dist.CLIENT)
 public final class JoystickHudOverlay implements LayeredDraw.Layer {
    private static final int SQUARE_SIZE = 60;
    private static final int BOTTOM_MARGIN = 80;

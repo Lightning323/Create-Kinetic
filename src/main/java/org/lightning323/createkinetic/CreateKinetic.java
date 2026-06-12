@@ -74,7 +74,9 @@ public class CreateKinetic {
         modBus.addListener(CreateKinetic::registerPayloads);
         modContainer.registerConfig(ModConfig.Type.SERVER, (IConfigSpec) Config.SPEC);
         CreateKinetic.setTooltips();
-        KineticClient.init(modBus);
+        if(FMLEnvironment.dist == Dist.CLIENT) {
+            KineticClient.init(modBus);
+        }
         KineticBlocks.init();
         KineticBlockEntityTypes.init();
         KineticItems.init();
