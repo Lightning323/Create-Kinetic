@@ -87,23 +87,24 @@ public final class Config {
 
     @SubscribeEvent
     static void onLoad(ModConfigEvent event) {
-        IConfigSpec spec = event.getConfig().getSpec();
-        if (spec == SPEC) {
-            gyroscopeOmegaTarget = (Double) GYROSCOPE_OMEGA_TARGET.get();
-            gyroscopeDampingRatio = (Double) GYROSCOPE_DAMPING_RATIO.get();
-            gyroscopeAuthorityPerUnit = (Double) GYROSCOPE_AUTHORITY_PER_UNIT.get();
-            gyroscopeFeedForwardGain = (Double) GYROSCOPE_FEED_FORWARD_GAIN.get();
-            gyroscopeFeedForwardSmoothing = (Double) GYROSCOPE_FEED_FORWARD_SMOOTHING.get();
-            gyroscopeReferenceRpm = (Double) GYROSCOPE_REFERENCE_RPM.get();
-            gyroscopeStressImpact = (Double) GYROSCOPE_STRESS_IMPACT.get();
-            joystickPixelsPerStep = (Double) JOYSTICK_PIXELS_PER_STEP.get();
-            renderTuningCheatsEnabled = (Boolean) ENABLE_RENDER_TUNING_CHEATS.get();
+        if (event instanceof ModConfigEvent.Loading) {
+            IConfigSpec spec = event.getConfig().getSpec();
+            if (spec == SPEC) {
+                gyroscopeOmegaTarget = (Double) GYROSCOPE_OMEGA_TARGET.get();
+                gyroscopeDampingRatio = (Double) GYROSCOPE_DAMPING_RATIO.get();
+                gyroscopeAuthorityPerUnit = (Double) GYROSCOPE_AUTHORITY_PER_UNIT.get();
+                gyroscopeFeedForwardGain = (Double) GYROSCOPE_FEED_FORWARD_GAIN.get();
+                gyroscopeFeedForwardSmoothing = (Double) GYROSCOPE_FEED_FORWARD_SMOOTHING.get();
+                gyroscopeReferenceRpm = (Double) GYROSCOPE_REFERENCE_RPM.get();
+                gyroscopeStressImpact = (Double) GYROSCOPE_STRESS_IMPACT.get();
+                joystickPixelsPerStep = (Double) JOYSTICK_PIXELS_PER_STEP.get();
+                renderTuningCheatsEnabled = (Boolean) ENABLE_RENDER_TUNING_CHEATS.get();
 
-        } else if (spec == CLIENT_SPEC) {
-            joystickKeyRepeatDelayMs = (Integer) JOYSTICK_KEY_REPEAT_DELAY_MS.get();
-            joystickSpringBackDelayMs = (Integer) JOYSTICK_SPRING_BACK_DELAY_MS.get();
+            } else if (spec == CLIENT_SPEC) {
+                joystickKeyRepeatDelayMs = (Integer) JOYSTICK_KEY_REPEAT_DELAY_MS.get();
+                joystickSpringBackDelayMs = (Integer) JOYSTICK_SPRING_BACK_DELAY_MS.get();
+            }
         }
-
     }
 
     static {
