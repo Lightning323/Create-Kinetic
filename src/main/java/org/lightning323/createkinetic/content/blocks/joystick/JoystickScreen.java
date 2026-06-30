@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.platform.InputConstants.Type;
 import com.mojang.blaze3d.vertex.PoseStack;
+import org.lightning323.createkinetic.CreateKinetic;
 import org.lightning323.createkinetic.registry.KineticPartialModels;
 import org.lightning323.createkinetic.client.gui.HoverTintIconButton;
 import org.lightning323.createkinetic.client.gui.ToggleButton;
@@ -30,7 +31,7 @@ import net.neoforged.neoforge.items.SlotItemHandler;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 public class JoystickScreen extends AbstractSimiContainerScreen<JoystickMenu> {
-   private static final ResourceLocation BACKGROUND = ResourceLocation.fromNamespaceAndPath("createkinetic", "textures/gui/joystick.png");
+   private static final ResourceLocation BACKGROUND = CreateKinetic.path("textures/gui/joystick.png");
    private static final ScreenElement KEYBOARD_ICON = iconBlit("keyboard");
    private static final ScreenElement MOUSE_ICON = iconBlit("mouse");
    private static final int TITLE_COLOR = 5841956;

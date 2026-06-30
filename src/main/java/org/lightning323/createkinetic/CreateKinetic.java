@@ -102,7 +102,6 @@ public class CreateKinetic {
         }));
     }
 
-
     private static void setTooltips() {
         CreateKinetic.getRegistrate().setTooltipModifierFactory(item -> {
             Rarity rarity = item.getDefaultInstance().getRarity();
@@ -115,7 +114,7 @@ public class CreateKinetic {
     }
 
     public static ResourceLocation path(String path) {
-        return ResourceLocation.tryBuild((String) MOD_ID, (String) path);
+        return ResourceLocation.tryBuild(MOD_ID, path);
     }
 }
 
