@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PFP"
+  ],
+  "key": {
+    "P": {
+      "item": "createkinetic:platinum_sheet"
+    },
+    "F": {
+      "item": "create:fluid_tank"
+    }
+  },
+  "result": {
+    "id": "createkinetic:platinum_fluid_vessel"
+  }
+}

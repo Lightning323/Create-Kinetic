@@ -1,0 +1,37 @@
+{
+  "parent": "createkinetic:im_vectoring_it",
+  "display": {
+    "icon": {
+      "id": "createkinetic:coral_generator"
+    },
+    "title": {
+      "translate": "advancement.createkinetic.feed_the_fire_621.title"
+    },
+    "description": {
+      "translate": "advancement.createkinetic.feed_the_fire_621.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_coral_generator": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "createkinetic:coral_generator"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_coral_generator"
+    ]
+  ]
+}

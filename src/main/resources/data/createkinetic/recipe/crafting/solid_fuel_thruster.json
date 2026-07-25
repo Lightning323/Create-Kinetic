@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CIC",
+    "ABA",
+    "IPI"
+  ],
+  "key": {
+    "C": { "item": "create:copper_sheet" },
+    "I": { "item": "create:iron_sheet" },
+    "A": { "item": "create:andesite_alloy" },
+    "B": { "item": "create:chute" },
+    "P": { "item": "create:fluid_pipe" }
+  },
+  "result": {
+    "id": "createkinetic:solid_fuel_thruster"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PSP",
+    "TWT",
+    "PSP"
+  ],
+  "key": {
+    "P": { "item": "createkinetic:platinum_sheet" },
+    "S": { "item": "simulated:docking_connector" },
+    "T": { "item": "create:sturdy_sheet" },
+    "W": { "item": "create:stockpile_switch" }
+  },
+  "result": {
+    "id": "createkinetic:coral_generator",
+    "count": 1
+  }
+}

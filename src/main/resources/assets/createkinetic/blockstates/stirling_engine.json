@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "createkinetic:block/stirling_base", "y": 180 },
+    "facing=south": { "model": "createkinetic:block/stirling_base", "y": 0   },
+    "facing=west" : { "model": "createkinetic:block/stirling_base", "y": 90  },
+    "facing=east" : { "model": "createkinetic:block/stirling_base", "y": 270 }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "replace": false,
+  "values": [
+    "createkinetic:thruster",
+    "createkinetic:creative_thruster",
+    "createkinetic:ion_thruster",
+    "createkinetic:vector_thruster",
+    "createkinetic:creative_vector_thruster",
+    "createkinetic:redstone_converter",
+    "createkinetic:redstone_transmission",
+    "createkinetic:solid_burner",
+    "createkinetic:liquid_burner",
+    "createkinetic:stirling_engine",
+    "createkinetic:tilt_adapter",
+    "createkinetic:advanced_tilt_adapter",
+    "createkinetic:wing",
+    "createkinetic:tempered_wing",
+    "createkinetic:copycat_wing",
+    "createkinetic:copycat_wing_8",
+    "createkinetic:copycat_wing_12",
+    "createkinetic:coral_generator",
+    "createkinetic:cable",
+    "createkinetic:cable_hub",
+    "createkinetic:cable_relay",
+    "createkinetic:platinum_casing",
+    "createkinetic:platinum_fluid_tank",
+    "createkinetic:platinum_fluid_vessel"
+  ]
+}

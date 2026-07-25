@@ -1,0 +1,15 @@
+{
+    "type": "create:cutting",
+    "ingredients": [
+        {
+            "item": "createkinetic:wing"
+        }
+    ],
+    "results": [
+        {
+            "id": "createkinetic:copycat_wing",
+            "count": 1
+        }
+    ],
+    "processingTime": 50
+}

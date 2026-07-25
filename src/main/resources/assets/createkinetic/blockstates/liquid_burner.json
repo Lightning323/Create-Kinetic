@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "createkinetic:block/liquid_burner_base"
+    },
+    "facing=east": {
+      "model": "createkinetic:block/liquid_burner_base",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "createkinetic:block/liquid_burner_base",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "createkinetic:block/liquid_burner_base",
+      "y": 270
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "createkinetic:platinum_fluid_tank"
+    }
+  ],
+  "result": {
+    "id": "createkinetic:platinum_fluid_vessel"
+  }
+}

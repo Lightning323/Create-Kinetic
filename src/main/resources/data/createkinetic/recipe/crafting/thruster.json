@@ -1,0 +1,28 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "IFI",
+        "PBP",
+        "ICI"
+    ],
+    "key": {
+        "I": {
+            "item": "create:iron_sheet"
+        },
+        "F": {
+            "item": "create:fluid_pipe"
+        },
+        "P": {
+            "item": "create:mechanical_pump"
+        },
+        "B": {
+            "item": "create:brass_casing"
+        },
+        "C": {
+            "item": "create:copper_sheet"
+        }
+    },
+    "result": {
+        "id": "createkinetic:thruster"
+    }
+}

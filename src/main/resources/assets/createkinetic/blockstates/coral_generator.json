@@ -1,0 +1,11 @@
+{
+  "variants": {
+    "facing=down": { "model": "createkinetic:block/coral_generator", "x": 180 },
+    "facing=up": { "model": "createkinetic:block/coral_generator" },
+    "facing=north": { "model": "createkinetic:block/coral_generator", "x": 270 },
+    "facing=south": { "model": "createkinetic:block/coral_generator", "x": 90 },
+    "facing=west": { "model": "createkinetic:block/coral_generator", "x": 90, "y": 90 },
+    "facing=east": { "model": "createkinetic:block/coral_generator", "x": 90, "y": 270 }
+  }
+}
+

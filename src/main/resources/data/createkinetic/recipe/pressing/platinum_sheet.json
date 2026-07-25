@@ -1,0 +1,9 @@
+{
+  "type": "create:pressing",
+  "ingredients": [
+    { "item": "createkinetic:platinum_ingot" }
+  ],
+  "results": [
+    { "id": "createkinetic:platinum_sheet" }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "createkinetic:block/solid_burner",
+  "textures": {
+    "north": "createkinetic:block/solid_burner_front_on"
+  }
+}

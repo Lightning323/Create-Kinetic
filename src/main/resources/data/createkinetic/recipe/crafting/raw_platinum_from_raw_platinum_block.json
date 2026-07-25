@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    { "item": "createkinetic:raw_platinum_block" }
+  ],
+  "result": {
+    "id": "createkinetic:raw_platinum",
+    "count": 9
+  }
+}

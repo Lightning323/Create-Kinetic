@@ -1,0 +1,6 @@
+{
+    "fluid": "northstar:methane",
+    "thrust_multiplier": 1.05,
+    "consumption_multiplier": 0.9,
+    "required_mod": "northstar"
+}

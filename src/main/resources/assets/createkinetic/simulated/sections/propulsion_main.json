@@ -1,0 +1,11 @@
+{
+  "priority": 100000,
+  "title": {
+    "text": { "translate": "simulated.simulated_section.propulsion_main" },
+    "background": "#aa1f2f3a",
+    "color": "#ffffffff",
+    "secondary_color": "#ffcfd8dc"
+  },
+  "sprite": "createkinetic:propulsion_banner",
+  "only_animate_on_hover": true
+}

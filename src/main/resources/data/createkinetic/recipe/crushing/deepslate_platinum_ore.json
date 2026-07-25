@@ -1,0 +1,19 @@
+{
+  "type": "create:crushing",
+  "ingredients": [
+    {
+      "item": "createkinetic:deepslate_platinum_ore"
+    }
+  ],
+  "results": [
+    {
+      "id": "create:crushed_raw_platinum"
+    },
+    {
+      "chance": 0.75,
+      "count": 4,
+      "id": "create:experience_nugget"
+    }
+  ],
+  "processingTime": 250
+}

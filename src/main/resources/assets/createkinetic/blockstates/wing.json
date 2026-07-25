@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "createkinetic:block/wing",
+      "x": 180
+    },
+    "facing=up": {
+      "model": "createkinetic:block/wing"
+    },
+    "facing=north": {
+      "model": "createkinetic:block/wing",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "createkinetic:block/wing",
+      "x": 90,
+      "y": 180
+    },
+    "facing=west": {
+      "model": "createkinetic:block/wing",
+      "x": 90,
+      "y": 270
+    },
+    "facing=east": {
+      "model": "createkinetic:block/wing",
+      "x": 90,
+      "y": 90
+    }
+  }
+}

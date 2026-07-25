@@ -1,0 +1,25 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "RCR",
+        "EBE",
+        " R "
+    ],
+    "key": {
+        "R": {
+            "item": "minecraft:redstone"
+        },
+        "C": {
+            "item": "minecraft:comparator"
+        },
+        "E": {
+            "item": "create:electron_tube"
+        },
+        "B": {
+            "item": "create:brass_casing"
+        }
+    },
+    "result": {
+        "id": "createkinetic:redstone_transmission"
+    }
+}

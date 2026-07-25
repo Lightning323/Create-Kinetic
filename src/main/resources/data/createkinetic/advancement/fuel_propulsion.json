@@ -1,0 +1,37 @@
+{
+  "parent": "minecraft:story/root",
+  "display": {
+    "icon": {
+      "id": "createkinetic:thruster"
+    },
+    "title": {
+      "translate": "advancement.createkinetic.fuel_propulsion.title"
+    },
+    "description": {
+      "translate": "advancement.createkinetic.fuel_propulsion.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_thruster": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "createkinetic:thruster"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_thruster"
+    ]
+  ]
+}

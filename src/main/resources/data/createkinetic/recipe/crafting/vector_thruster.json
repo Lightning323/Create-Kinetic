@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PIP",
+    "NGN"
+  ],
+  "key": {
+    "P": { "item": "createkinetic:platinum_sheet" },
+    "I": { "item": "createkinetic:ion_thruster" },
+    "N": { "item": "createkinetic:platinum_nugget" },
+    "G": { "item": "simulated:gimbal_sensor" }
+  },
+  "result": {
+    "id": "createkinetic:vector_thruster",
+    "count": 1
+  }
+}

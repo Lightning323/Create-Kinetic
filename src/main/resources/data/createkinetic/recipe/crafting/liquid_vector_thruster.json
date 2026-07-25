@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CTC",
+    "NGN"
+  ],
+  "key": {
+    "C": { "item": "create:copper_sheet" },
+    "T": { "item": "createkinetic:thruster" },
+    "N": { "item": "create:copper_nugget" },
+    "G": { "item": "simulated:gimbal_sensor" }
+  },
+  "result": {
+    "id": "createkinetic:liquid_vector_thruster",
+    "count": 1
+  }
+}

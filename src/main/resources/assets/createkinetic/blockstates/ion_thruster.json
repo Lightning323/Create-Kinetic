@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "facing=up,multi=false":    { "model": "createkinetic:block/ion_thruster" },
+    "facing=down,multi=false":  { "model": "createkinetic:block/ion_thruster", "x": 180 },
+    "facing=north,multi=false": { "model": "createkinetic:block/ion_thruster", "x": 90 },
+    "facing=south,multi=false": { "model": "createkinetic:block/ion_thruster", "x": 90, "y": 180 },
+    "facing=east,multi=false":  { "model": "createkinetic:block/ion_thruster", "x": 90, "y": 90 },
+    "facing=west,multi=false":  { "model": "createkinetic:block/ion_thruster", "x": 90, "y": 270 },
+    "facing=up,multi=true":     { "model": "createkinetic:block/thruster_empty" },
+    "facing=down,multi=true":   { "model": "createkinetic:block/thruster_empty" },
+    "facing=north,multi=true":  { "model": "createkinetic:block/thruster_empty" },
+    "facing=south,multi=true":  { "model": "createkinetic:block/thruster_empty" },
+    "facing=east,multi=true":   { "model": "createkinetic:block/thruster_empty" },
+    "facing=west,multi=true":   { "model": "createkinetic:block/thruster_empty" }
+  }
+}

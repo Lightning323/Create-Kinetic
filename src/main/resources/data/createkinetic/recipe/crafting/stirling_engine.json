@@ -1,0 +1,25 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "CSC",
+        "AGA",
+        "CCC"
+    ],
+    "key": {
+        "C": {
+            "item": "create:copper_sheet"
+        },
+        "G": {
+            "item": "create:cogwheel"
+        },
+        "S": {
+            "item": "create:shaft"
+        },
+        "A": {
+            "item": "create:andesite_alloy"
+        }
+    },
+    "result": {
+        "id": "createkinetic:stirling_engine"
+    }
+}

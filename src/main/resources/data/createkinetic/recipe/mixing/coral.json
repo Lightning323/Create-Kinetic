@@ -1,0 +1,25 @@
+{
+  "type": "create:mixing",
+  "heat_requirement": "superheated",
+  "ingredients": [
+    {
+      "type": "neoforge:components",
+      "amount": 500,
+      "components": {
+        "create:potion_fluid_bottle_type": "regular",
+        "minecraft:potion_contents": {
+          "potion": "minecraft:healing"
+        }
+      },
+      "fluids": "create:potion"
+    },
+    { "item": "minecraft:redstone" },
+    { "item": "minecraft:blaze_powder" }
+  ],
+  "results": [
+    {
+      "amount": 500,
+      "id": "createkinetic:coral"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PR",
+    "DN"
+  ],
+  "key": {
+    "P": {
+      "item": "createkinetic:platinum_sheet"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "D": {
+      "item": "minecraft:black_dye"
+    },
+    "N": {
+      "item": "createkinetic:platinum_nugget"
+    }
+  },
+  "result": {
+    "id": "createkinetic:cable",
+    "count": 4
+  }
+}

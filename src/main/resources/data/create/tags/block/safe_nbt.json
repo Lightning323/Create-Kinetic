@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "createkinetic:redstone_converter",
+    "createkinetic:redstone_transmission",
+    "createkinetic:tilt_adapter",
+    "createkinetic:platinum_fluid_tank",
+    "createkinetic:platinum_fluid_vessel"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "particle": "createkinetic:block/solid_burner_side",
+    "down": "minecraft:block/blast_furnace_top",
+    "up": "createkinetic:block/solid_burner_top",
+    "north": "createkinetic:block/solid_burner_front",
+    "south": "createkinetic:block/solid_burner_side",
+    "east": "createkinetic:block/solid_burner_side",
+    "west": "createkinetic:block/solid_burner_side"
+  }
+}

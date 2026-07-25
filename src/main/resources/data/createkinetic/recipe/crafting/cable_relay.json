@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "NCN",
+    "CDC",
+    "NCN"
+  ],
+  "key": {
+    "N": {
+      "item": "createkinetic:platinum_nugget"
+    },
+    "C": {
+      "item": "createkinetic:cable"
+    },
+    "D": {
+      "item": "createkinetic:platinum_casing"
+    }
+  },
+  "result": {
+    "id": "createkinetic:cable_relay",
+    "count": 1
+  }
+}

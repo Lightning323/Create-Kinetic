@@ -1,0 +1,16 @@
+{
+  "type": "create:item_application",
+  "ingredients": [
+    {
+      "item": "create:industrial_iron_block"
+    },
+    {
+      "item": "createkinetic:platinum_ingot"
+    }
+  ],
+  "results": [
+    {
+      "id": "createkinetic:platinum_casing"
+    }
+  ]
+}

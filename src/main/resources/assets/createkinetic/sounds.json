@@ -1,0 +1,11 @@
+{
+  "thruster_loop": {
+    "subtitle": "createkinetic.subtitle.thruster_loop",
+    "sounds": [
+      {
+        "name": "createkinetic:thruster_loop",
+        "stream": true
+      }
+    ]
+  }
+}

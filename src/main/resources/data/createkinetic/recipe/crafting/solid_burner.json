@@ -1,0 +1,22 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "CCC",
+        "IBI",
+        "   "
+    ],
+    "key": {
+        "C": {
+            "item": "create:copper_sheet"
+        },
+        "B": {
+            "item": "minecraft:blast_furnace"
+        },
+        "I": {
+            "item": "create:iron_sheet"
+        }
+    },
+    "result": {
+        "id": "createkinetic:solid_burner"
+    }
+}

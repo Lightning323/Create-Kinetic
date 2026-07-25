@@ -1,0 +1,37 @@
+{
+  "parent": "createkinetic:feed_the_fire_621",
+  "display": {
+    "icon": {
+      "id": "createkinetic:tempered_wing"
+    },
+    "title": {
+      "translate": "advancement.createkinetic.mighty_wings.title"
+    },
+    "description": {
+      "translate": "advancement.createkinetic.mighty_wings.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_tempered_wing": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "createkinetic:tempered_wing"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_tempered_wing"
+    ]
+  ]
+}
