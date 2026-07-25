@@ -64,7 +64,7 @@ import org.lightning323.createkinetic.events.ModCapabilityEvents;
 import org.lightning323.createkinetic.events.ModSetupEvents;
 import org.lightning323.createkinetic.network.PropulsionPackets;
 import org.lightning323.createkinetic.particles.ParticleTypes;
-import org.lightning323.createkinetic.assemblerstick.item.ModItems;
+import org.lightning323.createkinetic.content.creative_tools.item.ModItems;
 import org.lightning323.createkinetic.registries.*;
 
 @Mod(value = CreateKinetic.ID)

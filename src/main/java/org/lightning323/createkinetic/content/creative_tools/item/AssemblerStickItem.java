@@ -1,4 +1,4 @@
-package org.lightning323.createkinetic.assemblerstick.item;
+package org.lightning323.createkinetic.content.creative_tools.item;
 
 public class AssemblerStickItem extends CreateStyleTooltipItem {
     public AssemblerStickItem(final Properties properties) {

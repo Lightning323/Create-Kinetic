@@ -1,4 +1,4 @@
-package org.lightning323.createkinetic.assemblerstick.interaction;
+package org.lightning323.createkinetic.content.creative_tools.interaction;
 
 import com.simibubi.create.content.contraptions.glue.SuperGlueEntity;
 import com.simibubi.create.content.schematics.SchematicExport;
@@ -23,7 +23,7 @@ import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import org.lightning323.createkinetic.assemblerstick.item.ModItems;
+import org.lightning323.createkinetic.content.creative_tools.item.ModItems;
 
 import java.nio.file.Files;
 import java.nio.file.Path;

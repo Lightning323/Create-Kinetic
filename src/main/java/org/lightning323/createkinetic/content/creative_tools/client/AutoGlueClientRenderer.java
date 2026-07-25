@@ -1,4 +1,4 @@
-package org.lightning323.createkinetic.assemblerstick.client;
+package org.lightning323.createkinetic.content.creative_tools.client;
 
 import com.simibubi.create.foundation.utility.RaycastHelper;
 import dev.ryanhcode.sable.Sable;
@@ -23,7 +23,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import org.jetbrains.annotations.Nullable;
 import org.lightning323.createkinetic.CreateKinetic;
-import org.lightning323.createkinetic.assemblerstick.item.ModItems;
+import org.lightning323.createkinetic.content.creative_tools.item.ModItems;
 
 import java.util.List;
 import java.util.Optional;

@@ -1,4 +1,4 @@
-package org.lightning323.createkinetic.assemblerstick.interaction;
+package org.lightning323.createkinetic.content.creative_tools.interaction;
 
 import com.simibubi.create.content.contraptions.AssemblyException;
 import com.simibubi.create.content.contraptions.glue.SuperGlueEntity;
@@ -32,7 +32,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import org.joml.Vector3d;
 import org.lightning323.createkinetic.CreateKinetic;
-import org.lightning323.createkinetic.assemblerstick.item.ModItems;
+import org.lightning323.createkinetic.content.creative_tools.item.ModItems;
 
 import java.util.ArrayDeque;
 import java.util.HashSet;

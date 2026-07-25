@@ -4,7 +4,7 @@ import dev.simulated_team.simulated.registrate.SimulatedRegistrate;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import org.lightning323.createkinetic.CreateKinetic;
-import org.lightning323.createkinetic.assemblerstick.item.ModItems;
+import org.lightning323.createkinetic.content.creative_tools.item.ModItems;
 
 import java.util.function.Supplier;
 

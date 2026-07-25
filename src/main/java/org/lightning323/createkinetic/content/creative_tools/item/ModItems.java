@@ -1,4 +1,4 @@
-package org.lightning323.createkinetic.assemblerstick.item;
+package org.lightning323.createkinetic.content.creative_tools.item;
 
 import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.IEventBus;

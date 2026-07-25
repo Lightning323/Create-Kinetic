@@ -1,4 +1,4 @@
-package org.lightning323.createkinetic.assemblerstick.item;
+package org.lightning323.createkinetic.content.creative_tools.item;
 
 import com.simibubi.create.foundation.item.ItemDescription;
 import net.createmod.catnip.lang.FontHelper.Palette;
