@@ -19,7 +19,6 @@ import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.api.distmarker.Dist;
@@ -55,11 +54,11 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Supplier;
 
-import static org.lightning323.createkinetic.CreateKinetic.MOD_ID;
+import static org.lightning323.createkinetic.CreateKinetic.ID;
 
-@Mod(value = CreateKinetic.MOD_ID, dist = {Dist.CLIENT})
+@Mod(value = CreateKinetic.ID, dist = {Dist.CLIENT})
 public class KineticClient {
-    private static final KeyMapping OPEN_TUNING = new KeyMapping("key." + CreateKinetic.MOD_ID + ".open_tuning", InputConstants.Type.KEYSYM, 74, "key.categories." + CreateKinetic.MOD_ID);
+    private static final KeyMapping OPEN_TUNING = new KeyMapping("key." + CreateKinetic.ID + ".open_tuning", InputConstants.Type.KEYSYM, 74, "key.categories." + CreateKinetic.ID);
 
 
     private static void registerClientHandlers(IEventBus modEventBus) {
@@ -82,7 +81,7 @@ public class KineticClient {
 
     private static void clientSetup(FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
-            TrackRenderTuning.load(Minecraft.getInstance().gameDirectory.toPath().resolve("config/" + CreateKinetic.MOD_ID + "-render-tuning.txt"));
+            TrackRenderTuning.load(Minecraft.getInstance().gameDirectory.toPath().resolve("config/" + CreateKinetic.ID + "-render-tuning.txt"));
             BlockEntityRenderers.register((BlockEntityType) ((BlockEntityType) OffroadBlockEntityTypes.WHEEL_MOUNT.get()), AdjustableWheelMountRenderer::new);
             BlockEntityRenderers.register((BlockEntityType) ((BlockEntityType) KineticBlockEntityTypes.SABLE_TRACK.get()), SableTrackRenderer::new);
         });
@@ -100,7 +99,7 @@ public class KineticClient {
                 .neverSkipVanillaRender()
                 .apply();
 
-        BaseConfigScreen.setDefaultActionFor(MOD_ID, (base) -> base.withButtonLabels("Client Settings", "Common Settings", "Common Settings").withSpecs(Config.CLIENT_SPEC, Config.SPEC, Config.SPEC));
+        BaseConfigScreen.setDefaultActionFor(ID, (base) -> base.withButtonLabels("Client Settings", "Common Settings", "Common Settings").withSpecs(Config.CLIENT_SPEC, Config.SPEC, Config.SPEC));
     }
 
     private static void registerKeys(RegisterKeyMappingsEvent event) {
@@ -123,14 +122,14 @@ public class KineticClient {
 
     @SubscribeEvent
     public static void onLoadComplete(FMLLoadCompleteEvent event) {
-        ModContainer container = (ModContainer) ModList.get().getModContainerById(MOD_ID).orElseThrow(() -> new IllegalStateException("Aeroworks mod container missing on LoadComplete"));
-        Supplier<IConfigScreenFactory> factory = () -> (mc, previousScreen) -> new BaseConfigScreen(previousScreen, MOD_ID);
+        ModContainer container = (ModContainer) ModList.get().getModContainerById(ID).orElseThrow(() -> new IllegalStateException("Aeroworks mod container missing on LoadComplete"));
+        Supplier<IConfigScreenFactory> factory = () -> (mc, previousScreen) -> new BaseConfigScreen(previousScreen, ID);
         container.registerExtensionPoint(IConfigScreenFactory.class, factory);
     }
 
     @SubscribeEvent
     public static void onRegisterGuiLayers(RegisterGuiLayersEvent event) {
-        event.registerAbove(VanillaGuiLayers.HOTBAR, ResourceLocation.fromNamespaceAndPath(MOD_ID, "joystick_hud"), new JoystickHudOverlay());
+        event.registerAbove(VanillaGuiLayers.HOTBAR, ResourceLocation.fromNamespaceAndPath(ID, "joystick_hud"), new JoystickHudOverlay());
     }
 
     @SubscribeEvent
@@ -150,7 +149,7 @@ public class KineticClient {
 
     @SubscribeEvent
     public static void onModelBakingComplete(ModelEvent.ModifyBakingResult event) {
-        ResourceLocation itemRl = ResourceLocation.fromNamespaceAndPath(MOD_ID, "gyroscope");
+        ResourceLocation itemRl = ResourceLocation.fromNamespaceAndPath(ID, "gyroscope");
         ModelResourceLocation key = new ModelResourceLocation(itemRl, "inventory");
         Map<ModelResourceLocation, BakedModel> registry = event.getModels();
         BakedModel original = (BakedModel) registry.get(key);
@@ -172,7 +171,7 @@ public class KineticClient {
 
     private static void registerSectionItem(ResourceLocation sectionId, String itemPath, Supplier<Item> itemSupplier) {
         SimulatedRegistrate.TAB_ITEMS.add(itemSupplier);
-        SimulatedRegistrate.ITEM_TO_SECTION.put(ResourceLocation.fromNamespaceAndPath(MOD_ID, itemPath), sectionId);
+        SimulatedRegistrate.ITEM_TO_SECTION.put(ResourceLocation.fromNamespaceAndPath(ID, itemPath), sectionId);
     }
 
     public static void buildContents(BuildCreativeModeTabContentsEvent event) {

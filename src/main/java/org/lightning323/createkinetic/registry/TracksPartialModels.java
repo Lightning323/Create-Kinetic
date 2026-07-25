@@ -19,7 +19,7 @@ public class TracksPartialModels {
     public static final PartialModel TRACKWORK_WRAPPED_LINK = TracksPartialModels.block("wrapped_link");
 
     private static PartialModel block(String path) {
-        return PartialModel.of((ResourceLocation)ResourceLocation.tryBuild((String) CreateKinetic.MOD_ID, (String)("block/" + path)));
+        return PartialModel.of((ResourceLocation)ResourceLocation.tryBuild((String) CreateKinetic.ID, (String)("block/" + path)));
     }
 
     public static void init() {

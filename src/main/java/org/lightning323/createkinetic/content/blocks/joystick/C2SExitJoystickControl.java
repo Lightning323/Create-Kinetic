@@ -12,7 +12,7 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
 import org.lightning323.createkinetic.CreateKinetic;
 
 public record C2SExitJoystickControl(BlockPos pos) implements CustomPacketPayload {
-   public static final Type<C2SExitJoystickControl> TYPE = new Type(ResourceLocation.fromNamespaceAndPath(CreateKinetic.MOD_ID, "exit_joystick_control"));
+   public static final Type<C2SExitJoystickControl> TYPE = new Type(ResourceLocation.fromNamespaceAndPath(CreateKinetic.ID, "exit_joystick_control"));
    public static final StreamCodec<FriendlyByteBuf, C2SExitJoystickControl> STREAM_CODEC;
 
    public Type<? extends CustomPacketPayload> type() {

@@ -69,14 +69,11 @@
  */
 package org.lightning323.createkinetic.content.blocks.sable_track;
 
-import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.ValueBoxTransform;
-import com.simibubi.create.foundation.blockEntity.behaviour.ValueSettingsBoard;
-import com.simibubi.create.foundation.blockEntity.behaviour.ValueSettingsFormatter;
 import com.simibubi.create.foundation.blockEntity.behaviour.scrollValue.ScrollValueBehaviour;
 import dev.engine_room.flywheel.lib.transform.PoseTransformStack;
 import dev.engine_room.flywheel.lib.transform.TransformStack;
@@ -100,11 +97,9 @@ import net.minecraft.core.*;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Clearable;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
@@ -119,15 +114,11 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
-import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3d;
 import org.joml.Vector3dc;
 import org.lightning323.createkinetic.CreateKinetic;
-import org.lightning323.createkinetic.client.KineticClient;
-import org.lightning323.createkinetic.network.SelectTrackTuningModePayload;
-import org.lightning323.createkinetic.registry.KineticItems;
 
 import java.util.Collection;
 import java.util.List;
@@ -136,7 +127,7 @@ public class SableTrackBlockEntity
         extends KineticBlockEntity
         implements BlockEntitySubLevelActor,
         Clearable {
-    private static final MutableComponent SCROLL_OPTION_TITLE = Component.translatable((String) CreateKinetic.MOD_ID + ".scroll_option.track_suspension_strength");
+    private static final MutableComponent SCROLL_OPTION_TITLE = Component.translatable((String) CreateKinetic.ID + ".scroll_option.track_suspension_strength");
     private static final double MAX_LATERAL_OFFSET = 1.0;
     private static final double LATERAL_OFFSET_STEP = 0.125;
     private static final double MAX_LONGITUDINAL_OFFSET = 1.0;

@@ -188,7 +188,16 @@ repositories {
 
 dependencies {
     //Create
-    implementation("com.simibubi.create:create-${minecraft_version}:${create_version}:slim") { transitive = false }
+    implementation("com.simibubi.create:create-${minecraft_version}:${create_version}") {
+        // Exclude optional integrations we do not ship/use locally
+        exclude group: "com.tterrag.registrate", module: "Registrate"
+        exclude group: "dev.ftb.mods", module: "ftb-chunks-neoforge"
+        exclude group: "dev.ftb.mods", module: "ftb-teams-neoforge"
+        exclude group: "dev.ftb.mods", module: "ftb-library-neoforge"
+        exclude group: "maven.modrinth", module: "journeymap"
+        exclude group: "info.journeymap", module: "journeymap-api-neoforge"
+        exclude group: "dev.architectury", module: "architectury-neoforge"
+    }
 
     implementation("com.tterrag.registrate:Registrate:${registrate_version}")
     implementation "net.createmod.ponder:ponder-neoforge:${ponder_version}+mc${minecraft_version}"
@@ -217,27 +226,21 @@ dependencies {
     implementation("dev.ryanhcode.sable:sable-neoforge-${minecraft_version}:${sable_version}")
     api("dev.ryanhcode.sable-companion:sable-companion-common-${minecraft_version}:${sable_companion_version}")
     implementation "dev.ryanhcode.sable-companion:sable-companion-common-${minecraft_version}:${sable_companion_version}"
-//    compileOnly "dev.ryanhcode.sable:sable-common-${minecraft_version}:${sable_version}"
-//    runtimeOnly files("libs/sable-neoforge-${minecraft_version}-${sable_version}.jar")
 
     //Simulated https://maven.ryanhcode.dev/#/releases/dev/ryanhcode
     //https://maven.ryanhcode.dev/#/releases/dev/simulated_team/simulated/simulated-neoforge-1.21.1
     implementation "dev.simulated_team.simulated:simulated-neoforge-1.21.1:${simulated_version}"
-
     //https://maven.ryanhcode.dev/#/releases/dev/eriksonn/aeronautics/aeronautics-neoforge-1.21.1
     implementation("dev.eriksonn.aeronautics:aeronautics-neoforge-1.21.1:${aeronautics_version}")
-//    implementation files("libs/create-aeronautics-bundled-${minecraft_version}-${aeronautics_version}.jar")
-
     //https://maven.ryanhcode.dev/#/releases/dev/ryanhcode/offroad/offroad-neoforge-1.21.1/1.2.1
     implementation "dev.ryanhcode.offroad:offroad-neoforge-1.21.1:${offroad_version}"
 
-//    compileOnly files("libs/simulated-neoforge-${minecraft_version}-${simulated_version}.jar")
-//
-
-    //other
+    //other mods
     runtimeOnly files("libs/createaddition-1.5.10.jar")
     runtimeOnly files("libs/Jade-${minecraft_version}-NeoForge-15.10.5.jar")
     runtimeOnly "curse.maven:forge-config-api-port-547434:7213611"
+
+    //libraries
     implementation "com.fasterxml.jackson.core:jackson-annotations:2.18.2"
     implementation "org.joml:joml-primitives:1.10.0"
 }

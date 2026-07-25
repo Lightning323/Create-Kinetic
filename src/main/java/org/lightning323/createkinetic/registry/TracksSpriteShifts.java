@@ -27,7 +27,7 @@ public class TracksSpriteShifts {
     }
 
     private static SpriteShiftEntry get(String originalLocation, String targetLocation) {
-        return SpriteShifter.get((ResourceLocation) ResourceLocation.tryBuild((String) CreateKinetic.MOD_ID, (String) originalLocation), (ResourceLocation) ResourceLocation.tryBuild((String) CreateKinetic.MOD_ID, (String) targetLocation));
+        return SpriteShifter.get((ResourceLocation) ResourceLocation.tryBuild((String) CreateKinetic.ID, (String) originalLocation), (ResourceLocation) ResourceLocation.tryBuild((String) CreateKinetic.ID, (String) targetLocation));
     }
 
     private static String textureName(DyeColor color) {

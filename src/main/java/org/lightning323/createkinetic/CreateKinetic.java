@@ -21,6 +21,7 @@
  */
 package org.lightning323.createkinetic;
 
+import com.simibubi.create.compat.Mods;
 import com.simibubi.create.foundation.item.ItemDescription;
 import com.simibubi.create.foundation.item.KineticStats;
 import com.simibubi.create.foundation.item.TooltipHelper;
@@ -57,14 +58,27 @@ import org.lightning323.createkinetic.network.RequestOpenTuningPayload;
 import org.lightning323.createkinetic.network.SelectTrackTuningModePayload;
 import org.lightning323.createkinetic.registry.KineticMenuTypes;
 
-import static org.lightning323.createkinetic.CreateKinetic.MOD_ID;
+//import org.lightning323.createkinetic.compat.computercraft.CCProxy;
+//import org.lightning323.createkinetic.events.ModCapabilityEvents;
+//import org.lightning323.createkinetic.events.ModSetupEvents;
+//import org.lightning323.createkinetic.network.PropulsionPackets;
+//import org.lightning323.createkinetic.particles.ParticleTypes;
+//import org.lightning323.createkinetic.assemblerstick.item.ModItems;
+//import com.simibubi.create.compat.Mods;
+//
+//import net.minecraft.resources.ResourceLocation;
+//import net.neoforged.bus.api.IEventBus;
+//import net.neoforged.fml.ModContainer;
+//import net.neoforged.fml.common.Mod;
+//import net.neoforged.fml.config.ModConfig;
+//import org.lightning323.createkinetic.registries.*;
 
-@Mod(value = MOD_ID)
+@Mod(value = CreateKinetic.ID)
 public class CreateKinetic {
-    public static final String MOD_ID = "createkinetic";
+    public static final String ID = "createkinetic";
     public static final String trackHiddenTag = "tracks_hidden";
 
-    private static final NonNullSupplier<KineticRegistrate> REGISTRATE = KineticRegistrate.getKineticRegistrate(MOD_ID);
+    private static final NonNullSupplier<KineticRegistrate> REGISTRATE = KineticRegistrate.getKineticRegistrate(ID);
 
     public static KineticRegistrate getRegistrate() {
         return REGISTRATE.get();
@@ -89,10 +103,36 @@ public class CreateKinetic {
         NeoForge.EVENT_BUS.register(JoystickSessions.class);
         NeoForge.EVENT_BUS.register(GyroscopeController.class);
 
+
+//        //Propulsion
+//        modBus.addListener(ModCapabilityEvents::registerCapabilities);
+//        modBus.addListener(ModSetupEvents::onCommonSetup);
+//        //Content
+//        ParticleTypes.register(modBus);
+//        PropulsionBlocks.register(modBus);
+//        PropulsionBlockEntities.register(modBus);
+//        PropulsionItems.register(modBus);
+//        ModItems.register(modBus);
+//        PropulsionSoundEvents.register(modBus);
+//        PropulsionFluids.register(modBus);
+//        PropulsionPartialModels.register();
+//        PropulsionCreativeTab.registerAeronauticsSections();
+//        modBus.addListener(PropulsionPackets::register);
+//        PropulsionDisplaySources.register();
+//        PropulsionSableBridge.init();
+//
+//        //Compat
+//        Mods.COMPUTERCRAFT.executeIfInstalled(() -> CCProxy::register);
+//
+//        //Config
+//        modContainer.registerConfig(ModConfig.Type.COMMON, PropulsionConfig.COMMON_SPEC, ID + "-common.toml");
+//        modContainer.registerConfig(ModConfig.Type.CLIENT, PropulsionConfig.CLIENT_SPEC, ID + "-client.toml");
+//        PropulsionDefaultStress.init(PropulsionConfig.COMMON_SPEC);
+
     }
 
     private static void registerPayloads(RegisterPayloadHandlersEvent event) {
-        PayloadRegistrar registrar = event.registrar(MOD_ID).versioned("1.0.0");
+        PayloadRegistrar registrar = event.registrar(ID).versioned("1.0.0");
         registrar.playToServer(RequestOpenTuningPayload.TYPE, RequestOpenTuningPayload.STREAM_CODEC, RequestOpenTuningPayload::handle);
         registrar.playToServer(SelectTrackTuningModePayload.TYPE, SelectTrackTuningModePayload.STREAM_CODEC, SelectTrackTuningModePayload::handle);
         registrar.playToClient(OpenTuningScreenPayload.TYPE, OpenTuningScreenPayload.STREAM_CODEC, (payload, context) -> context.enqueueWork(() -> {
@@ -114,7 +154,10 @@ public class CreateKinetic {
     }
 
     public static ResourceLocation path(String path) {
-        return ResourceLocation.tryBuild(MOD_ID, path);
+        return ResourceLocation.tryBuild(ID, path);
+    }
+    public static ResourceLocation loc(String loc) {
+        return ResourceLocation.fromNamespaceAndPath(ID, loc);
     }
 }
 

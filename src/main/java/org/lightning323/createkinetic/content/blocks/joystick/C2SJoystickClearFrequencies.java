@@ -12,7 +12,7 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
 import org.lightning323.createkinetic.CreateKinetic;
 
 public record C2SJoystickClearFrequencies(BlockPos pos) implements CustomPacketPayload {
-   public static final Type<C2SJoystickClearFrequencies> TYPE = new Type(ResourceLocation.fromNamespaceAndPath(CreateKinetic.MOD_ID, "joystick_clear_frequencies"));
+   public static final Type<C2SJoystickClearFrequencies> TYPE = new Type(ResourceLocation.fromNamespaceAndPath(CreateKinetic.ID, "joystick_clear_frequencies"));
    public static final StreamCodec<FriendlyByteBuf, C2SJoystickClearFrequencies> STREAM_CODEC;
 
    public Type<? extends CustomPacketPayload> type() {
