@@ -140,7 +140,7 @@ public abstract class AbstractBurnerBlockEntity extends SmartBlockEntity impleme
     @Override
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
         CreateLang.builder()
-            .add(Component.translatable("createpropulsion.gui.goggles.title.burner_stats"))
+            .add(Component.translatable("createkinetic.gui.goggles.title.burner_stats"))
             .style(ChatFormatting.WHITE)
             .forGoggles(tooltip);
         addHeatInfoToTooltip(tooltip);
@@ -155,22 +155,22 @@ public abstract class AbstractBurnerBlockEntity extends SmartBlockEntity impleme
         String key = null;
 
         switch (heatLevelName) {
-            case COLD: color = ChatFormatting.BLUE; key = "createpropulsion.gui.goggles.burner.heat.cold"; break;
-            case WARM: color = ChatFormatting.GOLD; key = "createpropulsion.gui.goggles.burner.heat.warm"; break;
-            case HOT: color = ChatFormatting.GOLD; key = "createpropulsion.gui.goggles.burner.heat.hot"; break;
-            case SEARING: color = ChatFormatting.RED; key = "createpropulsion.gui.goggles.burner.heat.searing"; break;
+            case COLD: color = ChatFormatting.BLUE; key = "createkinetic.gui.goggles.burner.heat.cold"; break;
+            case WARM: color = ChatFormatting.GOLD; key = "createkinetic.gui.goggles.burner.heat.warm"; break;
+            case HOT: color = ChatFormatting.GOLD; key = "createkinetic.gui.goggles.burner.heat.hot"; break;
+            case SEARING: color = ChatFormatting.RED; key = "createkinetic.gui.goggles.burner.heat.searing"; break;
             default: color = ChatFormatting.BLUE; break;
         }
 
         //Heat level
         if (key != null)
-            CreateLang.builder().add(Component.translatable("createpropulsion.gui.goggles.burner.status")).text(": ").add(CreateLang.builder().add(Component.translatable(key)).style(color)).forGoggles(tooltip);
+            CreateLang.builder().add(Component.translatable("createkinetic.gui.goggles.burner.status")).text(": ").add(CreateLang.builder().add(Component.translatable(key)).style(color)).forGoggles(tooltip);
 
         //Thermostat
         CreateLang.builder()
-            .add(Component.translatable("createpropulsion.gui.goggles.burner.thermostat"))
+            .add(Component.translatable("createkinetic.gui.goggles.burner.thermostat"))
             .text(": ")
-            .add(CreateLang.builder().add(Component.translatable(!isPowered ? "createpropulsion.gui.goggles.burner.thermostat.on" : "createpropulsion.gui.goggles.burner.thermostat.off"))
+            .add(CreateLang.builder().add(Component.translatable(!isPowered ? "createkinetic.gui.goggles.burner.thermostat.on" : "createkinetic.gui.goggles.burner.thermostat.off"))
                 .style(!isPowered ? ChatFormatting.GREEN : ChatFormatting.RED))
             .forGoggles(tooltip);
     }

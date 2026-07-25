@@ -186,7 +186,7 @@ public class ThrusterFuelManager extends SimpleJsonResourceReloadListener {
 
     /**
      * Re-applies datapack thruster fuels using current common config (efficiency / burn rate / additional lines).
-     * Called when {@code createpropulsion-common.toml} reloads without a full datapack reload.
+     * Called when {@code common.toml} reloads without a full datapack reload.
      */
     public static void rebuildThrusterFuelsAfterCommonConfigReload() {
         if (cachedThrusterFuelDatapack == null) {

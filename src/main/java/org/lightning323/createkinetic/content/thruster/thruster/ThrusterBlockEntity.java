@@ -861,15 +861,15 @@ public class ThrusterBlockEntity extends AbstractThrusterBlockEntity {
     @Override
     protected LangBuilder getGoggleStatus() {
         if (fluidStack().isEmpty()) {
-            return CreateLang.builder().add(Component.translatable("createpropulsion.gui.goggles.thruster.status.no_fuel")).style(ChatFormatting.RED);
+            return CreateLang.builder().add(Component.translatable("createkinetic.gui.goggles.thruster.status.no_fuel")).style(ChatFormatting.RED);
         } else if (!validFluid()) {
-            return CreateLang.builder().add(Component.translatable("createpropulsion.gui.goggles.thruster.status.wrong_fuel")).style(ChatFormatting.RED);
+            return CreateLang.builder().add(Component.translatable("createkinetic.gui.goggles.thruster.status.wrong_fuel")).style(ChatFormatting.RED);
         } else if (!isPowered()) {
-            return CreateLang.builder().add(Component.translatable("createpropulsion.gui.goggles.thruster.status.not_powered")).style(ChatFormatting.GOLD);
+            return CreateLang.builder().add(Component.translatable("createkinetic.gui.goggles.thruster.status.not_powered")).style(ChatFormatting.GOLD);
         } else if (getEmptyBlocks() == 0) {
-            return CreateLang.builder().add(Component.translatable("createpropulsion.gui.goggles.thruster.obstructed")).style(ChatFormatting.RED);
+            return CreateLang.builder().add(Component.translatable("createkinetic.gui.goggles.thruster.obstructed")).style(ChatFormatting.RED);
         } else {
-            return CreateLang.builder().add(Component.translatable("createpropulsion.gui.goggles.thruster.status.working")).style(ChatFormatting.GREEN);
+            return CreateLang.builder().add(Component.translatable("createkinetic.gui.goggles.thruster.status.working")).style(ChatFormatting.GREEN);
         }
     }
 
@@ -899,10 +899,10 @@ public class ThrusterBlockEntity extends AbstractThrusterBlockEntity {
                 boolean hasOx = ctrl.validOxidizer();
                 // Header line for base multiblock savings (always active for multiblocks).
                 CreateLang.builder()
-                        .add(Component.translatable("createpropulsion.gui.goggles.thruster.bulk_bonus"))
+                        .add(Component.translatable("createkinetic.gui.goggles.thruster.bulk_bonus"))
                         .text(":")
                         .space()
-                        .add(Component.translatable("createpropulsion.gui.goggles.thruster.bulk_bonus_active").withStyle(ChatFormatting.GREEN))
+                        .add(Component.translatable("createkinetic.gui.goggles.thruster.bulk_bonus_active").withStyle(ChatFormatting.GREEN))
                         .style(ChatFormatting.AQUA)
                         .forGoggles(tooltip);
 
@@ -922,7 +922,7 @@ public class ThrusterBlockEntity extends AbstractThrusterBlockEntity {
                             .add(Component.literal("Oxidizer Bonus: ").withStyle(ChatFormatting.GRAY))
                             .add(hasOx
                                     ? Component.literal("-" + oxSavePct + "%").withStyle(ChatFormatting.AQUA)
-                                    : Component.translatable("createpropulsion.gui.goggles.thruster.bulk_bonus_inactive").withStyle(ChatFormatting.RED))
+                                    : Component.translatable("createkinetic.gui.goggles.thruster.bulk_bonus_inactive").withStyle(ChatFormatting.RED))
                             .forGoggles(tooltip);
                 }
 
@@ -931,11 +931,11 @@ public class ThrusterBlockEntity extends AbstractThrusterBlockEntity {
                 if (thrustBonusPct > 0) {
                     CreateLang.builder()
                             .add(Component.literal("  "))
-                            .add(Component.translatable("createpropulsion.gui.goggles.thruster.thrust_bonus").withStyle(ChatFormatting.GRAY))
+                            .add(Component.translatable("createkinetic.gui.goggles.thruster.thrust_bonus").withStyle(ChatFormatting.GRAY))
                             .add(Component.literal(": ").withStyle(ChatFormatting.GRAY))
                             .add(hasOx
                                     ? Component.literal("+" + thrustBonusPct + "%").withStyle(ChatFormatting.AQUA)
-                                    : Component.translatable("createpropulsion.gui.goggles.thruster.bulk_bonus_inactive").withStyle(ChatFormatting.RED))
+                                    : Component.translatable("createkinetic.gui.goggles.thruster.bulk_bonus_inactive").withStyle(ChatFormatting.RED))
                             .forGoggles(tooltip);
                 }
             }
@@ -945,13 +945,13 @@ public class ThrusterBlockEntity extends AbstractThrusterBlockEntity {
 
         // --- Fuel tank (always shown) ---
         addFluidContainerTooltip(tooltip,
-                Component.translatable("createpropulsion.gui.goggles.thruster.fuel_label"),
+                Component.translatable("createkinetic.gui.goggles.thruster.fuel_label"),
                 ctrl.tank.getPrimaryHandler(), ctrl.lastConsumedMbPerTick);
 
         // --- Oxidizer tank: multiblock only ---
         if (ctrl.isMultiblock() && ctrl.oxidizerTank != null) {
             addFluidContainerTooltip(tooltip,
-                    Component.translatable("createpropulsion.gui.goggles.thruster.oxidizer_label"),
+                    Component.translatable("createkinetic.gui.goggles.thruster.oxidizer_label"),
                     ctrl.oxidizerTank.getPrimaryHandler(), ctrl.lastOxidizerConsumedMbPerTick);
         }
     }

@@ -19,8 +19,8 @@ public class TooltipModifiers {
     private static final HashMap<Item, String> conditionKeyLookup = new HashMap<>();
 
     static {
-        summaryKeyLookup.put(PropulsionBlocks.THRUSTER_BLOCK.get().asItem(), "createpropulsion.tooltip.shared.thruster_summary");
-        summaryKeyLookup.put(PropulsionBlocks.CREATIVE_THRUSTER_BLOCK.get().asItem(), "createpropulsion.tooltip.shared.thruster_summary");
+        summaryKeyLookup.put(PropulsionBlocks.THRUSTER_BLOCK.get().asItem(), "createkinetic.tooltip.shared.thruster_summary");
+        summaryKeyLookup.put(PropulsionBlocks.CREATIVE_THRUSTER_BLOCK.get().asItem(), "createkinetic.tooltip.shared.thruster_summary");
 
         //Thruster
         tooltipModificationLookup.put(PropulsionBlocks.THRUSTER_BLOCK.get().asItem(), (payload) -> {

@@ -35,14 +35,14 @@ public class CreativeThrusterPowerScrollValueBehaviour extends ScrollValueBehavi
     }
 
     public CreativeThrusterPowerScrollValueBehaviour(SmartBlockEntity be, com.simibubi.create.foundation.blockEntity.behaviour.ValueBoxTransform slot, DoubleSupplier maxThrustSupplier) {
-        super(Component.translatable("createpropulsion.gui.creative_thruster.power_behaviour"), be, slot);
+        super(Component.translatable("createkinetic.gui.creative_thruster.power_behaviour"), be, slot);
         this.maxThrustSupplier = maxThrustSupplier;
         between(0, TOTAL_STEPS - 1); //Why is this even a thing :\
     }
 
     @Override
     public ValueSettingsBoard createBoard(Player player, BlockHitResult hitResult) {
-        ImmutableList<Component> row = ImmutableList.of(Component.translatable("createpropulsion.gui.goggles.thruster.unit_pn"));
+        ImmutableList<Component> row = ImmutableList.of(Component.translatable("createkinetic.gui.goggles.thruster.unit_pn"));
         return new ValueSettingsBoard(label, TOTAL_STEPS - 1, 10, row, new ValueSettingsFormatter(this::formatBoardValue));
     }
 
@@ -66,7 +66,7 @@ public class CreativeThrusterPowerScrollValueBehaviour extends ScrollValueBehavi
         double forceInKN = (settings.value() + 1) * getForcePerStep();
         return CreateLang.builder()
             .add(CreateLang.number((int) forceInKN))
-            .add(Component.translatable("createpropulsion.gui.goggles.thruster.unit_pn"))
+            .add(Component.translatable("createkinetic.gui.goggles.thruster.unit_pn"))
             .component();
     }
 

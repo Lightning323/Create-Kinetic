@@ -355,7 +355,7 @@ public class PropulsionConfig {
 
     private static List<String> defaultFuelProperties() {
         return new ArrayList<>(List.of(
-                "createpropulsion:turpentine=100,150",
+                "createkinetic:turpentine=100,150",
                 "minecraft:lava=75,100",
                 "createdieselgenerators:plant_oil=55,170",
                 "immersiveengineering:plantoil=55,170",
@@ -386,7 +386,7 @@ public class PropulsionConfig {
     }
 
     private static List<String> defaultCoralFuelConversionRates() {
-        return new ArrayList<>(List.of("createpropulsion:coral=500"));
+        return new ArrayList<>(List.of("createkinetic:coral=500"));
     }
 
     private static String configKeyForFluidId(String fluidId) {

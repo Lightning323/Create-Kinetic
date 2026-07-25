@@ -33,7 +33,7 @@ public class RedstoneConverterBlockEntity extends SmartBlockEntity {
     @Override
     public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
         outputStrength = new ScrollValueBehaviour(
-            Component.translatable("createpropulsion.redstone_converter.output_strength"),
+            Component.translatable("createkinetic.redstone_converter.output_strength"),
             this,
             new ConverterValueBoxSlot()
         ).between(1, 15);

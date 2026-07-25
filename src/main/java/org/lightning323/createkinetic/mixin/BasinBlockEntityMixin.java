@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(BasinBlockEntity.class)
 public class BasinBlockEntityMixin {
     @Inject(method = "getHeatLevelOf", at = @At("RETURN"), cancellable = true)
-    private static void createpropulsion$checkCustomBurners(BlockState state, CallbackInfoReturnable<BlazeBurnerBlock.HeatLevel> cir) {
+    private static void kinetic$checkCustomBurners(BlockState state, CallbackInfoReturnable<BlazeBurnerBlock.HeatLevel> cir) {
         if (cir.getReturnValue() == BlazeBurnerBlock.HeatLevel.NONE 
                 && state.getBlock() instanceof AbstractBurnerBlock
                 && PropulsionConfig.BURNERS_POWER_HEATED_MIXERS.get()) {

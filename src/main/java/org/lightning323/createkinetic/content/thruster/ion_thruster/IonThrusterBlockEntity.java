@@ -409,14 +409,14 @@ public class IonThrusterBlockEntity extends ThrusterBlockEntity {
     @Override
     protected LangBuilder getGoggleStatus() {
         if (this.getThrottle() <= 0.0d) {
-            return CreateLang.builder().add(Component.translatable("createpropulsion.gui.goggles.thruster.status.not_powered"))
+            return CreateLang.builder().add(Component.translatable("createkinetic.gui.goggles.thruster.status.not_powered"))
                     .style(ChatFormatting.GOLD);
         }
         if (this.getTotalEnergyStoredFe() <= 0) {
-            return CreateLang.builder().add(Component.translatable("createpropulsion.gui.goggles.thruster.status.no_energy"))
+            return CreateLang.builder().add(Component.translatable("createkinetic.gui.goggles.thruster.status.no_energy"))
                     .style(ChatFormatting.RED);
         }
-        return CreateLang.builder().add(Component.translatable("createpropulsion.gui.goggles.thruster.status.working"))
+        return CreateLang.builder().add(Component.translatable("createkinetic.gui.goggles.thruster.status.working"))
                 .style(ChatFormatting.GREEN);
     }
 
@@ -427,7 +427,7 @@ public class IonThrusterBlockEntity extends ThrusterBlockEntity {
             int bonusPct = Math.round((getIonMultiblockThrustMultiplier(width) - 1.0f) * 100.0f);
             if (bonusPct > 0) {
                 CreateLang.builder()
-                        .add(Component.translatable("createpropulsion.gui.goggles.thruster.thrust_bonus"))
+                        .add(Component.translatable("createkinetic.gui.goggles.thruster.thrust_bonus"))
                         .text(": ")
                         .add(Component.literal("+" + bonusPct + "%").withStyle(ChatFormatting.AQUA))
                         .style(ChatFormatting.WHITE)
@@ -437,7 +437,7 @@ public class IonThrusterBlockEntity extends ThrusterBlockEntity {
 
         // Label line: "Energy Storage:"
         CreateLang.builder()
-                .add(Component.translatable("createpropulsion.gui.goggles.thruster.energy_container"))
+                .add(Component.translatable("createkinetic.gui.goggles.thruster.energy_container"))
                 .style(ChatFormatting.WHITE)
                 .forGoggles(tooltip);
 
@@ -466,7 +466,7 @@ public class IonThrusterBlockEntity extends ThrusterBlockEntity {
             obstructionEfficiency = calculateObstructionEffect() * 100;
             tooltipColor = GoggleUtils.efficiencyColor(obstructionEfficiency);
             CreateLang.builder()
-                    .add(Component.translatable("createpropulsion.gui.goggles.thruster.obstructed"))
+                    .add(Component.translatable("createkinetic.gui.goggles.thruster.obstructed"))
                     .space()
                     .add(CreateLang.text(GoggleUtils.makeObstructionBar(getEmptyBlocks(), scanLength)))
                     .style(tooltipColor)
@@ -474,20 +474,20 @@ public class IonThrusterBlockEntity extends ThrusterBlockEntity {
         }
 
         CreateLang.builder()
-                .add(Component.translatable("createpropulsion.gui.goggles.thruster.efficiency")).text(": ")
+                .add(Component.translatable("createkinetic.gui.goggles.thruster.efficiency")).text(": ")
                 .add(CreateLang.number(obstructionEfficiency))
                 .add(CreateLang.text("%"))
                 .style(tooltipColor)
                 .forGoggles(tooltip);
 
         CreateLang.builder()
-                .add(Component.translatable("createpropulsion.gui.goggles.thruster.thrust_output"))
+                .add(Component.translatable("createkinetic.gui.goggles.thruster.thrust_output"))
                 .style(ChatFormatting.WHITE)
                 .forGoggles(tooltip);
 
         CreateLang.builder()
                 .add(Component.literal("  "))
-                .add(Component.translatable("createpropulsion.tooltip.thrust1").withStyle(ChatFormatting.GRAY))
+                .add(Component.translatable("createkinetic.tooltip.thrust1").withStyle(ChatFormatting.GRAY))
                 .add(Component.literal(String.format(Locale.ROOT, "%.2f", this.getDisplayedThrustPnForTooltip() / getThrustUnitsPerKn())).withStyle(ChatFormatting.AQUA))
                 .add(Component.literal(" pN").withStyle(ChatFormatting.GRAY))
                 .forGoggles(tooltip);

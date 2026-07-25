@@ -22,7 +22,7 @@ public abstract class FluidShellProjectileMixin {
     private static final float CORAL_MB_PER_TNT = 500.0f;
 
     @Inject(method = "detonate", at = @At("HEAD"), cancellable = true)
-    private void createpropulsion$detonateCoralAsExplosion(Position position, CallbackInfo ci) {
+    private void kinetic$detonateCoralAsExplosion(Position position, CallbackInfo ci) {
         try {
             var fluidStackField = this.getClass().getDeclaredField("fluidStack");
             fluidStackField.setAccessible(true);

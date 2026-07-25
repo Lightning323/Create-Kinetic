@@ -533,18 +533,18 @@ public class CreativeThrusterBlockEntity extends AbstractThrusterBlockEntity {
 
     private void addParticleCategory(List<Component> tooltip) {
         CreateLang.builder()
-                .add(Component.translatable("createpropulsion.gui.goggles.creative_thruster.particle"))
+                .add(Component.translatable("createkinetic.gui.goggles.creative_thruster.particle"))
                 .style(ChatFormatting.WHITE)
                 .forGoggles(tooltip);
 
         Component particleValue = switch (plumeType) {
-            case PLASMA -> Component.translatable("createpropulsion.gui.goggles.creative_thruster.particle.plasma")
+            case PLASMA -> Component.translatable("createkinetic.gui.goggles.creative_thruster.particle.plasma")
                     .withStyle(ChatFormatting.AQUA);
-            case ION -> Component.translatable("createpropulsion.gui.goggles.creative_thruster.particle.ion")
+            case ION -> Component.translatable("createkinetic.gui.goggles.creative_thruster.particle.ion")
                     .withStyle(ChatFormatting.BLUE);
-            case PLUME -> Component.translatable("createpropulsion.gui.goggles.creative_thruster.particle.plume")
+            case PLUME -> Component.translatable("createkinetic.gui.goggles.creative_thruster.particle.plume")
                     .withStyle(ChatFormatting.GOLD);
-            case NONE -> Component.translatable("createpropulsion.gui.goggles.creative_thruster.particle.none")
+            case NONE -> Component.translatable("createkinetic.gui.goggles.creative_thruster.particle.none")
                     .withStyle(ChatFormatting.DARK_GRAY);
         };
 
@@ -558,11 +558,11 @@ public class CreativeThrusterBlockEntity extends AbstractThrusterBlockEntity {
     protected LangBuilder getGoggleStatus() {
         if (isPowered()) {
             return CreateLang.builder()
-                    .add(Component.translatable("createpropulsion.gui.goggles.thruster.status.working"))
+                    .add(Component.translatable("createkinetic.gui.goggles.thruster.status.working"))
                     .style(ChatFormatting.GREEN);
         }
         return CreateLang.builder()
-                .add(Component.translatable("createpropulsion.gui.goggles.thruster.status.not_powered"))
+                .add(Component.translatable("createkinetic.gui.goggles.thruster.status.not_powered"))
                 .style(ChatFormatting.GOLD);
     }
 

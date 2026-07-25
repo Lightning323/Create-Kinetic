@@ -56,7 +56,7 @@ public class StirlingEngineBlockEntity extends GeneratingKineticBlockEntity impl
     @Override
     public void addBehaviours(List<BlockEntityBehaviour> behaviors) {
         super.addBehaviours(behaviors);
-        targetSpeedBehaviour = new StirlingScrollValueBehaviour(Component.translatable("createpropulsion.stirling_engine.generated_speed"), this, new StirlingEngineValueBox());
+        targetSpeedBehaviour = new StirlingScrollValueBehaviour(Component.translatable("createkinetic.stirling_engine.generated_speed"), this, new StirlingEngineValueBox());
         targetSpeedBehaviour.value = 4;
         targetSpeedBehaviour.withCallback(i -> this.updateGeneratedRotation());
         behaviors.add(targetSpeedBehaviour);
@@ -181,7 +181,7 @@ public class StirlingEngineBlockEntity extends GeneratingKineticBlockEntity impl
     @Override
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
         CreateLang.builder()
-            .add(Component.translatable("createpropulsion.gui.goggles.title.generator_stats"))
+            .add(Component.translatable("createkinetic.gui.goggles.title.generator_stats"))
             .style(ChatFormatting.WHITE)
             .forGoggles(tooltip);
         boolean active = isEngineActive();
@@ -190,26 +190,26 @@ public class StirlingEngineBlockEntity extends GeneratingKineticBlockEntity impl
         ChatFormatting statusColor;
         if (active) {
             if (activeTicks == 0) {
-                status = "createpropulsion.gui.goggles.stirling_engine.status.no_heat";
+                status = "createkinetic.gui.goggles.stirling_engine.status.no_heat";
                 statusColor = ChatFormatting.GOLD;
             } else {
-                status = "createpropulsion.gui.goggles.stirling_engine.status.on";
+                status = "createkinetic.gui.goggles.stirling_engine.status.on";
                 statusColor = ChatFormatting.GREEN;
             }
         } else {
-            status = "createpropulsion.gui.goggles.stirling_engine.status.off";
+            status = "createkinetic.gui.goggles.stirling_engine.status.off";
             statusColor = ChatFormatting.RED;
         }
 
         CreateLang.builder()
-            .add(Component.translatable("createpropulsion.gui.goggles.stirling_engine.status"))
+            .add(Component.translatable("createkinetic.gui.goggles.stirling_engine.status"))
             .text(": ")
             .add(Component.translatable(status).withStyle(statusColor))
             .forGoggles(tooltip);
 
         if (PropulsionCompatibility.CC_ACTIVE && computerBehaviour != null && computerBehaviour.hasAttachedComputer()) {
             CreateLang.builder()
-                .add(Component.translatable("createpropulsion.gui.goggles.cc.peripheral_controlled"))
+                .add(Component.translatable("createkinetic.gui.goggles.cc.peripheral_controlled"))
                 .style(ChatFormatting.GRAY)
                 .forGoggles(tooltip);
         }
