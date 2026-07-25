@@ -1,0 +1,15 @@
+package org.lightning323.createkinetic.content.heat;
+
+public interface IHeatSource {
+    float extractHeat(float amount, boolean simulate);
+
+    void generateHeat(float amount);
+
+    float getHeatStored();
+
+    float getMaxHeatStored();
+
+    //Should be constant
+    float getExpectedHeatProduction();
+}
+

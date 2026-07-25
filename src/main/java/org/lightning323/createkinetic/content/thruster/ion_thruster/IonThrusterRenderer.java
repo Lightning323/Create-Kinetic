@@ -1,0 +1,99 @@
+package org.lightning323.createkinetic.content.thruster.ion_thruster;
+
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Axis;
+import com.simibubi.create.foundation.blockEntity.renderer.SmartBlockEntityRenderer;
+import dev.engine_room.flywheel.lib.model.baked.PartialModel;
+import net.createmod.catnip.render.CachedBuffers;
+import net.createmod.catnip.render.SuperByteBuffer;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.block.state.BlockState;
+import org.lightning323.createkinetic.content.thruster.AbstractThrusterBlock;
+import org.lightning323.createkinetic.content.thruster.MeshedThrusterFlameUtils;
+import org.lightning323.createkinetic.content.thruster.ThrusterDebugRenderer;
+import org.lightning323.createkinetic.content.thruster.vector_thruster.VectorRedstoneLinkRenderer;
+import org.lightning323.createkinetic.content.thruster.vector_thruster.VectorThrusterBlockEntity;
+import org.lightning323.createkinetic.content.thruster.vector_thruster.VectorThrusterRenderer;
+import org.lightning323.createkinetic.registries.PropulsionPartialModels;
+
+public class IonThrusterRenderer extends SmartBlockEntityRenderer<IonThrusterBlockEntity> {
+
+    public IonThrusterRenderer(BlockEntityRendererProvider.Context context) {
+        super(context);
+    }
+
+    @Override
+    protected void renderSafe(IonThrusterBlockEntity be, float partialTick, PoseStack ms, MultiBufferSource buffer,
+                              int light, int overlay) {
+        super.renderSafe(be, partialTick, ms, buffer, light, overlay);
+        ThrusterDebugRenderer.render(be, ms, buffer);
+
+        if (be instanceof VectorThrusterBlockEntity vector) {
+            VectorThrusterRenderer.renderThruster(vector, partialTick, ms, buffer, light, overlay);
+            VectorRedstoneLinkRenderer.renderOnBlockEntity(vector, partialTick, ms, buffer, light, overlay);
+        } else {
+            if (be.isMultiblock()) {
+                if (be.isController()) renderMultiblock(be, partialTick, ms, buffer, light, overlay);
+            } else if (MeshedThrusterFlameUtils.isSpritePlume(be))
+                MeshedThrusterFlameUtils.renderMeshFlame(be, partialTick, ms, buffer);
+        }
+    }
+
+    private static void renderMultiblock(IonThrusterBlockEntity be, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light, int overlay) {
+        PartialModel model = getMultiblockModel(be.width);
+        if (model == null) return;
+
+        BlockState state = be.getBlockState();
+        Direction facing = state.getValue(AbstractThrusterBlock.FACING);
+        int w = be.width;
+
+        SuperByteBuffer mb = CachedBuffers.partial(model, state);
+        VertexConsumer vb = buffer.getBuffer(RenderType.cutoutMipped());
+
+        ms.pushPose();
+        float cx = w * 0.5f;
+        ms.translate(cx, cx, cx);
+        applyFacingRotation(ms, facing);
+        ms.translate(-cx, -cx, -cx);
+        ms.scale(w, w, w);
+        mb.light(light).overlay(overlay).renderInto(ms, vb);
+        ms.popPose();
+
+        //Draw meshed thrusters
+        if (MeshedThrusterFlameUtils.isSpritePlume(be)) {
+            MeshedThrusterFlameUtils.renderMultiblockFlame(be, partialTicks, ms, buffer, w);
+        }
+    }
+
+    private static PartialModel getMultiblockModel(int width) {
+        if (width == 2) return PropulsionPartialModels.ION_THRUSTER_MULTIBLOCK_2X2X2;
+        if (width == 3) return PropulsionPartialModels.ION_THRUSTER_MULTIBLOCK_3X3X3;
+        return null;
+    }
+
+    private static void applyFacingRotation(PoseStack ms, Direction facing) {
+        switch (facing) {
+            case UP -> {
+            }
+            case DOWN -> ms.mulPose(Axis.XP.rotationDegrees(180));
+            // Keep Z-axis orientations aligned with logical IO (input=facing, exhaust=facing.opposite).
+            case NORTH -> {
+                ms.mulPose(Axis.YP.rotationDegrees(180));
+                ms.mulPose(Axis.XP.rotationDegrees(90));
+            }
+            case SOUTH -> ms.mulPose(Axis.XP.rotationDegrees(90));
+            case EAST -> {
+                ms.mulPose(Axis.YP.rotationDegrees(90));
+                ms.mulPose(Axis.XP.rotationDegrees(90));
+            }
+            case WEST -> {
+                ms.mulPose(Axis.YP.rotationDegrees(270));
+                ms.mulPose(Axis.XP.rotationDegrees(90));
+            }
+        }
+    }
+}

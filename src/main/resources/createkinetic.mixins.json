@@ -3,9 +3,14 @@
   "minVersion": "0.8",
   "package": "org.lightning323.createkinetic.mixin",
   "compatibilityLevel": "JAVA_21",
+  "refmap": "createpropulsion.refmap.json",
+  "plugin": "org.lightning323.createkinetic.mixin.plugin.PropulsionMixinPlugin",
   "mixins": [
     "tracks.WheelMountBlockMixin",
-    "tracks.WheelMountOffsetMixin"
+    "tracks.WheelMountOffsetMixin",
+    "BasinBlockEntityMixin",
+    "FluidShellProjectileMixin",
+    "SchematicPlacePacketMixin"
   ],
   "client": [
     "tracks.KineticBlockEntityRendererMixin",
