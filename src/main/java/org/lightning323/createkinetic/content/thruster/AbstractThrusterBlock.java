@@ -22,7 +22,7 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.lightning323.createkinetic.PropulsionConfig;
+import org.lightning323.createkinetic.config.PropulsionConfig;
 
 public abstract class AbstractThrusterBlock extends DirectionalBlock implements IBE<AbstractThrusterBlockEntity>, IWrenchable {
     public static final DirectionProperty FACING = BlockStateProperties.FACING;

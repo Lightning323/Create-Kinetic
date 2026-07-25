@@ -1,4 +1,4 @@
-package org.lightning323.createkinetic.registry;
+package org.lightning323.createkinetic.registries;
 
 import org.lightning323.createkinetic.CreateKinetic;
 import org.lightning323.createkinetic.content.blocks.joystick.JoystickMenu;

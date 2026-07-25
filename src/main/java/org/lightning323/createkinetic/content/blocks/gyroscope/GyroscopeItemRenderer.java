@@ -2,7 +2,7 @@ package org.lightning323.createkinetic.content.blocks.gyroscope;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import org.lightning323.createkinetic.registry.KineticPartialModels;
+import org.lightning323.createkinetic.registries.KineticPartialModels;
 import com.simibubi.create.AllPartialModels;
 import com.simibubi.create.foundation.item.render.CustomRenderedItemModel;
 import com.simibubi.create.foundation.item.render.CustomRenderedItemModelRenderer;

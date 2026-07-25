@@ -3,7 +3,7 @@ package org.lightning323.createkinetic.mixin;
 import com.simibubi.create.content.processing.basin.BasinBlockEntity;
 import com.simibubi.create.content.processing.burner.BlazeBurnerBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import org.lightning323.createkinetic.PropulsionConfig;
+import org.lightning323.createkinetic.config.PropulsionConfig;
 import org.lightning323.createkinetic.content.heat.burners.AbstractBurnerBlock;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

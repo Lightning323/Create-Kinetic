@@ -7,7 +7,7 @@
  *  net.minecraft.resources.ResourceLocation
  *  net.minecraft.world.item.DyeColor
  */
-package org.lightning323.createkinetic.registry;
+package org.lightning323.createkinetic.registries;
 
 import java.util.EnumMap;
 import java.util.Map;

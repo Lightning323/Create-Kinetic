@@ -22,7 +22,7 @@ import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtension
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import org.joml.Vector3d;
-import org.lightning323.createkinetic.PropulsionConfig;
+import org.lightning323.createkinetic.config.PropulsionConfig;
 import org.lightning323.createkinetic.content.thruster.*;
 import org.lightning323.createkinetic.registries.PropulsionBlockEntities;
 import org.lightning323.createkinetic.registries.PropulsionFluids;

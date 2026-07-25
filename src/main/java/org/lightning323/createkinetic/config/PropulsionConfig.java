@@ -1,4 +1,4 @@
-package org.lightning323.createkinetic;
+package org.lightning323.createkinetic.config;
 
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.common.ModConfigSpec;

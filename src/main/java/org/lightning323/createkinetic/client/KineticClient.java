@@ -46,9 +46,8 @@ import org.lightning323.createkinetic.content.blocks.gyroscope.GyroscopeBlockEnt
 import org.lightning323.createkinetic.content.blocks.gyroscope.GyroscopeItemRenderer;
 import org.lightning323.createkinetic.content.blocks.gyroscope.GyroscopeVisual;
 import org.lightning323.createkinetic.content.blocks.joystick.*;
-import org.lightning323.createkinetic.registry.*;
+import org.lightning323.createkinetic.registries.*;
 import org.lightning323.createkinetic.network.RequestOpenTuningPayload;
-import org.lightning323.createkinetic.registry.KineticBlockEntityTypes;
 
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;

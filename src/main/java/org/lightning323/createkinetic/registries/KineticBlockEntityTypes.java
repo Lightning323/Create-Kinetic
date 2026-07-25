@@ -6,7 +6,7 @@
  *  com.tterrag.registrate.util.nullness.NonNullSupplier
  *  dev.simulated_team.simulated.registrate.SimulatedRegistrate
  */
-package org.lightning323.createkinetic.registry;
+package org.lightning323.createkinetic.registries;
 
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;

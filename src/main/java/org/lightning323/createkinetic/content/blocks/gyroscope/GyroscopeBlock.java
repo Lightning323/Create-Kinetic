@@ -16,7 +16,7 @@ import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.lightning323.createkinetic.registry.KineticBlockEntityTypes;
+import org.lightning323.createkinetic.registries.KineticBlockEntityTypes;
 
 public class GyroscopeBlock extends KineticBlock implements IBE<GyroscopeBlockEntity> {
    public static final EnumProperty<Direction> FACING;

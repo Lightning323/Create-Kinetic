@@ -2,7 +2,7 @@ package org.lightning323.createkinetic.content.blocks.joystick;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import org.lightning323.createkinetic.registry.KineticPartialModels;
+import org.lightning323.createkinetic.registries.KineticPartialModels;
 import com.simibubi.create.foundation.blockEntity.renderer.SafeBlockEntityRenderer;
 import dev.engine_room.flywheel.api.visualization.VisualizationManager;
 import net.createmod.catnip.render.CachedBuffers;

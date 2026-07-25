@@ -2,7 +2,7 @@ package org.lightning323.createkinetic.content.thruster;
 
 import net.minecraft.core.BlockPos;
 import org.joml.Vector3d;
-import org.lightning323.createkinetic.PropulsionConfig;
+import org.lightning323.createkinetic.config.PropulsionConfig;
 
 public final class ThrusterForceProvider {
     private ThrusterForceProvider() {

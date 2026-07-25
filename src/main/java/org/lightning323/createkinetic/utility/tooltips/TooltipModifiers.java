@@ -6,7 +6,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import org.lightning323.createkinetic.CreateKinetic;
-import org.lightning323.createkinetic.PropulsionConfig;
+import org.lightning323.createkinetic.config.PropulsionConfig;
 import org.lightning323.createkinetic.registries.PropulsionBlocks;
 
 import java.util.HashMap;

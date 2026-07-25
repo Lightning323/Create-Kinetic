@@ -42,7 +42,7 @@ package org.lightning323.createkinetic.content.blocks.sable_track;
 
 import com.simibubi.create.content.kinetics.base.HorizontalKineticBlock;
 import com.simibubi.create.foundation.block.IBE;
-import org.lightning323.createkinetic.registry.KineticBlockEntityTypes;
+import org.lightning323.createkinetic.registries.KineticBlockEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvent;

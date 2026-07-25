@@ -17,7 +17,7 @@ import net.minecraft.core.Direction;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
-import org.lightning323.createkinetic.PropulsionConfig;
+import org.lightning323.createkinetic.config.PropulsionConfig;
 import org.lightning323.createkinetic.registries.PropulsionPartialModels;
 import org.lightning323.createkinetic.utility.math.MathUtility;
 

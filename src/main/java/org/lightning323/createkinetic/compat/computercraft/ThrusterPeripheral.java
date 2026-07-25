@@ -9,7 +9,7 @@ import dan200.computercraft.shared.peripheral.generic.methods.FluidMethods;
 import net.minecraft.util.Mth;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import org.jetbrains.annotations.NotNull;
-import org.lightning323.createkinetic.PropulsionConfig;
+import org.lightning323.createkinetic.config.PropulsionConfig;
 import org.lightning323.createkinetic.content.thruster.AbstractThrusterBlockEntity.ControlMode;
 import org.lightning323.createkinetic.content.thruster.thruster.ThrusterBlockEntity;
 

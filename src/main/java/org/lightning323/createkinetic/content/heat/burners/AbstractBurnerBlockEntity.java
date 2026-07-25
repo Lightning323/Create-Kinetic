@@ -15,7 +15,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import org.lightning323.createkinetic.PropulsionConfig;
+import org.lightning323.createkinetic.config.PropulsionConfig;
 import org.lightning323.createkinetic.content.heat.HeatMapper;
 import org.lightning323.createkinetic.content.heat.HeatMapper.HeatLevelString;
 import org.lightning323.createkinetic.content.heat.HeatSourceBehavior;

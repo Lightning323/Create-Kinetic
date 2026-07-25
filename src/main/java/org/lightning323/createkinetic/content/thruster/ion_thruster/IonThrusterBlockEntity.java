@@ -18,7 +18,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
-import org.lightning323.createkinetic.PropulsionConfig;
+import org.lightning323.createkinetic.config.PropulsionConfig;
 import org.lightning323.createkinetic.compat.PropulsionCompatibility;
 import org.lightning323.createkinetic.compat.computercraft.ComputerBehaviour;
 import org.lightning323.createkinetic.content.thruster.SimulatedThrustAdapter;

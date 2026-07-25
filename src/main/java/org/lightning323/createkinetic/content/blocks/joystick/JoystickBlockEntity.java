@@ -1,6 +1,6 @@
 package org.lightning323.createkinetic.content.blocks.joystick;
 
-import org.lightning323.createkinetic.registry.KineticMenuTypes;
+import org.lightning323.createkinetic.registries.KineticMenuTypes;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.redstone.link.IRedstoneLinkable;
 import com.simibubi.create.content.redstone.link.RedstoneLinkNetworkHandler.Frequency;

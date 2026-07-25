@@ -9,7 +9,7 @@
  *  dev.simulated_team.simulated.registrate.simulated_tab.CreativeTabItemTransforms$VisibilityType
  *  net.minecraft.world.item.Item
  */
-package org.lightning323.createkinetic.registry;
+package org.lightning323.createkinetic.registries;
 
 import com.tterrag.registrate.util.entry.ItemEntry;
 import net.minecraft.world.item.Item;

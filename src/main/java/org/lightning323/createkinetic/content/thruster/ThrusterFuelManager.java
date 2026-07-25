@@ -17,7 +17,7 @@ import net.minecraft.world.level.material.Fluids;
 import net.neoforged.fml.ModList;
 import net.neoforged.neoforge.server.ServerLifecycleHooks;
 import org.lightning323.createkinetic.CreateKinetic;
-import org.lightning323.createkinetic.PropulsionConfig;
+import org.lightning323.createkinetic.config.PropulsionConfig;
 import org.lightning323.createkinetic.network.PropulsionPackets;
 import org.lightning323.createkinetic.network.SyncThrusterFuelsPacket;
 import org.slf4j.Logger;

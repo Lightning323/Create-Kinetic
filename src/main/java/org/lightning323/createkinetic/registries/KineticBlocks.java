@@ -15,12 +15,10 @@
  *  net.minecraft.world.level.block.state.BlockBehaviour$Properties
  *  net.minecraft.world.level.material.MapColor
  */
-package org.lightning323.createkinetic.registry;
+package org.lightning323.createkinetic.registries;
 
 import com.simibubi.create.AllTags;
 import com.simibubi.create.api.stress.BlockStressValues;
-import com.simibubi.create.foundation.data.BlockStateGen;
-import com.simibubi.create.foundation.data.ModelGen;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.foundation.data.TagGen;
 import com.tterrag.registrate.util.entry.BlockEntry;

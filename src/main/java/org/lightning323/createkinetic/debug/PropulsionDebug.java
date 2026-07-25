@@ -1,6 +1,6 @@
 package org.lightning323.createkinetic.debug;
 
-import org.lightning323.createkinetic.PropulsionConfig;
+import org.lightning323.createkinetic.config.PropulsionConfig;
 import org.lightning323.createkinetic.debug.routes.MainDebugRoute;
 
 import java.util.Map;

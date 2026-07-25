@@ -30,7 +30,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.lightning323.createkinetic.registry.KineticBlockEntityTypes;
+import org.lightning323.createkinetic.registries.KineticBlockEntityTypes;
 
 public class JoystickBlock extends Block implements EntityBlock, IBE<JoystickBlockEntity>, IWrenchable {
    public static final BooleanProperty POWERED;
