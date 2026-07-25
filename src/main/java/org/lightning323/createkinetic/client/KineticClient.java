@@ -54,6 +54,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Supplier;
 
 import static org.lightning323.createkinetic.CreateKinetic.ID;
+import static org.lightning323.createkinetic.registries.KineticCreativeTab.OFFROAD_CREATIVE_SECTION;
+import static org.lightning323.createkinetic.registries.KineticCreativeTab.SIMULATED_CREATIVE_SECTION;
 
 @Mod(value = CreateKinetic.ID, dist = {Dist.CLIENT})
 public class KineticClient {
@@ -72,7 +74,6 @@ public class KineticClient {
         KineticPartialModels.init();
         modBus.addListener(KineticClient::clientSetup);
         modBus.addListener(KineticClient::registerKeys);
-        modBus.addListener(KineticClient::buildContents);
         NeoForge.EVENT_BUS.addListener(EventPriority.NORMAL, KineticClient::clientTick);
         TracksPartialModels.init();
         TracksSpriteShifts.init();
@@ -162,27 +163,23 @@ public class KineticClient {
     /**
      * Register items in the existing tabs
      */
-    private static AtomicBoolean built = new AtomicBoolean(false);
-
-    public static final ResourceLocation SIMULATED_CREATIVE_SECTION = ResourceLocation.fromNamespaceAndPath("simulated", "simulated");
-    public static final ResourceLocation AERONAUTICS_CREATIVE_SECTION = ResourceLocation.fromNamespaceAndPath("aeronautics", "aeronautics");
-    public static final ResourceLocation OFFROAD_CREATIVE_SECTION = ResourceLocation.fromNamespaceAndPath("offroad", "offroad");
-
-    private static void registerSectionItem(ResourceLocation sectionId, String itemPath, Supplier<Item> itemSupplier) {
-        SimulatedRegistrate.TAB_ITEMS.add(itemSupplier);
-        SimulatedRegistrate.ITEM_TO_SECTION.put(ResourceLocation.fromNamespaceAndPath(ID, itemPath), sectionId);
-    }
-
-    public static void buildContents(BuildCreativeModeTabContentsEvent event) {
-        if (!built.get()) {
-            registerSectionItem(OFFROAD_CREATIVE_SECTION, "small_suspension_track", KineticItems.SMALL_SUSPENSION_TRACK::get);
-            registerSectionItem(OFFROAD_CREATIVE_SECTION, "small_track_drive_wheel", KineticItems.SMALL_TRACK_DRIVE_WHEEL::get);
-            registerSectionItem(OFFROAD_CREATIVE_SECTION, "track_mount", KineticBlocks.TRACK_MOUNT::asItem);
-            registerSectionItem(SIMULATED_CREATIVE_SECTION, "gyroscope", () -> KineticBlocks.GYROSCOPE.asItem());
-            registerSectionItem(SIMULATED_CREATIVE_SECTION, "joystick", () -> KineticBlocks.JOYSTICK.asItem());
-            built.set(true);
-        }
-    }
+//    private static AtomicBoolean built = new AtomicBoolean(false);
+//
+//    private static void registerSectionItem(ResourceLocation sectionId, String itemPath, Supplier<Item> itemSupplier) {
+//        SimulatedRegistrate.TAB_ITEMS.add(itemSupplier);
+//        SimulatedRegistrate.ITEM_TO_SECTION.put(ResourceLocation.fromNamespaceAndPath(ID, itemPath), sectionId);
+//    }
+//
+//    public static void buildContents(BuildCreativeModeTabContentsEvent event) {
+//        if (!built.get()) {
+//            registerSectionItem(OFFROAD_CREATIVE_SECTION, "small_suspension_track", KineticItems.SMALL_SUSPENSION_TRACK::get);
+//            registerSectionItem(OFFROAD_CREATIVE_SECTION, "small_track_drive_wheel", KineticItems.SMALL_TRACK_DRIVE_WHEEL::get);
+//            registerSectionItem(OFFROAD_CREATIVE_SECTION, "track_mount", KineticBlocks.TRACK_MOUNT::asItem);
+//            registerSectionItem(SIMULATED_CREATIVE_SECTION, "gyroscope", () -> KineticBlocks.GYROSCOPE.asItem());
+//            registerSectionItem(SIMULATED_CREATIVE_SECTION, "joystick", () -> KineticBlocks.JOYSTICK.asItem());
+//            built.set(true);
+//        }
+//    }
 
 }
 
