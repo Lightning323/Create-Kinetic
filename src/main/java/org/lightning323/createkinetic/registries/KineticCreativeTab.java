@@ -16,8 +16,8 @@ public class KineticCreativeTab {
     public static final ResourceLocation OFFROAD_CREATIVE_SECTION = ResourceLocation.fromNamespaceAndPath("offroad", "offroad");
 
 
-    //    private static final ResourceLocation MAIN_SECTION = ResourceLocation.fromNamespaceAndPath(CreateKinetic.ID, "propulsion_main");
-    private static final ResourceLocation TOOLS_SECTION = ResourceLocation.fromNamespaceAndPath(CreateKinetic.ID, "propulsion_tools");
+    //    private static final ResourceLocation MAIN_SECTION = ResourceLocation.fromNamespaceAndPath(CreateKinetic.ID, "kinetic_main");
+    private static final ResourceLocation TOOLS_SECTION = ResourceLocation.fromNamespaceAndPath(CreateKinetic.ID, "kinetic_tools");
     private static boolean sectionsInitialized = false;
 
     public static synchronized void registerAeronauticsSections() {
