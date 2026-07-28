@@ -18,7 +18,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.lightning323.createkinetic.registries.KineticBlockEntityTypes;
 
-public class ReactionWheelBlock extends KineticBlock implements IBE<GyroscopeBlockEntity> {
+public class ReactionWheelBlock extends KineticBlock implements IBE<ReactionWheelBlockEntity> {
    public static final EnumProperty<Direction> FACING;
    private static final VoxelShape OUTLINE;
    private static final VoxelShape COLLISION_DOWN;
@@ -56,11 +56,11 @@ public class ReactionWheelBlock extends KineticBlock implements IBE<GyroscopeBlo
       return face == state.getValue(FACING);
    }
 
-   public Class<GyroscopeBlockEntity> getBlockEntityClass() {
-      return GyroscopeBlockEntity.class;
+   public Class<ReactionWheelBlockEntity> getBlockEntityClass() {
+      return ReactionWheelBlockEntity.class;
    }
 
-   public BlockEntityType<? extends GyroscopeBlockEntity> getBlockEntityType() {
+   public BlockEntityType<? extends ReactionWheelBlockEntity> getBlockEntityType() {
       return (BlockEntityType) KineticBlockEntityTypes.GYROSCOPE.get();
    }
 

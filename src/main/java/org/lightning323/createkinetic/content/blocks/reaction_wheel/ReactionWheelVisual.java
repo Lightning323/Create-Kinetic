@@ -20,7 +20,7 @@ import net.minecraft.core.Direction.Axis;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Quaternionf;
 
-public class GyroscopeVisual extends AbstractBlockEntityVisual<GyroscopeBlockEntity> implements SimpleDynamicVisual {
+public class ReactionWheelVisual extends AbstractBlockEntityVisual<ReactionWheelBlockEntity> implements SimpleDynamicVisual {
    private static final float FLYWHEEL_LIFT = 0.61875F;
    private static final float FLYWHEEL_HEIGHT = 0.375F;
    private static final float FLYWHEEL_LIFT_INVERTED = 0.006250024F;
@@ -31,7 +31,7 @@ public class GyroscopeVisual extends AbstractBlockEntityVisual<GyroscopeBlockEnt
    private final Quaternionf flywheelOrientation = new Quaternionf();
    private final Quaternionf shaftOrientation = new Quaternionf();
 
-   public GyroscopeVisual(VisualizationContext ctx, GyroscopeBlockEntity be, float partialTick) {
+   public ReactionWheelVisual(VisualizationContext ctx, ReactionWheelBlockEntity be, float partialTick) {
       super(ctx, be, partialTick);
       boolean inverted = be.getBlockState().getValue(ReactionWheelBlock.FACING) == Direction.UP;
       float flywheelLift = inverted ? 0.006250024F : 0.61875F;
@@ -43,12 +43,12 @@ public class GyroscopeVisual extends AbstractBlockEntityVisual<GyroscopeBlockEnt
    public void beginFrame(Context context) {
       float partialTick = context.partialTick();
       this.computeCompensation(partialTick, this.compensation);
-      float flywheelSpeed = ((GyroscopeBlockEntity)this.blockEntity).effectiveSpeedAt(partialTick) * 3.0F / 10.0F;
-      float flywheelAngle = ((GyroscopeBlockEntity)this.blockEntity).getAngle() + flywheelSpeed * partialTick;
+      float flywheelSpeed = ((ReactionWheelBlockEntity)this.blockEntity).effectiveSpeedAt(partialTick) * 3.0F / 10.0F;
+      float flywheelAngle = ((ReactionWheelBlockEntity)this.blockEntity).getAngle() + flywheelSpeed * partialTick;
       float shaftAngleRad = KineticBlockEntityRenderer.getAngleForBe((KineticBlockEntity)this.blockEntity, this.pos, Axis.Y);
       this.flywheelOrientation.set(this.compensation).rotateY((float)Math.toRadians((double)flywheelAngle));
       this.flywheel.rotation(this.flywheelOrientation).setChanged();
-      boolean inverted = ((GyroscopeBlockEntity)this.blockEntity).getBlockState().getValue(ReactionWheelBlock.FACING) == Direction.UP;
+      boolean inverted = ((ReactionWheelBlockEntity)this.blockEntity).getBlockState().getValue(ReactionWheelBlock.FACING) == Direction.UP;
       float xRot = inverted ? (-(float)Math.PI / 2F) : ((float)Math.PI / 2F);
       float zRot = inverted ? shaftAngleRad : -shaftAngleRad;
       this.shaftOrientation.identity().rotateX(xRot).rotateZ(zRot);

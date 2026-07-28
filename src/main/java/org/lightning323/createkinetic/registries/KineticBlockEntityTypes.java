@@ -15,8 +15,8 @@ import org.lightning323.createkinetic.CreateKinetic;
 import org.lightning323.createkinetic.KineticRegistrate;
 import org.lightning323.createkinetic.content.blocks.sable_track.SableTrackBlockEntity;
 import org.lightning323.createkinetic.content.blocks.sable_track.SableTrackRenderer;
-import org.lightning323.createkinetic.content.blocks.reaction_wheel.GyroscopeBlockEntity;
-import org.lightning323.createkinetic.content.blocks.reaction_wheel.GyroscopeRenderer;
+import org.lightning323.createkinetic.content.blocks.reaction_wheel.ReactionWheelBlockEntity;
+import org.lightning323.createkinetic.content.blocks.reaction_wheel.ReactionWheelRenderer;
 import org.lightning323.createkinetic.content.blocks.joystick.JoystickBlockEntity;
 import org.lightning323.createkinetic.content.blocks.joystick.JoystickRenderer;
 
@@ -28,10 +28,10 @@ public class KineticBlockEntityTypes {
             .renderer(() -> (BlockEntityRendererProvider<SableTrackBlockEntity>) SableTrackRenderer::new)
             .register();
 
-    public static final BlockEntityEntry<GyroscopeBlockEntity> GYROSCOPE = REGISTRATE
-            .blockEntity("gyroscope", GyroscopeBlockEntity::new)
-            .validBlocks(KineticBlocks.GYROSCOPE)
-            .renderer(() -> GyroscopeRenderer::new)
+    public static final BlockEntityEntry<ReactionWheelBlockEntity> GYROSCOPE = REGISTRATE
+            .blockEntity("gyroscope", ReactionWheelBlockEntity::new)
+            .validBlocks(KineticBlocks.REACTION_WHEEL)
+            .renderer(() -> ReactionWheelRenderer::new)
             .register();
 
     public static final BlockEntityEntry<JoystickBlockEntity> JOYSTICK = REGISTRATE

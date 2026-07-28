@@ -47,7 +47,7 @@ import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import org.lightning323.createkinetic.client.KineticClient;
 import org.lightning323.createkinetic.config.Config;
 import org.lightning323.createkinetic.config.PropulsionConfig;
-import org.lightning323.createkinetic.content.blocks.reaction_wheel.GyroscopeController;
+import org.lightning323.createkinetic.content.blocks.reaction_wheel.ReactionWheelController;
 import org.lightning323.createkinetic.content.blocks.joystick.JoystickSessions;
 import org.lightning323.createkinetic.events.KineticEvents;
 import org.lightning323.createkinetic.network.KineticPackets;
@@ -94,7 +94,7 @@ public class CreateKinetic {
         modBus.register(KineticPackets.class);
         modBus.register(Config.class);
         NeoForge.EVENT_BUS.register(JoystickSessions.class);
-        NeoForge.EVENT_BUS.register(GyroscopeController.class);
+        NeoForge.EVENT_BUS.register(ReactionWheelController.class);
 
 
         //Propulsion
@@ -109,7 +109,7 @@ public class CreateKinetic {
         PropulsionSoundEvents.register(modBus);
         PropulsionFluids.register(modBus);
         PropulsionPartialModels.register();
-        KineticCreativeTab.registerAeronauticsSections();
+        KineticCreativeTabs.registerAeronauticsSections();
         modBus.addListener(PropulsionPackets::register);
         PropulsionDisplaySources.register();
         PropulsionSableBridge.init();

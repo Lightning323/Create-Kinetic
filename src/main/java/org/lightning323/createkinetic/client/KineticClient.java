@@ -40,9 +40,9 @@ import org.lightning323.createkinetic.config.Config;
 import org.lightning323.createkinetic.CreateKinetic;
 import org.lightning323.createkinetic.content.blocks.sable_track.SableTrackRenderer;
 import org.lightning323.createkinetic.content.blocks.wheel_mount.AdjustableWheelMountRenderer;
-import org.lightning323.createkinetic.content.blocks.reaction_wheel.GyroscopeBlockEntity;
-import org.lightning323.createkinetic.content.blocks.reaction_wheel.GyroscopeItemRenderer;
-import org.lightning323.createkinetic.content.blocks.reaction_wheel.GyroscopeVisual;
+import org.lightning323.createkinetic.content.blocks.reaction_wheel.ReactionWheelBlockEntity;
+import org.lightning323.createkinetic.content.blocks.reaction_wheel.ReactionWheelItemRenderer;
+import org.lightning323.createkinetic.content.blocks.reaction_wheel.ReactionWheelVisual;
 import org.lightning323.createkinetic.content.blocks.joystick.*;
 import org.lightning323.createkinetic.registries.*;
 import org.lightning323.createkinetic.network.RequestOpenTuningPayload;
@@ -85,7 +85,7 @@ public class KineticClient {
         //Fixed
         SimpleBlockEntityVisualizer.builder(KineticBlockEntityTypes.GYROSCOPE.get())
                 .factory((ctx, be, partialTick) ->
-                        new GyroscopeVisual(ctx, (GyroscopeBlockEntity) be, partialTick))
+                        new ReactionWheelVisual(ctx, (ReactionWheelBlockEntity) be, partialTick))
                 .neverSkipVanillaRender()
                 .apply();
 
@@ -135,12 +135,12 @@ public class KineticClient {
 
     @SubscribeEvent
     public static void onRegisterClientExtensions(RegisterClientExtensionsEvent event) {
-        final GyroscopeItemRenderer renderer = new GyroscopeItemRenderer();
+        final ReactionWheelItemRenderer renderer = new ReactionWheelItemRenderer();
         event.registerItem(new IClientItemExtensions() {
             public BlockEntityWithoutLevelRenderer getCustomRenderer() {
                 return renderer;
             }
-        }, new Item[]{KineticBlocks.GYROSCOPE.asItem()});
+        }, new Item[]{KineticBlocks.REACTION_WHEEL.asItem()});
     }
 
     @SubscribeEvent

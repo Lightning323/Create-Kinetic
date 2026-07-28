@@ -65,7 +65,7 @@ public final class Config {
         return gyroscopeReferenceRpm;
     }
 
-    public static double gyroscopeStressImpact() {
+    public static double reactionWheelStressImpact() {
         return gyroscopeStressImpact;
     }
 

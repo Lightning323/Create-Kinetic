@@ -19,7 +19,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
 import org.joml.Quaternionf;
 
-public class GyroscopeRenderer extends SafeBlockEntityRenderer<GyroscopeBlockEntity> {
+public class ReactionWheelRenderer extends SafeBlockEntityRenderer<ReactionWheelBlockEntity> {
    private static final float FLYWHEEL_LIFT = 0.61875F;
    private static final float FLYWHEEL_HEIGHT = 0.375F;
    private static final float FLYWHEEL_LIFT_INVERTED = 0.006250024F;
@@ -28,10 +28,10 @@ public class GyroscopeRenderer extends SafeBlockEntityRenderer<GyroscopeBlockEnt
    private static final int REDSTONE_ON = -3342336;
 
 
-   public GyroscopeRenderer(BlockEntityRendererProvider.Context context) {
+   public ReactionWheelRenderer(BlockEntityRendererProvider.Context context) {
    }
 
-   protected void renderSafe(GyroscopeBlockEntity be, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light, int overlay) {
+   protected void renderSafe(ReactionWheelBlockEntity be, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light, int overlay) {
       renderRedstoneStrips(be, partialTicks, ms, buffer, light);
       if (!VisualizationManager.supportsVisualization(be.getLevel())) {
          VertexConsumer vb = buffer.getBuffer(RenderType.cutout());
@@ -57,7 +57,7 @@ public class GyroscopeRenderer extends SafeBlockEntityRenderer<GyroscopeBlockEnt
       }
    }
 
-   private static void renderRedstoneStrips(GyroscopeBlockEntity be, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light) {
+   private static void renderRedstoneStrips(ReactionWheelBlockEntity be, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light) {
       boolean inverted = be.getBlockState().getValue(ReactionWheelBlock.FACING) == Direction.UP;
       VertexConsumer vb = buffer.getBuffer(RenderType.cutout());
       ms.pushPose();

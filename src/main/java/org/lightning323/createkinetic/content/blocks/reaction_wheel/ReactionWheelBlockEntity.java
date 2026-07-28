@@ -23,7 +23,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 
-public class GyroscopeBlockEntity extends KineticBlockEntity implements BlockEntitySubLevelActor {
+public class ReactionWheelBlockEntity extends KineticBlockEntity implements BlockEntitySubLevelActor {
    private static final float CHASE_RATE = 0.015625F;
    private static final float INDICATOR_CHASE_RATE = 0.15F;
    private static final int UNSTABLE_THRESHOLD = 50;
@@ -78,7 +78,7 @@ public class GyroscopeBlockEntity extends KineticBlockEntity implements BlockEnt
       }
    }
 
-   public GyroscopeBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+   public ReactionWheelBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
       super(type, pos, state);
    }
 
@@ -145,7 +145,7 @@ public class GyroscopeBlockEntity extends KineticBlockEntity implements BlockEnt
 
    public void sable$physicsTick(ServerSubLevel subLevel, RigidBodyHandle handle, double timeStep) {
       double partialPhysicsTick = SubLevelPhysicsSystem.getCurrentlySteppingSystem().getPartialPhysicsTick();
-      GyroscopeController.of(subLevel).tick(partialPhysicsTick, handle, timeStep);
+      ReactionWheelController.of(subLevel).tick(partialPhysicsTick, handle, timeStep);
    }
 
    public void remove() {
@@ -156,12 +156,12 @@ public class GyroscopeBlockEntity extends KineticBlockEntity implements BlockEnt
             ServerSubLevel server = (ServerSubLevel)sub;
 
             for(BlockEntitySubLevelActor actor : server.getPlot().getBlockEntityActors()) {
-               if (actor != this && actor instanceof GyroscopeBlockEntity) {
+               if (actor != this && actor instanceof ReactionWheelBlockEntity) {
                   return;
                }
             }
 
-            GyroscopeController.detach(server);
+            ReactionWheelController.detach(server);
          }
       }
    }
@@ -170,16 +170,16 @@ public class GyroscopeBlockEntity extends KineticBlockEntity implements BlockEnt
       int stability = this.getStabilizedPercent();
       StatusTier tier = StatusTier.of(stability, this.effectiveSpeed.getValue() == 0.0F);
       Component stateWord = Component.translatable(tier.langKey).withStyle(tier.color);
-      tooltip.add(Component.literal("    ").append(Component.translatable("tooltip.createkinetic.gyroscope.header", new Object[]{stateWord}).withStyle(ChatFormatting.WHITE)));
+      tooltip.add(Component.literal("    ").append(Component.translatable("tooltip.createkinetic.reaction_wheel.header", new Object[]{stateWord}).withStyle(ChatFormatting.WHITE)));
       int redBreak = (int)Math.round((double)9.0F);
       int sigX = this.getOwnSignalX();
       int sigZ = this.getOwnSignalZ();
       boolean showStiffness = sigX > 0 || sigZ > 0;
-      Component stabilitySpacer = showStiffness ? Component.translatable("tooltip.createkinetic.gyroscope.stability_dots").withStyle(ChatFormatting.DARK_GRAY) : Component.literal(" ");
-      tooltip.add(Component.literal("     ").append(Component.translatable("tooltip.createkinetic.gyroscope.stability").withStyle(ChatFormatting.GRAY)).append(stabilitySpacer).append(thresholdBar((float)stability / 100.0F, redBreak, 17, ChatFormatting.RED, ChatFormatting.YELLOW, ChatFormatting.GREEN)));
+      Component stabilitySpacer = showStiffness ? Component.translatable("tooltip.createkinetic.reaction_wheel.stability_dots").withStyle(ChatFormatting.DARK_GRAY) : Component.literal(" ");
+      tooltip.add(Component.literal("     ").append(Component.translatable("tooltip.createkinetic.reaction_wheel.stability").withStyle(ChatFormatting.GRAY)).append(stabilitySpacer).append(thresholdBar((float)stability / 100.0F, redBreak, 17, ChatFormatting.RED, ChatFormatting.YELLOW, ChatFormatting.GREEN)));
       if (showStiffness) {
-         tooltip.add(axisLine("tooltip.createkinetic.gyroscope.stiffness.x", sigX, ChatFormatting.GREEN));
-         tooltip.add(axisLine("tooltip.createkinetic.gyroscope.stiffness.z", sigZ, ChatFormatting.BLUE));
+         tooltip.add(axisLine("tooltip.createkinetic.reaction_wheel.stiffness.x", sigX, ChatFormatting.GREEN));
+         tooltip.add(axisLine("tooltip.createkinetic.reaction_wheel.stiffness.z", sigZ, ChatFormatting.BLUE));
       }
 
       tooltip.add(Component.empty());
@@ -189,7 +189,7 @@ public class GyroscopeBlockEntity extends KineticBlockEntity implements BlockEnt
 
    private static Component axisLine(String labelKey, int signal, ChatFormatting color) {
       float stiffness = 1.0F - (float)signal / 15.0F;
-      return Component.literal("     ").append(Component.translatable("tooltip.createkinetic.gyroscope.stiffness_indent").withStyle(ChatFormatting.DARK_GRAY)).append(Component.translatable(labelKey).withStyle(color)).append(Component.translatable(labelKey + "_dots").withStyle(ChatFormatting.DARK_GRAY)).append(stiffnessBar(stiffness, 18, color, ChatFormatting.DARK_GRAY));
+      return Component.literal("     ").append(Component.translatable("tooltip.createkinetic.reaction_wheel.stiffness_indent").withStyle(ChatFormatting.DARK_GRAY)).append(Component.translatable(labelKey).withStyle(color)).append(Component.translatable(labelKey + "_dots").withStyle(ChatFormatting.DARK_GRAY)).append(stiffnessBar(stiffness, 18, color, ChatFormatting.DARK_GRAY));
    }
 
    private static MutableComponent stiffnessBar(float fraction, int total, ChatFormatting filledColor, ChatFormatting emptyColor) {
@@ -211,10 +211,10 @@ public class GyroscopeBlockEntity extends KineticBlockEntity implements BlockEnt
    }
 
    private static enum StatusTier {
-      OFF(ChatFormatting.GRAY, "tooltip.createkinetic.gyroscope.status.off"),
-      UNSTABLE(ChatFormatting.RED, "tooltip.createkinetic.gyroscope.status.unstable"),
-      STEADY(ChatFormatting.YELLOW, "tooltip.createkinetic.gyroscope.status.steady"),
-      LEVEL(ChatFormatting.GREEN, "tooltip.createkinetic.gyroscope.status.level");
+      OFF(ChatFormatting.GRAY, "tooltip.createkinetic.reaction_wheel.status.off"),
+      UNSTABLE(ChatFormatting.RED, "tooltip.createkinetic.reaction_wheel.status.unstable"),
+      STEADY(ChatFormatting.YELLOW, "tooltip.createkinetic.reaction_wheel.status.steady"),
+      LEVEL(ChatFormatting.GREEN, "tooltip.createkinetic.reaction_wheel.status.level");
 
       final ChatFormatting color;
       final String langKey;

@@ -8,7 +8,7 @@ import org.lightning323.createkinetic.content.creative_tools.item.ModItems;
 
 import java.util.function.Supplier;
 
-public class KineticCreativeTab {
+public class KineticCreativeTabs {
 
 
     public static final ResourceLocation SIMULATED_CREATIVE_SECTION = ResourceLocation.fromNamespaceAndPath("simulated", "simulated");
@@ -28,7 +28,7 @@ public class KineticCreativeTab {
         registerSectionItem(OFFROAD_CREATIVE_SECTION, "small_suspension_track", KineticItems.SMALL_SUSPENSION_TRACK::get);
         registerSectionItem(OFFROAD_CREATIVE_SECTION, "small_track_drive_wheel", KineticItems.SMALL_TRACK_DRIVE_WHEEL::get);
         registerSectionItem(OFFROAD_CREATIVE_SECTION, "track_mount", KineticBlocks.TRACK_MOUNT::asItem);
-        registerSectionItem(SIMULATED_CREATIVE_SECTION, "gyroscope", () -> KineticBlocks.GYROSCOPE.asItem());
+        registerSectionItem(SIMULATED_CREATIVE_SECTION, "reaction_wheel", () -> KineticBlocks.REACTION_WHEEL.asItem());
         registerSectionItem(SIMULATED_CREATIVE_SECTION, "joystick", () -> KineticBlocks.JOYSTICK.asItem());
 
         registerSectionItem(AERONAUTICS_CREATIVE_SECTION, "thruster", () -> KineticBlocks.THRUSTER_BLOCK.get().asItem());

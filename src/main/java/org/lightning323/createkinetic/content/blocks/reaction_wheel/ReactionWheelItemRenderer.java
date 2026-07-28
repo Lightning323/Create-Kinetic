@@ -11,7 +11,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 
-public class GyroscopeItemRenderer extends CustomRenderedItemModelRenderer {
+public class ReactionWheelItemRenderer extends CustomRenderedItemModelRenderer {
    private static final float FLYWHEEL_LIFT = 0.375F;
    private static final float SHAFT_DROP = 0.0F;
 

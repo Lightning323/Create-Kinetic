@@ -112,11 +112,11 @@ public class KineticBlocks {
         () -> new ThrusterBlock(Block.Properties.of().mapColor(MapColor.METAL).requiresCorrectToolForDrops()
             .sound(SoundType.METAL).strength(5.5f, 4.0f).noOcclusion()));
 
-    public static final BlockEntry<ReactionWheelBlock> GYROSCOPE = REGISTRATE
-            .block("gyroscope", ReactionWheelBlock::new).initialProperties(SharedProperties::softMetal)
+    public static final BlockEntry<ReactionWheelBlock> REACTION_WHEEL = REGISTRATE
+            .block("reaction_wheel", ReactionWheelBlock::new).initialProperties(SharedProperties::softMetal)
             .properties((p) -> p.noOcclusion())
             .transform(TagGen.axeOrPickaxe())
-            .onRegister((block) -> BlockStressValues.IMPACTS.register(block, Config::gyroscopeStressImpact))
+            .onRegister((block) -> BlockStressValues.IMPACTS.register(block, Config::reactionWheelStressImpact))
             .simpleItem().register();
 
     public static final BlockEntry<JoystickBlock> JOYSTICK = REGISTRATE

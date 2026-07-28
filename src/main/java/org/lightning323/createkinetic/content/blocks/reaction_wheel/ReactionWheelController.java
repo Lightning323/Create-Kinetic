@@ -20,8 +20,8 @@ import org.joml.Quaterniondc;
 import org.joml.Vector3d;
 import org.joml.Vector3dc;
 
-public final class GyroscopeController {
-   private static final Map<ServerSubLevel, GyroscopeController> INSTANCES = new WeakHashMap();
+public final class ReactionWheelController {
+   private static final Map<ServerSubLevel, ReactionWheelController> INSTANCES = new WeakHashMap();
    private static final Vector3dc WORLD_UP = new Vector3d((double)0.0F, (double)1.0F, (double)0.0F);
    private static final double DISTURBANCE_DELTA_OMEGA_CAP = (double)1.0F;
    private static final double NEVER_TICKED = (double)-1.0F;
@@ -43,12 +43,12 @@ public final class GyroscopeController {
    private double lastTickedPartial = (double)-1.0F;
    private boolean hasObservedTick = false;
 
-   private GyroscopeController(ServerSubLevel subLevel) {
+   private ReactionWheelController(ServerSubLevel subLevel) {
       this.subLevel = subLevel;
    }
 
-   public static GyroscopeController of(ServerSubLevel subLevel) {
-      return (GyroscopeController)INSTANCES.computeIfAbsent(subLevel, GyroscopeController::new);
+   public static ReactionWheelController of(ServerSubLevel subLevel) {
+      return (ReactionWheelController)INSTANCES.computeIfAbsent(subLevel, ReactionWheelController::new);
    }
 
    static void detach(ServerSubLevel subLevel) {
@@ -146,7 +146,7 @@ public final class GyroscopeController {
 
    private void pushStabilizedPercentToBEs(int percent) {
       for(BlockEntitySubLevelActor actor : this.subLevel.getPlot().getBlockEntityActors()) {
-         if (actor instanceof GyroscopeBlockEntity gyro) {
+         if (actor instanceof ReactionWheelBlockEntity gyro) {
             gyro.setStabilizedPercent(percent);
          }
       }
@@ -166,7 +166,7 @@ public final class GyroscopeController {
       int gyroCount = 0;
 
       for(BlockEntitySubLevelActor actor : this.subLevel.getPlot().getBlockEntityActors()) {
-         if (actor instanceof GyroscopeBlockEntity gyro) {
+         if (actor instanceof ReactionWheelBlockEntity gyro) {
             double rpmScale = gyro.currentRpmScale();
             double authority = gyroAuthority(rpmScale);
             totalCapacity += authority;
@@ -214,7 +214,7 @@ public final class GyroscopeController {
       container.addObserver(new SubLevelObserver() {
          public void onSubLevelRemoved(SubLevel subLevel, SubLevelRemovalReason r) {
             if (subLevel instanceof ServerSubLevel s) {
-               GyroscopeController.detach(s);
+               ReactionWheelController.detach(s);
             }
 
          }
