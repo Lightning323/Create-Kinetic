@@ -1,4 +1,4 @@
-package org.lightning323.createkinetic.content.blocks.gyroscope;
+package org.lightning323.createkinetic.content.blocks.reaction_wheel;
 
 import org.lightning323.createkinetic.registries.KineticPartialModels;
 import com.simibubi.create.AllPartialModels;
@@ -33,7 +33,7 @@ public class GyroscopeVisual extends AbstractBlockEntityVisual<GyroscopeBlockEnt
 
    public GyroscopeVisual(VisualizationContext ctx, GyroscopeBlockEntity be, float partialTick) {
       super(ctx, be, partialTick);
-      boolean inverted = be.getBlockState().getValue(GyroscopeBlock.FACING) == Direction.UP;
+      boolean inverted = be.getBlockState().getValue(ReactionWheelBlock.FACING) == Direction.UP;
       float flywheelLift = inverted ? 0.006250024F : 0.61875F;
       this.flywheel = ((OrientedInstance)this.instancerProvider().instancer(InstanceTypes.ORIENTED, Models.partial(KineticPartialModels.GYROSCOPE_FLYWHEEL)).createInstance()).position(this.getVisualPosition()).translatePosition(0.0F, flywheelLift, 0.0F);
       this.shaft = ((OrientedInstance)this.instancerProvider().instancer(InstanceTypes.ORIENTED, Models.partial(AllPartialModels.SHAFT_HALF)).createInstance()).position(this.getVisualPosition()).translatePosition(0.0F, -0.0F, 0.0F);
@@ -48,7 +48,7 @@ public class GyroscopeVisual extends AbstractBlockEntityVisual<GyroscopeBlockEnt
       float shaftAngleRad = KineticBlockEntityRenderer.getAngleForBe((KineticBlockEntity)this.blockEntity, this.pos, Axis.Y);
       this.flywheelOrientation.set(this.compensation).rotateY((float)Math.toRadians((double)flywheelAngle));
       this.flywheel.rotation(this.flywheelOrientation).setChanged();
-      boolean inverted = ((GyroscopeBlockEntity)this.blockEntity).getBlockState().getValue(GyroscopeBlock.FACING) == Direction.UP;
+      boolean inverted = ((GyroscopeBlockEntity)this.blockEntity).getBlockState().getValue(ReactionWheelBlock.FACING) == Direction.UP;
       float xRot = inverted ? (-(float)Math.PI / 2F) : ((float)Math.PI / 2F);
       float zRot = inverted ? shaftAngleRad : -shaftAngleRad;
       this.shaftOrientation.identity().rotateX(xRot).rotateZ(zRot);

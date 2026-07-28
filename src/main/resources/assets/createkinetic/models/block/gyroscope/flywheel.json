@@ -6,7 +6,9 @@
 	"render_type": "minecraft:cutout_mipped",
 	"model": "createkinetic:models/block/gyroscope/flywheel.obj",
 	"textures": {
-		"0": "createkinetic:block/gyroscope/flywheel",
-		"particle": "createkinetic:block/gyroscope/flywheel"
+		"0": "create:block/flywheel",
+		"1": "create:block/axis",
+		"2": "create:block/axis_top",
+		"particle": "create:block/flywheel"
 	}
 }

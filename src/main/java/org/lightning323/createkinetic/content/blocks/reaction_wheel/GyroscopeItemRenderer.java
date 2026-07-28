@@ -1,4 +1,4 @@
-package org.lightning323.createkinetic.content.blocks.gyroscope;
+package org.lightning323.createkinetic.content.blocks.reaction_wheel;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;

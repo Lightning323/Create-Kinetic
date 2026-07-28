@@ -35,7 +35,7 @@ import org.lightning323.createkinetic.CreateKinetic;
 import org.lightning323.createkinetic.KineticRegistrate;
 import org.lightning323.createkinetic.content.blocks.sable_track.SableTrackBlock;
 import org.lightning323.createkinetic.content.blocks.sable_track.SableTrackRole;
-import org.lightning323.createkinetic.content.blocks.gyroscope.GyroscopeBlock;
+import org.lightning323.createkinetic.content.blocks.reaction_wheel.ReactionWheelBlock;
 import org.lightning323.createkinetic.content.heat.burners.liquid.LiquidBurnerBlock;
 import org.lightning323.createkinetic.content.heat.burners.solid.SolidBurnerBlock;
 import org.lightning323.createkinetic.content.heat.engine.StirlingEngineBlock;
@@ -112,8 +112,8 @@ public class KineticBlocks {
         () -> new ThrusterBlock(Block.Properties.of().mapColor(MapColor.METAL).requiresCorrectToolForDrops()
             .sound(SoundType.METAL).strength(5.5f, 4.0f).noOcclusion()));
 
-    public static final BlockEntry<GyroscopeBlock> GYROSCOPE = REGISTRATE
-            .block("gyroscope", GyroscopeBlock::new).initialProperties(SharedProperties::softMetal)
+    public static final BlockEntry<ReactionWheelBlock> GYROSCOPE = REGISTRATE
+            .block("gyroscope", ReactionWheelBlock::new).initialProperties(SharedProperties::softMetal)
             .properties((p) -> p.noOcclusion())
             .transform(TagGen.axeOrPickaxe())
             .onRegister((block) -> BlockStressValues.IMPACTS.register(block, Config::gyroscopeStressImpact))

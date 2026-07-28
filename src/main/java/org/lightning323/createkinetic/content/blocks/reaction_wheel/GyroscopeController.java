@@ -1,4 +1,4 @@
-package org.lightning323.createkinetic.content.blocks.gyroscope;
+package org.lightning323.createkinetic.content.blocks.reaction_wheel;
 
 import org.lightning323.createkinetic.config.Config;
 import dev.ryanhcode.sable.api.block.BlockEntitySubLevelActor;

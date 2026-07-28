@@ -1,5 +1,11 @@
-# Blender 5.1.1 MTL File: 'flywheel.blend'
-# www.blender.org
+# Blender MTL File: 'engine.blend'
+# Material Count: 3
 
-newmtl Material
+newmtl m_0
 map_Kd #0
+
+newmtl m_1
+map_Kd #1
+
+newmtl m_2
+map_Kd #2

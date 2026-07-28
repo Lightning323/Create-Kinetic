@@ -7,7 +7,6 @@ import com.mojang.blaze3d.platform.InputConstants;
 import com.simibubi.create.foundation.item.render.CustomRenderedItemModel;
 import dev.engine_room.flywheel.lib.visualization.SimpleBlockEntityVisualizer;
 import dev.ryanhcode.offroad.index.OffroadBlockEntityTypes;
-import dev.simulated_team.simulated.registrate.SimulatedRegistrate;
 import net.createmod.catnip.config.ui.BaseConfigScreen;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
@@ -36,21 +35,19 @@ import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsE
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.lightning323.createkinetic.config.Config;
 import org.lightning323.createkinetic.CreateKinetic;
 import org.lightning323.createkinetic.content.blocks.sable_track.SableTrackRenderer;
 import org.lightning323.createkinetic.content.blocks.wheel_mount.AdjustableWheelMountRenderer;
-import org.lightning323.createkinetic.content.blocks.gyroscope.GyroscopeBlockEntity;
-import org.lightning323.createkinetic.content.blocks.gyroscope.GyroscopeItemRenderer;
-import org.lightning323.createkinetic.content.blocks.gyroscope.GyroscopeVisual;
+import org.lightning323.createkinetic.content.blocks.reaction_wheel.GyroscopeBlockEntity;
+import org.lightning323.createkinetic.content.blocks.reaction_wheel.GyroscopeItemRenderer;
+import org.lightning323.createkinetic.content.blocks.reaction_wheel.GyroscopeVisual;
 import org.lightning323.createkinetic.content.blocks.joystick.*;
 import org.lightning323.createkinetic.registries.*;
 import org.lightning323.createkinetic.network.RequestOpenTuningPayload;
 
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Supplier;
 
 import static org.lightning323.createkinetic.CreateKinetic.ID;

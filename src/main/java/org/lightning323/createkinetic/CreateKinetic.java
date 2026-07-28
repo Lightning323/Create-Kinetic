@@ -47,7 +47,7 @@ import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import org.lightning323.createkinetic.client.KineticClient;
 import org.lightning323.createkinetic.config.Config;
 import org.lightning323.createkinetic.config.PropulsionConfig;
-import org.lightning323.createkinetic.content.blocks.gyroscope.GyroscopeController;
+import org.lightning323.createkinetic.content.blocks.reaction_wheel.GyroscopeController;
 import org.lightning323.createkinetic.content.blocks.joystick.JoystickSessions;
 import org.lightning323.createkinetic.events.KineticEvents;
 import org.lightning323.createkinetic.network.KineticPackets;

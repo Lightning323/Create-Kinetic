@@ -1,4 +1,4 @@
-package org.lightning323.createkinetic.content.blocks.gyroscope;
+package org.lightning323.createkinetic.content.blocks.reaction_wheel;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -40,7 +40,7 @@ public class GyroscopeRenderer extends SafeBlockEntityRenderer<GyroscopeBlockEnt
          float shaftAngle = (float)Math.toDegrees((double)KineticBlockEntityRenderer.getAngleForBe(be, be.getBlockPos(), Axis.Y));
          ClientSubLevel subLevel = Sable.HELPER.getContainingClient(be);
          Quaternionf comp = subLevel != null ? (new Quaternionf(subLevel.renderPose(partialTicks).orientation())).invert() : null;
-         boolean inverted = be.getBlockState().getValue(GyroscopeBlock.FACING) == Direction.UP;
+         boolean inverted = be.getBlockState().getValue(ReactionWheelBlock.FACING) == Direction.UP;
          float flywheelLift = inverted ? 0.006250024F : 0.61875F;
          float shaftXDeg = inverted ? -90.0F : 90.0F;
          float shaftAngleSigned = inverted ? shaftAngle : -shaftAngle;
@@ -58,7 +58,7 @@ public class GyroscopeRenderer extends SafeBlockEntityRenderer<GyroscopeBlockEnt
    }
 
    private static void renderRedstoneStrips(GyroscopeBlockEntity be, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light) {
-      boolean inverted = be.getBlockState().getValue(GyroscopeBlock.FACING) == Direction.UP;
+      boolean inverted = be.getBlockState().getValue(ReactionWheelBlock.FACING) == Direction.UP;
       VertexConsumer vb = buffer.getBuffer(RenderType.cutout());
       ms.pushPose();
       if (inverted) {

@@ -1,4 +1,4 @@
-package org.lightning323.createkinetic.content.blocks.gyroscope;
+package org.lightning323.createkinetic.content.blocks.reaction_wheel;
 
 import com.simibubi.create.content.kinetics.base.KineticBlock;
 import com.simibubi.create.foundation.block.IBE;
@@ -18,13 +18,13 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.lightning323.createkinetic.registries.KineticBlockEntityTypes;
 
-public class GyroscopeBlock extends KineticBlock implements IBE<GyroscopeBlockEntity> {
+public class ReactionWheelBlock extends KineticBlock implements IBE<GyroscopeBlockEntity> {
    public static final EnumProperty<Direction> FACING;
    private static final VoxelShape OUTLINE;
    private static final VoxelShape COLLISION_DOWN;
    private static final VoxelShape COLLISION_UP;
 
-   public GyroscopeBlock(Properties properties) {
+   public ReactionWheelBlock(Properties properties) {
       super(properties);
       this.registerDefaultState((BlockState)this.defaultBlockState().setValue(FACING, Direction.DOWN));
    }
