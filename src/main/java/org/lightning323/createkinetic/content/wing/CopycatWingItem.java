@@ -11,7 +11,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import org.lightning323.createkinetic.registries.PropulsionBlocks;
+import org.lightning323.createkinetic.registries.KineticBlocks;
 
 import javax.annotation.Nonnull;
 
@@ -31,8 +31,8 @@ public class CopycatWingItem extends BlockItem {
             CopycatWingBlock clickedWing = (CopycatWingBlock) clickedState.getBlock();
             if (clickedWing.getWidth() != 12) {
                 BlockState targetState = (clickedWing.getWidth() == 4)
-                    ? PropulsionBlocks.COPYCAT_WING_8.get().defaultBlockState()
-                    : PropulsionBlocks.COPYCAT_WING_12.get().defaultBlockState();
+                    ? KineticBlocks.COPYCAT_WING_8.get().defaultBlockState()
+                    : KineticBlocks.COPYCAT_WING_12.get().defaultBlockState();
                 
                 targetState = targetState.setValue(CopycatWingBlock.FACING, clickedState.getValue(CopycatWingBlock.FACING));
                 if (!world.isClientSide()) {

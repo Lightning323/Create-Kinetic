@@ -8,13 +8,13 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import org.lightning323.createkinetic.config.PropulsionConfig;
-import org.lightning323.createkinetic.registries.PropulsionBlocks;
+import org.lightning323.createkinetic.registries.KineticBlocks;
 
 public class ModSetupEvents {
     public static void onCommonSetup(FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
-            BoilerHeater.REGISTRY.register(PropulsionBlocks.SOLID_BURNER.get(), ModSetupEvents::propulsionBurnerHeat);
-            BoilerHeater.REGISTRY.register(PropulsionBlocks.LIQUID_BURNER.get(), ModSetupEvents::propulsionBurnerHeat);
+            BoilerHeater.REGISTRY.register(KineticBlocks.SOLID_BURNER.get(), ModSetupEvents::propulsionBurnerHeat);
+            BoilerHeater.REGISTRY.register(KineticBlocks.LIQUID_BURNER.get(), ModSetupEvents::propulsionBurnerHeat);
         });
     }
 

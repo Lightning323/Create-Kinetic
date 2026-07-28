@@ -37,10 +37,10 @@ public class PropulsionFluids {
     public static final DeferredHolder<Fluid, BaseFlowingFluid.Flowing> FLOWING_OXIDIZER = FLUIDS.register("flowing_oxidizer",
             () -> new ProtectedFlowingFluid.Flowing(oxidizerProperties()));
 
-    public static final DeferredBlock<LiquidBlock> TURPENTINE_BLOCK = PropulsionBlocks.BLOCKS.register("turpentine",
+    public static final DeferredBlock<LiquidBlock> TURPENTINE_BLOCK = KineticBlocks.BLOCKS.register("turpentine",
             () -> new LiquidBlock((FlowingFluid) TURPENTINE.get(), BlockBehaviour.Properties.ofFullCopy(Blocks.WATER).noLootTable()));
 
-    public static final DeferredBlock<LiquidBlock> OXIDIZER_BLOCK = PropulsionBlocks.BLOCKS.register("oxidizer",
+    public static final DeferredBlock<LiquidBlock> OXIDIZER_BLOCK = KineticBlocks.BLOCKS.register("oxidizer",
             () -> new LiquidBlock((FlowingFluid) OXIDIZER.get(), BlockBehaviour.Properties.ofFullCopy(Blocks.WATER).noLootTable()));
 
     public static void register(IEventBus modBus) {

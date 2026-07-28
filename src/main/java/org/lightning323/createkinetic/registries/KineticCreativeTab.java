@@ -31,20 +31,20 @@ public class KineticCreativeTab {
         registerSectionItem(SIMULATED_CREATIVE_SECTION, "gyroscope", () -> KineticBlocks.GYROSCOPE.asItem());
         registerSectionItem(SIMULATED_CREATIVE_SECTION, "joystick", () -> KineticBlocks.JOYSTICK.asItem());
 
-        registerSectionItem(AERONAUTICS_CREATIVE_SECTION, "thruster", () -> PropulsionBlocks.THRUSTER_BLOCK.get().asItem());
-        registerSectionItem(AERONAUTICS_CREATIVE_SECTION, "creative_thruster", () -> PropulsionBlocks.CREATIVE_THRUSTER_BLOCK.get().asItem());
-        registerSectionItem(AERONAUTICS_CREATIVE_SECTION, "ion_thruster", () -> PropulsionBlocks.ION_THRUSTER_BLOCK.get().asItem());
-        registerSectionItem(AERONAUTICS_CREATIVE_SECTION, "vector_thruster", () -> PropulsionBlocks.VECTOR_THRUSTER_BLOCK.get().asItem());
-        registerSectionItem(AERONAUTICS_CREATIVE_SECTION, "creative_vector_thruster", () -> PropulsionBlocks.CREATIVE_VECTOR_THRUSTER_BLOCK.get().asItem());
-        registerSectionItem(AERONAUTICS_CREATIVE_SECTION, "liquid_vector_thruster", () -> PropulsionBlocks.LIQUID_VECTOR_THRUSTER_BLOCK.get().asItem());
-        registerSectionItem(AERONAUTICS_CREATIVE_SECTION, "redstone_converter", () -> PropulsionBlocks.REDSTONE_CONVERTER_BLOCK.get().asItem());
+        registerSectionItem(AERONAUTICS_CREATIVE_SECTION, "thruster", () -> KineticBlocks.THRUSTER_BLOCK.get().asItem());
+        registerSectionItem(AERONAUTICS_CREATIVE_SECTION, "creative_thruster", () -> KineticBlocks.CREATIVE_THRUSTER_BLOCK.get().asItem());
+        registerSectionItem(AERONAUTICS_CREATIVE_SECTION, "ion_thruster", () -> KineticBlocks.ION_THRUSTER_BLOCK.get().asItem());
+        registerSectionItem(AERONAUTICS_CREATIVE_SECTION, "vector_thruster", () -> KineticBlocks.VECTOR_THRUSTER_BLOCK.get().asItem());
+        registerSectionItem(AERONAUTICS_CREATIVE_SECTION, "creative_vector_thruster", () -> KineticBlocks.CREATIVE_VECTOR_THRUSTER_BLOCK.get().asItem());
+        registerSectionItem(AERONAUTICS_CREATIVE_SECTION, "liquid_vector_thruster", () -> KineticBlocks.LIQUID_VECTOR_THRUSTER_BLOCK.get().asItem());
+        registerSectionItem(AERONAUTICS_CREATIVE_SECTION, "redstone_converter", () -> KineticBlocks.REDSTONE_CONVERTER_BLOCK.get().asItem());
 
-        registerSectionItem(AERONAUTICS_CREATIVE_SECTION, "wing", () -> PropulsionBlocks.WING_BLOCK.get().asItem());
-        registerSectionItem(AERONAUTICS_CREATIVE_SECTION, "tempered_wing", () -> PropulsionBlocks.TEMPERED_WING_BLOCK.get().asItem());
-        registerSectionItem(AERONAUTICS_CREATIVE_SECTION, "copycat_wing", () -> PropulsionBlocks.COPYCAT_WING.get().asItem());
-        registerSectionItem(AERONAUTICS_CREATIVE_SECTION, "solid_burner", () -> PropulsionBlocks.SOLID_BURNER.get().asItem());
-        registerSectionItem(AERONAUTICS_CREATIVE_SECTION, "liquid_burner", () -> PropulsionBlocks.LIQUID_BURNER.get().asItem());
-        registerSectionItem(AERONAUTICS_CREATIVE_SECTION, "stirling_engine", () -> PropulsionBlocks.STIRLING_ENGINE_BLOCK.get().asItem());
+        registerSectionItem(AERONAUTICS_CREATIVE_SECTION, "wing", () -> KineticBlocks.WING_BLOCK.get().asItem());
+        registerSectionItem(AERONAUTICS_CREATIVE_SECTION, "tempered_wing", () -> KineticBlocks.TEMPERED_WING_BLOCK.get().asItem());
+        registerSectionItem(AERONAUTICS_CREATIVE_SECTION, "copycat_wing", () -> KineticBlocks.COPYCAT_WING.get().asItem());
+        registerSectionItem(AERONAUTICS_CREATIVE_SECTION, "solid_burner", () -> KineticBlocks.SOLID_BURNER.get().asItem());
+        registerSectionItem(AERONAUTICS_CREATIVE_SECTION, "liquid_burner", () -> KineticBlocks.LIQUID_BURNER.get().asItem());
+        registerSectionItem(AERONAUTICS_CREATIVE_SECTION, "stirling_engine", () -> KineticBlocks.STIRLING_ENGINE_BLOCK.get().asItem());
 
         //TODO: We could use these for something in the future
 //        registerSectionItem(MAIN_SECTION, "platinum_fluid_tank", () -> PropulsionBlocks.PLATINUM_FLUID_TANK.get().asItem());

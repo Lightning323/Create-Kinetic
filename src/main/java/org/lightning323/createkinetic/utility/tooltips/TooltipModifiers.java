@@ -7,7 +7,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import org.lightning323.createkinetic.CreateKinetic;
 import org.lightning323.createkinetic.config.PropulsionConfig;
-import org.lightning323.createkinetic.registries.PropulsionBlocks;
+import org.lightning323.createkinetic.registries.KineticBlocks;
 
 import java.util.HashMap;
 import java.util.List;
@@ -19,16 +19,16 @@ public class TooltipModifiers {
     private static final HashMap<Item, String> conditionKeyLookup = new HashMap<>();
 
     static {
-        summaryKeyLookup.put(PropulsionBlocks.THRUSTER_BLOCK.get().asItem(), "createkinetic.tooltip.shared.thruster_summary");
-        summaryKeyLookup.put(PropulsionBlocks.CREATIVE_THRUSTER_BLOCK.get().asItem(), "createkinetic.tooltip.shared.thruster_summary");
+        summaryKeyLookup.put(KineticBlocks.THRUSTER_BLOCK.get().asItem(), "createkinetic.tooltip.shared.thruster_summary");
+        summaryKeyLookup.put(KineticBlocks.CREATIVE_THRUSTER_BLOCK.get().asItem(), "createkinetic.tooltip.shared.thruster_summary");
 
         //Thruster
-        tooltipModificationLookup.put(PropulsionBlocks.THRUSTER_BLOCK.get().asItem(), (payload) -> {
+        tooltipModificationLookup.put(KineticBlocks.THRUSTER_BLOCK.get().asItem(), (payload) -> {
             int thrusterStrength = (int) Math.round(PropulsionConfig.BASE_THRUST.get());
             return Component.translatable(getSummaryKey(payload.item(), payload.path() + ".tooltip.summary")).getString().replace("{}", String.valueOf(thrusterStrength));
         });
         //Creative thruster
-        tooltipModificationLookup.put(PropulsionBlocks.CREATIVE_THRUSTER_BLOCK.get().asItem(), (payload) -> {
+        tooltipModificationLookup.put(KineticBlocks.CREATIVE_THRUSTER_BLOCK.get().asItem(), (payload) -> {
             int thrusterStrength = (int) Math.round(PropulsionConfig.CREATIVE_THRUSTER_BASE_THRUST.get());
             return Component.translatable(getSummaryKey(payload.item(), payload.path() + ".tooltip.summary")).getString().replace("{}", String.valueOf(thrusterStrength));
         });

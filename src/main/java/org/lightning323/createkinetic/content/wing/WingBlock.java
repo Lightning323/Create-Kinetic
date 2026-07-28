@@ -24,7 +24,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.joml.Vector3d;
 import org.joml.Vector3dc;
-import org.lightning323.createkinetic.registries.PropulsionBlocks;
+import org.lightning323.createkinetic.registries.KineticBlocks;
 import org.lightning323.createkinetic.registries.PropulsionShapes;
 
 import javax.annotation.Nonnull;
@@ -36,8 +36,8 @@ public class WingBlock extends DirectionalBlock implements BlockSubLevelLiftProv
     public static final MapCodec<WingBlock> CODEC = simpleCodec(WingBlock::new);
     private static final Vector3dc CENTER_OF_MASS = new Vector3d(0.5, 0.5, 0.5);
     private static final List<Supplier<? extends net.minecraft.world.level.block.Block>> entires =
-        List.of(PropulsionBlocks.COPYCAT_WING, PropulsionBlocks.COPYCAT_WING_8, PropulsionBlocks.COPYCAT_WING_12,
-            PropulsionBlocks.WING_BLOCK, PropulsionBlocks.TEMPERED_WING_BLOCK);
+        List.of(KineticBlocks.COPYCAT_WING, KineticBlocks.COPYCAT_WING_8, KineticBlocks.COPYCAT_WING_12,
+            KineticBlocks.WING_BLOCK, KineticBlocks.TEMPERED_WING_BLOCK);
     private static final int placementHelperId = PlacementHelpers.register(new WingPlacementHelper(entires));
 
     public WingBlock(Properties properties) {

@@ -35,8 +35,8 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.joml.Vector3d;
 import org.joml.Vector3dc;
+import org.lightning323.createkinetic.registries.KineticBlocks;
 import org.lightning323.createkinetic.registries.PropulsionBlockEntities;
-import org.lightning323.createkinetic.registries.PropulsionBlocks;
 import org.lightning323.createkinetic.registries.PropulsionShapes;
 
 import javax.annotation.Nonnull;
@@ -53,8 +53,8 @@ public class CopycatWingBlock extends CopycatBlock implements BlockSubLevelLiftP
     private final int width;
 
     private static final List<Supplier<? extends Block>> entires =
-        List.of(PropulsionBlocks.COPYCAT_WING, PropulsionBlocks.COPYCAT_WING_8, PropulsionBlocks.COPYCAT_WING_12,
-            PropulsionBlocks.WING_BLOCK, PropulsionBlocks.TEMPERED_WING_BLOCK);
+        List.of(KineticBlocks.COPYCAT_WING, KineticBlocks.COPYCAT_WING_8, KineticBlocks.COPYCAT_WING_12,
+            KineticBlocks.WING_BLOCK, KineticBlocks.TEMPERED_WING_BLOCK);
     private static final int placementHelperId = PlacementHelpers.register(new WingPlacementHelper(entires));
 
     private static final Map<Integer, VoxelShaper> wingShapers = Map.of(
@@ -119,7 +119,7 @@ public class CopycatWingBlock extends CopycatBlock implements BlockSubLevelLiftP
     public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter level, BlockPos pos, Player player) {
         BlockState material = getMaterial(level, pos);
         if (player != null && player.isShiftKeyDown()) {
-            return new ItemStack(PropulsionBlocks.COPYCAT_WING.get());
+            return new ItemStack(KineticBlocks.COPYCAT_WING.get());
         }
         
         return material.getBlock().asItem().getDefaultInstance();
@@ -167,7 +167,7 @@ public class CopycatWingBlock extends CopycatBlock implements BlockSubLevelLiftP
         if (dropCount < 1) {
             return Collections.emptyList();
         }
-        return List.of(new ItemStack(PropulsionBlocks.COPYCAT_WING.get(), dropCount));
+        return List.of(new ItemStack(KineticBlocks.COPYCAT_WING.get(), dropCount));
     }
 
     @Override
@@ -204,7 +204,7 @@ public class CopycatWingBlock extends CopycatBlock implements BlockSubLevelLiftP
     public ItemRequirement getRequiredItems(BlockState state, BlockEntity blockEntity) {
         return new ItemRequirement(
             ItemRequirement.ItemUseType.CONSUME,
-            new ItemStack(PropulsionBlocks.COPYCAT_WING.get(), Math.max(1, width / 4))
+            new ItemStack(KineticBlocks.COPYCAT_WING.get(), Math.max(1, width / 4))
         );
     }
 }

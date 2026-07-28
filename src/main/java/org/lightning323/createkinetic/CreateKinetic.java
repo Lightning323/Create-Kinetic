@@ -85,7 +85,6 @@ public class CreateKinetic {
         if(FMLEnvironment.dist == Dist.CLIENT) {
             KineticClient.init(modBus);
         }
-        KineticBlocks.init();
         KineticBlockEntityTypes.init();
         KineticItems.init();
         SableEventPlatform.INSTANCE.onPhysicsTick(KineticEvents::physicsTick);
@@ -103,7 +102,7 @@ public class CreateKinetic {
         modBus.addListener(ModSetupEvents::onCommonSetup);
         //Content
         ParticleTypes.register(modBus);
-        PropulsionBlocks.register(modBus);
+        KineticBlocks.register(modBus);
         PropulsionBlockEntities.register(modBus);
         PropulsionItems.register(modBus);
         ModItems.register(modBus);

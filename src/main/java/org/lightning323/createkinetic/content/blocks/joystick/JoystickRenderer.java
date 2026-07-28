@@ -53,12 +53,12 @@ public class JoystickRenderer extends SafeBlockEntityRenderer<JoystickBlockEntit
          int tiltY = be.getTiltY();
 
 
-         //Display the indicators
-         for(JoystickDirection dir : JoystickDirection.VALUES) {
-            float curved = JoystickVisual.brightnessCurve((float)dir.strengthFor(tiltX, tiltY) / 15.0F);
-            int color = JoystickVisual.scaleBrightness(dir.colorRgb, curved);
-            ((SuperByteBuffer)((SuperByteBuffer)((SuperByteBuffer)CachedBuffers.partial(KineticPartialModels.JOYSTICK_INDICATOR, be.getBlockState()).translate(0.5F, 0.0F, 0.5F)).rotateYDegrees(-facingDeg - (float)dir.index * 90.0F)).translate(-0.5F, 0.0F, -0.5F)).color(color).light(light).renderInto(ms, vb);
-         }
+//         //Display the indicators
+//         for(JoystickDirection dir : JoystickDirection.VALUES) {
+//            float curved = JoystickVisual.brightnessCurve((float)dir.strengthFor(tiltX, tiltY) / 15.0F);
+//            int color = JoystickVisual.scaleBrightness(dir.colorRgb, curved);
+//            ((SuperByteBuffer)((SuperByteBuffer)((SuperByteBuffer)CachedBuffers.partial(KineticPartialModels.JOYSTICK_INDICATOR, be.getBlockState()).translate(0.5F, 0.0F, 0.5F)).rotateYDegrees(-facingDeg - (float)dir.index * 90.0F)).translate(-0.5F, 0.0F, -0.5F)).color(color).light(light).renderInto(ms, vb);
+//         }
       }
 
       Minecraft mc = Minecraft.getInstance();

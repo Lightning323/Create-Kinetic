@@ -117,8 +117,8 @@ public class ModClientEvents {
             ItemBlockRenderTypes.setRenderLayer(PropulsionFluids.FLOWING_TURPENTINE.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(PropulsionFluids.OXIDIZER.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(PropulsionFluids.FLOWING_OXIDIZER.get(), RenderType.translucent());
-            ItemBlockRenderTypes.setRenderLayer(PropulsionBlocks.PLATINUM_FLUID_TANK.get(), RenderType.cutoutMipped());
-            ItemBlockRenderTypes.setRenderLayer(PropulsionBlocks.PLATINUM_FLUID_VESSEL.get(), RenderType.cutoutMipped());
+            ItemBlockRenderTypes.setRenderLayer(KineticBlocks.PLATINUM_FLUID_TANK.get(), RenderType.cutoutMipped());
+            ItemBlockRenderTypes.setRenderLayer(KineticBlocks.PLATINUM_FLUID_VESSEL.get(), RenderType.cutoutMipped());
         });
 
         PonderIndex.addPlugin(new DeltaPonderPlugin());
@@ -157,11 +157,11 @@ public class ModClientEvents {
         EncasedCTBehaviour behaviour = new EncasedCTBehaviour(PropulsionSpriteShifts.PLATINUM_CASING_TEXTURE);
 
         ModelSwapper.swapModels(event.getModels(),
-            ModelSwapper.getAllBlockStateModelLocations(PropulsionBlocks.PLATINUM_FLUID_TANK.get()),
+            ModelSwapper.getAllBlockStateModelLocations(KineticBlocks.PLATINUM_FLUID_TANK.get()),
             PlatinumFluidTankModel::new);
 
         ModelSwapper.swapModels(event.getModels(),
-            ModelSwapper.getAllBlockStateModelLocations(PropulsionBlocks.PLATINUM_FLUID_VESSEL.get()),
+            ModelSwapper.getAllBlockStateModelLocations(KineticBlocks.PLATINUM_FLUID_VESSEL.get()),
             PlatinumFluidVesselModel::new);
     }
 }

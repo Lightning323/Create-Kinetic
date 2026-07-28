@@ -46,7 +46,7 @@ public class JoystickVisual extends AbstractBlockEntityVisual<JoystickBlockEntit
 
    public void beginFrame(Context context) {
       this.applyTransforms(context.partialTick());
-      this.applyIndicatorColors();
+//      this.applyIndicatorColors();
    }
 
    private void applyTransforms(float partialTick) {
@@ -60,23 +60,23 @@ public class JoystickVisual extends AbstractBlockEntityVisual<JoystickBlockEntit
       float buttonDrop = -((JoystickBlockEntity)this.blockEntity).buttonPressAt(partialTick) * 0.03125F;
       ((TransformedInstance)this.button.setIdentityTransform().translate(this.getVisualPosition())).translate(0.5F, 0.15625F, 0.5F).rotateY(facingRad).rotateZ(rotZ).rotateX(rotX).translate(-0.5F, -0.15625F + buttonDrop, -0.5F).setChanged();
 
-      for(JoystickDirection dir : JoystickDirection.VALUES) {
-         float dirRad = (float)Math.toRadians((double)((float)(-dir.index) * 90.0F));
-         ((TransformedInstance)this.indicators[dir.index].setIdentityTransform().translate(this.getVisualPosition())).translate(0.5F, 0.0F, 0.5F).rotateY(facingRad + dirRad).translate(-0.5F, 0.0F, -0.5F).setChanged();
-      }
+//      for(JoystickDirection dir : JoystickDirection.VALUES) {
+//         float dirRad = (float)Math.toRadians((double)((float)(-dir.index) * 90.0F));
+//         ((TransformedInstance)this.indicators[dir.index].setIdentityTransform().translate(this.getVisualPosition())).translate(0.5F, 0.0F, 0.5F).rotateY(facingRad + dirRad).translate(-0.5F, 0.0F, -0.5F).setChanged();
+//      }
 
    }
 
-   private void applyIndicatorColors() {
-      int tiltX = ((JoystickBlockEntity)this.blockEntity).getTiltX();
-      int tiltY = ((JoystickBlockEntity)this.blockEntity).getTiltY();
-
-      for(JoystickDirection dir : JoystickDirection.VALUES) {
-         float curved = brightnessCurve((float)dir.strengthFor(tiltX, tiltY) / 15.0F);
-         this.indicators[dir.index].colorArgb(scaleBrightness(dir.colorRgb, curved)).setChanged();
-      }
-
-   }
+//   private void applyIndicatorColors() {
+//      int tiltX = ((JoystickBlockEntity)this.blockEntity).getTiltX();
+//      int tiltY = ((JoystickBlockEntity)this.blockEntity).getTiltY();
+//
+//      for(JoystickDirection dir : JoystickDirection.VALUES) {
+//         float curved = brightnessCurve((float)dir.strengthFor(tiltX, tiltY) / 15.0F);
+//         this.indicators[dir.index].colorArgb(scaleBrightness(dir.colorRgb, curved)).setChanged();
+//      }
+//
+//   }
 
    static float brightnessCurve(float brightness) {
       return brightness <= 0.0F ? 0.3F : 0.4F + 0.6F * brightness;

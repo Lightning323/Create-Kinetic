@@ -23,7 +23,7 @@ import net.neoforged.neoforge.fluids.FluidStack;
 import org.lightning323.createkinetic.content.heat.burners.AbstractBurnerBlock;
 import org.lightning323.createkinetic.content.heat.burners.liquid.LiquidBurnerBlockEntity;
 import org.lightning323.createkinetic.content.heat.burners.solid.SolidBurnerBlock;
-import org.lightning323.createkinetic.registries.PropulsionBlocks;
+import org.lightning323.createkinetic.registries.KineticBlocks;
 import org.lightning323.createkinetic.registries.PropulsionFluids;
 
 public class BurnerScenes {
@@ -63,7 +63,7 @@ public class BurnerScenes {
         scene.effects().emitParticles(util.vector().centerOf(burnerPos), (world, x, y, z) -> {
             BlockPos pos = BlockPos.containing(x, y, z);
             net.minecraft.world.level.block.state.BlockState state = world.getBlockState(pos);
-            PropulsionBlocks.SOLID_BURNER.get().animateTick(state, world, pos, world.random);
+            KineticBlocks.SOLID_BURNER.get().animateTick(state, world, pos, world.random);
         }, 1, 1000);
         scene.idle(20);
 
@@ -293,7 +293,7 @@ public class BurnerScenes {
         scene.addKeyframe();
         scene.idle(10);
 
-        scene.world().setBlock(burnerBPos, PropulsionBlocks.LIQUID_BURNER.get().defaultBlockState()
+        scene.world().setBlock(burnerBPos, KineticBlocks.LIQUID_BURNER.get().defaultBlockState()
             .setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.SOUTH), true);
         
         scene.overlay().showText(60)
@@ -303,7 +303,7 @@ public class BurnerScenes {
         scene.idle(60);
 
         scene.world().showSection(stirlingBSel, Direction.DOWN);
-        scene.world().setBlock(stirlingBPos, PropulsionBlocks.STIRLING_ENGINE_BLOCK.get().defaultBlockState()
+        scene.world().setBlock(stirlingBPos, KineticBlocks.STIRLING_ENGINE_BLOCK.get().defaultBlockState()
             .setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH), true);
         scene.idle(10);
 

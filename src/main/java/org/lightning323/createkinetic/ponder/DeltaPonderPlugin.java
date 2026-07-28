@@ -8,7 +8,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import org.lightning323.createkinetic.CreateKinetic;
-import org.lightning323.createkinetic.registries.PropulsionBlocks;
+import org.lightning323.createkinetic.registries.KineticBlocks;
 
 import javax.annotation.Nonnull;
 
@@ -16,23 +16,23 @@ public class DeltaPonderPlugin implements PonderPlugin {
     public static void register(PonderSceneRegistrationHelper<ResourceLocation> helper) {
         final PonderSceneRegistrationHelper<Block> HELPER = helper.withKeyFunction(BuiltInRegistries.BLOCK::getKey);
         //Burners
-        HELPER.forComponents(PropulsionBlocks.SOLID_BURNER.get()).addStoryBoard("solid_burner", BurnerScenes::solidBurner);
-        HELPER.forComponents(PropulsionBlocks.LIQUID_BURNER.get()).addStoryBoard("liquid_burner", BurnerScenes::liquidBurner);
+        HELPER.forComponents(KineticBlocks.SOLID_BURNER.get()).addStoryBoard("solid_burner", BurnerScenes::solidBurner);
+        HELPER.forComponents(KineticBlocks.LIQUID_BURNER.get()).addStoryBoard("liquid_burner", BurnerScenes::liquidBurner);
         //Stirling engine
-        HELPER.forComponents(PropulsionBlocks.STIRLING_ENGINE_BLOCK.get())
+        HELPER.forComponents(KineticBlocks.STIRLING_ENGINE_BLOCK.get())
                 .addStoryBoard("stirling_engine_solid", StirlingEngineScene::stirlingEngine)
                 .addStoryBoard("stirling_engine_liquid", StirlingEngineScene::stirlingEngineLiquid);
 
         //Thruster
-        HELPER.forComponents(PropulsionBlocks.THRUSTER_BLOCK.get())
+        HELPER.forComponents(KineticBlocks.THRUSTER_BLOCK.get())
                 .addStoryBoard("ponder_thruster_normal", ThrusterScenes::normal)
                 .addStoryBoard("ponder_thruster_2x2", ThrusterScenes::multiblock2x2)
                 .addStoryBoard("ponder_thruster_3x3", ThrusterScenes::multiblock3x3);
-        HELPER.forComponents(PropulsionBlocks.VECTOR_THRUSTER_BLOCK.get())
+        HELPER.forComponents(KineticBlocks.VECTOR_THRUSTER_BLOCK.get())
                 .addStoryBoard("ponder_vector_thruster_normal", VectorThrusterFeScenes::vectorThrusterFe);
-        HELPER.forComponents(PropulsionBlocks.CREATIVE_VECTOR_THRUSTER_BLOCK.get())
+        HELPER.forComponents(KineticBlocks.CREATIVE_VECTOR_THRUSTER_BLOCK.get())
                 .addStoryBoard("ponder_creative_vector_thruster", VectorThrusterFeScenes::creativeVectorThruster);
-        HELPER.forComponents(PropulsionBlocks.LIQUID_VECTOR_THRUSTER_BLOCK.get())
+        HELPER.forComponents(KineticBlocks.LIQUID_VECTOR_THRUSTER_BLOCK.get())
                 .addStoryBoard("ponder_liquid_vector_thruster", VectorThrusterFeScenes::liquidVectorThruster);
     }
 
@@ -50,9 +50,9 @@ public class DeltaPonderPlugin implements PonderPlugin {
     public void registerTags(@Nonnull PonderTagRegistrationHelper<ResourceLocation> helper) {
         final PonderTagRegistrationHelper<Block> HELPER = helper.withKeyFunction(BuiltInRegistries.BLOCK::getKey);
         HELPER.addToTag(AllCreatePonderTags.KINETIC_APPLIANCES)
-            .add(PropulsionBlocks.STIRLING_ENGINE_BLOCK.get())
-            .add(PropulsionBlocks.VECTOR_THRUSTER_BLOCK.get())
-            .add(PropulsionBlocks.CREATIVE_VECTOR_THRUSTER_BLOCK.get())
-            .add(PropulsionBlocks.LIQUID_VECTOR_THRUSTER_BLOCK.get());
+            .add(KineticBlocks.STIRLING_ENGINE_BLOCK.get())
+            .add(KineticBlocks.VECTOR_THRUSTER_BLOCK.get())
+            .add(KineticBlocks.CREATIVE_VECTOR_THRUSTER_BLOCK.get())
+            .add(KineticBlocks.LIQUID_VECTOR_THRUSTER_BLOCK.get());
     }
 }

@@ -9,7 +9,6 @@
     "tracks.WheelMountBlockMixin",
     "tracks.WheelMountOffsetMixin",
     "BasinBlockEntityMixin",
-    "FluidShellProjectileMixin",
     "SchematicPlacePacketMixin"
   ],
   "client": [
