@@ -15,7 +15,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import org.lightning323.createkinetic.CreateKinetic;
 
-public class PropulsionFluids {
+public class KineticFluids {
     private static final String TURPENTINE_DESCRIPTION = "fluid." + CreateKinetic.ID + ".turpentine";
 
     public static final DeferredRegister<FluidType> FLUID_TYPES = DeferredRegister.create(NeoForgeRegistries.Keys.FLUID_TYPES, CreateKinetic.ID);
@@ -53,7 +53,7 @@ public class PropulsionFluids {
                 TURPENTINE_TYPE,
                 TURPENTINE,
                 FLOWING_TURPENTINE
-        ).bucket(PropulsionItems.TURPENTINE_BUCKET)
+        ).bucket(KineticItems.TURPENTINE_BUCKET)
                 .block(TURPENTINE_BLOCK)
                 .levelDecreasePerBlock(1)
                 .tickRate(7)
@@ -65,7 +65,7 @@ public class PropulsionFluids {
                 OXIDIZER_TYPE,
                 OXIDIZER,
                 FLOWING_OXIDIZER
-        ).bucket(PropulsionItems.OXIDIZER_BUCKET)
+        ).bucket(KineticItems.OXIDIZER_BUCKET)
                 .block(OXIDIZER_BLOCK)
                 .levelDecreasePerBlock(1)
                 .tickRate(5)

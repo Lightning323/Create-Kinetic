@@ -24,7 +24,7 @@ import org.lightning323.createkinetic.content.heat.burners.AbstractBurnerBlock;
 import org.lightning323.createkinetic.content.heat.burners.liquid.LiquidBurnerBlockEntity;
 import org.lightning323.createkinetic.content.heat.burners.solid.SolidBurnerBlock;
 import org.lightning323.createkinetic.registries.KineticBlocks;
-import org.lightning323.createkinetic.registries.PropulsionFluids;
+import org.lightning323.createkinetic.registries.KineticFluids;
 
 public class BurnerScenes {
     public static void solidBurner(SceneBuilder builder, SceneBuildingUtil util) {
@@ -191,7 +191,7 @@ public class BurnerScenes {
 
         scene.world().modifyBlockEntityNBT(burnerASel, LiquidBurnerBlockEntity.class, nbt -> {
             CompoundTag tankNbt = new CompoundTag();
-            FluidStack fuel = new FluidStack(PropulsionFluids.TURPENTINE.get(), 100); 
+            FluidStack fuel = new FluidStack(KineticFluids.TURPENTINE.get(), 100);
             tankNbt.putInt("Amount", fuel.getAmount());
             nbt.put("Tank", tankNbt);
             nbt.putInt("burnTime", 1000);

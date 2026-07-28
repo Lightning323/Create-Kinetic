@@ -79,7 +79,7 @@ public class ModClientEvents {
             public int getTintColor(FluidStack stack) {
                 return 0xFFD69E49;
             }
-        }, PropulsionFluids.TURPENTINE_TYPE);
+        }, KineticFluids.TURPENTINE_TYPE);
 
 
         event.registerFluidType(new IClientFluidTypeExtensions() {
@@ -107,16 +107,16 @@ public class ModClientEvents {
             public int getTintColor(FluidStack stack) {
                 return 0xFF88CCFF;
             }
-        }, PropulsionFluids.OXIDIZER_TYPE);
+        }, KineticFluids.OXIDIZER_TYPE);
     }
 
     @SubscribeEvent
     public static void clientInit(final FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
-            ItemBlockRenderTypes.setRenderLayer(PropulsionFluids.TURPENTINE.get(), RenderType.translucent());
-            ItemBlockRenderTypes.setRenderLayer(PropulsionFluids.FLOWING_TURPENTINE.get(), RenderType.translucent());
-            ItemBlockRenderTypes.setRenderLayer(PropulsionFluids.OXIDIZER.get(), RenderType.translucent());
-            ItemBlockRenderTypes.setRenderLayer(PropulsionFluids.FLOWING_OXIDIZER.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(KineticFluids.TURPENTINE.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(KineticFluids.FLOWING_TURPENTINE.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(KineticFluids.OXIDIZER.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(KineticFluids.FLOWING_OXIDIZER.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(KineticBlocks.PLATINUM_FLUID_TANK.get(), RenderType.cutoutMipped());
             ItemBlockRenderTypes.setRenderLayer(KineticBlocks.PLATINUM_FLUID_VESSEL.get(), RenderType.cutoutMipped());
         });

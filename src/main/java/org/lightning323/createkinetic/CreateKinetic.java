@@ -86,7 +86,6 @@ public class CreateKinetic {
             KineticClient.init(modBus);
         }
         KineticBlockEntityTypes.init();
-        KineticItems.init();
         SableEventPlatform.INSTANCE.onPhysicsTick(KineticEvents::physicsTick);
         getRegistrate().registerEventListeners(modBus);
         KineticMenuTypes.register();
@@ -104,10 +103,10 @@ public class CreateKinetic {
         ParticleTypes.register(modBus);
         KineticBlocks.register(modBus);
         PropulsionBlockEntities.register(modBus);
-        PropulsionItems.register(modBus);
+        KineticItems.register(modBus);
         ModItems.register(modBus);
         PropulsionSoundEvents.register(modBus);
-        PropulsionFluids.register(modBus);
+        KineticFluids.register(modBus);
         PropulsionPartialModels.register();
         KineticCreativeTabs.registerAeronauticsSections();
         modBus.addListener(PropulsionPackets::register);

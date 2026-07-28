@@ -25,7 +25,7 @@ import org.joml.Vector3d;
 import org.lightning323.createkinetic.config.PropulsionConfig;
 import org.lightning323.createkinetic.content.thruster.*;
 import org.lightning323.createkinetic.registries.PropulsionBlockEntities;
-import org.lightning323.createkinetic.registries.PropulsionFluids;
+import org.lightning323.createkinetic.registries.KineticFluids;
 import org.lightning323.createkinetic.utility.MultiFluidHandler;
 import org.lightning323.createkinetic.utility.math.MathUtility;
 
@@ -67,7 +67,7 @@ public class ThrusterBlockEntity extends AbstractThrusterBlockEntity {
         if (supportsMultiblock()) {
             oxidizerTank = SmartFluidTankBehaviour.single(this, getBaseTankCapacityMb());
             behaviours.add(oxidizerTank);
-            oxidizerTank.getPrimaryHandler().setValidator(stack -> stack.getFluid() == PropulsionFluids.OXIDIZER.get() || stack.getFluid() == PropulsionFluids.FLOWING_OXIDIZER.get());
+            oxidizerTank.getPrimaryHandler().setValidator(stack -> stack.getFluid() == KineticFluids.OXIDIZER.get() || stack.getFluid() == KineticFluids.FLOWING_OXIDIZER.get());
         }
     }
 

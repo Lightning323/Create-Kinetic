@@ -30,7 +30,7 @@ import org.lightning323.createkinetic.content.thruster.ThrusterFuelManager;
 import org.lightning323.createkinetic.network.PropulsionPackets;
 import org.lightning323.createkinetic.network.SyncThrusterFuelsPacket;
 import org.lightning323.createkinetic.registries.PropulsionCommands;
-import org.lightning323.createkinetic.registries.PropulsionFluids;
+import org.lightning323.createkinetic.registries.KineticFluids;
 
 @SuppressWarnings("removal")
 @EventBusSubscriber(modid = CreateKinetic.ID, bus = EventBusSubscriber.Bus.GAME)
@@ -92,7 +92,7 @@ public class ForgeEvents {
             return;
         }
 
-        boolean isTurpentine = state.getFluidState().is(PropulsionFluids.TURPENTINE.get());
+        boolean isTurpentine = state.getFluidState().is(KineticFluids.TURPENTINE.get());
         boolean isLava = state.getFluidState().is(Fluids.LAVA) || state.getFluidState().is(Fluids.FLOWING_LAVA);
 
         if (!isTurpentine && !isLava) {
@@ -108,7 +108,7 @@ public class ForgeEvents {
                 return;
             }
 
-            if (isLava && neighborFluid.is(PropulsionFluids.TURPENTINE.get())) {
+            if (isLava && neighborFluid.is(KineticFluids.TURPENTINE.get())) {
                 level.setBlock(neighborPos, Blocks.STONE.defaultBlockState(), 3);
                 return;
             }

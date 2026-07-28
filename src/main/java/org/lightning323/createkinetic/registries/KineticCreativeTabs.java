@@ -50,9 +50,9 @@ public class KineticCreativeTabs {
 //        registerSectionItem(MAIN_SECTION, "platinum_fluid_tank", () -> PropulsionBlocks.PLATINUM_FLUID_TANK.get().asItem());
 //        registerSectionItem(MAIN_SECTION, "platinum_fluid_vessel", () -> PropulsionBlocks.PLATINUM_FLUID_VESSEL.get().asItem());
 
-        registerSectionItem(AERONAUTICS_CREATIVE_SECTION, "turpentine_bucket", () -> PropulsionItems.TURPENTINE_BUCKET.get());
-        registerSectionItem(AERONAUTICS_CREATIVE_SECTION, "pine_resin", () -> PropulsionItems.PINE_RESIN.get());
-        registerSectionItem(AERONAUTICS_CREATIVE_SECTION, "oxidizer_bucket", () -> PropulsionItems.OXIDIZER_BUCKET.get());
+        registerSectionItem(AERONAUTICS_CREATIVE_SECTION, "turpentine_bucket", () -> KineticItems.TURPENTINE_BUCKET.get());
+        registerSectionItem(AERONAUTICS_CREATIVE_SECTION, "pine_resin", () -> KineticItems.PINE_RESIN.get());
+        registerSectionItem(AERONAUTICS_CREATIVE_SECTION, "oxidizer_bucket", () -> KineticItems.OXIDIZER_BUCKET.get());
 
         registerSectionItem(TOOLS_SECTION, "assembler_stick", () -> ModItems.ASSEMBLER_STICK.get());
         registerSectionItem(TOOLS_SECTION, "auto_glue", () -> ModItems.AUTO_GLUE.get());

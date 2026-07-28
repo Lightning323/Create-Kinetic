@@ -145,8 +145,10 @@ public class KineticClient {
 
     @SubscribeEvent
     public static void onModelBakingComplete(ModelEvent.ModifyBakingResult event) {
-        ResourceLocation itemRl = ResourceLocation.fromNamespaceAndPath(ID, "gyroscope");
+
+        ResourceLocation itemRl = ResourceLocation.fromNamespaceAndPath(ID, "reaction_wheel");
         ModelResourceLocation key = new ModelResourceLocation(itemRl, "inventory");
+
         Map<ModelResourceLocation, BakedModel> registry = event.getModels();
         BakedModel original = (BakedModel) registry.get(key);
         if (original != null) {

@@ -20,7 +20,7 @@ import org.lightning323.createkinetic.content.thruster.vector_thruster.VectorThr
 import org.lightning323.createkinetic.content.thruster.vector_thruster.creative_vector_thruster.CreativeVectorThrusterBlockEntity;
 import org.lightning323.createkinetic.content.thruster.vector_thruster.liquid_vector_thruster.LiquidVectorThrusterBlockEntity;
 import org.lightning323.createkinetic.particles.ion.IonParticleData;
-import org.lightning323.createkinetic.registries.PropulsionFluids;
+import org.lightning323.createkinetic.registries.KineticFluids;
 
 import java.util.List;
 
@@ -239,7 +239,7 @@ public final class VectorThrusterFeScenes {
                 scene.idle(95);
                 int fuelCapacity = PropulsionConfig.getLiquidVectorThrusterFuelTankCapacityMbOrDefault();
                 scene.world().modifyBlockEntity(thrusterPos, LiquidVectorThrusterBlockEntity.class,
-                    be -> be.tank.getPrimaryHandler().setFluid(new FluidStack(PropulsionFluids.TURPENTINE.get(), fuelCapacity)));
+                    be -> be.tank.getPrimaryHandler().setFluid(new FluidStack(KineticFluids.TURPENTINE.get(), fuelCapacity)));
                 scene.overlay().showText(90)
                     .attachKeyFrame()
                     .sharedText("vector_thruster_liquid.intro.pumped")
@@ -265,7 +265,7 @@ public final class VectorThrusterFeScenes {
             case LIQUID -> {
                 scene.world().modifyBlockEntity(thrusterPos, LiquidVectorThrusterBlockEntity.class, be -> {
                     int fuelCapacity = PropulsionConfig.getLiquidVectorThrusterFuelTankCapacityMbOrDefault();
-                    be.tank.getPrimaryHandler().setFluid(new FluidStack(PropulsionFluids.TURPENTINE.get(), fuelCapacity));
+                    be.tank.getPrimaryHandler().setFluid(new FluidStack(KineticFluids.TURPENTINE.get(), fuelCapacity));
                 });
                 scene.world().modifyBlockEntityNBT(thrusterSel, LiquidVectorThrusterBlockEntity.class,
                     nbt -> nbt.putInt("RedstoneInput", 15));
