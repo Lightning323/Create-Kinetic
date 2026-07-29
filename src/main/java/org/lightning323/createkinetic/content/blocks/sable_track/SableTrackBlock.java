@@ -98,10 +98,17 @@ public class SableTrackBlock
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
         if (state.hasBlockEntity() && state.getBlock() != newState.getBlock()) {
             SableTrackBlockEntity be = (SableTrackBlockEntity) level.getBlockEntity(pos);
-            if (be != null && !be.getHeldItem().isEmpty()) {
+
+            if (be != null) {
                 Direction facing = (Direction) state.getValue(HORIZONTAL_FACING);
                 BlockPos dropPos = pos.relative(facing);
-                Containers.dropItemStack((Level) level, (double) dropPos.getX(), (double) dropPos.getY(), (double) dropPos.getZ(), (ItemStack) be.getHeldItem());
+
+                if (!be.getHeldItem().isEmpty()) {
+                    if (be.setIsBeltAcrossTrack(false))
+                        Containers.dropItemStack((Level) level, (double) dropPos.getX(), (double) dropPos.getY(), (double) dropPos.getZ(), AllItems.BELT_CONNECTOR.asStack());
+
+                    Containers.dropItemStack((Level) level, (double) dropPos.getX(), (double) dropPos.getY(), (double) dropPos.getZ(), (ItemStack) be.getHeldItem());
+                }
             }
             level.removeBlockEntity(pos);
         }
@@ -128,7 +135,8 @@ public class SableTrackBlock
         return face.getAxis() == ((Direction) state.getValue(HORIZONTAL_FACING)).getAxis();
     }
 
-    protected ItemInteractionResult useItemOn(ItemStack heldItem, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+    protected ItemInteractionResult useItemOn(ItemStack heldItem, BlockState state, Level level, BlockPos
+            pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         if (this.role != SableTrackRole.MOUNT) {
             return super.useItemOn(heldItem, state, level, pos, player, hand, hitResult);
         }
@@ -138,13 +146,13 @@ public class SableTrackBlock
 //            }
 //            return ItemInteractionResult.CONSUME;
 //        }
-        if (player.isShiftKeyDown() && hitResult.getDirection() == state.getValue(HORIZONTAL_FACING)) {
-            if (!level.isClientSide) {
-                this.withBlockEntityDo((BlockGetter) level, pos, SableTrackBlockEntity::toggleVisualSuspensionHidden);
-                level.playSound(null, pos, (SoundEvent) SoundEvents.UI_BUTTON_CLICK.value(), SoundSource.PLAYERS, 0.5f, 1.1f);
-            }
-            return ItemInteractionResult.CONSUME;
-        }
+//        if (player.isShiftKeyDown() && hitResult.getDirection() == state.getValue(HORIZONTAL_FACING)) {
+//            if (!level.isClientSide) {
+//                this.withBlockEntityDo((BlockGetter) level, pos, SableTrackBlockEntity::toggleVisualSuspensionHidden);
+//                level.playSound(null, pos, (SoundEvent) SoundEvents.UI_BUTTON_CLICK.value(), SoundSource.PLAYERS, 0.5f, 1.1f);
+//            }
+//            return ItemInteractionResult.CONSUME;
+//        }
         Item item = heldItem.getItem();
 
 
@@ -237,7 +245,8 @@ public class SableTrackBlock
         return Shapes.block();
     }
 
-    protected VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+    protected VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext
+            context) {
         return Shapes.block();
     }
 
