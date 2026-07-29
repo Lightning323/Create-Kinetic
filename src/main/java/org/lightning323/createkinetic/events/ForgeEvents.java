@@ -35,13 +35,6 @@ import org.lightning323.createkinetic.registries.KineticFluids;
 @SuppressWarnings("removal")
 @EventBusSubscriber(modid = CreateKinetic.ID, bus = EventBusSubscriber.Bus.GAME)
 public class ForgeEvents {
-    private static final ResourceKey<DamageType> CORAL_SUBMERSION_DAMAGE_TYPE = ResourceKey.create(
-        Registries.DAMAGE_TYPE,
-        ResourceLocation.fromNamespaceAndPath(CreateKinetic.ID, "coral_submersion")
-    );
-    private static final int CORAL_DAMAGE_INTERVAL_TICKS = 20;
-    private static final float CORAL_DAMAGE_AMOUNT = 8.0f;
-
 
     @SubscribeEvent
     public static void onCommandsRegister(RegisterCommandsEvent event) {
@@ -62,23 +55,6 @@ public class ForgeEvents {
                 serverPlayer
             );
         }
-    }
-
-    @SubscribeEvent
-    public static void onPlayerTick(PlayerTickEvent.Post event) {
-        if (!(event.getEntity().level() instanceof ServerLevel serverLevel)) {
-            return;
-        }
-
-        Player player = event.getEntity();
-        if (player.tickCount % CORAL_DAMAGE_INTERVAL_TICKS != 0) {
-            return;
-        }
-        if (hasFullNetheriteDivingProtection(player)) {
-            return;
-        }
-
-        player.hurt(coralSubmersionDamageSource(serverLevel), CORAL_DAMAGE_AMOUNT);
     }
 
     //Turpentine-lava interaction
@@ -113,22 +89,6 @@ public class ForgeEvents {
                 return;
             }
         }
-    }
-
-    private static boolean hasFullNetheriteDivingProtection(Player player) {
-        return NetheriteDivingHandler.isNetheriteDivingHelmet(player.getItemBySlot(EquipmentSlot.HEAD))
-            && NetheriteDivingHandler.isNetheriteBacktank(player.getItemBySlot(EquipmentSlot.CHEST))
-            && NetheriteDivingHandler.isNetheriteArmor(player.getItemBySlot(EquipmentSlot.LEGS))
-            && NetheriteDivingHandler.isNetheriteArmor(player.getItemBySlot(EquipmentSlot.FEET));
-    }
-
-
-
-    private static DamageSource coralSubmersionDamageSource(ServerLevel level) {
-        Holder<DamageType> damageType = level.registryAccess()
-            .lookupOrThrow(Registries.DAMAGE_TYPE)
-            .getOrThrow(CORAL_SUBMERSION_DAMAGE_TYPE);
-        return new DamageSource(damageType);
     }
 
 }

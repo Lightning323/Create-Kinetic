@@ -1,13 +1,20 @@
 package org.lightning323.createkinetic.events;
 
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.simibubi.create.content.decoration.encasing.EncasedCTBehaviour;
 import com.simibubi.create.content.fluids.tank.FluidTankRenderer;
 import com.simibubi.create.foundation.model.ModelSwapper;
 import dev.engine_room.flywheel.api.visualization.VisualizationManager;
 import dev.engine_room.flywheel.lib.visualization.SimpleBlockEntityVisualizer;
+import net.createmod.catnip.config.ui.BaseConfigScreen;
+import net.createmod.catnip.gui.ScreenOpener;
 import net.createmod.ponder.foundation.PonderIndex;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.Commands;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.BlockAndTintGetter;
@@ -16,10 +23,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
-import net.neoforged.neoforge.client.event.EntityRenderersEvent;
-import net.neoforged.neoforge.client.event.ModelEvent;
-import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
-import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
+import net.neoforged.neoforge.client.event.*;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.fluids.FluidStack;
@@ -34,13 +38,42 @@ import org.lightning323.createkinetic.content.platinum.PlatinumFluidVesselRender
 import org.lightning323.createkinetic.content.thruster.ion_thruster.IonThrusterRenderer;
 import org.lightning323.createkinetic.content.thruster.thruster.ThrusterRenderer;
 import org.lightning323.createkinetic.content.thruster.thruster.creative_thruster.CreativeThrusterRenderer;
+import org.lightning323.createkinetic.content.thruster.vector_thruster.VectorRedstoneLinkRenderer;
 import org.lightning323.createkinetic.content.thruster.vector_thruster.liquid_vector_thruster.LiquidVectorThrusterRenderer;
 import org.lightning323.createkinetic.ponder.DeltaPonderPlugin;
 import org.lightning323.createkinetic.registries.*;
+import org.lightning323.createkinetic.utility.value_boxes.DualRowValueRenderer;
 
 @SuppressWarnings("removal")
 @EventBusSubscriber(modid = CreateKinetic.ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ModClientEvents {
+
+    @SubscribeEvent
+    public static void onKeyInput(InputEvent.InteractionKeyMappingTriggered event) {
+        // Removed assembly gauge click handling.
+    }
+
+    @SubscribeEvent
+    public static void onClientTick(ClientTickEvent.Post event) {
+        DualRowValueRenderer.tick();
+        VectorRedstoneLinkRenderer.tick();
+    }
+
+    @SubscribeEvent
+    public static void onClientCommandsRegister(RegisterClientCommandsEvent event) {
+        LiteralArgumentBuilder<CommandSourceStack> propulsionCommand = Commands.literal("propulsion");
+        event.getDispatcher().register(propulsionCommand
+                .then(Commands.literal("config")
+                        .executes((ctx) -> {
+                            openConfig();
+                            return 1;
+                        })));
+    }
+
+    private static void openConfig() {
+        Screen parent = Minecraft.getInstance().screen;
+        ScreenOpener.open(new BaseConfigScreen(parent, CreateKinetic.ID));
+    }
 
     @SubscribeEvent
     public static void registerItemColors(RegisterColorHandlersEvent.Item event) {

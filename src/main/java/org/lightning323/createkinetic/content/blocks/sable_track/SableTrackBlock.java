@@ -149,7 +149,7 @@ public class SableTrackBlock
 
         if (heldItem.is(AllItems.BELT_CONNECTOR)) {
             if (!level.isClientSide) {
-                this.withBlockEntityDo((BlockGetter) level, pos, mount -> mount.setBeltAdded(true));
+                this.withBlockEntityDo((BlockGetter) level, pos, mount -> mount.setBeltAddedAcrossNetwork(true));
                 if (!player.hasInfiniteMaterials()) {
                     heldItem.shrink(1);
                 }

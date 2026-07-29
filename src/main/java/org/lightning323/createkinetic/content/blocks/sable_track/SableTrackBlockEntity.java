@@ -681,17 +681,33 @@ public class SableTrackBlockEntity extends KineticBlockEntity implements BlockEn
         return changed |= this.copyBeltColorAlong(along.getOpposite(), facing, color);
     }
 
-    public boolean setBeltAdded(boolean added) {
+    public boolean setBeltAddedAcrossNetwork(boolean added) {
         if (this.level == null || this.level.isClientSide) {
             return false;
         }
-
         this.setHasBelt(added);
         Direction facing = (Direction) this.getBlockState().getValue(SableTrackBlock.HORIZONTAL_FACING);
         Direction along = facing.getClockWise();
-        this.copyBeltColorAlong(along, facing, DyeColor.WHITE);
-        return this.copyBeltColorAlong(along.getOpposite(), facing, DyeColor.WHITE);
+        this.copyBeltInfoAlong(along, facing, added);
+        return this.copyBeltInfoAlong(along.getOpposite(), facing, added);
     }
+
+    private boolean copyBeltInfoAlong(Direction direction, Direction facing, boolean hasBelt) {
+        boolean changed = false;
+        for (int step = 1; step <= 16; ++step) {
+            SableTrackBlockEntity neighbor;
+            BlockPos targetPos = this.getBlockPos().relative(direction, step);
+            BlockEntity blockEntity = this.level.getBlockEntity(targetPos);
+            if (!(blockEntity instanceof SableTrackBlockEntity)
+                    || (neighbor = (SableTrackBlockEntity) blockEntity)
+                    .getBlockState().getValue(SableTrackBlock.HORIZONTAL_FACING) != facing) {
+                return changed;
+            }
+            changed |= neighbor.setHasBelt(hasBelt);
+        }
+        return changed;
+    }
+
 
     public void resetTuningToConnectedTrack() {
         if (this.level == null || this.level.isClientSide) {
@@ -731,22 +747,6 @@ public class SableTrackBlockEntity extends KineticBlockEntity implements BlockEn
                 return changed;
             }
             changed |= neighbor.setBeltColor(color);
-        }
-        return changed;
-    }
-
-    private boolean copyBeltInfoAlong(Direction direction, Direction facing, boolean hasBelt) {
-        boolean changed = false;
-        for (int step = 1; step <= 16; ++step) {
-            SableTrackBlockEntity neighbor;
-            BlockPos targetPos = this.getBlockPos().relative(direction, step);
-            BlockEntity blockEntity = this.level.getBlockEntity(targetPos);
-            if (!(blockEntity instanceof SableTrackBlockEntity)
-                    || (neighbor = (SableTrackBlockEntity) blockEntity)
-                    .getBlockState().getValue(SableTrackBlock.HORIZONTAL_FACING) != facing) {
-                return changed;
-            }
-            changed |= neighbor.setBeltAdded(hasBelt);
         }
         return changed;
     }
@@ -798,13 +798,15 @@ public class SableTrackBlockEntity extends KineticBlockEntity implements BlockEn
         return true;
     }
 
-    private void setHasBelt(boolean hasBelt) {
+    private boolean setHasBelt(boolean hasBelt) {
+        if (this.hasBelt == hasBelt) return false;
         this.hasBelt = hasBelt;
         this.setChanged();
         this.invalidateRenderBoundingBox();
         if (this.level != null && !this.level.isClientSide) {
             this.sendData();
         }
+        return true;
     }
 
     public double getNeighborExtensionDelta(Direction facing, float partialTicks) {

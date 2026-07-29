@@ -377,8 +377,6 @@
   "message.assemblystick.mover_finalize_success": "Contraption moved successfully.",
   "message.assemblystick.cloner_finalize_success": "Contraption cloned successfully.",
   "message.assemblystick.mover_finalize_failed": "Placement finished, but source cleanup failed.",
-  "death.attack.createkinetic.coral": "%1$s died while becoming one with the coral",
-
   "simulated.simulated_section.propulsion_main": "Kinetic",
   "simulated.simulated_section.kinetic_tools": "Creative Tools"
 }

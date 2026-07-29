@@ -1,8 +1,6 @@
 {
   "term": "suspension",
   "results": [
-    "createkinetic:suspension_key",
-    "createkinetic:small_suspension_track",
     "offroad:wheel_mount"
   ]
 }

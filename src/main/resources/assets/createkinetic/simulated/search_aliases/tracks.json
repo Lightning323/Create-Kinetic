@@ -3,7 +3,6 @@
   "results": [
     "tracks:track_mount",
     "tracks:small_suspension_track",
-    "tracks:small_track_drive_wheel",
-    "tracks:suspension_key"
+    "tracks:small_track_drive_wheel"
   ]
 }
