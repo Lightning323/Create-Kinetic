@@ -25,8 +25,8 @@ public class KineticCreativeTabs {
             return;
         }
 
-        registerSectionItem(OFFROAD_CREATIVE_SECTION, "small_suspension_track", KineticItems.SMALL_SUSPENSION_TRACK::get);
-        registerSectionItem(OFFROAD_CREATIVE_SECTION, "small_track_drive_wheel", KineticItems.SMALL_TRACK_DRIVE_WHEEL::get);
+        registerSectionItem(OFFROAD_CREATIVE_SECTION, "small_suspension_track", KineticItems.SUSPENSION_TRACK::get);
+        registerSectionItem(OFFROAD_CREATIVE_SECTION, "small_track_drive_wheel", KineticItems.TRACK_DRIVE_WHEEL::get);
         registerSectionItem(OFFROAD_CREATIVE_SECTION, "track_mount", KineticBlocks.TRACK_MOUNT::asItem);
         registerSectionItem(SIMULATED_CREATIVE_SECTION, "reaction_wheel", () -> KineticBlocks.REACTION_WHEEL.asItem());
         registerSectionItem(SIMULATED_CREATIVE_SECTION, "joystick", () -> KineticBlocks.JOYSTICK.asItem());

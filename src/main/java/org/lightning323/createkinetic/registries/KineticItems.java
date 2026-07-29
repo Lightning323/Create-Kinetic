@@ -24,12 +24,12 @@ public class KineticItems {
     private static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(CreateKinetic.ID);
     private static final KineticRegistrate REGISTRATE = CreateKinetic.getRegistrate();
 
-    public static final ItemEntry<Item> SMALL_SUSPENSION_TRACK =
+    public static final ItemEntry<Item> SUSPENSION_TRACK =
             REGISTRATE.item("small_suspension_track", Item::new)
                     .model((ctx, prov) -> {})
                     .register();
 
-    public static final ItemEntry<Item> SMALL_TRACK_DRIVE_WHEEL =
+    public static final ItemEntry<Item> TRACK_DRIVE_WHEEL =
             REGISTRATE.item("small_track_drive_wheel", Item::new)
                     .model((ctx, prov) -> {})
                     .register();

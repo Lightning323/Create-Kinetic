@@ -104,7 +104,7 @@ public class SableTrackBlock
                 BlockPos dropPos = pos.relative(facing);
 
                 if (!be.getHeldItem().isEmpty()) {
-                    if (be.setIsBeltAcrossTrack(false))
+                    if (be.removeBeltAcrossTrack())
                         Containers.dropItemStack((Level) level, (double) dropPos.getX(), (double) dropPos.getY(), (double) dropPos.getZ(), AllItems.BELT_CONNECTOR.asStack());
 
                     Containers.dropItemStack((Level) level, (double) dropPos.getX(), (double) dropPos.getY(), (double) dropPos.getZ(), (ItemStack) be.getHeldItem());
@@ -158,7 +158,7 @@ public class SableTrackBlock
 
         if (heldItem.is(AllItems.BELT_CONNECTOR)) {
             if (!level.isClientSide) {
-                this.withBlockEntityDo((BlockGetter) level, pos, mount -> mount.setIsBeltAcrossTrack(true));
+                this.withBlockEntityDo((BlockGetter) level, pos, mount -> mount.applyBeltAcrossTrack(player));
                 if (!player.hasInfiniteMaterials()) {
                     heldItem.shrink(1);
                 }
@@ -199,15 +199,21 @@ public class SableTrackBlock
             return ItemInteractionResult.SUCCESS;
         }
         boolean[] handled = new boolean[]{false};
+
         this.withBlockEntityDo((BlockGetter) level, pos, mount -> {
             if (!heldItem.isEmpty() && heldPart == SableTrackPart.NONE) {
                 return;
             }
             ItemStack previous = mount.getHeldItem().copy();
             mount.setHeldItem(heldItem.isEmpty() ? ItemStack.EMPTY : heldItem.copyWithCount(1));
+
+
             if (!heldItem.isEmpty() && !player.hasInfiniteMaterials()) {
                 heldItem.shrink(1);
             }
+            if (mount.removeBeltAcrossTrack())
+                player.getInventory().placeItemBackInInventory(AllItems.BELT_CONNECTOR.asStack());
+
             if (!previous.isEmpty()) {
                 player.getInventory().placeItemBackInInventory(previous);
             }

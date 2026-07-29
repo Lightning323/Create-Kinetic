@@ -37,10 +37,10 @@ public enum SableTrackPart {
     }
 
     public static SableTrackPart fromStack(ItemStack stack) {
-        if (stack.is(KineticItems.SMALL_SUSPENSION_TRACK.asItem())) {
+        if (stack.is(KineticItems.SUSPENSION_TRACK.asItem())) {
             return SMALL_SUSPENSION;
         }
-        if (stack.is(KineticItems.SMALL_TRACK_DRIVE_WHEEL.asItem())) {
+        if (stack.is(KineticItems.TRACK_DRIVE_WHEEL.asItem())) {
             return SMALL_DRIVE;
         }
         return NONE;

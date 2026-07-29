@@ -93,6 +93,7 @@ import dev.ryanhcode.sable.sublevel.SubLevel;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import net.createmod.catnip.math.AngleHelper;
 import net.createmod.catnip.math.VecHelper;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.*;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -100,11 +101,10 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Clearable;
-import net.minecraft.world.Containers;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -121,7 +121,9 @@ import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3d;
 import org.joml.Vector3dc;
 import org.lightning323.createkinetic.CreateKinetic;
+import org.lightning323.createkinetic.registries.KineticItems;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -687,32 +689,92 @@ public class SableTrackBlockEntity extends KineticBlockEntity implements BlockEn
         return changed |= this.copyBeltColorAlong(along.getOpposite(), facing, color);
     }
 
-    public boolean setIsBeltAcrossTrack(boolean added) {
+    /**
+     *
+     * @param player
+     * @return if any belts were added
+     */
+    public boolean applyBeltAcrossTrack(Player player) {
         if (this.level == null || this.level.isClientSide) {
             return false;
         }
-        this.setHasBelt(added);
         Direction facing = (Direction) this.getBlockState().getValue(SableTrackBlock.HORIZONTAL_FACING);
         Direction along = facing.getClockWise();
-        this.copyBeltInfoAlong(along, facing, added);
-        return this.copyBeltInfoAlong(along.getOpposite(), facing, added);
+
+        List<SableTrackBlockEntity> toUpdate = new ArrayList<>();
+
+        alongLoop:
+        for (int a = 0; a < 2; a++) {
+            boolean endedWithDriveWheel = false;
+
+            stepLoop:
+            for (int step = 0; step <= 20; ++step) {
+                BlockPos targetPos = this.getBlockPos().relative(along, step);
+                BlockEntity blockEntity = this.level.getBlockEntity(targetPos);
+
+                if (blockEntity instanceof SableTrackBlockEntity neighbor) {
+                    if (blockEntity.getBlockState().getValue(SableTrackBlock.HORIZONTAL_FACING) != facing)
+                        return false;// block entity isnt the same direction
+                    toUpdate.add(neighbor);
+                    if (neighbor.getHeldItem().is(KineticItems.TRACK_DRIVE_WHEEL.get())) {
+                        endedWithDriveWheel = true;
+                        break stepLoop;
+                    } else if (!neighbor.getHeldItem().is(KineticItems.SUSPENSION_TRACK.get()))
+                        break stepLoop;
+                } else break stepLoop;
+            }
+
+            //We HAVE to end with a drive wheel otherwise we have no belt
+            if (!endedWithDriveWheel) {
+                toUpdate.clear();
+                break alongLoop;
+            }
+
+            along = along.getOpposite();
+        }
+
+        if (toUpdate.size() > 2) {
+            for (SableTrackBlockEntity neighbor : toUpdate) {
+                neighbor.setHasBelt(true);
+            }
+            return true;
+        } else if (player != null) {
+            player.displayClientMessage(
+                    Component.literal("You must place a drive wheel on both ends of the track.").withStyle(ChatFormatting.RED),
+                    true // true = action bar, false = chat
+            );
+        }
+        return false;
     }
 
-    private boolean copyBeltInfoAlong(Direction direction, Direction facing, boolean hasBelt) {
-        boolean changed = false;
-        for (int step = 1; step <= 16; ++step) {
-            SableTrackBlockEntity neighbor;
-            BlockPos targetPos = this.getBlockPos().relative(direction, step);
-            BlockEntity blockEntity = this.level.getBlockEntity(targetPos);
-            if (!(blockEntity instanceof SableTrackBlockEntity)
-                    || (neighbor = (SableTrackBlockEntity) blockEntity)
-                    .getBlockState().getValue(SableTrackBlock.HORIZONTAL_FACING) != facing) {
-                return changed;
-            }
-            changed |= neighbor.setHasBelt(hasBelt);
+    /**
+     *
+     * @return if any belts were removed
+     */
+    public boolean removeBeltAcrossTrack() {
+        if (this.level == null || this.level.isClientSide) {
+            return false;
         }
-        return changed;
+        Direction facing = (Direction) this.getBlockState().getValue(SableTrackBlock.HORIZONTAL_FACING);
+        Direction along = facing.getClockWise();
+
+        int removedBelts = 0;
+
+        for (int a = 0; a < 2; a++) {
+            for (int step = 0; step <= 20; ++step) {
+                BlockPos targetPos = this.getBlockPos().relative(along, step);
+                BlockEntity blockEntity = this.level.getBlockEntity(targetPos);
+
+                if (blockEntity instanceof SableTrackBlockEntity neighbor) {
+                    if (blockEntity.getBlockState().getValue(SableTrackBlock.HORIZONTAL_FACING) == facing)
+                        if (neighbor.setHasBelt(false)) removedBelts++;
+                }
+            }
+            along = along.getOpposite();
+        }
+        return removedBelts > 0;
     }
+
 
     public void toggleVisualSuspensionHidden() {
         this.visualSuspensionHidden = !this.visualSuspensionHidden;
