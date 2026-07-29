@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.152.
- * 
+ *
  * Could not load the following classes:
  *  com.simibubi.create.content.kinetics.base.HorizontalKineticBlock
  *  com.simibubi.create.foundation.block.IBE
@@ -40,6 +40,7 @@
  */
 package org.lightning323.createkinetic.content.blocks.sable_track;
 
+import com.simibubi.create.AllItems;
 import com.simibubi.create.content.kinetics.base.HorizontalKineticBlock;
 import com.simibubi.create.foundation.block.IBE;
 import org.lightning323.createkinetic.registries.KineticBlockEntityTypes;
@@ -76,17 +77,17 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class SableTrackBlock
-extends HorizontalKineticBlock
-implements IBE<SableTrackBlockEntity> {
-    public static final BooleanProperty HIDDEN = BooleanProperty.create((String)"hidden");
-    public static final BooleanProperty SUSPENSION_MODEL = BooleanProperty.create((String)"suspension_model");
-    private static final VoxelShape HIDDEN_SELECTION_SHAPE = Block.box((double)0.0, (double)14.0, (double)0.0, (double)16.0, (double)16.0, (double)16.0);
+        extends HorizontalKineticBlock
+        implements IBE<SableTrackBlockEntity> {
+    public static final BooleanProperty HIDDEN = BooleanProperty.create((String) "hidden");
+    public static final BooleanProperty SUSPENSION_MODEL = BooleanProperty.create((String) "suspension_model");
+    private static final VoxelShape HIDDEN_SELECTION_SHAPE = Block.box((double) 0.0, (double) 14.0, (double) 0.0, (double) 16.0, (double) 16.0, (double) 16.0);
     private final SableTrackRole role;
 
     public SableTrackBlock(Properties properties, SableTrackRole role) {
         super(properties);
         this.role = role;
-        this.registerDefaultState((BlockState)((BlockState)this.defaultBlockState().setValue((Property)HIDDEN, (Comparable)Boolean.valueOf(false))).setValue((Property)SUSPENSION_MODEL, (Comparable)Boolean.valueOf(false)));
+        this.registerDefaultState((BlockState) ((BlockState) this.defaultBlockState().setValue((Property) HIDDEN, (Comparable) Boolean.valueOf(false))).setValue((Property) SUSPENSION_MODEL, (Comparable) Boolean.valueOf(false)));
     }
 
     public SableTrackRole role() {
@@ -95,11 +96,11 @@ implements IBE<SableTrackBlockEntity> {
 
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
         if (state.hasBlockEntity() && state.getBlock() != newState.getBlock()) {
-            SableTrackBlockEntity be = (SableTrackBlockEntity)level.getBlockEntity(pos);
+            SableTrackBlockEntity be = (SableTrackBlockEntity) level.getBlockEntity(pos);
             if (be != null && !be.getHeldItem().isEmpty()) {
-                Direction facing = (Direction)state.getValue(HORIZONTAL_FACING);
+                Direction facing = (Direction) state.getValue(HORIZONTAL_FACING);
                 BlockPos dropPos = pos.relative(facing);
-                Containers.dropItemStack((Level)level, (double)dropPos.getX(), (double)dropPos.getY(), (double)dropPos.getZ(), (ItemStack)be.getHeldItem());
+                Containers.dropItemStack((Level) level, (double) dropPos.getX(), (double) dropPos.getY(), (double) dropPos.getZ(), (ItemStack) be.getHeldItem());
             }
             level.removeBlockEntity(pos);
         }
@@ -117,13 +118,13 @@ implements IBE<SableTrackBlockEntity> {
         boolean bl = crouching = context.getPlayer() != null && context.getPlayer().isShiftKeyDown();
         if (preferred == null || crouching) {
             Direction horizontalDirection = context.getHorizontalDirection();
-            return (BlockState)this.defaultBlockState().setValue(HORIZONTAL_FACING, crouching ? horizontalDirection : horizontalDirection.getOpposite());
+            return (BlockState) this.defaultBlockState().setValue(HORIZONTAL_FACING, crouching ? horizontalDirection : horizontalDirection.getOpposite());
         }
-        return (BlockState)this.defaultBlockState().setValue(HORIZONTAL_FACING, preferred.getOpposite());
+        return (BlockState) this.defaultBlockState().setValue(HORIZONTAL_FACING, preferred.getOpposite());
     }
 
     public boolean hasShaftTowards(LevelReader world, BlockPos pos, BlockState state, Direction face) {
-        return face.getAxis() == ((Direction)state.getValue(HORIZONTAL_FACING)).getAxis();
+        return face.getAxis() == ((Direction) state.getValue(HORIZONTAL_FACING)).getAxis();
     }
 
     protected ItemInteractionResult useItemOn(ItemStack heldItem, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
@@ -138,32 +139,42 @@ implements IBE<SableTrackBlockEntity> {
         }
         if (player.isShiftKeyDown() && hitResult.getDirection() == state.getValue(HORIZONTAL_FACING)) {
             if (!level.isClientSide) {
-                this.withBlockEntityDo((BlockGetter)level, pos, SableTrackBlockEntity::toggleVisualSuspensionHidden);
-                level.playSound(null, pos, (SoundEvent)SoundEvents.UI_BUTTON_CLICK.value(), SoundSource.PLAYERS, 0.5f, 1.1f);
+                this.withBlockEntityDo((BlockGetter) level, pos, SableTrackBlockEntity::toggleVisualSuspensionHidden);
+                level.playSound(null, pos, (SoundEvent) SoundEvents.UI_BUTTON_CLICK.value(), SoundSource.PLAYERS, 0.5f, 1.1f);
             }
             return ItemInteractionResult.CONSUME;
         }
         Item item = heldItem.getItem();
-        if (item instanceof DyeItem) {
-            DyeItem dyeItem = (DyeItem)item;
+
+
+        if (heldItem.is(AllItems.BELT_CONNECTOR)) {
             if (!level.isClientSide) {
-                this.withBlockEntityDo((BlockGetter)level, pos, mount -> mount.applyBeltColorToConnectedTrack(dyeItem.getDyeColor()));
+                this.withBlockEntityDo((BlockGetter) level, pos, mount -> mount.setBeltAdded(true));
                 if (!player.hasInfiniteMaterials()) {
                     heldItem.shrink(1);
                 }
                 level.playSound(null, pos, SoundEvents.DYE_USE, SoundSource.PLAYERS, 0.8f, 1.0f);
             }
             return ItemInteractionResult.CONSUME;
-        }
-        if (heldItem.is(Items.WATER_BUCKET)) {
+        } else if (item instanceof DyeItem) {
+            DyeItem dyeItem = (DyeItem) item;
+            if (!level.isClientSide) {
+                this.withBlockEntityDo((BlockGetter) level, pos, mount -> mount.applyBeltColorToConnectedTrack(dyeItem.getDyeColor()));
+                if (!player.hasInfiniteMaterials()) {
+                    heldItem.shrink(1);
+                }
+                level.playSound(null, pos, SoundEvents.DYE_USE, SoundSource.PLAYERS, 0.8f, 1.0f);
+            }
+            return ItemInteractionResult.CONSUME;
+        } else if (heldItem.is(Items.WATER_BUCKET)) {
             boolean[] changed = new boolean[]{false};
             if (!level.isClientSide) {
-                this.withBlockEntityDo((BlockGetter)level, pos, mount -> {
+                this.withBlockEntityDo((BlockGetter) level, pos, mount -> {
                     changed[0] = mount.applyBeltColorToConnectedTrack(null);
                 });
                 if (changed[0] && !player.hasInfiniteMaterials()) {
                     heldItem.shrink(1);
-                    player.getInventory().placeItemBackInInventory(new ItemStack((ItemLike)Items.BUCKET));
+                    player.getInventory().placeItemBackInInventory(new ItemStack((ItemLike) Items.BUCKET));
                 }
                 if (changed[0]) {
                     level.playSound(null, pos, SoundEvents.AXOLOTL_SPLASH, SoundSource.PLAYERS, 0.8f, 1.0f);
@@ -179,7 +190,7 @@ implements IBE<SableTrackBlockEntity> {
             return ItemInteractionResult.SUCCESS;
         }
         boolean[] handled = new boolean[]{false};
-        this.withBlockEntityDo((BlockGetter)level, pos, mount -> {
+        this.withBlockEntityDo((BlockGetter) level, pos, mount -> {
             if (!heldItem.isEmpty() && heldPart == SableTrackPart.NONE) {
                 return;
             }
@@ -209,8 +220,8 @@ implements IBE<SableTrackBlockEntity> {
         if (this.role == SableTrackRole.MOUNT && context.getClickedFace() == state.getValue(HORIZONTAL_FACING)) {
             Level level = context.getLevel();
             if (!level.isClientSide) {
-                this.withBlockEntityDo((BlockGetter)level, context.getClickedPos(), SableTrackBlockEntity::toggleVisualSuspensionHidden);
-                level.playSound(null, context.getClickedPos(), (SoundEvent)SoundEvents.UI_BUTTON_CLICK.value(), SoundSource.PLAYERS, 0.5f, 1.1f);
+                this.withBlockEntityDo((BlockGetter) level, context.getClickedPos(), SableTrackBlockEntity::toggleVisualSuspensionHidden);
+                level.playSound(null, context.getClickedPos(), (SoundEvent) SoundEvents.UI_BUTTON_CLICK.value(), SoundSource.PLAYERS, 0.5f, 1.1f);
             }
             return InteractionResult.SUCCESS;
         }
@@ -218,47 +229,47 @@ implements IBE<SableTrackBlockEntity> {
     }
 
     private void toggleHiddenMount(BlockState state, Level level, BlockPos pos) {
-        level.setBlock(pos, (BlockState)state.cycle((Property)HIDDEN), 2);
-        level.playSound(null, pos, (SoundEvent)SoundEvents.UI_BUTTON_CLICK.value(), SoundSource.PLAYERS, 0.5f, (Boolean)state.getValue((Property)HIDDEN) != false ? 0.8f : 1.2f);
+        level.setBlock(pos, (BlockState) state.cycle((Property) HIDDEN), 2);
+        level.playSound(null, pos, (SoundEvent) SoundEvents.UI_BUTTON_CLICK.value(), SoundSource.PLAYERS, 0.5f, (Boolean) state.getValue((Property) HIDDEN) != false ? 0.8f : 1.2f);
     }
 
     public Direction.Axis getRotationAxis(BlockState state) {
-        return ((Direction)state.getValue(HORIZONTAL_FACING)).getAxis();
+        return ((Direction) state.getValue(HORIZONTAL_FACING)).getAxis();
     }
 
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return (Boolean)state.getValue((Property)HIDDEN) != false ? HIDDEN_SELECTION_SHAPE : Shapes.block();
+        return (Boolean) state.getValue((Property) HIDDEN) != false ? HIDDEN_SELECTION_SHAPE : Shapes.block();
     }
 
     protected VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        if (((Boolean)state.getValue((Property)HIDDEN)).booleanValue() && context != CollisionContext.empty()) {
+        if (((Boolean) state.getValue((Property) HIDDEN)).booleanValue() && context != CollisionContext.empty()) {
             return Shapes.empty();
         }
         return Shapes.block();
     }
 
     protected VoxelShape getOcclusionShape(BlockState state, BlockGetter level, BlockPos pos) {
-        return (Boolean)state.getValue((Property)HIDDEN) != false ? Shapes.empty() : Shapes.block();
+        return (Boolean) state.getValue((Property) HIDDEN) != false ? Shapes.empty() : Shapes.block();
     }
 
     protected VoxelShape getVisualShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return (Boolean)state.getValue((Property)HIDDEN) != false ? Shapes.empty() : super.getVisualShape(state, level, pos, context);
+        return (Boolean) state.getValue((Property) HIDDEN) != false ? Shapes.empty() : super.getVisualShape(state, level, pos, context);
     }
 
     protected boolean useShapeForLightOcclusion(BlockState state) {
-        return (Boolean)state.getValue((Property)HIDDEN) == false && super.useShapeForLightOcclusion(state);
+        return (Boolean) state.getValue((Property) HIDDEN) == false && super.useShapeForLightOcclusion(state);
     }
 
     protected boolean propagatesSkylightDown(BlockState state, BlockGetter level, BlockPos pos) {
-        return (Boolean)state.getValue((Property)HIDDEN) != false || super.propagatesSkylightDown(state, level, pos);
+        return (Boolean) state.getValue((Property) HIDDEN) != false || super.propagatesSkylightDown(state, level, pos);
     }
 
     protected float getShadeBrightness(BlockState state, BlockGetter level, BlockPos pos) {
-        return (Boolean)state.getValue((Property)HIDDEN) != false ? 1.0f : super.getShadeBrightness(state, level, pos);
+        return (Boolean) state.getValue((Property) HIDDEN) != false ? 1.0f : super.getShadeBrightness(state, level, pos);
     }
 
     protected RenderShape getRenderShape(BlockState state) {
-        return (Boolean)state.getValue((Property)HIDDEN) != false ? RenderShape.INVISIBLE : super.getRenderShape(state);
+        return (Boolean) state.getValue((Property) HIDDEN) != false ? RenderShape.INVISIBLE : super.getRenderShape(state);
     }
 
     public Class<SableTrackBlockEntity> getBlockEntityClass() {

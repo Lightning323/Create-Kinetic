@@ -123,10 +123,8 @@ import org.lightning323.createkinetic.CreateKinetic;
 import java.util.Collection;
 import java.util.List;
 
-public class SableTrackBlockEntity
-        extends KineticBlockEntity
-        implements BlockEntitySubLevelActor,
-        Clearable {
+public class SableTrackBlockEntity extends KineticBlockEntity implements BlockEntitySubLevelActor, Clearable {
+
     private static final MutableComponent SCROLL_OPTION_TITLE = Component.translatable((String) CreateKinetic.ID + ".scroll_option.track_suspension_strength");
     private static final double MAX_LATERAL_OFFSET = 1.0;
     private static final double LATERAL_OFFSET_STEP = 0.125;
@@ -170,6 +168,7 @@ public class SableTrackBlockEntity
     private String scrollTuningKey = "strength";
     private boolean liftedUp = false;
     private boolean visualSuspensionHidden = false;
+    public boolean hasBelt = false;
     private DyeColor beltColor = null;
     private ItemStack heldItem = ItemStack.EMPTY;
 
@@ -682,6 +681,18 @@ public class SableTrackBlockEntity
         return changed |= this.copyBeltColorAlong(along.getOpposite(), facing, color);
     }
 
+    public boolean setBeltAdded(boolean added) {
+        if (this.level == null || this.level.isClientSide) {
+            return false;
+        }
+
+        this.setHasBelt(added);
+        Direction facing = (Direction) this.getBlockState().getValue(SableTrackBlock.HORIZONTAL_FACING);
+        Direction along = facing.getClockWise();
+        this.copyBeltColorAlong(along, facing, DyeColor.WHITE);
+        return this.copyBeltColorAlong(along.getOpposite(), facing, DyeColor.WHITE);
+    }
+
     public void resetTuningToConnectedTrack() {
         if (this.level == null || this.level.isClientSide) {
             return;
@@ -720,6 +731,22 @@ public class SableTrackBlockEntity
                 return changed;
             }
             changed |= neighbor.setBeltColor(color);
+        }
+        return changed;
+    }
+
+    private boolean copyBeltInfoAlong(Direction direction, Direction facing, boolean hasBelt) {
+        boolean changed = false;
+        for (int step = 1; step <= 16; ++step) {
+            SableTrackBlockEntity neighbor;
+            BlockPos targetPos = this.getBlockPos().relative(direction, step);
+            BlockEntity blockEntity = this.level.getBlockEntity(targetPos);
+            if (!(blockEntity instanceof SableTrackBlockEntity)
+                    || (neighbor = (SableTrackBlockEntity) blockEntity)
+                    .getBlockState().getValue(SableTrackBlock.HORIZONTAL_FACING) != facing) {
+                return changed;
+            }
+            changed |= neighbor.setBeltAdded(hasBelt);
         }
         return changed;
     }
@@ -769,6 +796,15 @@ public class SableTrackBlockEntity
             this.sendData();
         }
         return true;
+    }
+
+    private void setHasBelt(boolean hasBelt) {
+        this.hasBelt = hasBelt;
+        this.setChanged();
+        this.invalidateRenderBoundingBox();
+        if (this.level != null && !this.level.isClientSide) {
+            this.sendData();
+        }
     }
 
     public double getNeighborExtensionDelta(Direction facing, float partialTicks) {
@@ -1041,6 +1077,7 @@ public class SableTrackBlockEntity
         tag.putDouble("DriveMultiplier", this.driveMultiplier);
         tag.putDouble("GripMultiplier", this.gripMultiplier);
         tag.putBoolean("VisualSuspensionHidden", this.visualSuspensionHidden);
+        tag.putBoolean("HasBelt", this.hasBelt);
         if (this.beltColor != null) {
             tag.putString("BeltColor", this.beltColor.getName());
         }
@@ -1086,6 +1123,9 @@ public class SableTrackBlockEntity
         }
         if (tag.contains("VisualSuspensionHidden")) {
             this.visualSuspensionHidden = tag.getBoolean("VisualSuspensionHidden");
+        }
+        if (tag.contains("HasBelt")) {
+            this.hasBelt = tag.getBoolean("HasBelt");
         }
         this.beltColor = tag.contains("BeltColor") ? DyeColor.byName((String) tag.getString("BeltColor"), null) : null;
         this.heldItem = ItemStack.parseOptional((HolderLookup.Provider) registries, (CompoundTag) tag.getCompound("HeldTrackItem"));
