@@ -1,62 +1,32 @@
 ﻿{
   "variants": {
-    "facing=east,hidden=false,suspension_model=false": {
+    "facing=east,suspension_model=false": {
       "model": "offroad:block/wheel_mount/block",
       "y": 90
     },
-    "facing=north,hidden=false,suspension_model=false": {
+    "facing=north,suspension_model=false": {
       "model": "offroad:block/wheel_mount/block"
     },
-    "facing=south,hidden=false,suspension_model=false": {
+    "facing=south,suspension_model=false": {
       "model": "offroad:block/wheel_mount/block",
       "y": 180
     },
-    "facing=west,hidden=false,suspension_model=false": {
+    "facing=west,suspension_model=false": {
       "model": "offroad:block/wheel_mount/block",
       "y": 270
     },
-    "facing=east,hidden=true,suspension_model=false": {
-      "model": "offroad:block/wheel_mount/block",
-      "y": 90
-    },
-    "facing=north,hidden=true,suspension_model=false": {
-      "model": "offroad:block/wheel_mount/block"
-    },
-    "facing=south,hidden=true,suspension_model=false": {
-      "model": "offroad:block/wheel_mount/block",
-      "y": 180
-    },
-    "facing=west,hidden=true,suspension_model=false": {
-      "model": "offroad:block/wheel_mount/block",
-      "y": 270
-    },
-    "facing=east,hidden=false,suspension_model=true": {
+    "facing=east,suspension_model=true": {
       "model": "createkinetic:block/suspension_mount",
       "y": 90
     },
-    "facing=north,hidden=false,suspension_model=true": {
+    "facing=north,suspension_model=true": {
       "model": "createkinetic:block/suspension_mount"
     },
-    "facing=south,hidden=false,suspension_model=true": {
+    "facing=south,suspension_model=true": {
       "model": "createkinetic:block/suspension_mount",
       "y": 180
     },
-    "facing=west,hidden=false,suspension_model=true": {
-      "model": "createkinetic:block/suspension_mount",
-      "y": 270
-    },
-    "facing=east,hidden=true,suspension_model=true": {
-      "model": "createkinetic:block/suspension_mount",
-      "y": 90
-    },
-    "facing=north,hidden=true,suspension_model=true": {
-      "model": "createkinetic:block/suspension_mount"
-    },
-    "facing=south,hidden=true,suspension_model=true": {
-      "model": "createkinetic:block/suspension_mount",
-      "y": 180
-    },
-    "facing=west,hidden=true,suspension_model=true": {
+    "facing=west,suspension_model=true": {
       "model": "createkinetic:block/suspension_mount",
       "y": 270
     }

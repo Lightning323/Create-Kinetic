@@ -79,15 +79,16 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 public class SableTrackBlock
         extends HorizontalKineticBlock
         implements IBE<SableTrackBlockEntity> {
-    public static final BooleanProperty HIDDEN = BooleanProperty.create((String) "hidden");
+
     public static final BooleanProperty SUSPENSION_MODEL = BooleanProperty.create((String) "suspension_model");
-    private static final VoxelShape HIDDEN_SELECTION_SHAPE = Block.box((double) 0.0, (double) 14.0, (double) 0.0, (double) 16.0, (double) 16.0, (double) 16.0);
     private final SableTrackRole role;
 
     public SableTrackBlock(Properties properties, SableTrackRole role) {
         super(properties);
         this.role = role;
-        this.registerDefaultState((BlockState) ((BlockState) this.defaultBlockState().setValue((Property) HIDDEN, (Comparable) Boolean.valueOf(false))).setValue((Property) SUSPENSION_MODEL, (Comparable) Boolean.valueOf(false)));
+        this.registerDefaultState(
+                this.defaultBlockState().setValue((Property) SUSPENSION_MODEL, (Comparable) Boolean.valueOf(false))
+        );
     }
 
     public SableTrackRole role() {
@@ -109,7 +110,7 @@ public class SableTrackBlock
 
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
-        builder.add(new Property[]{HIDDEN, SUSPENSION_MODEL});
+        builder.add(new Property[]{SUSPENSION_MODEL});
     }
 
     public BlockState getStateForPlacement(BlockPlaceContext context) {
@@ -131,12 +132,12 @@ public class SableTrackBlock
         if (this.role != SableTrackRole.MOUNT) {
             return super.useItemOn(heldItem, state, level, pos, player, hand, hitResult);
         }
-        if (player.isShiftKeyDown() && hitResult.getDirection() == Direction.UP) {
-            if (!level.isClientSide) {
-                this.toggleHiddenMount(state, level, pos);
-            }
-            return ItemInteractionResult.CONSUME;
-        }
+//        if (player.isShiftKeyDown() && hitResult.getDirection() == Direction.UP) {
+//            if (!level.isClientSide) {
+//                this.toggleHiddenMount(state, level, pos);
+//            }
+//            return ItemInteractionResult.CONSUME;
+//        }
         if (player.isShiftKeyDown() && hitResult.getDirection() == state.getValue(HORIZONTAL_FACING)) {
             if (!level.isClientSide) {
                 this.withBlockEntityDo((BlockGetter) level, pos, SableTrackBlockEntity::toggleVisualSuspensionHidden);
@@ -149,7 +150,7 @@ public class SableTrackBlock
 
         if (heldItem.is(AllItems.BELT_CONNECTOR)) {
             if (!level.isClientSide) {
-                this.withBlockEntityDo((BlockGetter) level, pos, mount -> mount.setBeltAddedAcrossNetwork(true));
+                this.withBlockEntityDo((BlockGetter) level, pos, mount -> mount.setIsBeltAcrossTrack(true));
                 if (!player.hasInfiniteMaterials()) {
                     heldItem.shrink(1);
                 }
@@ -159,7 +160,7 @@ public class SableTrackBlock
         } else if (item instanceof DyeItem) {
             DyeItem dyeItem = (DyeItem) item;
             if (!level.isClientSide) {
-                this.withBlockEntityDo((BlockGetter) level, pos, mount -> mount.applyBeltColorToConnectedTrack(dyeItem.getDyeColor()));
+                this.withBlockEntityDo((BlockGetter) level, pos, mount -> mount.setBeltColorAcrossTrack(dyeItem.getDyeColor()));
                 if (!player.hasInfiniteMaterials()) {
                     heldItem.shrink(1);
                 }
@@ -170,7 +171,7 @@ public class SableTrackBlock
             boolean[] changed = new boolean[]{false};
             if (!level.isClientSide) {
                 this.withBlockEntityDo((BlockGetter) level, pos, mount -> {
-                    changed[0] = mount.applyBeltColorToConnectedTrack(null);
+                    changed[0] = mount.setBeltColorAcrossTrack(null);
                 });
                 if (changed[0] && !player.hasInfiniteMaterials()) {
                     heldItem.shrink(1);
@@ -210,13 +211,13 @@ public class SableTrackBlock
     }
 
     public InteractionResult onSneakWrenched(BlockState state, UseOnContext context) {
-        if (this.role == SableTrackRole.MOUNT && context.getClickedFace() == Direction.UP) {
-            Level level = context.getLevel();
-            if (!level.isClientSide) {
-                this.toggleHiddenMount(state, level, context.getClickedPos());
-            }
-            return InteractionResult.SUCCESS;
-        }
+//        if (this.role == SableTrackRole.MOUNT && context.getClickedFace() == Direction.UP) {
+//            Level level = context.getLevel();
+//            if (!level.isClientSide) {
+//                this.toggleHiddenMount(state, level, context.getClickedPos());
+//            }
+//            return InteractionResult.SUCCESS;
+//        }
         if (this.role == SableTrackRole.MOUNT && context.getClickedFace() == state.getValue(HORIZONTAL_FACING)) {
             Level level = context.getLevel();
             if (!level.isClientSide) {
@@ -228,48 +229,40 @@ public class SableTrackBlock
         return super.onSneakWrenched(state, context);
     }
 
-    private void toggleHiddenMount(BlockState state, Level level, BlockPos pos) {
-        level.setBlock(pos, (BlockState) state.cycle((Property) HIDDEN), 2);
-        level.playSound(null, pos, (SoundEvent) SoundEvents.UI_BUTTON_CLICK.value(), SoundSource.PLAYERS, 0.5f, (Boolean) state.getValue((Property) HIDDEN) != false ? 0.8f : 1.2f);
-    }
-
     public Direction.Axis getRotationAxis(BlockState state) {
         return ((Direction) state.getValue(HORIZONTAL_FACING)).getAxis();
     }
 
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return (Boolean) state.getValue((Property) HIDDEN) != false ? HIDDEN_SELECTION_SHAPE : Shapes.block();
+        return Shapes.block();
     }
 
     protected VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        if (((Boolean) state.getValue((Property) HIDDEN)).booleanValue() && context != CollisionContext.empty()) {
-            return Shapes.empty();
-        }
         return Shapes.block();
     }
 
     protected VoxelShape getOcclusionShape(BlockState state, BlockGetter level, BlockPos pos) {
-        return (Boolean) state.getValue((Property) HIDDEN) != false ? Shapes.empty() : Shapes.block();
+        return Shapes.block();
     }
 
     protected VoxelShape getVisualShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return (Boolean) state.getValue((Property) HIDDEN) != false ? Shapes.empty() : super.getVisualShape(state, level, pos, context);
+        return super.getVisualShape(state, level, pos, context);
     }
 
     protected boolean useShapeForLightOcclusion(BlockState state) {
-        return (Boolean) state.getValue((Property) HIDDEN) == false && super.useShapeForLightOcclusion(state);
+        return super.useShapeForLightOcclusion(state);
     }
 
     protected boolean propagatesSkylightDown(BlockState state, BlockGetter level, BlockPos pos) {
-        return (Boolean) state.getValue((Property) HIDDEN) != false || super.propagatesSkylightDown(state, level, pos);
+        return super.propagatesSkylightDown(state, level, pos);
     }
 
     protected float getShadeBrightness(BlockState state, BlockGetter level, BlockPos pos) {
-        return (Boolean) state.getValue((Property) HIDDEN) != false ? 1.0f : super.getShadeBrightness(state, level, pos);
+        return super.getShadeBrightness(state, level, pos);
     }
 
     protected RenderShape getRenderShape(BlockState state) {
-        return (Boolean) state.getValue((Property) HIDDEN) != false ? RenderShape.INVISIBLE : super.getRenderShape(state);
+        return super.getRenderShape(state);
     }
 
     public Class<SableTrackBlockEntity> getBlockEntityClass() {

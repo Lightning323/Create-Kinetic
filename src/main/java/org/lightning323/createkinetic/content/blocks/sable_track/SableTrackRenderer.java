@@ -78,12 +78,11 @@ public class SableTrackRenderer
 
         RenderType type = this.getRenderType(be, shaftState);
 
-        boolean hasBelt = be.hasBelt;
-        boolean hiddenMount = (Boolean) blockState.getValue((Property) SableTrackBlock.HIDDEN);
+        boolean hasBelt = be.isHasBelt();
         Direction direction = ((Direction) blockState.getValue((Property) BlockStateProperties.HORIZONTAL_FACING)).getOpposite();
         Direction facing = (Direction) blockState.getValue((Property) BlockStateProperties.HORIZONTAL_FACING);
 
-        if (!hiddenMount && role != SableTrackRole.SUSPENSION) {
+        if (role != SableTrackRole.SUSPENSION) {
             SableTrackRenderer.renderRotatingBuffer((KineticBlockEntity) be, (SuperByteBuffer) this.getRotatedModel(be, shaftState), (PoseStack) ms, (VertexConsumer) buffer.getBuffer(type), (int) light);
             SableTrackRenderer.renderRotatingBuffer((KineticBlockEntity) be, (SuperByteBuffer) this.getOppositeRotatedModel(be, shaftState), (PoseStack) ms, (VertexConsumer) buffer.getBuffer(type), (int) light);
         }

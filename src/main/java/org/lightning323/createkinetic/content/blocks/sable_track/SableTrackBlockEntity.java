@@ -168,7 +168,7 @@ public class SableTrackBlockEntity extends KineticBlockEntity implements BlockEn
     private String scrollTuningKey = "strength";
     private boolean liftedUp = false;
     private boolean visualSuspensionHidden = false;
-    public boolean hasBelt = false;
+    private boolean hasBelt = false;
     private DyeColor beltColor = null;
     private ItemStack heldItem = ItemStack.EMPTY;
 
@@ -622,6 +622,10 @@ public class SableTrackBlockEntity extends KineticBlockEntity implements BlockEn
         return fallback.getLerpedAngle(partialTicks);
     }
 
+    public boolean isHasBelt() {
+        return hasBelt;
+    }
+
     public ItemStack getHeldItem() {
         return this.heldItem;
     }
@@ -670,7 +674,7 @@ public class SableTrackBlockEntity extends KineticBlockEntity implements BlockEn
         return this.beltColor;
     }
 
-    public boolean applyBeltColorToConnectedTrack(DyeColor color) {
+    public boolean setBeltColorAcrossTrack(DyeColor color) {
         if (this.level == null || this.level.isClientSide) {
             return false;
         }
@@ -681,7 +685,7 @@ public class SableTrackBlockEntity extends KineticBlockEntity implements BlockEn
         return changed |= this.copyBeltColorAlong(along.getOpposite(), facing, color);
     }
 
-    public boolean setBeltAddedAcrossNetwork(boolean added) {
+    public boolean setIsBeltAcrossTrack(boolean added) {
         if (this.level == null || this.level.isClientSide) {
             return false;
         }
@@ -706,18 +710,6 @@ public class SableTrackBlockEntity extends KineticBlockEntity implements BlockEn
             changed |= neighbor.setHasBelt(hasBelt);
         }
         return changed;
-    }
-
-
-    public void resetTuningToConnectedTrack() {
-        if (this.level == null || this.level.isClientSide) {
-            return;
-        }
-        this.resetTuning();
-        Direction facing = (Direction) this.getBlockState().getValue(SableTrackBlock.HORIZONTAL_FACING);
-        Direction along = facing.getClockWise();
-        this.resetTuningAlong(along, facing);
-        this.resetTuningAlong(along.getOpposite(), facing);
     }
 
     public void toggleVisualSuspensionHidden() {
@@ -750,40 +742,28 @@ public class SableTrackBlockEntity extends KineticBlockEntity implements BlockEn
         }
         return changed;
     }
-
-    private void resetTuningAlong(Direction direction, Direction facing) {
-        for (int step = 1; step <= 16; ++step) {
-            SableTrackBlockEntity neighbor;
-            BlockPos targetPos = this.getBlockPos().relative(direction, step);
-            BlockEntity blockEntity = this.level.getBlockEntity(targetPos);
-            if (!(blockEntity instanceof SableTrackBlockEntity) || (neighbor = (SableTrackBlockEntity) blockEntity).getBlockState().getValue(SableTrackBlock.HORIZONTAL_FACING) != facing) {
-                return;
-            }
-            neighbor.resetTuning();
-        }
-    }
-
-    private void resetTuning() {
-        if (this.strength != null) {
-            this.strength.value = 16;
-        }
-        this.lastPropagatedStrength = 16;
-        this.protectedStrengthValue = 16;
-        this.springMultiplier = 0.5;
-        this.dampingMultiplier = 1.0;
-        this.bumpClearanceMultiplier = 1.0;
-        this.bumpForceMultiplier = 1.0;
-        this.maxImpulseMultiplier = 1.0;
-        this.driveMultiplier = 1.0;
-        this.gripMultiplier = 1.0;
-        this.lateralOffset = 0.0;
-        this.longitudinalOffset = 0.0;
-        this.heightOffset = 0.0;
-        this.setChanged();
-        if (this.level != null && !this.level.isClientSide) {
-            this.sendData();
-        }
-    }
+//
+//    private void resetTuning() {
+//        if (this.strength != null) {
+//            this.strength.value = 16;
+//        }
+//        this.lastPropagatedStrength = 16;
+//        this.protectedStrengthValue = 16;
+//        this.springMultiplier = 0.5;
+//        this.dampingMultiplier = 1.0;
+//        this.bumpClearanceMultiplier = 1.0;
+//        this.bumpForceMultiplier = 1.0;
+//        this.maxImpulseMultiplier = 1.0;
+//        this.driveMultiplier = 1.0;
+//        this.gripMultiplier = 1.0;
+//        this.lateralOffset = 0.0;
+//        this.longitudinalOffset = 0.0;
+//        this.heightOffset = 0.0;
+//        this.setChanged();
+//        if (this.level != null && !this.level.isClientSide) {
+//            this.sendData();
+//        }
+//    }
 
     private boolean setBeltColor(DyeColor color) {
         if (this.beltColor == color) {
