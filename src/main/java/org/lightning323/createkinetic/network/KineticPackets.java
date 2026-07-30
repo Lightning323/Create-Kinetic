@@ -8,7 +8,6 @@ import org.lightning323.createkinetic.content.blocks.joystick.C2SJoystickSetBind
 import org.lightning323.createkinetic.content.blocks.joystick.C2SJoystickShowHud;
 import org.lightning323.createkinetic.content.blocks.joystick.C2SJoystickSpringBack;
 import org.lightning323.createkinetic.content.blocks.joystick.C2SJoystickTilt;
-import org.lightning323.createkinetic.content.blocks.joystick.C2SJoystickUseMouseInput;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
@@ -26,7 +25,6 @@ public final class KineticPackets {
       r.playToServer(C2SJoystickButton.TYPE, C2SJoystickButton.STREAM_CODEC, C2SJoystickButton::handleOnServer);
       r.playToServer(C2SJoystickClearFrequencies.TYPE, C2SJoystickClearFrequencies.STREAM_CODEC, C2SJoystickClearFrequencies::handleOnServer);
       r.playToServer(C2SJoystickSetBind.TYPE, C2SJoystickSetBind.STREAM_CODEC, C2SJoystickSetBind::handleOnServer);
-      r.playToServer(C2SJoystickUseMouseInput.TYPE, C2SJoystickUseMouseInput.STREAM_CODEC, C2SJoystickUseMouseInput::handleOnServer);
       r.playToServer(C2SJoystickSpringBack.TYPE, C2SJoystickSpringBack.STREAM_CODEC, C2SJoystickSpringBack::handleOnServer);
    }
 }

@@ -202,19 +202,9 @@ public class JoystickBlockEntity extends SmartBlockEntity implements MenuProvide
    }
 
    public boolean isUseMouseInput() {
-      return this.useMouseInput;
+      return true;
    }
 
-   public void setUseMouseInput(boolean use) {
-      if (this.useMouseInput != use) {
-         this.useMouseInput = use;
-         if (this.level != null && !this.level.isClientSide) {
-            this.setChanged();
-            this.sendData();
-         }
-
-      }
-   }
 
    public boolean isSpringBack() {
       return this.springBack;

@@ -12,14 +12,7 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
 
 public class JoystickMenu extends GhostItemMenu<JoystickBlockEntity> {
-   public static final int FRAME_WIDTH = 156;
-   public static final int FRAME_HEIGHT = 100;
-   public static final int FRAME_OFFSET_X = 10;
-   public static final int IMAGE_WIDTH = 176;
-   public static final int IMAGE_HEIGHT = 212;
-   public static final int SLOT_ROW_1_Y = 32;
-   public static final int SLOT_ROW_2_Y = 50;
-   public static final int BUTTON_COLUMN_FRAME_X = 124;
+
 
    public JoystickMenu(MenuType<?> type, int id, Inventory inv, RegistryFriendlyByteBuf buf) {
       super(type, id, inv, buf);

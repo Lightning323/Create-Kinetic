@@ -34,17 +34,8 @@ public class JoystickScreen extends AbstractSimiContainerScreen<JoystickMenu> {
    private static final ResourceLocation BACKGROUND = CreateKinetic.path("textures/gui/joystick.png");
    private static final ScreenElement KEYBOARD_ICON = iconBlit("keyboard");
    private static final ScreenElement MOUSE_ICON = iconBlit("mouse");
-   private static final int TITLE_COLOR = 5841956;
-   private static final int PREVIEW_AREA_WIDTH = 55;
-   private static final int PREVIEW_AREA_HEIGHT = 58;
-   private static final int HEADER_Y = 19;
-   private static final int HEADER_WIDTH = 16;
-   private static final int HEADER_HEIGHT = 11;
-   private static final int HEADER_TINT_RESTING = 419430399;
-   private static final int HEADER_TINT_HOVER = 1090519039;
-   private static final int HEADER_TINT_CAPTURE = -2130706560;
+
    private ToggleButton hudButton;
-   private ToggleButton mouseInputToggle;
    private ToggleButton springBackToggle;
    private IconButton clearButton;
    private IconButton confirmButton;
@@ -85,7 +76,9 @@ public class JoystickScreen extends AbstractSimiContainerScreen<JoystickMenu> {
          }
       });
       this.addRenderableWidget(this.hudButton);
-      this.mouseInputToggle = new ToggleButton(frameLeft + 29, frameTop + 76, MOUSE_ICON);
+
+      /* //For reference
+          this.mouseInputToggle = new ToggleButton(frameLeft + 29, frameTop + 76, MOUSE_ICON);
       boolean initialMouse = ((JoystickMenu)this.menu).contentHolder != null && ((JoystickBlockEntity)((JoystickMenu)this.menu).contentHolder).isUseMouseInput();
       this.mouseInputToggle.setSelected(initialMouse);
       this.applyMouseToggleTooltip();
@@ -98,6 +91,8 @@ public class JoystickScreen extends AbstractSimiContainerScreen<JoystickMenu> {
          }
       });
       this.addRenderableWidget(this.mouseInputToggle);
+       */
+
       this.springBackToggle = new ToggleButton(frameLeft + 50, frameTop + 76, AllIcons.I_REFRESH);
       boolean initialSpring = ((JoystickMenu)this.menu).contentHolder != null && ((JoystickBlockEntity)((JoystickMenu)this.menu).contentHolder).isSpringBack();
       this.springBackToggle.setSelected(initialSpring);
@@ -283,13 +278,6 @@ public class JoystickScreen extends AbstractSimiContainerScreen<JoystickMenu> {
    private void applyHudTooltip() {
       String key = this.hudButton.isSelected() ? "gui.createkinetic.joystick.hide_hud" : "gui.createkinetic.joystick.show_hud";
       this.hudButton.setToolTip(Component.translatable(key));
-   }
-
-   private void applyMouseToggleTooltip() {
-      boolean mouseMode = this.mouseInputToggle.isSelected();
-      this.mouseInputToggle.setIcon(mouseMode ? MOUSE_ICON : KEYBOARD_ICON);
-      String key = mouseMode ? "gui.createkinetic.joystick.use_mouse_on" : "gui.createkinetic.joystick.use_mouse_off";
-      this.mouseInputToggle.setToolTip(Component.translatable(key));
    }
 
    private void refreshSpringBackState() {
