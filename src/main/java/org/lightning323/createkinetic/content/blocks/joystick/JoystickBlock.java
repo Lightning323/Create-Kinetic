@@ -34,7 +34,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.lightning323.createkinetic.mixin.LinkedTypewriterBlockInvoker;
-import org.lightning323.createkinetic.registries.KineticBlockEntityTypes;
+import org.lightning323.createkinetic.registries.KineticBlockEntities;
 
 public class JoystickBlock extends Block implements EntityBlock, IBE<JoystickBlockEntity>, IWrenchable {
     public static final BooleanProperty POWERED;
@@ -132,7 +132,7 @@ public class JoystickBlock extends Block implements EntityBlock, IBE<JoystickBlo
 
 
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return KineticBlockEntityTypes.JOYSTICK.create(pos, state);
+        return KineticBlockEntities.JOYSTICK.create(pos, state);
     }
 
     public Class<JoystickBlockEntity> getBlockEntityClass() {
@@ -140,7 +140,7 @@ public class JoystickBlock extends Block implements EntityBlock, IBE<JoystickBlo
     }
 
     public BlockEntityType<? extends JoystickBlockEntity> getBlockEntityType() {
-        return (BlockEntityType) KineticBlockEntityTypes.JOYSTICK.get();
+        return (BlockEntityType) KineticBlockEntities.JOYSTICK.get();
     }
 
     static {

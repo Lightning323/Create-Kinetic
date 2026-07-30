@@ -51,7 +51,6 @@ import org.lightning323.createkinetic.content.blocks.reaction_wheel.ReactionWhee
 import org.lightning323.createkinetic.content.blocks.joystick.JoystickSessions;
 import org.lightning323.createkinetic.events.KineticEvents;
 import org.lightning323.createkinetic.network.KineticPackets;
-import org.lightning323.createkinetic.registries.KineticBlockEntityTypes;
 import org.lightning323.createkinetic.registries.KineticBlocks;
 import org.lightning323.createkinetic.registries.KineticItems;
 import org.lightning323.createkinetic.network.OpenTuningScreenPayload;
@@ -85,7 +84,7 @@ public class CreateKinetic {
         if(FMLEnvironment.dist == Dist.CLIENT) {
             KineticClient.init(modBus);
         }
-        KineticBlockEntityTypes.init();
+        KineticBlockEntities.register(modBus);
         SableEventPlatform.INSTANCE.onPhysicsTick(KineticEvents::physicsTick);
         getRegistrate().registerEventListeners(modBus);
         KineticMenuTypes.register();
@@ -102,7 +101,7 @@ public class CreateKinetic {
         //Content
         ParticleTypes.register(modBus);
         KineticBlocks.register(modBus);
-        PropulsionBlockEntities.register(modBus);
+
         KineticItems.register(modBus);
         ModItems.register(modBus);
         PropulsionSoundEvents.register(modBus);

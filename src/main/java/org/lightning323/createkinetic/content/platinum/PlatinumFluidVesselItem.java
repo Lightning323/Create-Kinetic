@@ -22,7 +22,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.fluids.FluidStack;
-import org.lightning323.createkinetic.registries.PropulsionBlockEntities;
+import org.lightning323.createkinetic.registries.KineticBlockEntities;
 
 public class PlatinumFluidVesselItem extends BlockItem {
 
@@ -89,7 +89,7 @@ public class PlatinumFluidVesselItem extends BlockItem {
         }
 
         PlatinumFluidVesselBlockEntity vesselAt = ConnectivityHandler.partAt(
-            PropulsionBlockEntities.PLATINUM_FLUID_VESSEL_BLOCK_ENTITY.get(), world, placedOnPos
+            KineticBlockEntities.PLATINUM_FLUID_VESSEL_BLOCK_ENTITY.get(), world, placedOnPos
         );
         if (vesselAt == null) {
             return;

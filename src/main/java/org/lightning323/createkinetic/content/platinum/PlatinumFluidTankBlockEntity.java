@@ -8,11 +8,11 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction;
-import org.lightning323.createkinetic.registries.PropulsionBlockEntities;
+import org.lightning323.createkinetic.registries.KineticBlockEntities;
 
 public class PlatinumFluidTankBlockEntity extends FluidTankBlockEntity {
     public PlatinumFluidTankBlockEntity(BlockPos pos, BlockState state) {
-        super(PropulsionBlockEntities.PLATINUM_FLUID_TANK_BLOCK_ENTITY.get(), pos, state);
+        super(KineticBlockEntities.PLATINUM_FLUID_TANK_BLOCK_ENTITY.get(), pos, state);
     }
 
     @Override

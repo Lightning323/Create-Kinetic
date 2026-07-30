@@ -26,7 +26,7 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import org.lightning323.createkinetic.content.heat.burners.AbstractBurnerBlock;
 import org.lightning323.createkinetic.content.heat.burners.AbstractBurnerBlockEntity;
-import org.lightning323.createkinetic.registries.PropulsionBlockEntities;
+import org.lightning323.createkinetic.registries.KineticBlockEntities;
 import org.lightning323.createkinetic.utility.burners.BurnerFuelBehaviour;
 
 import javax.annotation.Nonnull;
@@ -46,12 +46,12 @@ public class SolidBurnerBlock extends AbstractBurnerBlock {
 
     @Override
     public BlockEntityType<? extends AbstractBurnerBlockEntity> getBlockEntityType() {
-        return PropulsionBlockEntities.SOLID_BURNER_BLOCK_ENTITY.get();
+        return KineticBlockEntities.SOLID_BURNER_BLOCK_ENTITY.get();
     }
 
     @Override
     public BlockEntity newBlockEntity(@Nonnull BlockPos pos, @Nonnull BlockState state) {
-        return new SolidBurnerBlockEntity(PropulsionBlockEntities.SOLID_BURNER_BLOCK_ENTITY.get(), pos, state);
+        return new SolidBurnerBlockEntity(KineticBlockEntities.SOLID_BURNER_BLOCK_ENTITY.get(), pos, state);
     }
 
     @Override
@@ -61,7 +61,7 @@ public class SolidBurnerBlock extends AbstractBurnerBlock {
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@Nonnull Level level, @Nonnull BlockState state, @Nonnull BlockEntityType<T> type) {
-        if (type == PropulsionBlockEntities.SOLID_BURNER_BLOCK_ENTITY.get()) {
+        if (type == KineticBlockEntities.SOLID_BURNER_BLOCK_ENTITY.get()) {
             return new SmartBlockEntityTicker<>();
         }
         return null;

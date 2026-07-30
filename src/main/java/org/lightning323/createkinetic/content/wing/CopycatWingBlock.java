@@ -36,7 +36,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.joml.Vector3d;
 import org.joml.Vector3dc;
 import org.lightning323.createkinetic.registries.KineticBlocks;
-import org.lightning323.createkinetic.registries.PropulsionBlockEntities;
+import org.lightning323.createkinetic.registries.KineticBlockEntities;
 import org.lightning323.createkinetic.registries.PropulsionShapes;
 
 import javax.annotation.Nonnull;
@@ -75,7 +75,7 @@ public class CopycatWingBlock extends CopycatBlock implements BlockSubLevelLiftP
 
     @Override
     public BlockEntityType<? extends CopycatBlockEntity> getBlockEntityType() {
-        return PropulsionBlockEntities.COPYCAT_WING_BLOCK_ENTITY.get();
+        return KineticBlockEntities.COPYCAT_WING_BLOCK_ENTITY.get();
     }
 
     @Override

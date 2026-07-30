@@ -19,7 +19,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.joml.Vector3f;
-import org.lightning323.createkinetic.registries.PropulsionBlockEntities;
+import org.lightning323.createkinetic.registries.KineticBlockEntities;
 
 public class RedstoneConverterBlock extends AbstractDiodeBlock implements IBE<RedstoneConverterBlockEntity> {
     public static final MapCodec<RedstoneConverterBlock> CODEC = simpleCodec(RedstoneConverterBlock::new);
@@ -88,7 +88,7 @@ public class RedstoneConverterBlock extends AbstractDiodeBlock implements IBE<Re
 
     @Override
     public BlockEntityType<? extends RedstoneConverterBlockEntity> getBlockEntityType() {
-        return PropulsionBlockEntities.REDSTONE_CONVERTER_BLOCK_ENTITY.get();
+        return KineticBlockEntities.REDSTONE_CONVERTER_BLOCK_ENTITY.get();
     }
 
     @Override

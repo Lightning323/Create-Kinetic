@@ -79,17 +79,17 @@ public class KineticClient {
         event.enqueueWork(() -> {
             TrackRenderTuning.load(Minecraft.getInstance().gameDirectory.toPath().resolve("config/" + CreateKinetic.ID + "-render-tuning.txt"));
             BlockEntityRenderers.register((BlockEntityType) ((BlockEntityType) OffroadBlockEntityTypes.WHEEL_MOUNT.get()), AdjustableWheelMountRenderer::new);
-            BlockEntityRenderers.register((BlockEntityType) ((BlockEntityType) KineticBlockEntityTypes.SABLE_TRACK.get()), SableTrackRenderer::new);
+            BlockEntityRenderers.register((BlockEntityType) ((BlockEntityType) KineticBlockEntities.SABLE_TRACK.get()), SableTrackRenderer::new);
         });
 
         //Fixed
-        SimpleBlockEntityVisualizer.builder(KineticBlockEntityTypes.GYROSCOPE.get())
+        SimpleBlockEntityVisualizer.builder(KineticBlockEntities.GYROSCOPE.get())
                 .factory((ctx, be, partialTick) ->
                         new ReactionWheelVisual(ctx, (ReactionWheelBlockEntity) be, partialTick))
                 .neverSkipVanillaRender()
                 .apply();
 
-        SimpleBlockEntityVisualizer.builder(KineticBlockEntityTypes.JOYSTICK.get())
+        SimpleBlockEntityVisualizer.builder(KineticBlockEntities.JOYSTICK.get())
                 .factory((ctx, be, partialTick) ->
                         new JoystickVisual(ctx, (JoystickBlockEntity) be, partialTick))
                 .neverSkipVanillaRender()

@@ -19,7 +19,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.lightning323.createkinetic.registries.PropulsionBlockEntities;
+import org.lightning323.createkinetic.registries.KineticBlockEntities;
 import org.lightning323.createkinetic.registries.PropulsionShapes;
 
 import javax.annotation.Nonnull;
@@ -96,7 +96,7 @@ public class StirlingEngineBlock extends HorizontalKineticBlock implements IBE<S
 
     @Override
     public BlockEntityType<StirlingEngineBlockEntity> getBlockEntityType() {
-        return PropulsionBlockEntities.STIRLING_ENGINE_BLOCK_ENTITY.get();
+        return KineticBlockEntities.STIRLING_ENGINE_BLOCK_ENTITY.get();
     }
 
     @Nullable

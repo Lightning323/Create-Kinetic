@@ -1,11 +1,21 @@
 package org.lightning323.createkinetic.registries;
 
+import com.tterrag.registrate.util.entry.BlockEntityEntry;
+import com.tterrag.registrate.util.nullness.NonNullSupplier;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.lightning323.createkinetic.CreateKinetic;
+import org.lightning323.createkinetic.KineticRegistrate;
+import org.lightning323.createkinetic.content.blocks.joystick.JoystickBlockEntity;
+import org.lightning323.createkinetic.content.blocks.joystick.JoystickRenderer;
+import org.lightning323.createkinetic.content.blocks.reaction_wheel.ReactionWheelBlockEntity;
+import org.lightning323.createkinetic.content.blocks.reaction_wheel.ReactionWheelRenderer;
+import org.lightning323.createkinetic.content.blocks.sable_track.SableTrackBlockEntity;
+import org.lightning323.createkinetic.content.blocks.sable_track.SableTrackRenderer;
 import org.lightning323.createkinetic.content.heat.burners.liquid.LiquidBurnerBlockEntity;
 import org.lightning323.createkinetic.content.heat.burners.solid.SolidBurnerBlockEntity;
 import org.lightning323.createkinetic.content.heat.engine.StirlingEngineBlockEntity;
@@ -20,9 +30,25 @@ import org.lightning323.createkinetic.content.thruster.vector_thruster.creative_
 import org.lightning323.createkinetic.content.thruster.vector_thruster.liquid_vector_thruster.LiquidVectorThrusterBlockEntity;
 import org.lightning323.createkinetic.content.wing.PropulsionCopycatWingBlockEntity;
 
-public class PropulsionBlockEntities {
+public class KineticBlockEntities {
     private static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES =
         DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, CreateKinetic.ID);
+
+    public static final KineticRegistrate REGISTRATE = CreateKinetic.getRegistrate();
+    public static final BlockEntityEntry<JoystickBlockEntity> JOYSTICK = REGISTRATE
+            .blockEntity("joystick", JoystickBlockEntity::new)
+            .validBlocks(KineticBlocks.JOYSTICK)
+            .renderer(() -> JoystickRenderer::new)
+            .register();
+    public static final BlockEntityEntry<ReactionWheelBlockEntity> GYROSCOPE = REGISTRATE
+            .blockEntity("gyroscope", ReactionWheelBlockEntity::new)
+            .validBlocks(KineticBlocks.REACTION_WHEEL)
+            .renderer(() -> ReactionWheelRenderer::new)
+            .register();
+    public static final BlockEntityEntry<SableTrackBlockEntity> SABLE_TRACK = REGISTRATE.blockEntity("sable_track", SableTrackBlockEntity::new)
+            .validBlocks(new NonNullSupplier[]{KineticBlocks.TRACK_MOUNT})
+            .renderer(() -> (BlockEntityRendererProvider<SableTrackBlockEntity>) SableTrackRenderer::new)
+            .register();
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ThrusterBlockEntity>> THRUSTER_BLOCK_ENTITY =
         BLOCK_ENTITY_TYPES.register("thruster_block_entity",

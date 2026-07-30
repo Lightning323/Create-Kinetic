@@ -24,7 +24,7 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import org.joml.Vector3d;
 import org.lightning323.createkinetic.config.PropulsionConfig;
 import org.lightning323.createkinetic.content.thruster.*;
-import org.lightning323.createkinetic.registries.PropulsionBlockEntities;
+import org.lightning323.createkinetic.registries.KineticBlockEntities;
 import org.lightning323.createkinetic.registries.KineticFluids;
 import org.lightning323.createkinetic.utility.MultiFluidHandler;
 import org.lightning323.createkinetic.utility.math.MathUtility;
@@ -54,7 +54,7 @@ public class ThrusterBlockEntity extends AbstractThrusterBlockEntity {
     }
 
     public ThrusterBlockEntity(BlockPos pos, BlockState state) {
-        this(PropulsionBlockEntities.THRUSTER_BLOCK_ENTITY.get(), pos, state);
+        this(KineticBlockEntities.THRUSTER_BLOCK_ENTITY.get(), pos, state);
     }
 
     @Override

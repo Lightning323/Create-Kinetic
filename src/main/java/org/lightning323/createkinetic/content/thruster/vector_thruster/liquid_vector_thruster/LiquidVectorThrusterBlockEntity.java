@@ -19,7 +19,7 @@ import org.lightning323.createkinetic.config.PropulsionConfig;
 import org.lightning323.createkinetic.content.thruster.AbstractThrusterBlock;
 import org.lightning323.createkinetic.content.thruster.vector_thruster.VectorRedstoneLinkBehaviour;
 import org.lightning323.createkinetic.content.thruster.vector_thruster.VectorThrusterBlockEntity;
-import org.lightning323.createkinetic.registries.PropulsionBlockEntities;
+import org.lightning323.createkinetic.registries.KineticBlockEntities;
 
 import java.util.List;
 
@@ -51,7 +51,7 @@ public class LiquidVectorThrusterBlockEntity extends VectorThrusterBlockEntity {
     private float prevFlapProgress;
 
     public LiquidVectorThrusterBlockEntity(BlockPos pos, BlockState state) {
-        super(PropulsionBlockEntities.LIQUID_VECTOR_THRUSTER_BLOCK_ENTITY.get(), pos, state);
+        super(KineticBlockEntities.LIQUID_VECTOR_THRUSTER_BLOCK_ENTITY.get(), pos, state);
     }
 
     protected LiquidVectorThrusterBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {

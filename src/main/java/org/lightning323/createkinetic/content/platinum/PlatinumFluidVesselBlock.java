@@ -52,7 +52,7 @@ import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.common.util.DeferredSoundType;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
-import org.lightning323.createkinetic.registries.PropulsionBlockEntities;
+import org.lightning323.createkinetic.registries.KineticBlockEntities;
 
 import java.util.Locale;
 
@@ -255,7 +255,7 @@ public class PlatinumFluidVesselBlock extends Block implements IWrenchable, IBE<
 
     @Override
     public BlockEntityType<? extends PlatinumFluidVesselBlockEntity> getBlockEntityType() {
-        return PropulsionBlockEntities.PLATINUM_FLUID_VESSEL_BLOCK_ENTITY.get();
+        return KineticBlockEntities.PLATINUM_FLUID_VESSEL_BLOCK_ENTITY.get();
     }
 
     @Override

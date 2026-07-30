@@ -21,7 +21,7 @@ import org.lightning323.createkinetic.content.thruster.vector_thruster.VectorThr
 import org.lightning323.createkinetic.particles.ion.IonParticleData;
 import org.lightning323.createkinetic.particles.plasma.PlasmaParticleData;
 import org.lightning323.createkinetic.particles.plume.PlumeParticleData;
-import org.lightning323.createkinetic.registries.PropulsionBlockEntities;
+import org.lightning323.createkinetic.registries.KineticBlockEntities;
 import org.lightning323.createkinetic.utility.GoggleUtils;
 
 import java.util.List;
@@ -33,7 +33,7 @@ public class CreativeVectorThrusterBlockEntity extends VectorThrusterBlockEntity
     private float peripheralThrustOutput = -1.0f;
 
     public CreativeVectorThrusterBlockEntity(BlockPos pos, BlockState state) {
-        super(PropulsionBlockEntities.CREATIVE_VECTOR_THRUSTER_BLOCK_ENTITY.get(), pos, state);
+        super(KineticBlockEntities.CREATIVE_VECTOR_THRUSTER_BLOCK_ENTITY.get(), pos, state);
     }
 
     @Override

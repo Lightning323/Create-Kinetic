@@ -18,7 +18,7 @@ import org.lightning323.createkinetic.config.PropulsionConfig;
 import org.lightning323.createkinetic.content.heat.burners.AbstractBurnerBlock;
 import org.lightning323.createkinetic.content.heat.burners.AbstractBurnerBlockEntity;
 import org.lightning323.createkinetic.content.heat.burners.BurnerDamager;
-import org.lightning323.createkinetic.registries.PropulsionBlockEntities;
+import org.lightning323.createkinetic.registries.KineticBlockEntities;
 import org.lightning323.createkinetic.utility.burners.BurnerFuelBehaviour;
 import org.lightning323.createkinetic.utility.burners.IBurner;
 
@@ -36,7 +36,7 @@ public class SolidBurnerBlockEntity extends AbstractBurnerBlockEntity implements
     }
 
     public SolidBurnerBlockEntity(BlockPos pos, BlockState state) {
-        this(PropulsionBlockEntities.SOLID_BURNER_BLOCK_ENTITY.get(), pos, state);
+        this(KineticBlockEntities.SOLID_BURNER_BLOCK_ENTITY.get(), pos, state);
     }
 
     @Override

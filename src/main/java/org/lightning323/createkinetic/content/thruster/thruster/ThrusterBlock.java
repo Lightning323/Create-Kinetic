@@ -19,7 +19,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.lightning323.createkinetic.content.thruster.AbstractThrusterBlock;
 import org.lightning323.createkinetic.content.thruster.AbstractThrusterBlockEntity;
 import org.lightning323.createkinetic.content.thruster.ThrusterShapes;
-import org.lightning323.createkinetic.registries.PropulsionBlockEntities;
+import org.lightning323.createkinetic.registries.KineticBlockEntities;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -63,12 +63,12 @@ public class ThrusterBlock extends AbstractThrusterBlock {
 
     @Override
     public net.minecraft.world.level.block.entity.BlockEntity newBlockEntity(@Nonnull BlockPos pos, @Nonnull BlockState state) {
-        return new ThrusterBlockEntity(PropulsionBlockEntities.THRUSTER_BLOCK_ENTITY.get(), pos, state);
+        return new ThrusterBlockEntity(KineticBlockEntities.THRUSTER_BLOCK_ENTITY.get(), pos, state);
     }
 
     @Override
     public BlockEntityType<? extends AbstractThrusterBlockEntity> getBlockEntityType() {
-        return PropulsionBlockEntities.THRUSTER_BLOCK_ENTITY.get();
+        return KineticBlockEntities.THRUSTER_BLOCK_ENTITY.get();
     }
 
     @Override
@@ -88,7 +88,7 @@ public class ThrusterBlock extends AbstractThrusterBlock {
     @Nullable
     @Override
     public <T extends net.minecraft.world.level.block.entity.BlockEntity> BlockEntityTicker<T> getTicker(@Nonnull Level level, @Nonnull BlockState state, @Nonnull BlockEntityType<T> type) {
-        if (type == PropulsionBlockEntities.THRUSTER_BLOCK_ENTITY.get()) {
+        if (type == KineticBlockEntities.THRUSTER_BLOCK_ENTITY.get()) {
             return new SmartBlockEntityTicker<>();
         }
         return null;

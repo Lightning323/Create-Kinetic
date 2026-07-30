@@ -10,7 +10,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.lightning323.createkinetic.content.thruster.AbstractThrusterBlockEntity;
 import org.lightning323.createkinetic.content.thruster.vector_thruster.VectorThrusterBlock;
-import org.lightning323.createkinetic.registries.PropulsionBlockEntities;
+import org.lightning323.createkinetic.registries.KineticBlockEntities;
 
 import javax.annotation.Nonnull;
 
@@ -35,12 +35,12 @@ public class LiquidVectorThrusterBlock extends VectorThrusterBlock {
 
     @Override
     public BlockEntityType<? extends LiquidVectorThrusterBlockEntity> getBlockEntityType() {
-        return PropulsionBlockEntities.LIQUID_VECTOR_THRUSTER_BLOCK_ENTITY.get();
+        return KineticBlockEntities.LIQUID_VECTOR_THRUSTER_BLOCK_ENTITY.get();
     }
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@Nonnull Level level, @Nonnull BlockState state, @Nonnull BlockEntityType<T> type) {
-        if (type == PropulsionBlockEntities.LIQUID_VECTOR_THRUSTER_BLOCK_ENTITY.get()) {
+        if (type == KineticBlockEntities.LIQUID_VECTOR_THRUSTER_BLOCK_ENTITY.get()) {
             return new SmartBlockEntityTicker<>();
         }
         return null;

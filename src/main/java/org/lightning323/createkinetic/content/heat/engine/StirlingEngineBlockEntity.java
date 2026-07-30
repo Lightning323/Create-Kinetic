@@ -16,7 +16,7 @@ import org.lightning323.createkinetic.config.PropulsionConfig;
 import org.lightning323.createkinetic.compat.PropulsionCompatibility;
 import org.lightning323.createkinetic.compat.computercraft.ComputerBehaviour;
 import org.lightning323.createkinetic.content.heat.IHeatConsumer;
-import org.lightning323.createkinetic.registries.PropulsionBlockEntities;
+import org.lightning323.createkinetic.registries.KineticBlockEntities;
 
 import java.util.List;
 
@@ -39,7 +39,7 @@ public class StirlingEngineBlockEntity extends GeneratingKineticBlockEntity impl
     }
 
     public StirlingEngineBlockEntity(BlockPos pos, BlockState state) {
-        this(PropulsionBlockEntities.STIRLING_ENGINE_BLOCK_ENTITY.get(), pos, state);
+        this(KineticBlockEntities.STIRLING_ENGINE_BLOCK_ENTITY.get(), pos, state);
     }
 
     @Override

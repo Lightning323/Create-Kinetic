@@ -13,45 +13,45 @@ import org.lightning323.createkinetic.content.heat.burners.solid.SolidBurnerBloc
 import org.lightning323.createkinetic.content.thruster.ion_thruster.IonThrusterBlockEntity;
 import org.lightning323.createkinetic.content.thruster.thruster.ThrusterBlockEntity;
 import org.lightning323.createkinetic.content.thruster.vector_thruster.liquid_vector_thruster.LiquidVectorThrusterBlockEntity;
-import org.lightning323.createkinetic.registries.PropulsionBlockEntities;
+import org.lightning323.createkinetic.registries.KineticBlockEntities;
 
 public class ModCapabilityEvents {
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
         event.registerBlockEntity(
             Capabilities.FluidHandler.BLOCK,
-            PropulsionBlockEntities.THRUSTER_BLOCK_ENTITY.get(),
+            KineticBlockEntities.THRUSTER_BLOCK_ENTITY.get(),
             ModCapabilityEvents::getThrusterFluidHandler
         );
         event.registerBlockEntity(
             Capabilities.FluidHandler.BLOCK,
-            PropulsionBlockEntities.LIQUID_VECTOR_THRUSTER_BLOCK_ENTITY.get(),
+            KineticBlockEntities.LIQUID_VECTOR_THRUSTER_BLOCK_ENTITY.get(),
             ModCapabilityEvents::getLiquidVectorThrusterFluidHandler
         );
 
         event.registerBlockEntity(
             Capabilities.FluidHandler.BLOCK,
-            PropulsionBlockEntities.LIQUID_BURNER_BLOCK_ENTITY.get(),
+            KineticBlockEntities.LIQUID_BURNER_BLOCK_ENTITY.get(),
             ModCapabilityEvents::getLiquidBurnerFluidHandler
         );
         event.registerBlockEntity(
             Capabilities.ItemHandler.BLOCK,
-            PropulsionBlockEntities.SOLID_BURNER_BLOCK_ENTITY.get(),
+            KineticBlockEntities.SOLID_BURNER_BLOCK_ENTITY.get(),
             ModCapabilityEvents::getSolidBurnerItemHandler
         );
         event.registerBlockEntity(
             Capabilities.EnergyStorage.BLOCK,
-            PropulsionBlockEntities.ION_THRUSTER_BLOCK_ENTITY.get(),
+            KineticBlockEntities.ION_THRUSTER_BLOCK_ENTITY.get(),
             (be, side) -> ((IonThrusterBlockEntity) be).getEnergyHandler(side)
         );
 
         event.registerBlockEntity(
             Capabilities.FluidHandler.BLOCK,
-            PropulsionBlockEntities.PLATINUM_FLUID_TANK_BLOCK_ENTITY.get(),
+            KineticBlockEntities.PLATINUM_FLUID_TANK_BLOCK_ENTITY.get(),
             (be, side) -> be.getCapabilityHandler()
         );
         event.registerBlockEntity(
             Capabilities.FluidHandler.BLOCK,
-            PropulsionBlockEntities.PLATINUM_FLUID_VESSEL_BLOCK_ENTITY.get(),
+            KineticBlockEntities.PLATINUM_FLUID_VESSEL_BLOCK_ENTITY.get(),
             (be, side) -> be.getCapabilityHandler()
         );
 
@@ -70,32 +70,32 @@ public class ModCapabilityEvents {
 
             event.registerBlockEntity(
                 capability,
-                PropulsionBlockEntities.THRUSTER_BLOCK_ENTITY.get(),
+                KineticBlockEntities.THRUSTER_BLOCK_ENTITY.get(),
                 (be, side) -> be.computerBehaviour == null ? null : be.computerBehaviour.getPeripheralCapability()
             );
             event.registerBlockEntity(
                 capability,
-                PropulsionBlockEntities.ION_THRUSTER_BLOCK_ENTITY.get(),
+                KineticBlockEntities.ION_THRUSTER_BLOCK_ENTITY.get(),
                 (be, side) -> be.computerBehaviour == null ? null : be.computerBehaviour.getPeripheralCapability()
             );
             event.registerBlockEntity(
                 capability,
-                PropulsionBlockEntities.CREATIVE_THRUSTER_BLOCK_ENTITY.get(),
+                KineticBlockEntities.CREATIVE_THRUSTER_BLOCK_ENTITY.get(),
                 (be, side) -> be.computerBehaviour == null ? null : be.computerBehaviour.getPeripheralCapability()
             );
             event.registerBlockEntity(
                 capability,
-                PropulsionBlockEntities.CREATIVE_VECTOR_THRUSTER_BLOCK_ENTITY.get(),
+                KineticBlockEntities.CREATIVE_VECTOR_THRUSTER_BLOCK_ENTITY.get(),
                 (be, side) -> be.computerBehaviour == null ? null : be.computerBehaviour.getPeripheralCapability()
             );
             event.registerBlockEntity(
                 capability,
-                PropulsionBlockEntities.LIQUID_VECTOR_THRUSTER_BLOCK_ENTITY.get(),
+                KineticBlockEntities.LIQUID_VECTOR_THRUSTER_BLOCK_ENTITY.get(),
                 (be, side) -> be.computerBehaviour == null ? null : be.computerBehaviour.getPeripheralCapability()
             );
             event.registerBlockEntity(
                 capability,
-                PropulsionBlockEntities.STIRLING_ENGINE_BLOCK_ENTITY.get(),
+                KineticBlockEntities.STIRLING_ENGINE_BLOCK_ENTITY.get(),
                 (be, side) -> be.computerBehaviour == null ? null : be.computerBehaviour.getPeripheralCapability()
             );
 

@@ -23,7 +23,7 @@ import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
-import org.lightning323.createkinetic.registries.PropulsionBlockEntities;
+import org.lightning323.createkinetic.registries.KineticBlockEntities;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -40,7 +40,7 @@ public class PlatinumFluidVesselBlockEntity extends FluidTankBlockEntity impleme
     private LerpedFloat fluidLevel;
 
     public PlatinumFluidVesselBlockEntity(BlockPos pos, BlockState state) {
-        super(PropulsionBlockEntities.PLATINUM_FLUID_VESSEL_BLOCK_ENTITY.get(), pos, state);
+        super(KineticBlockEntities.PLATINUM_FLUID_VESSEL_BLOCK_ENTITY.get(), pos, state);
         windowType = WindowType.SIDE_WIDE;
         refreshCapability();
     }

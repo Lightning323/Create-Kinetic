@@ -43,7 +43,7 @@ package org.lightning323.createkinetic.content.blocks.sable_track;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.content.kinetics.base.HorizontalKineticBlock;
 import com.simibubi.create.foundation.block.IBE;
-import org.lightning323.createkinetic.registries.KineticBlockEntityTypes;
+import org.lightning323.createkinetic.registries.KineticBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvent;
@@ -285,7 +285,7 @@ public class SableTrackBlock
     }
 
     public BlockEntityType<? extends SableTrackBlockEntity> getBlockEntityType() {
-        return (BlockEntityType) KineticBlockEntityTypes.SABLE_TRACK.get();
+        return (BlockEntityType) KineticBlockEntities.SABLE_TRACK.get();
     }
 }
 

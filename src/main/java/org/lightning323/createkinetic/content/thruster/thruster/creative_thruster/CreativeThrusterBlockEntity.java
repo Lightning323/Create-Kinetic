@@ -26,7 +26,7 @@ import org.lightning323.createkinetic.content.thruster.SimulatedThrustAdapter;
 import org.lightning323.createkinetic.content.thruster.thruster.ThrusterBlock;
 import org.lightning323.createkinetic.particles.ion.IonParticleData;
 import org.lightning323.createkinetic.particles.plasma.PlasmaParticleData;
-import org.lightning323.createkinetic.registries.PropulsionBlockEntities;
+import org.lightning323.createkinetic.registries.KineticBlockEntities;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -50,7 +50,7 @@ public class CreativeThrusterBlockEntity extends AbstractThrusterBlockEntity {
     }
 
     public CreativeThrusterBlockEntity(BlockPos pos, BlockState state) {
-        this(PropulsionBlockEntities.CREATIVE_THRUSTER_BLOCK_ENTITY.get(), pos, state);
+        this(KineticBlockEntities.CREATIVE_THRUSTER_BLOCK_ENTITY.get(), pos, state);
     }
 
     public PropulsionConfig.ThrusterPlumeType getPlumeRenderType() {

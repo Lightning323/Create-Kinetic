@@ -19,7 +19,7 @@ import org.lightning323.createkinetic.content.thruster.AbstractThrusterBlock;
 import org.lightning323.createkinetic.content.thruster.AbstractThrusterBlockEntity;
 import org.lightning323.createkinetic.content.thruster.ThrusterShapes;
 import org.lightning323.createkinetic.content.thruster.thruster.ThrusterBlock;
-import org.lightning323.createkinetic.registries.PropulsionBlockEntities;
+import org.lightning323.createkinetic.registries.KineticBlockEntities;
 
 import javax.annotation.Nonnull;
 
@@ -56,12 +56,12 @@ public class IonThrusterBlock extends AbstractThrusterBlock {
 
     @Override
     public BlockEntityType<? extends AbstractThrusterBlockEntity> getBlockEntityType() {
-        return PropulsionBlockEntities.ION_THRUSTER_BLOCK_ENTITY.get();
+        return KineticBlockEntities.ION_THRUSTER_BLOCK_ENTITY.get();
     }
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@Nonnull Level level, @Nonnull BlockState state, @Nonnull BlockEntityType<T> type) {
-        if (type == PropulsionBlockEntities.ION_THRUSTER_BLOCK_ENTITY.get()) {
+        if (type == KineticBlockEntities.ION_THRUSTER_BLOCK_ENTITY.get()) {
             return new SmartBlockEntityTicker<>();
         }
         return null;

@@ -16,7 +16,7 @@ import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.lightning323.createkinetic.registries.KineticBlockEntityTypes;
+import org.lightning323.createkinetic.registries.KineticBlockEntities;
 
 public class ReactionWheelBlock extends KineticBlock implements IBE<ReactionWheelBlockEntity> {
    public static final EnumProperty<Direction> FACING;
@@ -61,7 +61,7 @@ public class ReactionWheelBlock extends KineticBlock implements IBE<ReactionWhee
    }
 
    public BlockEntityType<? extends ReactionWheelBlockEntity> getBlockEntityType() {
-      return (BlockEntityType) KineticBlockEntityTypes.GYROSCOPE.get();
+      return (BlockEntityType) KineticBlockEntities.GYROSCOPE.get();
    }
 
    static {

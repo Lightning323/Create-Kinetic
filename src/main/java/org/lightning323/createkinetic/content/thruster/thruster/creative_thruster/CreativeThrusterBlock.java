@@ -24,7 +24,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.lightning323.createkinetic.content.thruster.AbstractThrusterBlock;
 import org.lightning323.createkinetic.content.thruster.AbstractThrusterBlockEntity;
 import org.lightning323.createkinetic.content.thruster.thruster.ThrusterBlock;
-import org.lightning323.createkinetic.registries.PropulsionBlockEntities;
+import org.lightning323.createkinetic.registries.KineticBlockEntities;
 import org.lightning323.createkinetic.registries.PropulsionShapes;
 
 import javax.annotation.Nonnull;
@@ -38,7 +38,7 @@ public class CreativeThrusterBlock extends AbstractThrusterBlock implements IWre
 
     @Override
     public BlockEntityType<? extends AbstractThrusterBlockEntity> getBlockEntityType() {
-        return PropulsionBlockEntities.CREATIVE_THRUSTER_BLOCK_ENTITY.get();
+        return KineticBlockEntities.CREATIVE_THRUSTER_BLOCK_ENTITY.get();
     }
     public static final MapCodec<CreativeThrusterBlock> CODEC = simpleCodec(CreativeThrusterBlock::new);
     public static final DirectionProperty PLACEMENT_FACING = DirectionProperty.create("placement_facing", Direction.values());
@@ -64,7 +64,7 @@ public class CreativeThrusterBlock extends AbstractThrusterBlock implements IWre
 
     @Override
     public BlockEntity newBlockEntity(@Nonnull BlockPos pos, @Nonnull BlockState state) {
-        return new CreativeThrusterBlockEntity(PropulsionBlockEntities.CREATIVE_THRUSTER_BLOCK_ENTITY.get(), pos, state);
+        return new CreativeThrusterBlockEntity(KineticBlockEntities.CREATIVE_THRUSTER_BLOCK_ENTITY.get(), pos, state);
     }
 
     @Override
@@ -125,7 +125,7 @@ public class CreativeThrusterBlock extends AbstractThrusterBlock implements IWre
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@Nonnull Level level, @Nonnull BlockState state, @Nonnull BlockEntityType<T> type) {
-        if (type == PropulsionBlockEntities.CREATIVE_THRUSTER_BLOCK_ENTITY.get()) {
+        if (type == KineticBlockEntities.CREATIVE_THRUSTER_BLOCK_ENTITY.get()) {
             return new SmartBlockEntityTicker<>();
         }
         return null;

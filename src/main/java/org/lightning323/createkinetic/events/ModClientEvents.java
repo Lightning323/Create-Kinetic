@@ -158,12 +158,12 @@ public class ModClientEvents {
         PropulsionInstanceTypes.register();
 
 
-        SimpleBlockEntityVisualizer.builder(PropulsionBlockEntities.STIRLING_ENGINE_BLOCK_ENTITY.get())
+        SimpleBlockEntityVisualizer.builder(KineticBlockEntities.STIRLING_ENGINE_BLOCK_ENTITY.get())
             .factory(StirlingEngineVisual::new)
             .skipVanillaRender(be -> VisualizationManager.supportsVisualization(be.getLevel()))
             .apply();
 
-        SimpleBlockEntityVisualizer.builder(PropulsionBlockEntities.LIQUID_BURNER_BLOCK_ENTITY.get())
+        SimpleBlockEntityVisualizer.builder(KineticBlockEntities.LIQUID_BURNER_BLOCK_ENTITY.get())
             .factory(LiquidBurnerVisual::new)
             .skipVanillaRender(be -> VisualizationManager.supportsVisualization(be.getLevel()))
             .apply();
@@ -171,18 +171,18 @@ public class ModClientEvents {
 
     @SubscribeEvent
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerBlockEntityRenderer(PropulsionBlockEntities.STIRLING_ENGINE_BLOCK_ENTITY.get(), StirlingEngineRenderer::new);
-        event.registerBlockEntityRenderer(PropulsionBlockEntities.CREATIVE_THRUSTER_BLOCK_ENTITY.get(), CreativeThrusterRenderer::new);
+        event.registerBlockEntityRenderer(KineticBlockEntities.STIRLING_ENGINE_BLOCK_ENTITY.get(), StirlingEngineRenderer::new);
+        event.registerBlockEntityRenderer(KineticBlockEntities.CREATIVE_THRUSTER_BLOCK_ENTITY.get(), CreativeThrusterRenderer::new);
 
-        event.registerBlockEntityRenderer(PropulsionBlockEntities.THRUSTER_BLOCK_ENTITY.get(), ThrusterRenderer::new);
-        event.registerBlockEntityRenderer(PropulsionBlockEntities.ION_THRUSTER_BLOCK_ENTITY.get(), IonThrusterRenderer::new);
+        event.registerBlockEntityRenderer(KineticBlockEntities.THRUSTER_BLOCK_ENTITY.get(), ThrusterRenderer::new);
+        event.registerBlockEntityRenderer(KineticBlockEntities.ION_THRUSTER_BLOCK_ENTITY.get(), IonThrusterRenderer::new);
 
-        event.registerBlockEntityRenderer(PropulsionBlockEntities.CREATIVE_VECTOR_THRUSTER_BLOCK_ENTITY.get(), IonThrusterRenderer::new);
-        event.registerBlockEntityRenderer(PropulsionBlockEntities.LIQUID_VECTOR_THRUSTER_BLOCK_ENTITY.get(), LiquidVectorThrusterRenderer::new);
+        event.registerBlockEntityRenderer(KineticBlockEntities.CREATIVE_VECTOR_THRUSTER_BLOCK_ENTITY.get(), IonThrusterRenderer::new);
+        event.registerBlockEntityRenderer(KineticBlockEntities.LIQUID_VECTOR_THRUSTER_BLOCK_ENTITY.get(), LiquidVectorThrusterRenderer::new);
 
-        event.registerBlockEntityRenderer(PropulsionBlockEntities.LIQUID_BURNER_BLOCK_ENTITY.get(), LiquidBurnerRenderer::new);
-        event.registerBlockEntityRenderer(PropulsionBlockEntities.PLATINUM_FLUID_TANK_BLOCK_ENTITY.get(), FluidTankRenderer::new);
-        event.registerBlockEntityRenderer(PropulsionBlockEntities.PLATINUM_FLUID_VESSEL_BLOCK_ENTITY.get(), PlatinumFluidVesselRenderer::new);
+        event.registerBlockEntityRenderer(KineticBlockEntities.LIQUID_BURNER_BLOCK_ENTITY.get(), LiquidBurnerRenderer::new);
+        event.registerBlockEntityRenderer(KineticBlockEntities.PLATINUM_FLUID_TANK_BLOCK_ENTITY.get(), FluidTankRenderer::new);
+        event.registerBlockEntityRenderer(KineticBlockEntities.PLATINUM_FLUID_VESSEL_BLOCK_ENTITY.get(), PlatinumFluidVesselRenderer::new);
     }
 
     @SubscribeEvent

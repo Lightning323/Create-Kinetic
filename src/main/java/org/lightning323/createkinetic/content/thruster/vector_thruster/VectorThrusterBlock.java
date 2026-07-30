@@ -13,7 +13,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.lightning323.createkinetic.content.thruster.AbstractThrusterBlockEntity;
 import org.lightning323.createkinetic.content.thruster.ThrusterShapes;
 import org.lightning323.createkinetic.content.thruster.ion_thruster.IonThrusterBlock;
-import org.lightning323.createkinetic.registries.PropulsionBlockEntities;
+import org.lightning323.createkinetic.registries.KineticBlockEntities;
 
 public class VectorThrusterBlock extends IonThrusterBlock {
     public static final MapCodec<VectorThrusterBlock> CODEC = simpleCodec(VectorThrusterBlock::new);
@@ -51,6 +51,6 @@ public class VectorThrusterBlock extends IonThrusterBlock {
 
     @Override
     public BlockEntityType<? extends AbstractThrusterBlockEntity> getBlockEntityType() {
-        return PropulsionBlockEntities.ION_THRUSTER_BLOCK_ENTITY.get();
+        return KineticBlockEntities.ION_THRUSTER_BLOCK_ENTITY.get();
     }
 }

@@ -26,7 +26,7 @@ import org.lightning323.createkinetic.content.thruster.ThrusterDamager;
 import org.lightning323.createkinetic.content.thruster.thruster.ThrusterBlockEntity;
 import org.lightning323.createkinetic.content.thruster.thruster.creative_thruster.CreativeThrusterBlockEntity;
 import org.lightning323.createkinetic.particles.ion.IonParticleData;
-import org.lightning323.createkinetic.registries.PropulsionBlockEntities;
+import org.lightning323.createkinetic.registries.KineticBlockEntities;
 import org.lightning323.createkinetic.utility.GoggleUtils;
 
 import java.util.List;
@@ -84,7 +84,7 @@ public class IonThrusterBlockEntity extends ThrusterBlockEntity {
     };
 
     public IonThrusterBlockEntity(final BlockPos pos, final BlockState state) {
-        super(PropulsionBlockEntities.ION_THRUSTER_BLOCK_ENTITY.get(), pos, state);
+        super(KineticBlockEntities.ION_THRUSTER_BLOCK_ENTITY.get(), pos, state);
     }
 
     protected IonThrusterBlockEntity(final BlockEntityType<?> type, final BlockPos pos, final BlockState state) {

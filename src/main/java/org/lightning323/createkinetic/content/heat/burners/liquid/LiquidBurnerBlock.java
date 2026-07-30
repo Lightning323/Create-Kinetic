@@ -15,7 +15,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import org.lightning323.createkinetic.content.heat.burners.AbstractBurnerBlock;
 import org.lightning323.createkinetic.content.heat.burners.AbstractBurnerBlockEntity;
-import org.lightning323.createkinetic.registries.PropulsionBlockEntities;
+import org.lightning323.createkinetic.registries.KineticBlockEntities;
 
 import javax.annotation.Nonnull;
 
@@ -34,7 +34,7 @@ public class LiquidBurnerBlock extends AbstractBurnerBlock {
 
     @Override
     public BlockEntityType<? extends AbstractBurnerBlockEntity> getBlockEntityType() {
-        return PropulsionBlockEntities.LIQUID_BURNER_BLOCK_ENTITY.get();
+        return KineticBlockEntities.LIQUID_BURNER_BLOCK_ENTITY.get();
     }
 
     @Override
@@ -62,12 +62,12 @@ public class LiquidBurnerBlock extends AbstractBurnerBlock {
 
     @Override
     public BlockEntity newBlockEntity(@Nonnull BlockPos pos, @Nonnull BlockState state) {
-        return new LiquidBurnerBlockEntity(PropulsionBlockEntities.LIQUID_BURNER_BLOCK_ENTITY.get(), pos, state);
+        return new LiquidBurnerBlockEntity(KineticBlockEntities.LIQUID_BURNER_BLOCK_ENTITY.get(), pos, state);
     }
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@Nonnull Level level, @Nonnull BlockState state, @Nonnull BlockEntityType<T> type) {
-        if (type == PropulsionBlockEntities.LIQUID_BURNER_BLOCK_ENTITY.get()) {
+        if (type == KineticBlockEntities.LIQUID_BURNER_BLOCK_ENTITY.get()) {
             return new SmartBlockEntityTicker<>();
         }
         return null;

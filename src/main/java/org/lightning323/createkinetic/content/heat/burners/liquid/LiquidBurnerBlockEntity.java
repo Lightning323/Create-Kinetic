@@ -28,7 +28,7 @@ import org.lightning323.createkinetic.content.heat.burners.AbstractBurnerBlock;
 import org.lightning323.createkinetic.content.heat.burners.AbstractBurnerBlockEntity;
 import org.lightning323.createkinetic.content.heat.burners.BurnerDamager;
 import org.lightning323.createkinetic.content.thruster.ThrusterFuelManager;
-import org.lightning323.createkinetic.registries.PropulsionBlockEntities;
+import org.lightning323.createkinetic.registries.KineticBlockEntities;
 
 import java.util.List;
 
@@ -50,7 +50,7 @@ public class LiquidBurnerBlockEntity extends AbstractBurnerBlockEntity {
     }
 
     public LiquidBurnerBlockEntity(BlockPos pos, BlockState state) {
-        this(PropulsionBlockEntities.LIQUID_BURNER_BLOCK_ENTITY.get(), pos, state);
+        this(KineticBlockEntities.LIQUID_BURNER_BLOCK_ENTITY.get(), pos, state);
     }
 
     @Override

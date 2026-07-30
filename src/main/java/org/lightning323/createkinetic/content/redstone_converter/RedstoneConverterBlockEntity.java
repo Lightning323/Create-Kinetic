@@ -15,7 +15,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.Vec3;
-import org.lightning323.createkinetic.registries.PropulsionBlockEntities;
+import org.lightning323.createkinetic.registries.KineticBlockEntities;
 
 import java.util.List;
 
@@ -27,7 +27,7 @@ public class RedstoneConverterBlockEntity extends SmartBlockEntity {
     }
 
     public RedstoneConverterBlockEntity(BlockPos pos, BlockState state) {
-        this(PropulsionBlockEntities.REDSTONE_CONVERTER_BLOCK_ENTITY.get(), pos, state);
+        this(KineticBlockEntities.REDSTONE_CONVERTER_BLOCK_ENTITY.get(), pos, state);
     }
 
     @Override

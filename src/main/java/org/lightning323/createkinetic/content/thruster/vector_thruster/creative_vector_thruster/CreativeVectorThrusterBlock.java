@@ -19,7 +19,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.lightning323.createkinetic.content.thruster.AbstractThrusterBlockEntity;
 import org.lightning323.createkinetic.content.thruster.vector_thruster.VectorThrusterBlock;
-import org.lightning323.createkinetic.registries.PropulsionBlockEntities;
+import org.lightning323.createkinetic.registries.KineticBlockEntities;
 import org.lightning323.createkinetic.registries.PropulsionShapes;
 
 public class CreativeVectorThrusterBlock extends VectorThrusterBlock implements IWrenchable {
@@ -42,7 +42,7 @@ public class CreativeVectorThrusterBlock extends VectorThrusterBlock implements 
 
     @Override
     public BlockEntityType<? extends AbstractThrusterBlockEntity> getBlockEntityType() {
-        return PropulsionBlockEntities.CREATIVE_VECTOR_THRUSTER_BLOCK_ENTITY.get();
+        return KineticBlockEntities.CREATIVE_VECTOR_THRUSTER_BLOCK_ENTITY.get();
     }
 
     @Override
@@ -76,7 +76,7 @@ public class CreativeVectorThrusterBlock extends VectorThrusterBlock implements 
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level level, @NotNull BlockState state, @NotNull BlockEntityType<T> type) {
-        if (type == PropulsionBlockEntities.CREATIVE_VECTOR_THRUSTER_BLOCK_ENTITY.get()) {
+        if (type == KineticBlockEntities.CREATIVE_VECTOR_THRUSTER_BLOCK_ENTITY.get()) {
             return new SmartBlockEntityTicker<>();
         }
         return null;
