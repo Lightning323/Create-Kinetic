@@ -30,7 +30,6 @@ public final class JoystickControlClient {
    private static byte tiltY;
    private static double accumX;
    private static double accumY;
-   private static final boolean[] dirHeld;
    private static final long[] dirLastStepMs;
    private static long lastSpringStepXMs;
    private static long lastSpringStepYMs;
@@ -112,10 +111,6 @@ public final class JoystickControlClient {
       tiltY = 0;
       accumX = (double)0.0F;
       accumY = (double)0.0F;
-
-      for(int i = 0; i < dirHeld.length; ++i) {
-         dirHeld[i] = false;
-      }
 
       LocalPlayer player = Minecraft.getInstance().player;
       if (player != null) {
@@ -240,29 +235,20 @@ public final class JoystickControlClient {
       if (!KineticKeys.isFreeCameraHeld()) {
          long now = System.currentTimeMillis();
 
-         for(int i = 0; i < dirHeld.length; ++i) {
-            if (dirHeld[i] && now - dirLastStepMs[i] >= stepIntervalMs()) {
-               applyDirectionStep(i);
-               dirLastStepMs[i] = now;
-            }
-         }
-
          JoystickBlockEntity be = activeBE();
          if (be != null && be.isSpringBack() && !be.isUseMouseInput() && !be.isPowered()) {
             if (now - lastBoundActionMs >= springBackDelayMs()) {
                boolean axisXBound = !be.getBinding(JoystickDirection.LEFT.index).isEmpty() || !be.getBinding(JoystickDirection.RIGHT.index).isEmpty();
                boolean axisYBound = !be.getBinding(JoystickDirection.FORWARD.index).isEmpty() || !be.getBinding(JoystickDirection.BACK.index).isEmpty();
-               boolean keyHeldX = dirHeld[JoystickDirection.LEFT.index] || dirHeld[JoystickDirection.RIGHT.index];
-               boolean keyHeldY = dirHeld[JoystickDirection.FORWARD.index] || dirHeld[JoystickDirection.BACK.index];
                boolean changed = false;
-               if (axisXBound && !keyHeldX && tiltX != 0 && now - lastSpringStepXMs >= stepIntervalMs()) {
+               if (axisXBound  && tiltX != 0 && now - lastSpringStepXMs >= stepIntervalMs()) {
                   tiltX = (byte)(tiltX + (tiltX > 0 ? -1 : 1));
                   accumX = (double)0.0F;
                   lastSpringStepXMs = now;
                   changed = true;
                }
 
-               if (axisYBound && !keyHeldY && tiltY != 0 && now - lastSpringStepYMs >= stepIntervalMs()) {
+               if (axisYBound  && tiltY != 0 && now - lastSpringStepYMs >= stepIntervalMs()) {
                   tiltY = (byte)(tiltY + (tiltY > 0 ? -1 : 1));
                   accumY = (double)0.0F;
                   lastSpringStepYMs = now;
@@ -336,63 +322,8 @@ public final class JoystickControlClient {
          if (!KineticKeys.isFreeCameraHeld()) {
             if (slot == JoystickBlockEntity.BIND_BUTTON_INDEX) {
                setButtonPressed(pressed);
-            } else if (slot >= 0 && slot < dirHeld.length) {
-               JoystickBlockEntity be = activeBE();
-               if (be == null || !be.isUseMouseInput()) {
-                  long now = System.currentTimeMillis();
-                  lastBoundActionMs = now;
-                  if (pressed) {
-                     applyDirectionStep(slot);
-                     dirHeld[slot] = true;
-                     dirLastStepMs[slot] = now;
-                  } else {
-                     dirHeld[slot] = false;
-                  }
-
-               }
             }
          }
-      }
-   }
-
-   private static void applyDirectionStep(int slot) {
-      if (activePos != null) {
-         JoystickDirection dir = JoystickDirection.VALUES[slot];
-         boolean changed = false;
-         switch (dir) {
-            case FORWARD:
-               if (tiltY > -15) {
-                  --tiltY;
-                  accumY = (double)0.0F;
-                  changed = true;
-               }
-               break;
-            case BACK:
-               if (tiltY < 15) {
-                  ++tiltY;
-                  accumY = (double)0.0F;
-                  changed = true;
-               }
-               break;
-            case LEFT:
-               if (tiltX > -15) {
-                  --tiltX;
-                  accumX = (double)0.0F;
-                  changed = true;
-               }
-               break;
-            case RIGHT:
-               if (tiltX < 15) {
-                  ++tiltX;
-                  accumX = (double)0.0F;
-                  changed = true;
-               }
-         }
-
-         if (changed) {
-            PacketDistributor.sendToServer(new C2SJoystickTilt(activePos, tiltX, tiltY), new CustomPacketPayload[0]);
-         }
-
       }
    }
 
@@ -419,7 +350,6 @@ public final class JoystickControlClient {
    }
 
    static {
-      dirHeld = new boolean[JoystickDirection.VALUES.length];
       dirLastStepMs = new long[JoystickDirection.VALUES.length];
    }
 }
