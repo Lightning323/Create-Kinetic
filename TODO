@@ -1,6 +1,6 @@
-- neutral buoyancy with tank ballast
-- aesthetic changes to cranks
-- enchanted buoy can be disabled with redstone
-- better hitboxes for models
-- pondering for ship helm?
-- Rudders should only work in water?
+
+
+ITEMS to remove or keep
+- If your goal is strictly to avoid redundancy and keep the pack lean, the Stirling engine and liquid burner features duplicate mechanics already addressed by Create Aeronautics and base Create.
+
+If you are aiming for a minimalist mod list centered around Simulated and Aeronautics, you can safely drop the Stirling Engine mod. Simulated / Aeronautics already accounts for compact, fuel-based kinetic generation designed specifically to work cleanly on physics contraptions without needing extra multi-block setups.
