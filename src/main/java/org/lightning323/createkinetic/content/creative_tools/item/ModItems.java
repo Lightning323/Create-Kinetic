@@ -11,14 +11,19 @@ public final class ModItems {
 
     public static final DeferredHolder<Item, AssemblerStickItem> ASSEMBLER_STICK = ITEMS.register("assembler_stick",
             () -> new AssemblerStickItem(new Item.Properties().stacksTo(1)));
-    public static final DeferredHolder<Item, AutoGlueItem> AUTO_GLUE = ITEMS.register("auto_glue",
+
+    public static final DeferredHolder<Item, AutoGlueItem> CREATIVE_HONEY_GLUE = ITEMS.register("creative_honey_glue",
             () -> new AutoGlueItem(new Item.Properties().stacksTo(1)));
+
     public static final DeferredHolder<Item, GluedContraptionMoverItem> GLUED_CONTRAPTION_MOVER = ITEMS.register("glued_contraption_mover",
             () -> new GluedContraptionMoverItem(new Item.Properties().stacksTo(1)));
+
     public static final DeferredHolder<Item, GluedContraptionClonerItem> GLUED_CONTRAPTION_CLONER = ITEMS.register("glued_contraption_cloner",
             () -> new GluedContraptionClonerItem(new Item.Properties().stacksTo(1)));
+
     public static final DeferredHolder<Item, ContraptionRemoverItem> CONTRAPTION_REMOVER = ITEMS.register("contraption_remover",
             () -> new ContraptionRemoverItem(new Item.Properties().stacksTo(1)));
+
 
     private ModItems() {
     }

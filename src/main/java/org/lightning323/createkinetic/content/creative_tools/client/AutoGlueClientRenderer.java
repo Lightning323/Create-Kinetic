@@ -42,8 +42,8 @@ public final class AutoGlueClientRenderer {
             return;
         }
 
-        final boolean holdingAutoGlue = player.getItemInHand(InteractionHand.MAIN_HAND).is(ModItems.AUTO_GLUE.get()) ||
-                player.getItemInHand(InteractionHand.OFF_HAND).is(ModItems.AUTO_GLUE.get());
+        final boolean holdingAutoGlue = player.getItemInHand(InteractionHand.MAIN_HAND).is(ModItems.CREATIVE_HONEY_GLUE.get()) ||
+                player.getItemInHand(InteractionHand.OFF_HAND).is(ModItems.CREATIVE_HONEY_GLUE.get());
         if (!holdingAutoGlue) {
             return;
         }

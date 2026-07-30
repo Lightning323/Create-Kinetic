@@ -1,6 +1,5 @@
 package org.lightning323.createkinetic.registries;
 
-import dev.simulated_team.simulated.index.SimItems;
 import dev.simulated_team.simulated.registrate.SimulatedRegistrate;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -16,9 +15,8 @@ public class KineticCreativeTabs {
     public static final ResourceLocation AERONAUTICS_CREATIVE_SECTION = ResourceLocation.fromNamespaceAndPath("aeronautics", "aeronautics");
     public static final ResourceLocation OFFROAD_CREATIVE_SECTION = ResourceLocation.fromNamespaceAndPath("offroad", "offroad");
 
-
     //    private static final ResourceLocation MAIN_SECTION = ResourceLocation.fromNamespaceAndPath(CreateKinetic.ID, "kinetic_main");
-    private static final ResourceLocation CREATIVE_SECTION = ResourceLocation.fromNamespaceAndPath(CreateKinetic.ID, "kinetic_creative");
+//    private static final ResourceLocation CREATIVE_SECTION = ResourceLocation.fromNamespaceAndPath(CreateKinetic.ID, "kinetic_creative");
     private static boolean sectionsInitialized = false;
 
     public static synchronized void registerAeronauticsSections() {
@@ -30,9 +28,10 @@ public class KineticCreativeTabs {
         registerSectionItem(OFFROAD_CREATIVE_SECTION, "small_track_drive_wheel", KineticItems.TRACK_DRIVE_WHEEL::get);
         registerSectionItem(OFFROAD_CREATIVE_SECTION, "track_mount", KineticBlocks.TRACK_MOUNT::asItem);
 
-        registerSectionItem(SIMULATED_CREATIVE_SECTION, "auto_glue", () -> ModItems.AUTO_GLUE.get());
+
         registerSectionItem(SIMULATED_CREATIVE_SECTION, "reaction_wheel", () -> KineticBlocks.REACTION_WHEEL.asItem());
         registerSectionItem(SIMULATED_CREATIVE_SECTION, "joystick", () -> KineticBlocks.JOYSTICK.asItem());
+        registerSectionItem(SIMULATED_CREATIVE_SECTION, "creative_honey_glue", () -> ModItems.CREATIVE_HONEY_GLUE.get());
 
         registerSectionItem(AERONAUTICS_CREATIVE_SECTION, "thruster", () -> KineticBlocks.THRUSTER_BLOCK.get().asItem());
         registerSectionItem(AERONAUTICS_CREATIVE_SECTION, "creative_thruster", () -> KineticBlocks.CREATIVE_THRUSTER_BLOCK.get().asItem());
