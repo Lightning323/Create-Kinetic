@@ -1,19 +1,12 @@
 {
     "type": "minecraft:crafting_shaped",
     "pattern": [
-        "IBI",
-        "BAB",
-        "IBI"
+        "BBB",
+        "BBB"
     ],
     "key": {
-        "I": {
-            "item": "create:iron_sheet"
-        },
-        "A": {
-            "item": "create:andesite_alloy"
-        },
         "B": {
-            "item": "minecraft:iron_nugget"
+            "item": "create:iron_sheet"
         }
     },
     "result": {

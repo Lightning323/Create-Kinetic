@@ -103,7 +103,6 @@ public class CreateKinetic {
         PropulsionSoundEvents.register(modBus);
         KineticFluids.register(modBus);
         PropulsionPartialModels.register();
-        KineticCreativeTabs.registerAeronauticsSections();
         modBus.addListener(PropulsionPackets::register);
         PropulsionDisplaySources.register();
         PropulsionSableBridge.init();

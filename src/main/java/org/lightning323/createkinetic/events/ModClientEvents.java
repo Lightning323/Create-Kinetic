@@ -151,10 +151,10 @@ public class ModClientEvents {
 
     }
 
-    @SubscribeEvent
-    private void buildContents(BuildCreativeModeTabContentsEvent event) {
-       System.out.println("BuildCreativeModeTabContentsEvent "+event.getTabKey());
-    }
+//    @SubscribeEvent
+//    private static void buildContents(BuildCreativeModeTabContentsEvent event) {
+////       System.out.println("BuildCreativeModeTabContentsEvent "+event.getTabKey());
+//    }
 
 
     @SubscribeEvent

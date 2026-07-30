@@ -175,7 +175,7 @@
   "createkinetic.tooltip.thrust1": "Thrust: ",
   "createkinetic.tooltip.airflow": "Airflow:",
   "createkinetic.gui.goggles.burner.thermostat.off": "Off",
-  "block.createkinetic.wing": "Wing",
+  "block.createkinetic.wing": "Iron Wing",
   "createkinetic.redstone_transmission.control_mode.direct": "Direct",
   "createkinetic.ponder.shared.burner.status.hot": "Burner status: Hot",
   "createkinetic.ponder.shared.burner.efficiency": "Maintain good fuel and setup to keep burner efficiency high.",
