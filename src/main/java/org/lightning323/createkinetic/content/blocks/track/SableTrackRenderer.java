@@ -28,7 +28,7 @@
  *  net.minecraft.world.level.block.state.properties.Property
  *  org.joml.Vector2d
  */
-package org.lightning323.createkinetic.content.blocks.sable_track;
+package org.lightning323.createkinetic.content.blocks.track;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;

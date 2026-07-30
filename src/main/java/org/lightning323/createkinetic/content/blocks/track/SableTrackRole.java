@@ -1,7 +1,7 @@
 /*
  * Decompiled with CFR 0.152.
  */
-package org.lightning323.createkinetic.content.blocks.sable_track;
+package org.lightning323.createkinetic.content.blocks.track;
 
 public enum SableTrackRole {
     MOUNT(0.0, 0.0, 0.0, 0.0, 0, false),

@@ -38,7 +38,7 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.lightning323.createkinetic.CreateKinetic;
 import org.lightning323.createkinetic.config.KineticConfig;
-import org.lightning323.createkinetic.content.blocks.sable_track.SableTrackRenderer;
+import org.lightning323.createkinetic.content.blocks.track.SableTrackRenderer;
 import org.lightning323.createkinetic.content.blocks.wheel_mount.AdjustableWheelMountRenderer;
 import org.lightning323.createkinetic.content.blocks.reaction_wheel.ReactionWheelBlockEntity;
 import org.lightning323.createkinetic.content.blocks.reaction_wheel.ReactionWheelItemRenderer;

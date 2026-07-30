@@ -13,7 +13,7 @@
 package org.lightning323.createkinetic.network;
 
 import org.lightning323.createkinetic.CreateKinetic;
-import org.lightning323.createkinetic.content.blocks.sable_track.SableTrackBlockEntity;
+import org.lightning323.createkinetic.content.blocks.track.SableTrackBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;

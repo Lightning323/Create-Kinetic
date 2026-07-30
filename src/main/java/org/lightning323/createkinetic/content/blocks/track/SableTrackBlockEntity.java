@@ -67,7 +67,7 @@
  *  org.joml.Vector3d
  *  org.joml.Vector3dc
  */
-package org.lightning323.createkinetic.content.blocks.sable_track;
+package org.lightning323.createkinetic.content.blocks.track;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
@@ -130,19 +130,6 @@ import java.util.List;
 public class SableTrackBlockEntity extends KineticBlockEntity implements BlockEntitySubLevelActor, Clearable {
 
     private static final MutableComponent SCROLL_OPTION_TITLE = Component.translatable((String) CreateKinetic.ID + ".scroll_option.track_suspension_strength");
-    private static final double MAX_LATERAL_OFFSET = 1.0;
-    private static final double LATERAL_OFFSET_STEP = 0.125;
-    private static final double MAX_LONGITUDINAL_OFFSET = 1.0;
-    private static final double LONGITUDINAL_OFFSET_STEP = 0.125;
-    private static final double MAX_HEIGHT_OFFSET = 0.75;
-    private static final double HEIGHT_OFFSET_STEP = 0.125;
-    private static final int DRIVE_SCAN_RANGE = 16;
-    private static final double SLEEP_VELOCITY = 0.08;
-    private static final double OFFROAD_SMALL_WHEEL_REST_DISTANCE = 0.65;
-    private static final double TRACK_DRIVE_FORCE_SCALE = -0.45;
-    private static final double TRACK_MAX_SPRING_IMPULSE_SCALE = 0.9;
-    private static final double TRACK_BUMP_STOP_CLEARANCE_SCALE = 0.95;
-    private static final double TRACK_BUMP_STOP_FORCE_SCALE = 4.0;
     private static final Collection<SableTrackBlockEntity> QUEUED_TRACKS = new ObjectOpenHashSet();
     private final ForceTotal forceTotal = new ForceTotal();
     private final Vector3d queuedForcePos = new Vector3d();
@@ -275,7 +262,7 @@ public class SableTrackBlockEntity extends KineticBlockEntity implements BlockEn
         double brakeStrength = (double) this.level.getSignal(this.getBlockPos().above(), Direction.DOWN) / 15.0;
         double surfaceBraking = Math.min(this.touchingFriction, 1.0);
         double brakingFrictionStrength = (0.075 + brakeStrength * 0.3) * surfaceBraking * part.sideGripMultiplier();
-        float kineticSpeed = Math.abs(this.getSharedTrackSpeed(facing)) < 0.05f ? 0.0f : this.getSharedTrackSpeed(facing);
+        float kineticSpeed = !hasBelt || Math.abs(this.getSharedTrackSpeed(facing)) < 0.05f ? 0.0f : this.getSharedTrackSpeed(facing);
         this.queuedForce.fma(localVelocity.dot(forwardD) * -brakingFrictionStrength * strengthMul * timeStep + (double) kineticSpeed * (1.0 - brakeStrength) * surfaceBraking * -0.45 * part.driveMultiplier() * this.driveMultiplier * timeStep, forwardD);
         this.queuedForce.fma(localVelocity.dot(sideD) * -0.6 * this.touchingFriction * strengthMul * part.sideGripMultiplier() * this.gripMultiplier * timeStep, sideD);
         if (this.queuedForce.lengthSquared() < 1.0E-10) {

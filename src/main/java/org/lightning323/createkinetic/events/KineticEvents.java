@@ -7,7 +7,7 @@
  */
 package org.lightning323.createkinetic.events;
 
-import org.lightning323.createkinetic.content.blocks.sable_track.SableTrackBlockEntity;
+import org.lightning323.createkinetic.content.blocks.track.SableTrackBlockEntity;
 import dev.ryanhcode.sable.sublevel.system.SubLevelPhysicsSystem;
 import net.minecraft.server.level.ServerLevel;
 

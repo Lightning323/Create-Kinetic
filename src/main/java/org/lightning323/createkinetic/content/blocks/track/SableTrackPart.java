@@ -4,7 +4,7 @@
  * Could not load the following classes:
  *  net.minecraft.world.item.ItemStack
  */
-package org.lightning323.createkinetic.content.blocks.sable_track;
+package org.lightning323.createkinetic.content.blocks.track;
 
 import org.lightning323.createkinetic.registries.KineticItems;
 import net.minecraft.world.item.ItemStack;

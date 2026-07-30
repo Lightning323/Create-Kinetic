@@ -14,8 +14,8 @@ import org.lightning323.createkinetic.content.blocks.joystick.JoystickBlockEntit
 import org.lightning323.createkinetic.content.blocks.joystick.JoystickRenderer;
 import org.lightning323.createkinetic.content.blocks.reaction_wheel.ReactionWheelBlockEntity;
 import org.lightning323.createkinetic.content.blocks.reaction_wheel.ReactionWheelRenderer;
-import org.lightning323.createkinetic.content.blocks.sable_track.SableTrackBlockEntity;
-import org.lightning323.createkinetic.content.blocks.sable_track.SableTrackRenderer;
+import org.lightning323.createkinetic.content.blocks.track.SableTrackBlockEntity;
+import org.lightning323.createkinetic.content.blocks.track.SableTrackRenderer;
 import org.lightning323.createkinetic.content.thruster.ion_thruster.IonThrusterBlockEntity;
 import org.lightning323.createkinetic.content.thruster.thruster.ThrusterBlockEntity;
 import org.lightning323.createkinetic.content.thruster.thruster.creative_thruster.CreativeThrusterBlockEntity;

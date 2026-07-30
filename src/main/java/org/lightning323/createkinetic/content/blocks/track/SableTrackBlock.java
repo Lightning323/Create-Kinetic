@@ -38,7 +38,7 @@
  *  net.minecraft.world.phys.shapes.Shapes
  *  net.minecraft.world.phys.shapes.VoxelShape
  */
-package org.lightning323.createkinetic.content.blocks.sable_track;
+package org.lightning323.createkinetic.content.blocks.track;
 
 import com.simibubi.create.AllItems;
 import com.simibubi.create.content.kinetics.base.HorizontalKineticBlock;

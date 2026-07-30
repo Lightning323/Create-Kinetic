@@ -6,7 +6,7 @@
  */
 package org.lightning323.createkinetic.client;
 
-import org.lightning323.createkinetic.content.blocks.sable_track.SableTrackPart;
+import org.lightning323.createkinetic.content.blocks.track.SableTrackPart;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
