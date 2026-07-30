@@ -7,15 +7,21 @@
     },
     "G": {
       "item": "simulated:gimbal_sensor"
+    },
+    "F": {
+      "item": "create:flywheel"
+    },
+    "S": {
+      "item": "create:shaft"
     }
   },
   "pattern": [
-    " M ",
+    " F ",
     "MGM",
-    " M "
+    " S "
   ],
   "result": {
     "count": 1,
-    "id": "createkinetic:gyroscope"
+    "id": "createkinetic:reaction_wheel"
   }
 }

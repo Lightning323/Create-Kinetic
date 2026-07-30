@@ -72,9 +72,7 @@ public class CreativeThrusterBlockEntity extends AbstractThrusterBlockEntity {
         behaviours.add(powerBehaviour);
     }
 
-    public boolean isMultiblock(){
-        return false;
-    }
+
 
     private void onAnyPowerBehaviourChanged(int value) {
         if (isMultiblock() && !isController()) {
@@ -204,7 +202,7 @@ public class CreativeThrusterBlockEntity extends AbstractThrusterBlockEntity {
 
     @Override
     public boolean supportsMultiblock() {
-        return true;
+        return false;
     }
 
 

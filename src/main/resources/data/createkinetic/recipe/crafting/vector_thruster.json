@@ -2,12 +2,11 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "PIP",
-    "NGN"
+    " G "
   ],
   "key": {
-    "P": { "item": "createkinetic:platinum_sheet" },
+    "P": { "item": "create:brass_sheet" },
     "I": { "item": "createkinetic:ion_thruster" },
-    "N": { "item": "createkinetic:platinum_nugget" },
     "G": { "item": "simulated:gimbal_sensor" }
   },
   "result": {
