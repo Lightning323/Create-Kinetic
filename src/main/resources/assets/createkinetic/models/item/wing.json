@@ -4,7 +4,7 @@
 	"texture_size": [32, 32],
 	"textures": {
 		"0": "createkinetic:block/wing",
-		"particle": "createkinetic:block/wing"
+		"particle": "minecraft:block/iron_block"
 	},
 	"elements": [
 		{

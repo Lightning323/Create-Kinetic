@@ -2,7 +2,7 @@
 	"credit": "Made with Blockbench",
 	"parent": "block/block",
 	"textures": {
-		"0": "minecraft:block/iron_block",
+		"0": "createkinetic:block/wing",
 		"particle": "minecraft:block/iron_block"
 	},
 	"elements": [
