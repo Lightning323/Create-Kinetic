@@ -23,10 +23,11 @@ public class KeyboardHandlerMixin {
             if (key == GLFW.GLFW_KEY_ESCAPE && action == 1) {
                 JoystickControlClient.requestExit();
                 ci.cancel();
-            } else if (Minecraft.getInstance().options.keyInventory.matches(key, scanCode)
-                    && action == GLFW.GLFW_PRESS) {
-                JoystickControlClient.requestExit();
             }
+//            else if (Minecraft.getInstance().options.keyInventory.matches(key, scanCode)
+//                    && action == GLFW.GLFW_PRESS) {
+//                JoystickControlClient.requestExit();
+//            }
 //            else {
 //               InputConstants.Key boundKey = InputConstants.getKey(key, scanCode);
 //               int slot = JoystickControlClient.findBoundSlot(boundKey);

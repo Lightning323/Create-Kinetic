@@ -9,7 +9,8 @@
     "tracks.WheelMountBlockMixin",
     "tracks.WheelMountOffsetMixin",
     "SchematicPlacePacketMixin",
-    "linked_typewriter.LinkedTypewriterBlockInvoker"
+    "linked_typewriter.LinkedTypewriterBlockInvoker",
+    "client.MinecraftMixin"
   ],
   "client": [
     "tracks.KineticBlockEntityRendererMixin",
