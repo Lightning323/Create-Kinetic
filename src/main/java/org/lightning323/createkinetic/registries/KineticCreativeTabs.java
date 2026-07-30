@@ -29,6 +29,8 @@ public class KineticCreativeTabs {
         registerSectionItem(OFFROAD_CREATIVE_SECTION, "small_suspension_track", KineticItems.SUSPENSION_TRACK::get);
         registerSectionItem(OFFROAD_CREATIVE_SECTION, "small_track_drive_wheel", KineticItems.TRACK_DRIVE_WHEEL::get);
         registerSectionItem(OFFROAD_CREATIVE_SECTION, "track_mount", KineticBlocks.TRACK_MOUNT::asItem);
+
+        registerSectionItem(SIMULATED_CREATIVE_SECTION, "auto_glue", () -> ModItems.AUTO_GLUE.get());
         registerSectionItem(SIMULATED_CREATIVE_SECTION, "reaction_wheel", () -> KineticBlocks.REACTION_WHEEL.asItem());
         registerSectionItem(SIMULATED_CREATIVE_SECTION, "joystick", () -> KineticBlocks.JOYSTICK.asItem());
 
@@ -52,8 +54,8 @@ public class KineticCreativeTabs {
 //        registerSectionItem(MAIN_SECTION, "platinum_fluid_tank", () -> PropulsionBlocks.PLATINUM_FLUID_TANK.get().asItem());
 //        registerSectionItem(MAIN_SECTION, "platinum_fluid_vessel", () -> PropulsionBlocks.PLATINUM_FLUID_VESSEL.get().asItem());
 
-        registerSectionItem(AERONAUTICS_CREATIVE_SECTION, "turpentine_bucket", () -> KineticItems.TURPENTINE_BUCKET.get());
         registerSectionItem(AERONAUTICS_CREATIVE_SECTION, "pine_resin", () -> KineticItems.PINE_RESIN.get());
+        registerSectionItem(AERONAUTICS_CREATIVE_SECTION, "turpentine_bucket", () -> KineticItems.TURPENTINE_BUCKET.get());
         registerSectionItem(AERONAUTICS_CREATIVE_SECTION, "oxidizer_bucket", () -> KineticItems.OXIDIZER_BUCKET.get());
 
 
