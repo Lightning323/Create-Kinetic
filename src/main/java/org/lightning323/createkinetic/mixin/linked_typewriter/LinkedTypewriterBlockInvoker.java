@@ -1,4 +1,4 @@
-package org.lightning323.createkinetic.mixin;
+package org.lightning323.createkinetic.mixin.linked_typewriter;
 
 import dev.simulated_team.simulated.content.blocks.redstone.linked_typewriter.LinkedTypewriterBlock;
 import net.minecraft.core.BlockPos;

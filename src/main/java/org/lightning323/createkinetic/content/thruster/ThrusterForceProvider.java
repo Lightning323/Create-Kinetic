@@ -2,7 +2,7 @@ package org.lightning323.createkinetic.content.thruster;
 
 import net.minecraft.core.BlockPos;
 import org.joml.Vector3d;
-import org.lightning323.createkinetic.config.PropulsionConfig;
+import org.lightning323.createkinetic.config.KineticConfig;
 
 public final class ThrusterForceProvider {
     private ThrusterForceProvider() {
@@ -19,7 +19,7 @@ public final class ThrusterForceProvider {
                 thrusterCenter.getX() + offset,
                 thrusterCenter.getY() + offset,
                 thrusterCenter.getZ() + offset
-        ).fma(PropulsionConfig.NOZZLE_OFFSET_FROM_CENTER.get(), directionLocal);
+        ).fma(KineticConfig.NOZZLE_OFFSET_FROM_CENTER.get(), directionLocal);
 
         final Vector3d impulseLocal = new Vector3d(directionLocal).mul(blockEntity.getCurrentThrust() * timeStep);
 

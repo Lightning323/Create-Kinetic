@@ -22,7 +22,7 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.lightning323.createkinetic.config.PropulsionConfig;
+import org.lightning323.createkinetic.config.KineticConfig;
 
 public abstract class AbstractThrusterBlock extends DirectionalBlock implements IBE<AbstractThrusterBlockEntity>, IWrenchable {
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
@@ -84,7 +84,7 @@ public abstract class AbstractThrusterBlock extends DirectionalBlock implements 
                                               final BlockHitResult hitResult) {
         if (!stack.isEmpty()) {
             String itemId = BuiltInRegistries.ITEM.getKey(stack.getItem()).toString();
-            if (PropulsionConfig.isDyeConfigured(itemId)) {
+            if (KineticConfig.isDyeConfigured(itemId)) {
                 if (!level.isClientSide()) {
                     if (level.getBlockEntity(pos) instanceof AbstractThrusterBlockEntity be) {
                         String currentDye = be.getDyeId();

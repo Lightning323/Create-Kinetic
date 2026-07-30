@@ -19,7 +19,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Vector3d;
-import org.lightning323.createkinetic.config.PropulsionConfig;
+import org.lightning323.createkinetic.config.KineticConfig;
 import org.lightning323.createkinetic.content.thruster.AbstractThrusterBlock;
 import org.lightning323.createkinetic.content.thruster.AbstractThrusterBlockEntity;
 import org.lightning323.createkinetic.content.thruster.SimulatedThrustAdapter;
@@ -53,8 +53,8 @@ public class CreativeThrusterBlockEntity extends AbstractThrusterBlockEntity {
         this(KineticBlockEntities.CREATIVE_THRUSTER_BLOCK_ENTITY.get(), pos, state);
     }
 
-    public PropulsionConfig.ThrusterPlumeType getPlumeRenderType() {
-        return PropulsionConfig.getCreativeThrusterPlumeType();
+    public KineticConfig.ThrusterPlumeType getPlumeRenderType() {
+        return KineticConfig.getCreativeThrusterPlumeType();
     }
 
 
@@ -64,8 +64,8 @@ public class CreativeThrusterBlockEntity extends AbstractThrusterBlockEntity {
         super.addBehaviours(behaviours);
         powerBehaviour = new CreativeThrusterPowerScrollValueBehaviour(this, new CreativeThrusterValueBox(), this::getConfiguredMaxThrustKn);
         // Start scroll at the configured base thrust value
-        double base = PropulsionConfig.CREATIVE_THRUSTER_BASE_THRUST.get();
-        double max = PropulsionConfig.CREATIVE_THRUSTER_MAX_THRUST.get();
+        double base = KineticConfig.CREATIVE_THRUSTER_BASE_THRUST.get();
+        double max = KineticConfig.CREATIVE_THRUSTER_MAX_THRUST.get();
         int startStep = (int) Math.round((base / max) * (CreativeThrusterPowerScrollValueBehaviour.TOTAL_STEPS - 1));
         powerBehaviour.value = Math.max(0, Math.min(CreativeThrusterPowerScrollValueBehaviour.TOTAL_STEPS - 1, startStep));
         powerBehaviour.withCallback(this::onAnyPowerBehaviourChanged);
@@ -382,7 +382,7 @@ public class CreativeThrusterBlockEntity extends AbstractThrusterBlockEntity {
 
     @Override
     public void calculateObstruction(Level level, BlockPos pos, Direction forwardDirection) {
-        this.emptyBlocks = PropulsionConfig.OBSTRUCTION_SCAN_LENGTH.get();
+        this.emptyBlocks = KineticConfig.OBSTRUCTION_SCAN_LENGTH.get();
     }
 
     // Particles
@@ -607,9 +607,9 @@ public class CreativeThrusterBlockEntity extends AbstractThrusterBlockEntity {
         CreativeThrusterBlockEntity ctrl = isController() ? this : getControllerBE();
         int effectiveWidth = ctrl != null ? ctrl.width : width;
         return switch (effectiveWidth) {
-            case 2 -> PropulsionConfig.CREATIVE_THRUSTER_MULTIBLOCK_2X2X2_MAX_THRUST.get();
-            case 3 -> PropulsionConfig.CREATIVE_THRUSTER_MULTIBLOCK_3X3X3_MAX_THRUST.get();
-            default -> PropulsionConfig.CREATIVE_THRUSTER_MAX_THRUST.get();
+            case 2 -> KineticConfig.CREATIVE_THRUSTER_MULTIBLOCK_2X2X2_MAX_THRUST.get();
+            case 3 -> KineticConfig.CREATIVE_THRUSTER_MULTIBLOCK_3X3X3_MAX_THRUST.get();
+            default -> KineticConfig.CREATIVE_THRUSTER_MAX_THRUST.get();
         };
     }
 

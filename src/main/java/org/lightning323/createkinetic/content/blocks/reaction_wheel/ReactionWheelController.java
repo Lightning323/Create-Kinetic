@@ -1,6 +1,5 @@
 package org.lightning323.createkinetic.content.blocks.reaction_wheel;
 
-import org.lightning323.createkinetic.config.Config;
 import dev.ryanhcode.sable.api.block.BlockEntitySubLevelActor;
 import dev.ryanhcode.sable.api.physics.handle.RigidBodyHandle;
 import dev.ryanhcode.sable.api.physics.mass.MassData;
@@ -19,6 +18,7 @@ import org.joml.Matrix3dc;
 import org.joml.Quaterniondc;
 import org.joml.Vector3d;
 import org.joml.Vector3dc;
+import org.lightning323.createkinetic.config.KineticConfig;
 
 public final class ReactionWheelController {
    private static final Map<ServerSubLevel, ReactionWheelController> INSTANCES = new WeakHashMap();
@@ -93,7 +93,7 @@ public final class ReactionWheelController {
                      this.disturbanceImpulseLocal.fma(-this.disturbanceImpulseLocal.dot(this.worldUpLocal), this.worldUpLocal);
                   }
 
-                  this.filteredDisturbanceLocal.lerp(this.disturbanceImpulseLocal, Config.gyroscopeFeedForwardSmoothing());
+                  this.filteredDisturbanceLocal.lerp(this.disturbanceImpulseLocal, KineticConfig.gyroscopeFeedForwardSmoothing());
                   if (fleet.kX() <= (double)0.0F) {
                      this.filteredDisturbanceLocal.x = (double)0.0F;
                   }
@@ -110,7 +110,7 @@ public final class ReactionWheelController {
                   inverseInertia.transform(this.dampingImpulseLocal, this.deltaOmegaLocal);
                   this.dampingImpulseLocal.mul(clampingFactor(this.angularVelocityLocal, this.deltaOmegaLocal));
                   this.restoringImpulseLocal.add(this.dampingImpulseLocal);
-                  double feedForward = gains.scale() * Config.gyroscopeFeedForwardGain();
+                  double feedForward = gains.scale() * KineticConfig.gyroscopeFeedForwardGain();
                   this.restoringImpulseLocal.fma(-feedForward, this.filteredDisturbanceLocal);
                   Vector3d var10000 = this.restoringImpulseLocal;
                   var10000.x *= fleet.kX();
@@ -129,7 +129,7 @@ public final class ReactionWheelController {
                   double tiltZ = this.errorAxisLocal.z() * fleet.kZ();
                   double omegaX = this.angularVelocityLocal.x() * fleet.kX();
                   double omegaZ = this.angularVelocityLocal.z() * fleet.kZ();
-                  double omegaTarget = Config.gyroscopeOmegaTarget();
+                  double omegaTarget = KineticConfig.gyroscopeOmegaTarget();
                   double phaseDistance = Math.min((double)1.0F, Math.sqrt(tiltX * tiltX + tiltZ * tiltZ + (omegaX * omegaX + omegaZ * omegaZ) / (omegaTarget * omegaTarget)));
                   int reportedPercent = (int)Math.round(((double)1.0F - phaseDistance) * (double)100.0F);
                   this.pushStabilizedPercentToBEs(reportedPercent);
@@ -184,8 +184,8 @@ public final class ReactionWheelController {
    }
 
    private static Gains computeGains(double inertia, double totalCapacity, double meanRpmScale) {
-      double omega = Config.gyroscopeOmegaTarget();
-      double zeta = Config.gyroscopeDampingRatio();
+      double omega = KineticConfig.gyroscopeOmegaTarget();
+      double zeta = KineticConfig.gyroscopeDampingRatio();
       double scale = inertia <= (double)0.0F ? (double)0.0F : Math.min(meanRpmScale, totalCapacity / inertia);
       double kpFull = omega * omega * inertia;
       double kdFull = (double)2.0F * zeta * omega * inertia;
@@ -193,7 +193,7 @@ public final class ReactionWheelController {
    }
 
    private static double gyroAuthority(double rpmScale) {
-      return rpmScale * Config.gyroscopeAuthorityPerUnit();
+      return rpmScale * KineticConfig.gyroscopeAuthorityPerUnit();
    }
 
    private static double clampingFactor(Vector3dc currentVelocity, Vector3dc expectedVelocityChange) {

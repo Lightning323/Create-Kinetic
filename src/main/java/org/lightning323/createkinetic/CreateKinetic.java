@@ -45,8 +45,7 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import org.lightning323.createkinetic.client.KineticClient;
-import org.lightning323.createkinetic.config.Config;
-import org.lightning323.createkinetic.config.PropulsionConfig;
+import org.lightning323.createkinetic.config.KineticConfig;
 import org.lightning323.createkinetic.content.blocks.reaction_wheel.ReactionWheelController;
 import org.lightning323.createkinetic.content.blocks.joystick.JoystickSessions;
 import org.lightning323.createkinetic.events.KineticEvents;
@@ -79,7 +78,6 @@ public class CreateKinetic {
 
     public CreateKinetic(IEventBus modBus, ModContainer modContainer) {
         modBus.addListener(CreateKinetic::registerPayloads);
-        modContainer.registerConfig(ModConfig.Type.SERVER, (IConfigSpec) Config.SPEC);
         CreateKinetic.setTooltips();
         if(FMLEnvironment.dist == Dist.CLIENT) {
             KineticClient.init(modBus);
@@ -88,9 +86,7 @@ public class CreateKinetic {
         SableEventPlatform.INSTANCE.onPhysicsTick(KineticEvents::physicsTick);
         getRegistrate().registerEventListeners(modBus);
         KineticMenuTypes.register();
-        modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
         modBus.register(KineticPackets.class);
-        modBus.register(Config.class);
         NeoForge.EVENT_BUS.register(JoystickSessions.class);
         NeoForge.EVENT_BUS.register(ReactionWheelController.class);
 
@@ -116,9 +112,10 @@ public class CreateKinetic {
         Mods.COMPUTERCRAFT.executeIfInstalled(() -> CCProxy::register);
 
         //Config
-        modContainer.registerConfig(ModConfig.Type.COMMON, PropulsionConfig.COMMON_SPEC, ID + "-p-common.toml");
-        modContainer.registerConfig(ModConfig.Type.CLIENT, PropulsionConfig.CLIENT_SPEC, ID + "-p-client.toml");
-        PropulsionDefaultStress.init(PropulsionConfig.COMMON_SPEC);
+        modContainer.registerConfig(ModConfig.Type.COMMON, KineticConfig.COMMON_SPEC, ID + "-common.toml");
+        modContainer.registerConfig(ModConfig.Type.CLIENT, KineticConfig.CLIENT_SPEC, ID + "-client.toml");
+        PropulsionDefaultStress.init(KineticConfig.COMMON_SPEC);
+        modBus.register(KineticConfig.class);
 
     }
 

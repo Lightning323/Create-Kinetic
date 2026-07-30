@@ -6,7 +6,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import org.lightning323.createkinetic.CreateKinetic;
-import org.lightning323.createkinetic.config.PropulsionConfig;
+import org.lightning323.createkinetic.config.KineticConfig;
 import org.lightning323.createkinetic.registries.KineticBlocks;
 
 import java.util.HashMap;
@@ -24,12 +24,12 @@ public class TooltipModifiers {
 
         //Thruster
         tooltipModificationLookup.put(KineticBlocks.THRUSTER_BLOCK.get().asItem(), (payload) -> {
-            int thrusterStrength = (int) Math.round(PropulsionConfig.BASE_THRUST.get());
+            int thrusterStrength = (int) Math.round(KineticConfig.BASE_THRUST.get());
             return Component.translatable(getSummaryKey(payload.item(), payload.path() + ".tooltip.summary")).getString().replace("{}", String.valueOf(thrusterStrength));
         });
         //Creative thruster
         tooltipModificationLookup.put(KineticBlocks.CREATIVE_THRUSTER_BLOCK.get().asItem(), (payload) -> {
-            int thrusterStrength = (int) Math.round(PropulsionConfig.CREATIVE_THRUSTER_BASE_THRUST.get());
+            int thrusterStrength = (int) Math.round(KineticConfig.CREATIVE_THRUSTER_BASE_THRUST.get());
             return Component.translatable(getSummaryKey(payload.item(), payload.path() + ".tooltip.summary")).getString().replace("{}", String.valueOf(thrusterStrength));
         });
     }

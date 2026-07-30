@@ -7,7 +7,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import org.lightning323.createkinetic.config.PropulsionConfig;
+import org.lightning323.createkinetic.config.KineticConfig;
 import org.lightning323.createkinetic.registries.KineticBlocks;
 
 public class ModSetupEvents {
@@ -19,7 +19,7 @@ public class ModSetupEvents {
     }
 
     private static float propulsionBurnerHeat(Level level, BlockPos pos, BlockState state) {
-        if (!PropulsionConfig.BURNERS_HEAT_STEAM_ENGINES.get()) {
+        if (!KineticConfig.BURNERS_HEAT_STEAM_ENGINES.get()) {
             return BoilerHeater.NO_HEAT;
         }
         HeatLevel value = state.getValue(BlazeBurnerBlock.HEAT_LEVEL);
@@ -27,7 +27,7 @@ public class ModSetupEvents {
             return BoilerHeater.NO_HEAT;
         }
         if (value == HeatLevel.SEETHING) {
-            return PropulsionConfig.BURNERS_SUPERHEAT_STEAM_ENGINES.get() ? 2 : 1;
+            return KineticConfig.BURNERS_SUPERHEAT_STEAM_ENGINES.get() ? 2 : 1;
         }
         if (value.isAtLeast(HeatLevel.FADING)) {
             return 1;

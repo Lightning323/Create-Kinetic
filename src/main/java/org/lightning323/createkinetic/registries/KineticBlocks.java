@@ -30,9 +30,9 @@ import net.minecraft.world.level.block.SoundType;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import org.lightning323.createkinetic.config.Config;
 import org.lightning323.createkinetic.CreateKinetic;
 import org.lightning323.createkinetic.KineticRegistrate;
+import org.lightning323.createkinetic.config.KineticConfig;
 import org.lightning323.createkinetic.content.blocks.sable_track.SableTrackBlock;
 import org.lightning323.createkinetic.content.blocks.sable_track.SableTrackRole;
 import org.lightning323.createkinetic.content.blocks.reaction_wheel.ReactionWheelBlock;
@@ -116,7 +116,7 @@ public class KineticBlocks {
             .block("reaction_wheel", ReactionWheelBlock::new).initialProperties(SharedProperties::softMetal)
             .properties((p) -> p.noOcclusion())
             .transform(TagGen.axeOrPickaxe())
-            .onRegister((block) -> BlockStressValues.IMPACTS.register(block, Config::reactionWheelStressImpact))
+            .onRegister((block) -> BlockStressValues.IMPACTS.register(block, KineticConfig::reactionWheelStressImpact))
             .simpleItem().register();
 
     public static final BlockEntry<JoystickBlock> JOYSTICK = REGISTRATE

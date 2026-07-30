@@ -19,7 +19,7 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import org.joml.Vector3d;
-import org.lightning323.createkinetic.config.PropulsionConfig;
+import org.lightning323.createkinetic.config.KineticConfig;
 import org.lightning323.createkinetic.content.thruster.AbstractThrusterBlock;
 import org.lightning323.createkinetic.content.thruster.MeshedThrusterFlameUtils;
 import org.lightning323.createkinetic.content.thruster.ion_thruster.IonThrusterBlockEntity;
@@ -68,8 +68,8 @@ public class VectorThrusterBlockEntity extends IonThrusterBlockEntity {
         super(type, pos, state);
     }
 
-    public PropulsionConfig.ThrusterPlumeType getPlumeRenderType() {
-        return PropulsionConfig.getVectorThrustersPlumeType();
+    public KineticConfig.ThrusterPlumeType getPlumeRenderType() {
+        return KineticConfig.getVectorThrustersPlumeType();
     }
 
 
@@ -157,7 +157,7 @@ public class VectorThrusterBlockEntity extends IonThrusterBlockEntity {
     @OnlyIn(Dist.CLIENT)
     @Override
     public AABB getRenderBoundingBox() {
-        if (getPlumeRenderType() == PropulsionConfig.ThrusterPlumeType.PARTICLES) return getSingleRenderBox();
+        if (getPlumeRenderType() == KineticConfig.ThrusterPlumeType.PARTICLES) return getSingleRenderBox();
 
         AABB box = MeshedThrusterFlameUtils.inflateVectorRenderBoundingBox(this, getSingleRenderBox());
         if (box != null) boundingBox = box; //Update the box instead of calculating it every tick
@@ -269,7 +269,7 @@ public class VectorThrusterBlockEntity extends IonThrusterBlockEntity {
 
     @Override
     public void calculateObstruction(Level level, BlockPos pos, Direction forwardDirection) {
-        int scanLength = PropulsionConfig.OBSTRUCTION_SCAN_LENGTH.get();
+        int scanLength = KineticConfig.OBSTRUCTION_SCAN_LENGTH.get();
         ObstructionRaySample sample = sampleObstructionRaycast(level, scanLength);
         double firstHitDistance = sample.firstHitDistance();
         float newEfficiency = scanLength <= 0
@@ -361,7 +361,7 @@ public class VectorThrusterBlockEntity extends IonThrusterBlockEntity {
             prevVectorY = currentVectorY;
             if (clientPacket) clientInitialized = true;
         }
-        int scanLength = PropulsionConfig.OBSTRUCTION_SCAN_LENGTH.get();
+        int scanLength = KineticConfig.OBSTRUCTION_SCAN_LENGTH.get();
         obstructionEfficiency = compound.contains("ObstructionEfficiency")
                 ? compound.getFloat("ObstructionEfficiency")
                 : (scanLength <= 0 ? 0.0f : Math.clamp((float) emptyBlocks / (float) scanLength, 0.0f, 1.0f));
@@ -369,17 +369,17 @@ public class VectorThrusterBlockEntity extends IonThrusterBlockEntity {
 
     @Override
     public double getNozzleOffsetFromCenter() {
-        return PropulsionConfig.NOZZLE_OFFSET_FROM_CENTER.get();
+        return KineticConfig.NOZZLE_OFFSET_FROM_CENTER.get();
     }
 
     @Override
     protected double getBaseThrust() {
-        return PropulsionConfig.VECTOR_THRUSTER_BASE_THRUST.get();
+        return KineticConfig.VECTOR_THRUSTER_BASE_THRUST.get();
     }
 
     @Override
     protected double getRawThrustCap() {
-        return PropulsionConfig.VECTOR_THRUSTER_BASE_THRUST.get();
+        return KineticConfig.VECTOR_THRUSTER_BASE_THRUST.get();
     }
 
     @Override

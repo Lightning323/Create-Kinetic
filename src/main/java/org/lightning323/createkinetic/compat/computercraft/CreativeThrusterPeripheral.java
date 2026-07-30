@@ -6,7 +6,7 @@ import dan200.computercraft.api.peripheral.IComputerAccess;
 import dan200.computercraft.api.peripheral.IPeripheral;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
-import org.lightning323.createkinetic.config.PropulsionConfig;
+import org.lightning323.createkinetic.config.KineticConfig;
 import org.lightning323.createkinetic.content.thruster.AbstractThrusterBlockEntity.ControlMode;
 import org.lightning323.createkinetic.content.thruster.thruster.creative_thruster.CreativeThrusterBlockEntity;
 
@@ -58,7 +58,7 @@ public class CreativeThrusterPeripheral extends SyncedPeripheral<CreativeThruste
 
     @LuaFunction
     public final float getTargetThrustKN() {
-        return (float) (getTargetThrustPN() / PropulsionConfig.getThrustUnitsPerKnOrDefault());
+        return (float) (getTargetThrustPN() / KineticConfig.getThrustUnitsPerKnOrDefault());
     }
 
     @LuaFunction
@@ -68,7 +68,7 @@ public class CreativeThrusterPeripheral extends SyncedPeripheral<CreativeThruste
 
     @LuaFunction
     public final double getCurrentThrustKN() {
-        return getCurrentThrustPN() / PropulsionConfig.getThrustUnitsPerKnOrDefault();
+        return getCurrentThrustPN() / KineticConfig.getThrustUnitsPerKnOrDefault();
     }
 
     @LuaFunction
@@ -78,7 +78,7 @@ public class CreativeThrusterPeripheral extends SyncedPeripheral<CreativeThruste
 
     @LuaFunction
     public final double getDisplayedThrustKN() {
-        return getDisplayedThrustPN() / PropulsionConfig.getThrustUnitsPerKnOrDefault();
+        return getDisplayedThrustPN() / KineticConfig.getThrustUnitsPerKnOrDefault();
     }
 
     @LuaFunction

@@ -6,7 +6,7 @@ import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Vector3d;
-import org.lightning323.createkinetic.config.PropulsionConfig;
+import org.lightning323.createkinetic.config.KineticConfig;
 import org.lightning323.createkinetic.content.thruster.thruster.ThrusterBlockEntity;
 import org.lightning323.createkinetic.particles.ion.IonParticleData;
 import org.lightning323.createkinetic.particles.plasma.PlasmaParticleData;
@@ -28,7 +28,7 @@ public final class ThrusterParticles {
             return;
         }
 
-        final int maxCap = PropulsionConfig.CLIENT_PARTICLES_PER_TICK.get();
+        final int maxCap = KineticConfig.CLIENT_PARTICLES_PER_TICK.get();
         if (maxCap <= 0) {
             return;
         }

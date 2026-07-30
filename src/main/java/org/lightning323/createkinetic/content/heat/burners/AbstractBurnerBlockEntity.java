@@ -15,7 +15,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import org.lightning323.createkinetic.config.PropulsionConfig;
+import org.lightning323.createkinetic.config.KineticConfig;
 import org.lightning323.createkinetic.content.heat.HeatMapper;
 import org.lightning323.createkinetic.content.heat.HeatMapper.HeatLevelString;
 import org.lightning323.createkinetic.content.heat.HeatSourceBehavior;
@@ -79,7 +79,7 @@ public abstract class AbstractBurnerBlockEntity extends SmartBlockEntity impleme
         BlockEntity beAbove = level.getBlockEntity(worldPosition.above());
         if (beAbove == null) return false;
 
-        if (beAbove instanceof BasinBlockEntity && PropulsionConfig.BURNERS_POWER_HEATED_MIXERS.get()) return true;
+        if (beAbove instanceof BasinBlockEntity && KineticConfig.BURNERS_POWER_HEATED_MIXERS.get()) return true;
 
         if (beAbove instanceof IHeatConsumer consumer) {
                 if (!consumer.isActive()) return false;

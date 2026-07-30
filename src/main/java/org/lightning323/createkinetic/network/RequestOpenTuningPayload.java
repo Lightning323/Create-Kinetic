@@ -14,7 +14,6 @@
 package org.lightning323.createkinetic.network;
 
 import org.lightning323.createkinetic.CreateKinetic;
-import org.lightning323.createkinetic.config.Config;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
@@ -22,6 +21,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
+import org.lightning323.createkinetic.config.KineticConfig;
 
 public record RequestOpenTuningPayload() implements CustomPacketPayload
 {
@@ -33,7 +33,7 @@ public record RequestOpenTuningPayload() implements CustomPacketPayload
             Player patt0$temp = context.player();
             if (patt0$temp instanceof ServerPlayer) {
                 ServerPlayer player = (ServerPlayer)patt0$temp;
-                if (Config.renderTuningCheatsEnabled() && player.hasPermissions(2)) {
+                if (KineticConfig.renderTuningCheatsEnabled() && player.hasPermissions(2)) {
                     PacketDistributor.sendToPlayer((ServerPlayer)player, (CustomPacketPayload)new OpenTuningScreenPayload(), (CustomPacketPayload[])new CustomPacketPayload[0]);
                 }
             }

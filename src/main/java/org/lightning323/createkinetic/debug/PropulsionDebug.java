@@ -1,6 +1,6 @@
 package org.lightning323.createkinetic.debug;
 
-import org.lightning323.createkinetic.config.PropulsionConfig;
+import org.lightning323.createkinetic.config.KineticConfig;
 import org.lightning323.createkinetic.debug.routes.MainDebugRoute;
 
 import java.util.Map;
@@ -25,7 +25,7 @@ public class PropulsionDebug {
 
     public static boolean isDebug(IDebugRoute route) {
         if (route == MainDebugRoute.THRUSTER) {
-            return PropulsionConfig.CLIENT_SPEC.isLoaded() && PropulsionConfig.DEBUG_THRUSTER.get();
+            return KineticConfig.CLIENT_SPEC.isLoaded() && KineticConfig.DEBUG_THRUSTER.get();
         }
         return activeDebugStates.getOrDefault(route, false);
     }

@@ -2,7 +2,7 @@ package org.lightning323.createkinetic.compat.computercraft;
 
 import dan200.computercraft.api.lua.LuaFunction;
 import dan200.computercraft.api.peripheral.IPeripheral;
-import org.lightning323.createkinetic.config.PropulsionConfig;
+import org.lightning323.createkinetic.config.KineticConfig;
 import org.lightning323.createkinetic.content.thruster.vector_thruster.creative_vector_thruster.CreativeVectorThrusterBlockEntity;
 
 /**
@@ -33,7 +33,7 @@ public class CreativeVectorThrusterPeripheral extends VectorThrusterPeripheral {
     /** Maximum base thrust in pN allowed by config (same cap as the scroll). */
     @LuaFunction
     public final double getMaxThrustOutputPn() {
-        return PropulsionConfig.CREATIVE_VECTOR_THRUSTER_MAX_THRUST.get() * PropulsionConfig.getThrustUnitsPerKnOrDefault();
+        return KineticConfig.CREATIVE_VECTOR_THRUSTER_MAX_THRUST.get() * KineticConfig.getThrustUnitsPerKnOrDefault();
     }
 
     @LuaFunction

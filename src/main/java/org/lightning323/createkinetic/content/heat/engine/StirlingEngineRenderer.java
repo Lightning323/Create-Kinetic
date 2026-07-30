@@ -16,7 +16,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import org.joml.Vector4f;
-import org.lightning323.createkinetic.config.PropulsionConfig;
+import org.lightning323.createkinetic.config.KineticConfig;
 import org.lightning323.createkinetic.registries.PropulsionPartialModels;
 import org.lightning323.createkinetic.utility.math.MathUtility;
 
@@ -62,10 +62,10 @@ public class StirlingEngineRenderer extends KineticBlockEntityRenderer<StirlingE
         float timeSeconds = time / 20.0f;
         float effectiveRevolutionPeriod = Float.MAX_VALUE;
         if (speed > MathUtility.epsilon) {
-            effectiveRevolutionPeriod = PropulsionConfig.STIRLING_REVOLUTION_PERIOD.get().floatValue() / speed;
+            effectiveRevolutionPeriod = KineticConfig.STIRLING_REVOLUTION_PERIOD.get().floatValue() / speed;
         }
-        float crankRadius = PropulsionConfig.STIRLING_CRANK_RADIUS.get().floatValue();
-        float conrodLength = PropulsionConfig.STIRLING_CONROD_LENGTH.get().floatValue();
+        float crankRadius = KineticConfig.STIRLING_CRANK_RADIUS.get().floatValue();
+        float conrodLength = KineticConfig.STIRLING_CONROD_LENGTH.get().floatValue();
         Vector4f normalizedExtensions = calculateExtensions(timeSeconds, crankRadius, conrodLength, effectiveRevolutionPeriod);
 
         for (int i = 0; i < 4; i++) {

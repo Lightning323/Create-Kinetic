@@ -36,8 +36,8 @@ import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.network.PacketDistributor;
-import org.lightning323.createkinetic.config.Config;
 import org.lightning323.createkinetic.CreateKinetic;
+import org.lightning323.createkinetic.config.KineticConfig;
 import org.lightning323.createkinetic.content.blocks.sable_track.SableTrackRenderer;
 import org.lightning323.createkinetic.content.blocks.wheel_mount.AdjustableWheelMountRenderer;
 import org.lightning323.createkinetic.content.blocks.reaction_wheel.ReactionWheelBlockEntity;
@@ -95,7 +95,9 @@ public class KineticClient {
                 .neverSkipVanillaRender()
                 .apply();
 
-        BaseConfigScreen.setDefaultActionFor(ID, (base) -> base.withButtonLabels("Client Settings", "Common Settings", "Common Settings").withSpecs(Config.CLIENT_SPEC, Config.SPEC, Config.SPEC));
+        BaseConfigScreen.setDefaultActionFor(ID, (base) ->
+                base.withButtonLabels("Client Settings", "Common Settings", "Common Settings")
+                .withSpecs(KineticConfig.CLIENT_SPEC, KineticConfig.COMMON_SPEC, KineticConfig.COMMON_SPEC));
     }
 
     private static void registerKeys(RegisterKeyMappingsEvent event) {

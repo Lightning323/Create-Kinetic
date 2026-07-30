@@ -1,6 +1,5 @@
 package org.lightning323.createkinetic.content.blocks.reaction_wheel;
 
-import org.lightning323.createkinetic.config.Config;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import dev.ryanhcode.sable.Sable;
@@ -22,6 +21,7 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import org.lightning323.createkinetic.config.KineticConfig;
 
 public class ReactionWheelBlockEntity extends KineticBlockEntity implements BlockEntitySubLevelActor {
    private static final float CHASE_RATE = 0.015625F;
@@ -47,7 +47,7 @@ public class ReactionWheelBlockEntity extends KineticBlockEntity implements Bloc
    }
 
    public double currentRpmScale() {
-      return Math.min((double)Math.abs(this.effectiveSpeed.getValue()) / Config.gyroscopeReferenceRpm(), (double)1.0F);
+      return Math.min((double)Math.abs(this.effectiveSpeed.getValue()) / KineticConfig.gyroscopeReferenceRpm(), (double)1.0F);
    }
 
    public int getStabilizedPercent() {

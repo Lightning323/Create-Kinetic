@@ -19,7 +19,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.joml.*;
 import org.lightning323.createkinetic.CreateKinetic;
-import org.lightning323.createkinetic.config.PropulsionConfig;
+import org.lightning323.createkinetic.config.KineticConfig;
 import org.lightning323.createkinetic.content.thruster.thruster.ThrusterBlock;
 import org.lightning323.createkinetic.content.thruster.vector_thruster.VectorThrusterBlockEntity;
 
@@ -36,8 +36,8 @@ public class MeshedThrusterFlameUtils {
     public static final int RENDER_BOX_FLAME_LENGTH = 7;
 
     public static boolean isSpritePlume(AbstractThrusterBlockEntity be) {
-        return be.getPlumeRenderType() == PropulsionConfig.ThrusterPlumeType.SPRITE_MESH ||
-                be.getPlumeRenderType() == PropulsionConfig.ThrusterPlumeType.SPRITE_MESH_SINGLE_MULTIBLOCK;
+        return be.getPlumeRenderType() == KineticConfig.ThrusterPlumeType.SPRITE_MESH ||
+                be.getPlumeRenderType() == KineticConfig.ThrusterPlumeType.SPRITE_MESH_SINGLE_MULTIBLOCK;
     }
 
     public static void renderMultiblockFlame(AbstractThrusterBlockEntity be, float partialTicks, PoseStack ms, MultiBufferSource buffer, int w) {
@@ -57,7 +57,7 @@ public class MeshedThrusterFlameUtils {
         final ShaderProgram shader = VeilRenderSystem.setShader(THRUSTER_FLAME_SHADER);
         boolean bluePlume = be.isBluePlume();
 
-        if (be.getPlumeRenderType() == PropulsionConfig.ThrusterPlumeType.SPRITE_MESH_SINGLE_MULTIBLOCK) {
+        if (be.getPlumeRenderType() == KineticConfig.ThrusterPlumeType.SPRITE_MESH_SINGLE_MULTIBLOCK) {
             ms.pushPose();
             ms.scale(w, w, w);
             MeshedThrusterFlameUtils.renderMeshFlame(be, partialTicks, ms, buffer, shader,
@@ -194,7 +194,7 @@ public class MeshedThrusterFlameUtils {
             be.boundingBoxHash = hash;
             final var state = be.getBlockState();
             Vec3 center = box.getCenter();
-            if (be.getPlumeRenderType() == PropulsionConfig.ThrusterPlumeType.SPRITE_MESH_SINGLE_MULTIBLOCK) {
+            if (be.getPlumeRenderType() == KineticConfig.ThrusterPlumeType.SPRITE_MESH_SINGLE_MULTIBLOCK) {
                 length *= be.width;
             }
 

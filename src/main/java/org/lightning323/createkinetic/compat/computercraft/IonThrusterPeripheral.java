@@ -6,7 +6,7 @@ import dan200.computercraft.api.peripheral.IComputerAccess;
 import dan200.computercraft.api.peripheral.IPeripheral;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
-import org.lightning323.createkinetic.config.PropulsionConfig;
+import org.lightning323.createkinetic.config.KineticConfig;
 import org.lightning323.createkinetic.content.thruster.AbstractThrusterBlockEntity.ControlMode;
 import org.lightning323.createkinetic.content.thruster.ion_thruster.IonThrusterBlockEntity;
 
@@ -51,7 +51,7 @@ public class IonThrusterPeripheral extends SyncedPeripheral<IonThrusterBlockEnti
 
     @LuaFunction
     public final double getCurrentThrustKN() {
-        return getCurrentThrustPN() / PropulsionConfig.getThrustUnitsPerKnOrDefault();
+        return getCurrentThrustPN() / KineticConfig.getThrustUnitsPerKnOrDefault();
     }
 
     @LuaFunction
@@ -61,7 +61,7 @@ public class IonThrusterPeripheral extends SyncedPeripheral<IonThrusterBlockEnti
 
     @LuaFunction
     public final double getDisplayedThrustKN() {
-        return getDisplayedThrustPN() / PropulsionConfig.getThrustUnitsPerKnOrDefault();
+        return getDisplayedThrustPN() / KineticConfig.getThrustUnitsPerKnOrDefault();
     }
 
     @LuaFunction

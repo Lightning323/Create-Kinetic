@@ -12,7 +12,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import org.lightning323.createkinetic.config.PropulsionConfig;
+import org.lightning323.createkinetic.config.KineticConfig;
 import org.lightning323.createkinetic.compat.PropulsionCompatibility;
 import org.lightning323.createkinetic.compat.computercraft.ComputerBehaviour;
 import org.lightning323.createkinetic.content.heat.IHeatConsumer;
@@ -113,7 +113,7 @@ public class StirlingEngineBlockEntity extends GeneratingKineticBlockEntity impl
 
     private void tickBlazeBurnerHeat() {
         if (!isEngineActive()) return;
-        if (!PropulsionConfig.BLAZE_BURNERS_HEAT_STIRLING_ENGINES.get()) return;
+        if (!KineticConfig.BLAZE_BURNERS_HEAT_STIRLING_ENGINES.get()) return;
 
         BlockState below = level.getBlockState(worldPosition.below());
         if (!(below.getBlock() instanceof BlazeBurnerBlock)) return;
@@ -172,7 +172,7 @@ public class StirlingEngineBlockEntity extends GeneratingKineticBlockEntity impl
         if (rpm == 0) return 0f; 
 
         float stressFactor = MAX_GENERATED_RPM / rpm;
-        float capacity = stressFactor * PropulsionConfig.STIRLING_GENERATED_SU.get().floatValue();
+        float capacity = stressFactor * KineticConfig.STIRLING_GENERATED_SU.get().floatValue();
 
         this.lastCapacityProvided = capacity;
         return capacity;

@@ -10,7 +10,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.BlockHitResult;
-import org.lightning323.createkinetic.config.PropulsionConfig;
+import org.lightning323.createkinetic.config.KineticConfig;
 
 import java.util.function.DoubleSupplier;
 
@@ -27,7 +27,7 @@ public class CreativeThrusterPowerScrollValueBehaviour extends ScrollValueBehavi
     }
  
     public CreativeThrusterPowerScrollValueBehaviour(SmartBlockEntity be) {
-        this(be, new CreativeThrusterValueBox(), () -> PropulsionConfig.CREATIVE_THRUSTER_MAX_THRUST.get());
+        this(be, new CreativeThrusterValueBox(), () -> KineticConfig.CREATIVE_THRUSTER_MAX_THRUST.get());
     }
 
     public CreativeThrusterPowerScrollValueBehaviour(SmartBlockEntity be, DoubleSupplier maxThrustSupplier) {

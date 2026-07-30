@@ -33,7 +33,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.lightning323.createkinetic.mixin.LinkedTypewriterBlockInvoker;
+import org.lightning323.createkinetic.mixin.linked_typewriter.LinkedTypewriterBlockInvoker;
 import org.lightning323.createkinetic.registries.KineticBlockEntities;
 
 public class JoystickBlock extends Block implements EntityBlock, IBE<JoystickBlockEntity>, IWrenchable {

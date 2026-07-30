@@ -22,7 +22,7 @@ import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtension
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import org.joml.Vector3d;
-import org.lightning323.createkinetic.config.PropulsionConfig;
+import org.lightning323.createkinetic.config.KineticConfig;
 import org.lightning323.createkinetic.content.thruster.*;
 import org.lightning323.createkinetic.registries.KineticBlockEntities;
 import org.lightning323.createkinetic.registries.KineticFluids;
@@ -73,8 +73,8 @@ public class ThrusterBlockEntity extends AbstractThrusterBlockEntity {
 
 
 
-    public PropulsionConfig.ThrusterPlumeType getPlumeRenderType() {
-        return PropulsionConfig.getThrusterPlumeType();
+    public KineticConfig.ThrusterPlumeType getPlumeRenderType() {
+        return KineticConfig.getThrusterPlumeType();
     }
 
 
@@ -648,21 +648,21 @@ public class ThrusterBlockEntity extends AbstractThrusterBlockEntity {
 
     private static float getMultiblockFuelEfficiency(int cubeWidth) {
         if (cubeWidth <= 1) return 1.0f;
-        if (cubeWidth == 2) return PropulsionConfig.MULTIBLOCK_2X_FUEL_EFFICIENCY.get().floatValue();
-        if (cubeWidth == 3) return PropulsionConfig.MULTIBLOCK_3X_FUEL_EFFICIENCY.get().floatValue();
+        if (cubeWidth == 2) return KineticConfig.MULTIBLOCK_2X_FUEL_EFFICIENCY.get().floatValue();
+        if (cubeWidth == 3) return KineticConfig.MULTIBLOCK_3X_FUEL_EFFICIENCY.get().floatValue();
         return 1.0f;
     }
 
     private static float getMultiblockOxidizerEfficiency(int cubeWidth) {
         if (cubeWidth <= 1) return 1.0f;
-        if (cubeWidth == 2) return PropulsionConfig.MULTIBLOCK_2X_OXIDIZER_EFFICIENCY.get().floatValue();
-        if (cubeWidth == 3) return PropulsionConfig.MULTIBLOCK_3X_OXIDIZER_EFFICIENCY.get().floatValue();
+        if (cubeWidth == 2) return KineticConfig.MULTIBLOCK_2X_OXIDIZER_EFFICIENCY.get().floatValue();
+        if (cubeWidth == 3) return KineticConfig.MULTIBLOCK_3X_OXIDIZER_EFFICIENCY.get().floatValue();
         return 1.0f;
     }
 
     private static float getMultiblockThrustMultiplier(int cubeWidth) {
-        if (cubeWidth == 2) return PropulsionConfig.MULTIBLOCK_2X_THRUST_MULTIPLIER.get().floatValue();
-        if (cubeWidth == 3) return PropulsionConfig.MULTIBLOCK_3X_THRUST_MULTIPLIER.get().floatValue();
+        if (cubeWidth == 2) return KineticConfig.MULTIBLOCK_2X_THRUST_MULTIPLIER.get().floatValue();
+        if (cubeWidth == 3) return KineticConfig.MULTIBLOCK_3X_THRUST_MULTIPLIER.get().floatValue();
         return 1.0f;
     }
 
@@ -841,12 +841,12 @@ public class ThrusterBlockEntity extends AbstractThrusterBlockEntity {
 
     @Override
     protected double getBaseThrust() {
-        return PropulsionConfig.BASE_THRUST.get();
+        return KineticConfig.BASE_THRUST.get();
     }
 
     @Override
     protected double getRawThrustCap() {
-        return PropulsionConfig.BASE_THRUST.get();
+        return KineticConfig.BASE_THRUST.get();
     }
 
     public Direction getFluidCapSide() {
@@ -1035,7 +1035,7 @@ public class ThrusterBlockEntity extends AbstractThrusterBlockEntity {
     }
 
     protected double getFuelConsumptionPerTickAtFullThrottle() {
-        return PropulsionConfig.FUEL_MB_PER_TICK_AT_FULL_THROTTLE.get();
+        return KineticConfig.FUEL_MB_PER_TICK_AT_FULL_THROTTLE.get();
     }
 
     private int consumeFuelWithAccumulator(double requestedAmount) {
@@ -1109,7 +1109,7 @@ public class ThrusterBlockEntity extends AbstractThrusterBlockEntity {
     }
 
     protected int getBaseTankCapacityMb() {
-        return PropulsionConfig.FUEL_TANK_CAPACITY_MB.get();
+        return KineticConfig.FUEL_TANK_CAPACITY_MB.get();
     }
 }
 

@@ -34,7 +34,7 @@ import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import org.joml.Math;
 import org.joml.Vector3d;
-import org.lightning323.createkinetic.config.PropulsionConfig;
+import org.lightning323.createkinetic.config.KineticConfig;
 import org.lightning323.createkinetic.compat.PropulsionCompatibility;
 import org.lightning323.createkinetic.compat.computercraft.ComputerBehaviour;
 import org.lightning323.createkinetic.content.thruster.thruster.creative_thruster.CreativeThrusterBlockEntity;
@@ -60,7 +60,7 @@ public abstract class AbstractThrusterBlockEntity extends SmartBlockEntity
      */
     public static final double TARGET_PARTICLE_SPACING_BLOCKS = 0.5d;
     /**
-     * Matches {@link PropulsionConfig} thruster particle multiplier defineInRange max (0–32).
+     * Matches {@link KineticConfig} thruster particle multiplier defineInRange max (0–32).
      */
     protected static final double PARTICLE_MULTIPLIER_CAP = 32.0d;
     protected static final double OBSTRUCTION_RAY_START_EPSILON = 0.05d;
@@ -113,7 +113,7 @@ public abstract class AbstractThrusterBlockEntity extends SmartBlockEntity
         if (isMultiblock()) {
             if (isController()) { //If this is multiblock controller
                 //If this is a particle thruster, return the bounding box
-                if (getPlumeRenderType() == PropulsionConfig.ThrusterPlumeType.PARTICLES)
+                if (getPlumeRenderType() == KineticConfig.ThrusterPlumeType.PARTICLES)
                     return getMultiblockRenderBox();
 
                 //Inflate and cache the bounding box
@@ -125,7 +125,7 @@ public abstract class AbstractThrusterBlockEntity extends SmartBlockEntity
         }
 
         //If this is single block
-        if (getPlumeRenderType() == PropulsionConfig.ThrusterPlumeType.PARTICLES)
+        if (getPlumeRenderType() == KineticConfig.ThrusterPlumeType.PARTICLES)
             return getSingleRenderBox();
 
         //Inflate and cache the bounding box
@@ -149,7 +149,7 @@ public abstract class AbstractThrusterBlockEntity extends SmartBlockEntity
     }
 
     protected double getThrustUnitsPerKn() {
-        return PropulsionConfig.getThrustUnitsPerKnOrDefault();
+        return KineticConfig.getThrustUnitsPerKnOrDefault();
     }
 
     protected double getParticleCountMultiplier() {
@@ -285,7 +285,7 @@ public abstract class AbstractThrusterBlockEntity extends SmartBlockEntity
         }
 
         if (shouldEmitPlume()) {
-            if (getPlumeRenderType() == PropulsionConfig.ThrusterPlumeType.PARTICLES)
+            if (getPlumeRenderType() == KineticConfig.ThrusterPlumeType.PARTICLES)
                 emitPlumeParticles(level, worldPosition, currentBlockState);
             else emitMeshedParticles(level, worldPosition, currentBlockState);
         }
@@ -347,7 +347,7 @@ public abstract class AbstractThrusterBlockEntity extends SmartBlockEntity
     }
 
     protected boolean shouldDamageEntities() {
-        return PropulsionConfig.DAMAGE_ENTITIES.get() && isPowered() && isWorking();
+        return KineticConfig.DAMAGE_ENTITIES.get() && isPowered() && isWorking();
     }
 
     protected void addSpecificGoggleInfo(List<Component> tooltip, boolean isPlayerSneaking) {
@@ -404,7 +404,7 @@ public abstract class AbstractThrusterBlockEntity extends SmartBlockEntity
     }
 
     public Integer getDyeColor() {
-        return dyeId != null ? PropulsionConfig.getDyeColor(dyeId) : null;
+        return dyeId != null ? KineticConfig.getDyeColor(dyeId) : null;
     }
 
     public CreativeThrusterBlockEntity.PlumeType getPlumeType() {
@@ -415,7 +415,7 @@ public abstract class AbstractThrusterBlockEntity extends SmartBlockEntity
      *
      * @return if this thruster is a meshed plume or a particle only plume
      */
-    public abstract PropulsionConfig.ThrusterPlumeType getPlumeRenderType();
+    public abstract KineticConfig.ThrusterPlumeType getPlumeRenderType();
 
     public boolean isBluePlume() {
         return getPlumeType() == CreativeThrusterBlockEntity.PlumeType.PLASMA ||
@@ -431,7 +431,7 @@ public abstract class AbstractThrusterBlockEntity extends SmartBlockEntity
     }
 
     protected float calculateObstructionEffect() {
-        return (float) emptyBlocks / (float) PropulsionConfig.OBSTRUCTION_SCAN_LENGTH.get();
+        return (float) emptyBlocks / (float) KineticConfig.OBSTRUCTION_SCAN_LENGTH.get();
     }
 
     protected ParticleOptions createParticleOptions() {
@@ -449,7 +449,7 @@ public abstract class AbstractThrusterBlockEntity extends SmartBlockEntity
      * The effect is configurable and never hard-cuts thrust to zero.
      */
     protected double calculateAtmosphericFactor() {
-        if (!PropulsionConfig.USE_ATMOSPHERIC_PRESSURE.get()) return 1.0;
+        if (!KineticConfig.USE_ATMOSPHERIC_PRESSURE.get()) return 1.0;
         Level lvl = getLevel();
         if (lvl == null) return 1.0;
 
@@ -465,7 +465,7 @@ public abstract class AbstractThrusterBlockEntity extends SmartBlockEntity
 
         // Proxy for air pressure (1.0 at sea level, 0.0 at space/build limit)
         double airPressure = 1.0 - normalizedAltitude;
-        double strength = Math.clamp(0.0d, 2.0d, PropulsionConfig.ATMOSPHERIC_PRESSURE_AMOUNT.get());
+        double strength = Math.clamp(0.0d, 2.0d, KineticConfig.ATMOSPHERIC_PRESSURE_AMOUNT.get());
 
         if (this.isIon()) {
             // Ion propulsion suffers strongly in dense air and ramps up toward vacuum.
@@ -552,7 +552,7 @@ public abstract class AbstractThrusterBlockEntity extends SmartBlockEntity
         // When the config option is enabled and the thruster is on a sub-level, clip in
         // local sub-level space so only blocks belonging to the same sub-level count.
         final dev.ryanhcode.sable.sublevel.SubLevel containingSubLevel = Sable.HELPER.getContaining(level, worldPosition);
-        if (PropulsionConfig.OBSTRUCTION_IGNORE_OTHER_SUBLEVELS.get()
+        if (KineticConfig.OBSTRUCTION_IGNORE_OTHER_SUBLEVELS.get()
                 && containingSubLevel != null) {
             Vec3 localNozzle = getParticleDebugNozzlePositionLocal();
             Vec3 localDir = getParticleDebugExhaustDirectionLocal();
@@ -786,7 +786,7 @@ public abstract class AbstractThrusterBlockEntity extends SmartBlockEntity
     public void calculateObstruction(Level level, BlockPos pos, Direction forwardDirection) {
         // Raycast in world space so sublevel thrusters correctly collide against real-world blocks.
         int oldEmptyBlocks = this.emptyBlocks;
-        ObstructionRaySample sample = sampleObstructionRaycast(level, PropulsionConfig.OBSTRUCTION_SCAN_LENGTH.get());
+        ObstructionRaySample sample = sampleObstructionRaycast(level, KineticConfig.OBSTRUCTION_SCAN_LENGTH.get());
         this.emptyBlocks = sample.emptyBlocksEstimate();
         if (oldEmptyBlocks != this.emptyBlocks) { //Only set dirty if it actually changed
             isThrustDirty = true;
@@ -818,7 +818,7 @@ public abstract class AbstractThrusterBlockEntity extends SmartBlockEntity
     protected void addThrusterDetails(List<Component> tooltip, boolean isPlayerSneaking) {
         float obstructionEfficiency = 100;
         ChatFormatting tooltipColor = ChatFormatting.GREEN;
-        int scanLength = PropulsionConfig.OBSTRUCTION_SCAN_LENGTH.get();
+        int scanLength = KineticConfig.OBSTRUCTION_SCAN_LENGTH.get();
         if (emptyBlocks < scanLength) {
             obstructionEfficiency = calculateObstructionEffect() * 100;
             tooltipColor = GoggleUtils.efficiencyColor(obstructionEfficiency);

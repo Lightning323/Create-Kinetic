@@ -14,7 +14,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.fluids.FluidStack;
-import org.lightning323.createkinetic.config.PropulsionConfig;
+import org.lightning323.createkinetic.config.KineticConfig;
 import org.lightning323.createkinetic.content.thruster.ion_thruster.IonThrusterBlockEntity;
 import org.lightning323.createkinetic.content.thruster.vector_thruster.VectorThrusterBlockEntity;
 import org.lightning323.createkinetic.content.thruster.vector_thruster.creative_vector_thruster.CreativeVectorThrusterBlockEntity;
@@ -203,7 +203,7 @@ public final class VectorThrusterFeScenes {
                     .pointAt(util.vector().centerOf(thrusterPos))
                     .placeNearTarget();
                 scene.idle(90);
-                int feCap = PropulsionConfig.ION_THRUSTER_ENERGY_CAPACITY_FE.get();
+                int feCap = KineticConfig.ION_THRUSTER_ENERGY_CAPACITY_FE.get();
                 scene.overlay().showText(90)
                     .attachKeyFrame()
                     .sharedText("vector_thruster_fe.intro.fe_storage", feCap)
@@ -237,7 +237,7 @@ public final class VectorThrusterFeScenes {
                     .pointAt(util.vector().centerOf(util.grid().at(4, 1, 3)))
                     .placeNearTarget();
                 scene.idle(95);
-                int fuelCapacity = PropulsionConfig.getLiquidVectorThrusterFuelTankCapacityMbOrDefault();
+                int fuelCapacity = KineticConfig.getLiquidVectorThrusterFuelTankCapacityMbOrDefault();
                 scene.world().modifyBlockEntity(thrusterPos, LiquidVectorThrusterBlockEntity.class,
                     be -> be.tank.getPrimaryHandler().setFluid(new FluidStack(KineticFluids.TURPENTINE.get(), fuelCapacity)));
                 scene.overlay().showText(90)
@@ -254,7 +254,7 @@ public final class VectorThrusterFeScenes {
         Selection thrusterSel, BlockPos thrusterPos) {
         switch (sceneType) {
             case FE -> {
-                int feCap = PropulsionConfig.ION_THRUSTER_ENERGY_CAPACITY_FE.get();
+                int feCap = KineticConfig.ION_THRUSTER_ENERGY_CAPACITY_FE.get();
                 scene.world().modifyBlockEntityNBT(thrusterSel, IonThrusterBlockEntity.class, nbt -> {
                     nbt.putInt("EnergyStored", feCap);
                     nbt.putInt("RedstoneInput", 15);
@@ -264,7 +264,7 @@ public final class VectorThrusterFeScenes {
                 nbt -> nbt.putInt("RedstoneInput", 15));
             case LIQUID -> {
                 scene.world().modifyBlockEntity(thrusterPos, LiquidVectorThrusterBlockEntity.class, be -> {
-                    int fuelCapacity = PropulsionConfig.getLiquidVectorThrusterFuelTankCapacityMbOrDefault();
+                    int fuelCapacity = KineticConfig.getLiquidVectorThrusterFuelTankCapacityMbOrDefault();
                     be.tank.getPrimaryHandler().setFluid(new FluidStack(KineticFluids.TURPENTINE.get(), fuelCapacity));
                 });
                 scene.world().modifyBlockEntityNBT(thrusterSel, LiquidVectorThrusterBlockEntity.class,

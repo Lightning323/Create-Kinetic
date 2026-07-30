@@ -13,7 +13,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import org.lightning323.createkinetic.config.PropulsionConfig;
+import org.lightning323.createkinetic.config.KineticConfig;
 import org.lightning323.createkinetic.content.thruster.SimulatedThrustAdapter;
 import org.lightning323.createkinetic.content.thruster.thruster.creative_thruster.CreativeThrusterBlockEntity;
 import org.lightning323.createkinetic.content.thruster.thruster.creative_thruster.CreativeThrusterPowerScrollValueBehaviour;
@@ -40,9 +40,9 @@ public class CreativeVectorThrusterBlockEntity extends VectorThrusterBlockEntity
     public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
         super.addBehaviours(behaviours);
         ValueBoxTransform slot = new CreativeVectorThrusterValueBox(true);
-        powerBehaviour = new CreativeThrusterPowerScrollValueBehaviour(this, slot, () -> PropulsionConfig.CREATIVE_VECTOR_THRUSTER_MAX_THRUST.get());
-        double base = PropulsionConfig.CREATIVE_VECTOR_THRUSTER_BASE_THRUST.get();
-        double max = PropulsionConfig.CREATIVE_VECTOR_THRUSTER_MAX_THRUST.get();
+        powerBehaviour = new CreativeThrusterPowerScrollValueBehaviour(this, slot, () -> KineticConfig.CREATIVE_VECTOR_THRUSTER_MAX_THRUST.get());
+        double base = KineticConfig.CREATIVE_VECTOR_THRUSTER_BASE_THRUST.get();
+        double max = KineticConfig.CREATIVE_VECTOR_THRUSTER_MAX_THRUST.get();
         int startStep = (int) Math.round((base / max) * (CreativeThrusterPowerScrollValueBehaviour.TOTAL_STEPS - 1));
         powerBehaviour.value = Math.max(0, Math.min(CreativeThrusterPowerScrollValueBehaviour.TOTAL_STEPS - 1, startStep));
         powerBehaviour.withCallback(i -> {
@@ -158,13 +158,13 @@ public class CreativeVectorThrusterBlockEntity extends VectorThrusterBlockEntity
     /**
      * Overrides base thrust from the scroll when {@code >= 0} (pN). Pass a negative value or use
      * {@link #clearPeripheralThrustOutput()} to use scroll thrust again. Values are clamped to
-     * {@link PropulsionConfig#CREATIVE_VECTOR_THRUSTER_MAX_THRUST} (kN) converted to pN.
+     * {@link KineticConfig#CREATIVE_VECTOR_THRUSTER_MAX_THRUST} (kN) converted to pN.
      */
     public void setThrustOutput(float thrustOutputPn) {
         if (thrustOutputPn < 0.0f || Float.isNaN(thrustOutputPn)) {
             this.peripheralThrustOutput = -1.0f;
         } else {
-            float maxPn = (float) (PropulsionConfig.CREATIVE_VECTOR_THRUSTER_MAX_THRUST.get() * getThrustUnitsPerKn());
+            float maxPn = (float) (KineticConfig.CREATIVE_VECTOR_THRUSTER_MAX_THRUST.get() * getThrustUnitsPerKn());
             this.peripheralThrustOutput = Math.min(Math.max(0.0f, thrustOutputPn), maxPn);
         }
         updateThrust(getBlockState());
@@ -182,14 +182,14 @@ public class CreativeVectorThrusterBlockEntity extends VectorThrusterBlockEntity
 
     @Override
     public void calculateObstruction(Level level, BlockPos pos, Direction forwardDirection) {
-        this.emptyBlocks = PropulsionConfig.OBSTRUCTION_SCAN_LENGTH.get();
+        this.emptyBlocks = KineticConfig.OBSTRUCTION_SCAN_LENGTH.get();
     }
 
     @Override
     protected void addThrusterDetails(List<Component> tooltip, boolean isPlayerSneaking) {
         float obstructionEfficiency = 100;
         ChatFormatting tooltipColor = ChatFormatting.GREEN;
-        int scanLength = PropulsionConfig.OBSTRUCTION_SCAN_LENGTH.get();
+        int scanLength = KineticConfig.OBSTRUCTION_SCAN_LENGTH.get();
         if (emptyBlocks < scanLength) {
             obstructionEfficiency = calculateObstructionEffect() * 100;
             tooltipColor = GoggleUtils.efficiencyColor(obstructionEfficiency);
@@ -257,7 +257,7 @@ public class CreativeVectorThrusterBlockEntity extends VectorThrusterBlockEntity
         if (compound.contains("PeripheralThrustOutput")) {
             peripheralThrustOutput = Math.max(-1.0f, compound.getFloat("PeripheralThrustOutput"));
             if (peripheralThrustOutput >= 0.0f) {
-                float maxPn = (float) (PropulsionConfig.CREATIVE_VECTOR_THRUSTER_MAX_THRUST.get() * getThrustUnitsPerKn());
+                float maxPn = (float) (KineticConfig.CREATIVE_VECTOR_THRUSTER_MAX_THRUST.get() * getThrustUnitsPerKn());
                 peripheralThrustOutput = Math.min(peripheralThrustOutput, maxPn);
             }
         }

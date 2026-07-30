@@ -14,7 +14,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.items.IItemHandler;
-import org.lightning323.createkinetic.config.PropulsionConfig;
+import org.lightning323.createkinetic.config.KineticConfig;
 import org.lightning323.createkinetic.content.heat.burners.AbstractBurnerBlock;
 import org.lightning323.createkinetic.content.heat.burners.AbstractBurnerBlockEntity;
 import org.lightning323.createkinetic.content.heat.burners.BurnerDamager;
@@ -41,7 +41,7 @@ public class SolidBurnerBlockEntity extends AbstractBurnerBlockEntity implements
 
     @Override
     public void setBurnTime(int burnTime) {
-        double consumptionMultiplier = Math.max(0.01, PropulsionConfig.SOLID_BURNER_FUEL_CONSUMPTION_MULTIPLIER.get());
+        double consumptionMultiplier = Math.max(0.01, KineticConfig.SOLID_BURNER_FUEL_CONSUMPTION_MULTIPLIER.get());
         this.burnTime = Math.max(1, (int) Math.ceil(burnTime / consumptionMultiplier));
     }
 

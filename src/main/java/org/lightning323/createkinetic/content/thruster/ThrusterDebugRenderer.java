@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
-import org.lightning323.createkinetic.config.PropulsionConfig;
+import org.lightning323.createkinetic.config.KineticConfig;
 import org.lightning323.createkinetic.debug.DebugRenderer;
 import org.lightning323.createkinetic.debug.PropulsionDebug;
 import org.lightning323.createkinetic.debug.routes.MainDebugRoute;
@@ -49,7 +49,7 @@ public final class ThrusterDebugRenderer {
             return;
         }
 
-        int obstructionLength = PropulsionConfig.OBSTRUCTION_SCAN_LENGTH.get();
+        int obstructionLength = KineticConfig.OBSTRUCTION_SCAN_LENGTH.get();
         Level worldLevel = worldRay.level();
         Vec3 traceStart = worldRay.nozzlePos().add(worldRay.direction().scale(START_EPSILON));
         Vec3 worldEnd = traceStart.add(worldRay.direction().scale(obstructionLength));

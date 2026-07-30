@@ -15,7 +15,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Vector3d;
-import org.lightning323.createkinetic.config.PropulsionConfig;
+import org.lightning323.createkinetic.config.KineticConfig;
 import org.lightning323.createkinetic.content.thruster.AbstractThrusterBlock;
 import org.lightning323.createkinetic.content.thruster.vector_thruster.VectorRedstoneLinkBehaviour;
 import org.lightning323.createkinetic.content.thruster.vector_thruster.VectorThrusterBlockEntity;
@@ -225,7 +225,7 @@ public class LiquidVectorThrusterBlockEntity extends VectorThrusterBlockEntity {
 
     @Override
     public void calculateObstruction(Level level, BlockPos pos, Direction forwardDirection) {
-        int scanLength = PropulsionConfig.OBSTRUCTION_SCAN_LENGTH.get();
+        int scanLength = KineticConfig.OBSTRUCTION_SCAN_LENGTH.get();
         ObstructionRaySample sample = sampleObstructionRaycast(level, scanLength);
         double firstHitDistance = sample.firstHitDistance();
         float newEfficiency = scanLength <= 0
@@ -291,27 +291,27 @@ public class LiquidVectorThrusterBlockEntity extends VectorThrusterBlockEntity {
 
     @Override
     public double getNozzleOffsetFromCenter() {
-        return PropulsionConfig.NOZZLE_OFFSET_FROM_CENTER.get();
+        return KineticConfig.NOZZLE_OFFSET_FROM_CENTER.get();
     }
 
     @Override
     protected double getBaseThrust() {
-        return PropulsionConfig.getLiquidVectorThrusterBaseThrustOrDefault();
+        return KineticConfig.getLiquidVectorThrusterBaseThrustOrDefault();
     }
 
     @Override
     protected double getRawThrustCap() {
-        return PropulsionConfig.getLiquidVectorThrusterBaseThrustOrDefault();
+        return KineticConfig.getLiquidVectorThrusterBaseThrustOrDefault();
     }
 
     @Override
     protected int getBaseTankCapacityMb() {
-        return PropulsionConfig.getLiquidVectorThrusterFuelTankCapacityMbOrDefault();
+        return KineticConfig.getLiquidVectorThrusterFuelTankCapacityMbOrDefault();
     }
 
     @Override
     protected double getFuelConsumptionPerTickAtFullThrottle() {
-        return PropulsionConfig.getLiquidVectorThrusterFuelMbPerTickAtFullThrottleOrDefault();
+        return KineticConfig.getLiquidVectorThrusterFuelMbPerTickAtFullThrottleOrDefault();
     }
 
     @Override
@@ -345,7 +345,7 @@ public class LiquidVectorThrusterBlockEntity extends VectorThrusterBlockEntity {
             prevVectorY = currentVectorY;
             if (clientPacket) clientInitialized = true;
         }
-        int scanLength = PropulsionConfig.OBSTRUCTION_SCAN_LENGTH.get();
+        int scanLength = KineticConfig.OBSTRUCTION_SCAN_LENGTH.get();
         obstructionEfficiency = compound.contains("ObstructionEfficiency")
             ? compound.getFloat("ObstructionEfficiency")
             : (scanLength <= 0 ? 0.0f : Math.clamp((float) emptyBlocks / (float) scanLength, 0.0f, 1.0f));

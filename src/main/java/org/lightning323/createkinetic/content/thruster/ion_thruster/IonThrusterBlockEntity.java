@@ -18,7 +18,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
-import org.lightning323.createkinetic.config.PropulsionConfig;
+import org.lightning323.createkinetic.config.KineticConfig;
 import org.lightning323.createkinetic.compat.PropulsionCompatibility;
 import org.lightning323.createkinetic.compat.computercraft.ComputerBehaviour;
 import org.lightning323.createkinetic.content.thruster.SimulatedThrustAdapter;
@@ -135,7 +135,7 @@ public class IonThrusterBlockEntity extends ThrusterBlockEntity {
 
                 // Config value is FE/t at full throttle; scale by throttle and elapsed ticks.
                 double requestedDrain = energyDrainAccumulator
-                        + (double) ticksElapsed * thrustPercentage * PropulsionConfig.ION_THRUSTER_FE_PER_TICK_AT_FULL_THROTTLE.get();
+                        + (double) ticksElapsed * thrustPercentage * KineticConfig.ION_THRUSTER_FE_PER_TICK_AT_FULL_THROTTLE.get();
                 int totalDrain = (int) Math.floor(requestedDrain);
                 energyDrainAccumulator = requestedDrain - totalDrain;
 
@@ -143,7 +143,7 @@ public class IonThrusterBlockEntity extends ThrusterBlockEntity {
                 if (consumed > 0) {
                     energyStored -= consumed;
                     float consumptionRatio = (float) consumed / (float) totalDrain;
-                    float baseThrustPn = (float) (PropulsionConfig.ION_THRUSTER_BASE_THRUST.get() * getThrustUnitsPerKn());
+                    float baseThrustPn = (float) (KineticConfig.ION_THRUSTER_BASE_THRUST.get() * getThrustUnitsPerKn());
                     baseThrustPn *= (float) calculateAtmosphericFactor();
                     thrust = baseThrustPn * thrustPercentage * consumptionRatio;
                 }
@@ -187,14 +187,14 @@ public class IonThrusterBlockEntity extends ThrusterBlockEntity {
                 lastEnergyDrainGameTime = currentGameTime;
 
                 double requestedDrain = energyDrainAccumulator
-                        + (double) ticksElapsed * thrustPercentage * PropulsionConfig.ION_THRUSTER_FE_PER_TICK_AT_FULL_THROTTLE.get() * n;
+                        + (double) ticksElapsed * thrustPercentage * KineticConfig.ION_THRUSTER_FE_PER_TICK_AT_FULL_THROTTLE.get() * n;
                 int totalDrain = (int) Math.floor(requestedDrain);
                 energyDrainAccumulator = requestedDrain - totalDrain;
 
                 int consumed = drainEnergyFromMultiblock(totalDrain);
                 if (consumed > 0 && totalDrain > 0) {
                     float consumptionRatio = (float) consumed / (float) totalDrain;
-                    float baseThrustPn = (float) (PropulsionConfig.ION_THRUSTER_BASE_THRUST.get() * getThrustUnitsPerKn());
+                    float baseThrustPn = (float) (KineticConfig.ION_THRUSTER_BASE_THRUST.get() * getThrustUnitsPerKn());
                     baseThrustPn *= (float) calculateAtmosphericFactor();
                     thrust = baseThrustPn * thrustPercentage * consumptionRatio * n * getIonMultiblockThrustMultiplier(width);
                 }
@@ -301,8 +301,8 @@ public class IonThrusterBlockEntity extends ThrusterBlockEntity {
     }
 
     private static float getIonMultiblockThrustMultiplier(int cubeWidth) {
-        if (cubeWidth == 2) return PropulsionConfig.ION_MULTIBLOCK_2X_THRUST_MULTIPLIER.get().floatValue();
-        if (cubeWidth == 3) return PropulsionConfig.ION_MULTIBLOCK_3X_THRUST_MULTIPLIER.get().floatValue();
+        if (cubeWidth == 2) return KineticConfig.ION_MULTIBLOCK_2X_THRUST_MULTIPLIER.get().floatValue();
+        if (cubeWidth == 3) return KineticConfig.ION_MULTIBLOCK_3X_THRUST_MULTIPLIER.get().floatValue();
         return 1.0f;
     }
 
@@ -349,8 +349,8 @@ public class IonThrusterBlockEntity extends ThrusterBlockEntity {
         return getThrottle() > 0 && getTotalEnergyStoredFe() > 0;
     }
 
-    public PropulsionConfig.ThrusterPlumeType getPlumeRenderType() {
-        return PropulsionConfig.getIonThrusterPlumeType();
+    public KineticConfig.ThrusterPlumeType getPlumeRenderType() {
+        return KineticConfig.getIonThrusterPlumeType();
     }
 
     @Override
@@ -386,12 +386,12 @@ public class IonThrusterBlockEntity extends ThrusterBlockEntity {
 
     @Override
     protected double getBaseThrust() {
-        return PropulsionConfig.ION_THRUSTER_BASE_THRUST.get();
+        return KineticConfig.ION_THRUSTER_BASE_THRUST.get();
     }
 
     @Override
     protected double getRawThrustCap() {
-        return PropulsionConfig.ION_THRUSTER_BASE_THRUST.get();
+        return KineticConfig.ION_THRUSTER_BASE_THRUST.get();
     }
 
     public int getEnergyStoredFe() {
@@ -399,7 +399,7 @@ public class IonThrusterBlockEntity extends ThrusterBlockEntity {
     }
 
     public int getEnergyCapacity() {
-        return PropulsionConfig.ION_THRUSTER_ENERGY_CAPACITY_FE.get();
+        return KineticConfig.ION_THRUSTER_ENERGY_CAPACITY_FE.get();
     }
 
     protected Direction getEnergyInputSide() {
@@ -461,7 +461,7 @@ public class IonThrusterBlockEntity extends ThrusterBlockEntity {
     private void addIonThrusterOutputDetails(final List<Component> tooltip) {
         float obstructionEfficiency = 100;
         ChatFormatting tooltipColor = ChatFormatting.GREEN;
-        int scanLength = PropulsionConfig.OBSTRUCTION_SCAN_LENGTH.get();
+        int scanLength = KineticConfig.OBSTRUCTION_SCAN_LENGTH.get();
         if (getEmptyBlocks() < scanLength) {
             obstructionEfficiency = calculateObstructionEffect() * 100;
             tooltipColor = GoggleUtils.efficiencyColor(obstructionEfficiency);

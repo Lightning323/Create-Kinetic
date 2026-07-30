@@ -2,7 +2,6 @@ package org.lightning323.createkinetic.content.blocks.joystick;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import org.lightning323.createkinetic.client.KineticKeys;
-import org.lightning323.createkinetic.config.Config;
 import com.simibubi.create.foundation.utility.ControlsUtil;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
@@ -23,6 +22,7 @@ import net.neoforged.neoforge.client.event.RenderGuiLayerEvent;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
+import org.lightning323.createkinetic.config.KineticConfig;
 
 public final class JoystickControlClient {
    private static @Nullable BlockPos activePos;
@@ -36,11 +36,11 @@ public final class JoystickControlClient {
    private static long lastBoundActionMs;
 
    private static long stepIntervalMs() {
-      return (long)Config.joystickKeyRepeatDelayMs();
+      return (long) KineticConfig.joystickKeyRepeatDelayMs();
    }
 
    private static long springBackDelayMs() {
-      return (long)Config.joystickSpringBackDelayMs();
+      return (long) KineticConfig.joystickSpringBackDelayMs();
    }
 
    private JoystickControlClient() {
@@ -141,7 +141,7 @@ public final class JoystickControlClient {
          if (be == null || be.isUseMouseInput()) {
             accumX += dx;
             accumY += dy;
-            double threshold = Config.joystickPixelsPerStep();
+            double threshold = KineticConfig.joystickPixelsPerStep();
             if (!(threshold <= (double)0.0F)) {
                boolean changed;
                for(changed = false; accumX >= threshold && tiltX < 15; changed = true) {
