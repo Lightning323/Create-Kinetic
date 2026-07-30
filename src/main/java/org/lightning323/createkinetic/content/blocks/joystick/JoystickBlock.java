@@ -147,10 +147,25 @@ public class JoystickBlock extends Block implements EntityBlock, IBE<JoystickBlo
         POWERED = BlockStateProperties.POWERED;
         FACING = BlockStateProperties.HORIZONTAL_FACING;
         IN_USE = BooleanProperty.create("in_use");
-        CHASSIS_SHAPE = Shapes.or(box((double) 0.0F, (double) 0.0F, (double) 0.0F, (double) 16.0F, (double) 3.0F, (double) 16.0F), box((double) 5.0F, (double) 3.0F, (double) 5.0F, (double) 11.0F, (double) 4.0F, (double) 11.0F));
+
+        CHASSIS_SHAPE = Shapes.or(box(
+                (double) 1.0F,
+                (double) 0.0F,
+                (double) 1.0F,
+                (double) 15.0F,
+                (double) 3.0F,
+                (double) 15.0F),
+                box(
+                        (double) 5.0F,
+                        (double) 3.0F,
+                        (double) 5.0F,
+                        (double) 11.0F,
+                        (double) 4.0F,
+                        (double) 11.0F));
+
         HANDLE_CORE_SHAPE = Shapes.or(box((double) 6.0F, (double) 3.0F, (double) 6.0F, (double) 10.0F, (double) 5.0F, (double) 10.0F), new VoxelShape[]{box((double) 7.0F, (double) 5.0F, (double) 7.0F, (double) 9.0F, (double) 15.0F, (double) 9.0F), box((double) 6.75F, (double) 15.0F, (double) 6.75F, (double) 9.25F, (double) 21.0F, (double) 9.25F)});
         BUTTON_SHAPE = box((double) 7.0F, (double) 21.0F, (double) 7.0F, (double) 9.0F, (double) 22.0F, (double) 9.0F);
         HANDLE_SHAPE = Shapes.or(HANDLE_CORE_SHAPE, BUTTON_SHAPE);
-        COLLISION = box((double) 0.0F, (double) 0.0F, (double) 0.0F, (double) 16.0F, (double) 4.0F, (double) 16.0F);
+        COLLISION = box((double) 1.0F, (double) 0.0F, (double) 1.0F, (double) 15.0F, (double) 4.0F, (double) 15.0F);
     }
 }

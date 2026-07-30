@@ -695,13 +695,11 @@ public abstract class AbstractThrusterBlockEntity extends SmartBlockEntity
         double spawnX = worldNozzlePosition.x;
         double spawnY = worldNozzlePosition.y;
         double spawnZ = worldNozzlePosition.z;
-        for (int i = 0; i < 2; i++) {
-            emitParticle(
-                    spawnX + (particleRandom.nextFloat() - 0.5) * 1,
-                    spawnY + (particleRandom.nextFloat() - 0.5) * 1,
-                    spawnZ + (particleRandom.nextFloat() - 0.5) * 1,
-                    particleVelocity, isBluePlume() ? ParticleTypes.SOUL_FIRE_FLAME : ParticleTypes.FLAME);
-        }
+        emitParticle(
+                spawnX + (particleRandom.nextFloat() - 0.5) * 1,
+                spawnY + (particleRandom.nextFloat() - 0.5) * 1,
+                spawnZ + (particleRandom.nextFloat() - 0.5) * 1,
+                particleVelocity, isBluePlume() ? ParticleTypes.SOUL_FIRE_FLAME : ParticleTypes.FLAME);
 
         if (power > 0.5) {
             spawnX += worldExhaustDirection.x * 2;
