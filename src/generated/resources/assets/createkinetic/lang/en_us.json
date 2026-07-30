@@ -1,6 +1,6 @@
 {
-  "block.createkinetic.gyroscope": "Gyroscope",
   "block.createkinetic.joystick": "Joystick",
+  "block.createkinetic.reaction_wheel": "Reaction Wheel",
   "block.createkinetic.track_mount": "Track Mount",
   "item.createkinetic.small_suspension_track": "Small Suspension Track",
   "item.createkinetic.small_track_drive_wheel": "Small Track Drive Wheel"

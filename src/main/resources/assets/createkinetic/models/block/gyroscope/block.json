@@ -3,7 +3,8 @@
 	"credit": "Made with Blockbench",
 	"render_type": "minecraft:cutout_mipped",
 	"textures": {
-		"2": "createkinetic:block/gyroscope/block"
+		"2": "createkinetic:block/gyroscope/block",
+		"particle": "createkinetic:block/gyroscope/block"
 	},
 	"elements": [
 		{

@@ -1,15 +1,15 @@
-// 1.21.1	2026-06-12T17:07:35.047081966	Registrate Provider for createkinetic [Registries, Data Maps, Recipes, Advancements, Loot Tables, Tags (blocks), Tags (enchantments), Tags (items), Tags (fluids), Tags (entity_types), generic_server_provider, Blockstates, Item models, Lang (en_us/en_ud), generic_client_provider]
-c10f471eba0207c599ead9181cfd9820dbff7cc5 assets/createkinetic/blockstates/gyroscope.json
+// 1.21.1	2026-07-30T15:17:09.179672506	Registrate Provider for createkinetic [Registries, Data Maps, Recipes, Advancements, Loot Tables, Tags (blocks), Tags (enchantments), Tags (items), Tags (fluids), Tags (entity_types), generic_server_provider, Blockstates, Item models, Lang (en_us/en_ud), generic_client_provider]
 f7f7befa2d96cf1e23eeff84a39c2d4d373d8df0 assets/createkinetic/blockstates/joystick.json
-a37306a80d85dab01250b8d24d2a867ba901b548 assets/createkinetic/lang/en_ud.json
-d40457f7299a852f2f2fa3e604381d9d9051c20d assets/createkinetic/lang/en_us.json
-d44b3d211be7a3e60b0daa31d18a38ac9806f8a2 assets/createkinetic/models/block/gyroscope.json
+afd018a79f8dd2d5bdae1d5675f32839cc775b0e assets/createkinetic/blockstates/reaction_wheel.json
+ed5c7425a45f33f23b07976dd1df103d0a114dcc assets/createkinetic/lang/en_ud.json
+c6107a496a9ac00fdb1175f1baba0ebd376ff2f7 assets/createkinetic/lang/en_us.json
 9258e5fb09924a48e467bb12dafe2f78f99cdcf5 assets/createkinetic/models/block/joystick.json
-3e4a0aae5bcc1c0a001759b4dfd6dd755bf29273 assets/createkinetic/models/item/gyroscope.json
+dbf070526ff249ff723daf0458a414115450934c assets/createkinetic/models/block/reaction_wheel.json
 dc097ab16374a9afc00d01b115b0a37bc40dc720 assets/createkinetic/models/item/joystick.json
+36ada28de9c510ad74eb3f59386ca651e7954a47 assets/createkinetic/models/item/reaction_wheel.json
 eb98c1b6371c05412a76d824315721781ce9576b data/create/tags/block/safe_nbt.json
-6adc9d6596d8eb4a3d8aa09e11995c574698d39b data/createkinetic/loot_table/blocks/gyroscope.json
 62964d497b1d7b6a810c082d84342593867b5257 data/createkinetic/loot_table/blocks/joystick.json
+14a4dd311e857633bd6b74cc0d8f7c6f9c060547 data/createkinetic/loot_table/blocks/reaction_wheel.json
 7c249b3822930703c1e4084fd76c909a3f83df99 data/createkinetic/loot_table/blocks/track_mount.json
-7eddc719b964189fde28374948edbde35c43d9b7 data/minecraft/tags/block/mineable/axe.json
-7eddc719b964189fde28374948edbde35c43d9b7 data/minecraft/tags/block/mineable/pickaxe.json
+9fd821ec8fd594b5ba77c1667f3ec10d4142934b data/minecraft/tags/block/mineable/axe.json
+9fd821ec8fd594b5ba77c1667f3ec10d4142934b data/minecraft/tags/block/mineable/pickaxe.json
