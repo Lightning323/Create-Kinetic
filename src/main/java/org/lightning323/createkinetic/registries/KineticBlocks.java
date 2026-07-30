@@ -36,18 +36,10 @@ import org.lightning323.createkinetic.config.KineticConfig;
 import org.lightning323.createkinetic.content.blocks.sable_track.SableTrackBlock;
 import org.lightning323.createkinetic.content.blocks.sable_track.SableTrackRole;
 import org.lightning323.createkinetic.content.blocks.reaction_wheel.ReactionWheelBlock;
-import org.lightning323.createkinetic.content.heat.burners.liquid.LiquidBurnerBlock;
-import org.lightning323.createkinetic.content.heat.burners.solid.SolidBurnerBlock;
-import org.lightning323.createkinetic.content.heat.engine.StirlingEngineBlock;
 import org.lightning323.createkinetic.content.items.TrackMountBlockItem;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.level.material.MapColor;
 import org.lightning323.createkinetic.content.blocks.joystick.JoystickBlock;
-import org.lightning323.createkinetic.content.platinum.PlatinumFluidTankBlock;
-import org.lightning323.createkinetic.content.platinum.PlatinumFluidTankItem;
-import org.lightning323.createkinetic.content.platinum.PlatinumFluidVesselBlock;
-import org.lightning323.createkinetic.content.platinum.PlatinumFluidVesselItem;
-import org.lightning323.createkinetic.content.redstone_converter.RedstoneConverterBlock;
 import org.lightning323.createkinetic.content.thruster.ion_thruster.IonThrusterBlock;
 import org.lightning323.createkinetic.content.thruster.thruster.ThrusterBlock;
 import org.lightning323.createkinetic.content.thruster.thruster.creative_thruster.CreativeThrusterBlock;
@@ -63,28 +55,6 @@ public class KineticBlocks {
     public static final DeferredRegister.Items BLOCK_ITEMS = DeferredRegister.createItems(CreateKinetic.ID);
     private static final KineticRegistrate REGISTRATE = CreateKinetic.getRegistrate();
 
-
-    //These items are currently hidden from creative tabs
-    //TODO: Decide if we should keep them
-    public static final DeferredBlock<PlatinumFluidVesselBlock> PLATINUM_FLUID_VESSEL = BLOCKS.register("platinum_fluid_vessel",
-        () -> new PlatinumFluidVesselBlock(Block.Properties.of().mapColor(MapColor.METAL).sound(SoundType.COPPER)
-            .requiresCorrectToolForDrops().strength(2.5f, 2.0f).noOcclusion().isRedstoneConductor((s, l, p) -> true)));
-    public static final DeferredBlock<PlatinumFluidTankBlock> PLATINUM_FLUID_TANK = BLOCKS.register("platinum_fluid_tank",
-        () -> new PlatinumFluidTankBlock(Block.Properties.of().mapColor(MapColor.METAL).sound(SoundType.COPPER)
-            .requiresCorrectToolForDrops().strength(2.5f, 2.0f).noOcclusion().isRedstoneConductor((s, l, p) -> true)));
-
-    public static final DeferredBlock<StirlingEngineBlock> STIRLING_ENGINE_BLOCK = BLOCKS.register("stirling_engine",
-            () -> new StirlingEngineBlock(Block.Properties.of().mapColor(MapColor.STONE).sound(SoundType.COPPER)
-                    .requiresCorrectToolForDrops().strength(2.5f, 2.0f).noOcclusion()));
-    public static final DeferredBlock<LiquidBurnerBlock> LIQUID_BURNER = BLOCKS.register("liquid_burner",
-            () -> new LiquidBurnerBlock(Block.Properties.of().noOcclusion().mapColor(MapColor.STONE).sound(SoundType.COPPER)
-                    .requiresCorrectToolForDrops().strength(2.75f, 2.0f)));
-    public static final DeferredBlock<SolidBurnerBlock> SOLID_BURNER = BLOCKS.register("solid_burner",
-            () -> new SolidBurnerBlock(Block.Properties.of().mapColor(MapColor.STONE).sound(SoundType.COPPER)
-                    .requiresCorrectToolForDrops().strength(2.5f, 2.0f).lightLevel(s -> s.getValue(SolidBurnerBlock.LIT) ? 13 : 0)));
-    public static final DeferredBlock<RedstoneConverterBlock> REDSTONE_CONVERTER_BLOCK = BLOCKS.register("redstone_converter",
-            () -> new RedstoneConverterBlock(Block.Properties.of().mapColor(MapColor.METAL)
-                    .sound(SoundType.METAL).instabreak()));
 
 
 
@@ -157,20 +127,11 @@ public class KineticBlocks {
         registerBlockItem("vector_thruster", KineticBlocks.VECTOR_THRUSTER_BLOCK, new BlockItem.Properties().rarity(Rarity.UNCOMMON));
         registerBlockItem("liquid_vector_thruster", KineticBlocks.LIQUID_VECTOR_THRUSTER_BLOCK, new BlockItem.Properties().rarity(Rarity.UNCOMMON));
         registerBlockItem("creative_vector_thruster", KineticBlocks.CREATIVE_VECTOR_THRUSTER_BLOCK, new BlockItem.Properties().rarity(Rarity.EPIC));
-        registerDefaultBlockItem("redstone_converter", KineticBlocks.REDSTONE_CONVERTER_BLOCK);
-
-        registerDefaultBlockItem("solid_burner", KineticBlocks.SOLID_BURNER);
-        registerDefaultBlockItem("liquid_burner", KineticBlocks.LIQUID_BURNER);
-        registerDefaultBlockItem("stirling_engine", KineticBlocks.STIRLING_ENGINE_BLOCK);
         registerDefaultBlockItem("wing", KineticBlocks.WING_BLOCK);
         registerDefaultBlockItem("tempered_wing", KineticBlocks.TEMPERED_WING_BLOCK);
         KineticBlocks.BLOCK_ITEMS.register("copycat_wing", () -> new CopycatWingItem(KineticBlocks.COPYCAT_WING.get(), new BlockItem.Properties()));
         KineticBlocks.BLOCK_ITEMS.register("copycat_wing_8", () -> new CopycatWingItem(KineticBlocks.COPYCAT_WING_8.get(), new BlockItem.Properties()));
         KineticBlocks.BLOCK_ITEMS.register("copycat_wing_12", () -> new CopycatWingItem(KineticBlocks.COPYCAT_WING_12.get(), new BlockItem.Properties()));
-
-        KineticBlocks.BLOCK_ITEMS.register("platinum_fluid_tank", () -> new PlatinumFluidTankItem(KineticBlocks.PLATINUM_FLUID_TANK.get(), new BlockItem.Properties()));
-        KineticBlocks.BLOCK_ITEMS.register("platinum_fluid_vessel", () -> new PlatinumFluidVesselItem(KineticBlocks.PLATINUM_FLUID_VESSEL.get(), new BlockItem.Properties()));
-
 
         PropulsionDefaultStress.setImpact(ResourceLocation.fromNamespaceAndPath(CreateKinetic.ID, "redstone_transmission"), 0, false);
         PropulsionDefaultStress.setImpact(ResourceLocation.fromNamespaceAndPath(CreateKinetic.ID, "tilt_adapter"), 0, false);

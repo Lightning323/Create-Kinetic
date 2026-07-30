@@ -16,12 +16,6 @@ import org.lightning323.createkinetic.content.blocks.reaction_wheel.ReactionWhee
 import org.lightning323.createkinetic.content.blocks.reaction_wheel.ReactionWheelRenderer;
 import org.lightning323.createkinetic.content.blocks.sable_track.SableTrackBlockEntity;
 import org.lightning323.createkinetic.content.blocks.sable_track.SableTrackRenderer;
-import org.lightning323.createkinetic.content.heat.burners.liquid.LiquidBurnerBlockEntity;
-import org.lightning323.createkinetic.content.heat.burners.solid.SolidBurnerBlockEntity;
-import org.lightning323.createkinetic.content.heat.engine.StirlingEngineBlockEntity;
-import org.lightning323.createkinetic.content.platinum.PlatinumFluidTankBlockEntity;
-import org.lightning323.createkinetic.content.platinum.PlatinumFluidVesselBlockEntity;
-import org.lightning323.createkinetic.content.redstone_converter.RedstoneConverterBlockEntity;
 import org.lightning323.createkinetic.content.thruster.ion_thruster.IonThrusterBlockEntity;
 import org.lightning323.createkinetic.content.thruster.thruster.ThrusterBlockEntity;
 import org.lightning323.createkinetic.content.thruster.thruster.creative_thruster.CreativeThrusterBlockEntity;
@@ -74,23 +68,6 @@ public class KineticBlockEntities {
             () -> BlockEntityType.Builder.of((pos, state) -> new LiquidVectorThrusterBlockEntity(pos, state),
                 KineticBlocks.LIQUID_VECTOR_THRUSTER_BLOCK.get()).build(null));
 
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<RedstoneConverterBlockEntity>> REDSTONE_CONVERTER_BLOCK_ENTITY =
-        BLOCK_ENTITY_TYPES.register("redstone_converter_block_entity",
-            () -> BlockEntityType.Builder.of((pos, state) -> new RedstoneConverterBlockEntity(pos, state),
-                KineticBlocks.REDSTONE_CONVERTER_BLOCK.get()).build(null));
-
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<SolidBurnerBlockEntity>> SOLID_BURNER_BLOCK_ENTITY =
-        BLOCK_ENTITY_TYPES.register("solid_burner_block_entity",
-            () -> BlockEntityType.Builder.of((pos, state) -> new SolidBurnerBlockEntity(pos, state), KineticBlocks.SOLID_BURNER.get()).build(null));
-
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<LiquidBurnerBlockEntity>> LIQUID_BURNER_BLOCK_ENTITY =
-        BLOCK_ENTITY_TYPES.register("liquid_burner_block_entity",
-            () -> BlockEntityType.Builder.of((pos, state) -> new LiquidBurnerBlockEntity(pos, state), KineticBlocks.LIQUID_BURNER.get()).build(null));
-
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<StirlingEngineBlockEntity>> STIRLING_ENGINE_BLOCK_ENTITY =
-        BLOCK_ENTITY_TYPES.register("stirling_engine_block_entity",
-            () -> BlockEntityType.Builder.of((pos, state) -> new StirlingEngineBlockEntity(pos, state), KineticBlocks.STIRLING_ENGINE_BLOCK.get()).build(null));
-
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<PropulsionCopycatWingBlockEntity>> COPYCAT_WING_BLOCK_ENTITY =
         BLOCK_ENTITY_TYPES.register("copycat_wing_block_entity",
             () -> BlockEntityType.Builder.of(
@@ -99,14 +76,6 @@ public class KineticBlockEntities {
                 KineticBlocks.COPYCAT_WING_8.get(),
                 KineticBlocks.COPYCAT_WING_12.get()
             ).build(null));
-
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<PlatinumFluidTankBlockEntity>> PLATINUM_FLUID_TANK_BLOCK_ENTITY =
-        BLOCK_ENTITY_TYPES.register("platinum_fluid_tank_block_entity",
-            () -> BlockEntityType.Builder.of((pos, state) -> new PlatinumFluidTankBlockEntity(pos, state), KineticBlocks.PLATINUM_FLUID_TANK.get()).build(null));
-
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<PlatinumFluidVesselBlockEntity>> PLATINUM_FLUID_VESSEL_BLOCK_ENTITY =
-        BLOCK_ENTITY_TYPES.register("platinum_fluid_vessel_block_entity",
-            () -> BlockEntityType.Builder.of((pos, state) -> new PlatinumFluidVesselBlockEntity(pos, state), KineticBlocks.PLATINUM_FLUID_VESSEL.get()).build(null));
 
     public static void register(IEventBus modBus) {
         BLOCK_ENTITY_TYPES.register(modBus);

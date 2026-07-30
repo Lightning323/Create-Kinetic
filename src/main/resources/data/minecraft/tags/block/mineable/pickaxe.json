@@ -4,18 +4,15 @@
     "createkinetic:thruster",
     "createkinetic:creative_thruster",
     "createkinetic:ion_thruster",
-    "createkinetic:redstone_transmission",
-    "createkinetic:liquid_burner",
-    "createkinetic:stirling_engine",
-    "createkinetic:tilt_adapter",
-    "createkinetic:advanced_tilt_adapter",
     "createkinetic:wing",
     "createkinetic:tempered_wing",
     "createkinetic:copycat_wing",
     "createkinetic:copycat_wing_8",
     "createkinetic:copycat_wing_12",
+    "createkinetic:joystick",
     "createkinetic:vector_thruster",
     "createkinetic:creative_vector_thruster",
-    "createkinetic:liquid_vector_thruster"
+    "createkinetic:liquid_vector_thruster",
+    "createkinetic:reaction_wheel"
   ]
 }

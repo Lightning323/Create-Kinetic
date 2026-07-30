@@ -7,9 +7,6 @@ import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.items.IItemHandler;
 import org.lightning323.createkinetic.compat.PropulsionCompatibility;
-import org.lightning323.createkinetic.content.heat.burners.liquid.LiquidBurnerBlockEntity;
-import org.lightning323.createkinetic.content.heat.burners.liquid.PassthroughFluidHandler;
-import org.lightning323.createkinetic.content.heat.burners.solid.SolidBurnerBlockEntity;
 import org.lightning323.createkinetic.content.thruster.ion_thruster.IonThrusterBlockEntity;
 import org.lightning323.createkinetic.content.thruster.thruster.ThrusterBlockEntity;
 import org.lightning323.createkinetic.content.thruster.vector_thruster.liquid_vector_thruster.LiquidVectorThrusterBlockEntity;
@@ -29,30 +26,9 @@ public class ModCapabilityEvents {
         );
 
         event.registerBlockEntity(
-            Capabilities.FluidHandler.BLOCK,
-            KineticBlockEntities.LIQUID_BURNER_BLOCK_ENTITY.get(),
-            ModCapabilityEvents::getLiquidBurnerFluidHandler
-        );
-        event.registerBlockEntity(
-            Capabilities.ItemHandler.BLOCK,
-            KineticBlockEntities.SOLID_BURNER_BLOCK_ENTITY.get(),
-            ModCapabilityEvents::getSolidBurnerItemHandler
-        );
-        event.registerBlockEntity(
             Capabilities.EnergyStorage.BLOCK,
             KineticBlockEntities.ION_THRUSTER_BLOCK_ENTITY.get(),
             (be, side) -> ((IonThrusterBlockEntity) be).getEnergyHandler(side)
-        );
-
-        event.registerBlockEntity(
-            Capabilities.FluidHandler.BLOCK,
-            KineticBlockEntities.PLATINUM_FLUID_TANK_BLOCK_ENTITY.get(),
-            (be, side) -> be.getCapabilityHandler()
-        );
-        event.registerBlockEntity(
-            Capabilities.FluidHandler.BLOCK,
-            KineticBlockEntities.PLATINUM_FLUID_VESSEL_BLOCK_ENTITY.get(),
-            (be, side) -> be.getCapabilityHandler()
         );
 
         registerComputerCraftCapabilitiesIfAvailable(event);
@@ -93,11 +69,6 @@ public class ModCapabilityEvents {
                 KineticBlockEntities.LIQUID_VECTOR_THRUSTER_BLOCK_ENTITY.get(),
                 (be, side) -> be.computerBehaviour == null ? null : be.computerBehaviour.getPeripheralCapability()
             );
-            event.registerBlockEntity(
-                capability,
-                KineticBlockEntities.STIRLING_ENGINE_BLOCK_ENTITY.get(),
-                (be, side) -> be.computerBehaviour == null ? null : be.computerBehaviour.getPeripheralCapability()
-            );
 
         } catch (Throwable ignored) {
             // ComputerCraft not installed or API unavailable.
@@ -112,18 +83,4 @@ public class ModCapabilityEvents {
         return blockEntity.getFluidHandler(side);
     }
 
-    private static IFluidHandler getLiquidBurnerFluidHandler(LiquidBurnerBlockEntity blockEntity, Direction side) {
-        IFluidHandler primaryHandler = blockEntity.getPrimaryFluidHandler();
-        if (primaryHandler == null) {
-            return null;
-        }
-        if (side == null) {
-            return primaryHandler;
-        }
-        return new PassthroughFluidHandler(blockEntity, side);
-    }
-
-    private static IItemHandler getSolidBurnerItemHandler(SolidBurnerBlockEntity blockEntity, Direction side) {
-        return blockEntity.getItemHandler(side);
-    }
 }

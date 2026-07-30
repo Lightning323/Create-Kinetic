@@ -3,7 +3,6 @@ package org.lightning323.createkinetic.compat.computercraft;
 import com.simibubi.create.compat.computercraft.AbstractComputerBehaviour;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import dan200.computercraft.api.peripheral.IPeripheral;
-import org.lightning323.createkinetic.content.heat.engine.StirlingEngineBlockEntity;
 import org.lightning323.createkinetic.content.thruster.ion_thruster.IonThrusterBlockEntity;
 import org.lightning323.createkinetic.content.thruster.thruster.ThrusterBlockEntity;
 import org.lightning323.createkinetic.content.thruster.thruster.creative_thruster.CreativeThrusterBlockEntity;
@@ -36,7 +35,6 @@ public class ComputerBehaviour extends AbstractComputerBehaviour {
         register(VectorThrusterBlockEntity.class, VectorThrusterPeripheral::new);
         register(LiquidVectorThrusterBlockEntity.class, LiquidVectorThrusterPeripheral::new);
         register(CreativeThrusterBlockEntity.class, CreativeThrusterPeripheral::new);
-        register(StirlingEngineBlockEntity.class, StirlingEnginePeripheral::new);
     }
 
     public ComputerBehaviour(SmartBlockEntity blockEntity) {

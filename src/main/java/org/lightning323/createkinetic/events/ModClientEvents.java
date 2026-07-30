@@ -28,13 +28,6 @@ import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtension
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.fluids.FluidStack;
 import org.lightning323.createkinetic.CreateKinetic;
-import org.lightning323.createkinetic.content.heat.burners.liquid.LiquidBurnerRenderer;
-import org.lightning323.createkinetic.content.heat.burners.liquid.LiquidBurnerVisual;
-import org.lightning323.createkinetic.content.heat.engine.StirlingEngineRenderer;
-import org.lightning323.createkinetic.content.heat.engine.StirlingEngineVisual;
-import org.lightning323.createkinetic.content.platinum.PlatinumFluidTankModel;
-import org.lightning323.createkinetic.content.platinum.PlatinumFluidVesselModel;
-import org.lightning323.createkinetic.content.platinum.PlatinumFluidVesselRenderer;
 import org.lightning323.createkinetic.content.thruster.ion_thruster.IonThrusterRenderer;
 import org.lightning323.createkinetic.content.thruster.thruster.ThrusterRenderer;
 import org.lightning323.createkinetic.content.thruster.thruster.creative_thruster.CreativeThrusterRenderer;
@@ -150,51 +143,19 @@ public class ModClientEvents {
             ItemBlockRenderTypes.setRenderLayer(KineticFluids.FLOWING_TURPENTINE.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(KineticFluids.OXIDIZER.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(KineticFluids.FLOWING_OXIDIZER.get(), RenderType.translucent());
-            ItemBlockRenderTypes.setRenderLayer(KineticBlocks.PLATINUM_FLUID_TANK.get(), RenderType.cutoutMipped());
-            ItemBlockRenderTypes.setRenderLayer(KineticBlocks.PLATINUM_FLUID_VESSEL.get(), RenderType.cutoutMipped());
         });
 
         PonderIndex.addPlugin(new DeltaPonderPlugin());
         PropulsionInstanceTypes.register();
 
-
-        SimpleBlockEntityVisualizer.builder(KineticBlockEntities.STIRLING_ENGINE_BLOCK_ENTITY.get())
-            .factory(StirlingEngineVisual::new)
-            .skipVanillaRender(be -> VisualizationManager.supportsVisualization(be.getLevel()))
-            .apply();
-
-        SimpleBlockEntityVisualizer.builder(KineticBlockEntities.LIQUID_BURNER_BLOCK_ENTITY.get())
-            .factory(LiquidBurnerVisual::new)
-            .skipVanillaRender(be -> VisualizationManager.supportsVisualization(be.getLevel()))
-            .apply();
     }
 
     @SubscribeEvent
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerBlockEntityRenderer(KineticBlockEntities.STIRLING_ENGINE_BLOCK_ENTITY.get(), StirlingEngineRenderer::new);
         event.registerBlockEntityRenderer(KineticBlockEntities.CREATIVE_THRUSTER_BLOCK_ENTITY.get(), CreativeThrusterRenderer::new);
-
         event.registerBlockEntityRenderer(KineticBlockEntities.THRUSTER_BLOCK_ENTITY.get(), ThrusterRenderer::new);
         event.registerBlockEntityRenderer(KineticBlockEntities.ION_THRUSTER_BLOCK_ENTITY.get(), IonThrusterRenderer::new);
-
         event.registerBlockEntityRenderer(KineticBlockEntities.CREATIVE_VECTOR_THRUSTER_BLOCK_ENTITY.get(), IonThrusterRenderer::new);
         event.registerBlockEntityRenderer(KineticBlockEntities.LIQUID_VECTOR_THRUSTER_BLOCK_ENTITY.get(), LiquidVectorThrusterRenderer::new);
-
-        event.registerBlockEntityRenderer(KineticBlockEntities.LIQUID_BURNER_BLOCK_ENTITY.get(), LiquidBurnerRenderer::new);
-        event.registerBlockEntityRenderer(KineticBlockEntities.PLATINUM_FLUID_TANK_BLOCK_ENTITY.get(), FluidTankRenderer::new);
-        event.registerBlockEntityRenderer(KineticBlockEntities.PLATINUM_FLUID_VESSEL_BLOCK_ENTITY.get(), PlatinumFluidVesselRenderer::new);
-    }
-
-    @SubscribeEvent
-    public static void onModifyBakingResult(ModelEvent.ModifyBakingResult event) {
-        EncasedCTBehaviour behaviour = new EncasedCTBehaviour(PropulsionSpriteShifts.PLATINUM_CASING_TEXTURE);
-
-        ModelSwapper.swapModels(event.getModels(),
-            ModelSwapper.getAllBlockStateModelLocations(KineticBlocks.PLATINUM_FLUID_TANK.get()),
-            PlatinumFluidTankModel::new);
-
-        ModelSwapper.swapModels(event.getModels(),
-            ModelSwapper.getAllBlockStateModelLocations(KineticBlocks.PLATINUM_FLUID_VESSEL.get()),
-            PlatinumFluidVesselModel::new);
     }
 }

@@ -15,13 +15,6 @@ import javax.annotation.Nonnull;
 public class DeltaPonderPlugin implements PonderPlugin {
     public static void register(PonderSceneRegistrationHelper<ResourceLocation> helper) {
         final PonderSceneRegistrationHelper<Block> HELPER = helper.withKeyFunction(BuiltInRegistries.BLOCK::getKey);
-        //Burners
-        HELPER.forComponents(KineticBlocks.SOLID_BURNER.get()).addStoryBoard("solid_burner", BurnerScenes::solidBurner);
-        HELPER.forComponents(KineticBlocks.LIQUID_BURNER.get()).addStoryBoard("liquid_burner", BurnerScenes::liquidBurner);
-        //Stirling engine
-        HELPER.forComponents(KineticBlocks.STIRLING_ENGINE_BLOCK.get())
-                .addStoryBoard("stirling_engine_solid", StirlingEngineScene::stirlingEngine)
-                .addStoryBoard("stirling_engine_liquid", StirlingEngineScene::stirlingEngineLiquid);
 
         //Thruster
         HELPER.forComponents(KineticBlocks.THRUSTER_BLOCK.get())
@@ -50,7 +43,6 @@ public class DeltaPonderPlugin implements PonderPlugin {
     public void registerTags(@Nonnull PonderTagRegistrationHelper<ResourceLocation> helper) {
         final PonderTagRegistrationHelper<Block> HELPER = helper.withKeyFunction(BuiltInRegistries.BLOCK::getKey);
         HELPER.addToTag(AllCreatePonderTags.KINETIC_APPLIANCES)
-            .add(KineticBlocks.STIRLING_ENGINE_BLOCK.get())
             .add(KineticBlocks.VECTOR_THRUSTER_BLOCK.get())
             .add(KineticBlocks.CREATIVE_VECTOR_THRUSTER_BLOCK.get())
             .add(KineticBlocks.LIQUID_VECTOR_THRUSTER_BLOCK.get());

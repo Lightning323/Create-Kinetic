@@ -12,10 +12,6 @@ import org.lightning323.createkinetic.registries.KineticBlocks;
 
 public class ModSetupEvents {
     public static void onCommonSetup(FMLCommonSetupEvent event) {
-        event.enqueueWork(() -> {
-            BoilerHeater.REGISTRY.register(KineticBlocks.SOLID_BURNER.get(), ModSetupEvents::propulsionBurnerHeat);
-            BoilerHeater.REGISTRY.register(KineticBlocks.LIQUID_BURNER.get(), ModSetupEvents::propulsionBurnerHeat);
-        });
     }
 
     private static float propulsionBurnerHeat(Level level, BlockPos pos, BlockState state) {

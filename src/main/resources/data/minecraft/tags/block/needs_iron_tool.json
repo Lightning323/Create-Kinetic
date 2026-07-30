@@ -2,17 +2,8 @@
   "replace": false,
   "values": [
     "createkinetic:thruster",
-    "createkinetic:solid_burner",
-    "createkinetic:liquid_burner",
-    "createkinetic:stirling_engine",
     "createkinetic:vector_thruster",
     "createkinetic:creative_vector_thruster",
-    "createkinetic:liquid_vector_thruster",
-    "createkinetic:platinum_ore",
-    "createkinetic:deepslate_platinum_ore",
-    "createkinetic:platinum_block",
-    "createkinetic:raw_platinum_block",
-    "createkinetic:coral_generator",
-    "createkinetic:advanced_tilt_adapter"
+    "createkinetic:liquid_vector_thruster"
   ]
 }
