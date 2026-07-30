@@ -23,6 +23,24 @@
     "facing=west,multi=false": {
       "model": "createkinetic:block/ion_thruster",
       "y": 270
+    },
+    "facing=north,multi=true": {
+      "model": "createkinetic:block/thruster_empty"
+    },
+    "facing=south,multi=true": {
+      "model": "createkinetic:block/thruster_empty"
+    },
+    "facing=west,multi=true": {
+      "model": "createkinetic:block/thruster_empty"
+    },
+    "facing=east,multi=true": {
+      "model": "createkinetic:block/thruster_empty"
+    },
+    "facing=up,multi=true": {
+      "model": "createkinetic:block/thruster_empty"
+    },
+    "facing=down,multi=true": {
+      "model": "createkinetic:block/thruster_empty"
     }
   }
 }
