@@ -64,9 +64,6 @@ public class KineticBlocks {
         () -> new CopycatWingBlock(Block.Properties.of().strength(1.5f, 2.0f), 8));
     public static final DeferredBlock<CopycatWingBlock> COPYCAT_WING = BLOCKS.register("copycat_wing",
         () -> new CopycatWingBlock(Block.Properties.of().strength(1.5f, 2.0f), 4));
-    public static final DeferredBlock<WingBlock> TEMPERED_WING_BLOCK = BLOCKS.register("tempered_wing",
-        () -> new WingBlock(Block.Properties.of().mapColor(MapColor.COLOR_LIGHT_GRAY).sound(SoundType.COPPER)
-            .strength(1.5f, 2.0f).noOcclusion()));
     public static final DeferredBlock<WingBlock> WING_BLOCK = BLOCKS.register("wing",
         () -> new WingBlock(Block.Properties.of().mapColor(MapColor.COLOR_LIGHT_GRAY).sound(SoundType.COPPER)
             .strength(1.5f, 2.0f).noOcclusion()));
@@ -128,7 +125,6 @@ public class KineticBlocks {
         registerBlockItem("liquid_vector_thruster", KineticBlocks.LIQUID_VECTOR_THRUSTER_BLOCK, new BlockItem.Properties().rarity(Rarity.UNCOMMON));
         registerBlockItem("creative_vector_thruster", KineticBlocks.CREATIVE_VECTOR_THRUSTER_BLOCK, new BlockItem.Properties().rarity(Rarity.EPIC));
         registerDefaultBlockItem("wing", KineticBlocks.WING_BLOCK);
-        registerDefaultBlockItem("tempered_wing", KineticBlocks.TEMPERED_WING_BLOCK);
         KineticBlocks.BLOCK_ITEMS.register("copycat_wing", () -> new CopycatWingItem(KineticBlocks.COPYCAT_WING.get(), new BlockItem.Properties()));
         KineticBlocks.BLOCK_ITEMS.register("copycat_wing_8", () -> new CopycatWingItem(KineticBlocks.COPYCAT_WING_8.get(), new BlockItem.Properties()));
         KineticBlocks.BLOCK_ITEMS.register("copycat_wing_12", () -> new CopycatWingItem(KineticBlocks.COPYCAT_WING_12.get(), new BlockItem.Properties()));

@@ -26,6 +26,7 @@ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.*;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
+import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.fluids.FluidStack;
 import org.lightning323.createkinetic.CreateKinetic;
 import org.lightning323.createkinetic.content.thruster.ion_thruster.IonThrusterRenderer;
@@ -149,6 +150,12 @@ public class ModClientEvents {
         PropulsionInstanceTypes.register();
 
     }
+
+    @SubscribeEvent
+    private void buildContents(BuildCreativeModeTabContentsEvent event) {
+       System.out.println("BuildCreativeModeTabContentsEvent "+event.getTabKey());
+    }
+
 
     @SubscribeEvent
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {

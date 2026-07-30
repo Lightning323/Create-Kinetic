@@ -53,8 +53,11 @@ public class CopycatWingBlock extends CopycatBlock implements BlockSubLevelLiftP
     private final int width;
 
     private static final List<Supplier<? extends Block>> entires =
-        List.of(KineticBlocks.COPYCAT_WING, KineticBlocks.COPYCAT_WING_8, KineticBlocks.COPYCAT_WING_12,
-            KineticBlocks.WING_BLOCK, KineticBlocks.TEMPERED_WING_BLOCK);
+        List.of(
+                KineticBlocks.COPYCAT_WING,
+                KineticBlocks.COPYCAT_WING_8,
+                KineticBlocks.COPYCAT_WING_12,
+            KineticBlocks.WING_BLOCK);
     private static final int placementHelperId = PlacementHelpers.register(new WingPlacementHelper(entires));
 
     private static final Map<Integer, VoxelShaper> wingShapers = Map.of(

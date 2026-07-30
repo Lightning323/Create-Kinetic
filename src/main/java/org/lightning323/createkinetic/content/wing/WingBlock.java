@@ -37,7 +37,7 @@ public class WingBlock extends DirectionalBlock implements BlockSubLevelLiftProv
     private static final Vector3dc CENTER_OF_MASS = new Vector3d(0.5, 0.5, 0.5);
     private static final List<Supplier<? extends net.minecraft.world.level.block.Block>> entires =
         List.of(KineticBlocks.COPYCAT_WING, KineticBlocks.COPYCAT_WING_8, KineticBlocks.COPYCAT_WING_12,
-            KineticBlocks.WING_BLOCK, KineticBlocks.TEMPERED_WING_BLOCK);
+            KineticBlocks.WING_BLOCK);
     private static final int placementHelperId = PlacementHelpers.register(new WingPlacementHelper(entires));
 
     public WingBlock(Properties properties) {
