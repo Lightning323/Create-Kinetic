@@ -1,8 +1,0 @@
-{
-	"format_version": "1.21.11",
-	"credit": "Made with Blockbench",
-	"parent": "createkinetic:block/joystick/block",
-	"textures": {
-		"0": "createkinetic:block/joystick/brass/block_active"
-	}
-}
