@@ -4,6 +4,7 @@
 	"render_type": "minecraft:cutout_mipped",
 	"textures": {
 		"0": "createkinetic:block/joystick/brass/block",
+		"particle": "createkinetic:block/joystick/brass/block",
 		"redstone_antenna": "create:block/redstone_antenna"
 	},
 	"elements": [
@@ -36,9 +37,9 @@
 		},
 		{
 			"name": "AntennaTop",
-			"from": [12, 11, 3],
-			"to": [13, 12, 4],
-			"rotation": {"angle": 0, "axis": "y", "origin": [19, 6, -5]},
+			"from": [12, 9, 3],
+			"to": [13, 10, 4],
+			"rotation": {"angle": 0, "axis": "y", "origin": [19, 4, -5]},
 			"faces": {
 				"north": {"uv": [0, 0, 0, 0], "texture": "#redstone_antenna"},
 				"east": {"uv": [0, 0, 0, 0], "texture": "#redstone_antenna"},
@@ -50,9 +51,9 @@
 		},
 		{
 			"name": "AntennaZ",
-			"from": [12, 3, 2],
-			"to": [13, 13, 5],
-			"rotation": {"angle": 0, "axis": "y", "origin": [19, 6, -5]},
+			"from": [12, 1, 2],
+			"to": [13, 11, 5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [19, 4, -5]},
 			"faces": {
 				"north": {"uv": [0, 0, 0, 0], "texture": "#redstone_antenna"},
 				"east": {"uv": [0, 0, 3, 10], "texture": "#redstone_antenna"},
@@ -64,9 +65,9 @@
 		},
 		{
 			"name": "AntennaX",
-			"from": [11, 3, 3],
-			"to": [14, 13, 4],
-			"rotation": {"angle": 0, "axis": "y", "origin": [19, 6, -5]},
+			"from": [11, 1, 3],
+			"to": [14, 11, 4],
+			"rotation": {"angle": 0, "axis": "y", "origin": [19, 4, -5]},
 			"faces": {
 				"north": {"uv": [0, 0, 3, 10], "texture": "#redstone_antenna"},
 				"east": {"uv": [0, 0, 0, 0], "texture": "#redstone_antenna"},

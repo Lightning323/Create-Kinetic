@@ -2,7 +2,9 @@
 	"format_version": "1.21.11",
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "createkinetic:block/joystick/brass/block"
+		"0": "createkinetic:block/joystick/brass/block",
+		"particle": "create:block/redstone_antenna",
+		"redstone_antenna": "create:block/redstone_antenna"
 	},
 	"elements": [
 		{
@@ -30,20 +32,6 @@
 				"west": {"uv": [11, 5, 8, 4.5], "texture": "#0"},
 				"up": {"uv": [11, 4.5, 8, 1.5], "texture": "#0"},
 				"down": {"uv": [11, 1.5, 8, 4.5], "texture": "#0"}
-			}
-		},
-		{
-			"name": "main",
-			"from": [12, 3, 3],
-			"to": [13, 10, 4],
-			"rotation": {"angle": 0, "axis": "y", "origin": [19, 4, -5]},
-			"faces": {
-				"north": {"uv": [15.5, 12.5, 16, 16], "texture": "#0"},
-				"east": {"uv": [15.5, 12.5, 16, 16], "texture": "#0"},
-				"south": {"uv": [15.5, 12.5, 16, 16], "texture": "#0"},
-				"west": {"uv": [15.5, 12.5, 16, 16], "texture": "#0"},
-				"up": {"uv": [15.5, 13, 16, 12.5], "texture": "#0"},
-				"down": {"uv": [15.5, 15.5, 16, 16], "texture": "#0"}
 			}
 		},
 		{
@@ -98,6 +86,48 @@
 				"up": {"uv": [12.5, 15.5, 11.5, 14.5], "texture": "#0"},
 				"down": {"uv": [12.5, 14.5, 11.5, 15.5], "texture": "#0"}
 			}
+		},
+		{
+			"name": "AntennaTop",
+			"from": [12, 9, 3],
+			"to": [13, 10, 4],
+			"rotation": {"angle": 0, "axis": "y", "origin": [19, 4, -5]},
+			"faces": {
+				"north": {"uv": [0, 0, 0, 0], "texture": "#redstone_antenna"},
+				"east": {"uv": [0, 0, 0, 0], "texture": "#redstone_antenna"},
+				"south": {"uv": [0, 0, 0, 0], "texture": "#redstone_antenna"},
+				"west": {"uv": [0, 0, 0, 0], "texture": "#redstone_antenna"},
+				"up": {"uv": [1, 1, 2, 2], "rotation": 180, "texture": "#redstone_antenna"},
+				"down": {"uv": [0, 0, 0, 0], "texture": "#redstone_antenna"}
+			}
+		},
+		{
+			"name": "AntennaZ",
+			"from": [12, 1, 2],
+			"to": [13, 11, 5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [19, 4, -5]},
+			"faces": {
+				"north": {"uv": [0, 0, 0, 0], "texture": "#redstone_antenna"},
+				"east": {"uv": [0, 0, 3, 10], "texture": "#redstone_antenna"},
+				"south": {"uv": [0, 0, 0, 0], "texture": "#redstone_antenna"},
+				"west": {"uv": [0, 0, 3, 10], "texture": "#redstone_antenna"},
+				"up": {"uv": [0, 0, 0, 0], "texture": "#redstone_antenna"},
+				"down": {"uv": [0, 0, 0, 0], "texture": "#redstone_antenna"}
+			}
+		},
+		{
+			"name": "AntennaX",
+			"from": [11, 1, 3],
+			"to": [14, 11, 4],
+			"rotation": {"angle": 0, "axis": "y", "origin": [19, 4, -5]},
+			"faces": {
+				"north": {"uv": [0, 0, 3, 10], "texture": "#redstone_antenna"},
+				"east": {"uv": [0, 0, 0, 0], "texture": "#redstone_antenna"},
+				"south": {"uv": [0, 0, 3, 10], "texture": "#redstone_antenna"},
+				"west": {"uv": [0, 0, 0, 0], "texture": "#redstone_antenna"},
+				"up": {"uv": [0, 0, 0, 0], "texture": "#redstone_antenna"},
+				"down": {"uv": [0, 0, 0, 0], "texture": "#redstone_antenna"}
+			}
 		}
 	],
 	"display": {
@@ -119,17 +149,24 @@
 			"origin": [0, 0, 0],
 			"scope": 0,
 			"color": 0,
-			"children": [2]
+			"children": []
 		},
+		2,
 		3,
 		4,
-		5,
 		{
 			"name": "button",
 			"origin": [0, 0, 0],
 			"scope": 0,
 			"color": 0,
-			"children": [6]
+			"children": [5]
+		},
+		{
+			"name": "Antenna",
+			"origin": [0, 0, 0],
+			"scope": 0,
+			"color": 0,
+			"children": [6, 7, 8]
 		}
 	]
 }
