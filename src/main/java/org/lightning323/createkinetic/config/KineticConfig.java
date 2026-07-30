@@ -45,11 +45,6 @@ public class KineticConfig {
     public static final ModConfigSpec.IntValue LIQUID_VECTOR_THRUSTER_FUEL_TANK_CAPACITY_MB;
     public static final ModConfigSpec.DoubleValue LIQUID_VECTOR_THRUSTER_FUEL_MB_PER_TICK_AT_FULL_THROTTLE;
 
-    public static final ModConfigSpec.DoubleValue SOLID_FUEL_THRUSTER_BASE_THRUST;
-    public static final ModConfigSpec.DoubleValue SOLID_FUEL_THRUSTER_NOZZLE_OFFSET;
-    public static final ModConfigSpec.DoubleValue SOLID_FUEL_THRUSTER_PARTICLE_COUNT_MULTIPLIER;
-    public static final ModConfigSpec.DoubleValue SOLID_FUEL_THRUSTER_PARTICLE_VELOCITY_MULTIPLIER;
-
     public static final ModConfigSpec.DoubleValue MULTIBLOCK_2X_THRUST_MULTIPLIER;
     public static final ModConfigSpec.DoubleValue MULTIBLOCK_3X_THRUST_MULTIPLIER;
     public static final ModConfigSpec.DoubleValue MULTIBLOCK_2X_FUEL_EFFICIENCY;
@@ -258,21 +253,6 @@ public class KineticConfig {
                 .defineInRange("liquidVectorThrusterFuelTankCapacityMb", 1000, 250, 10000000);
         LIQUID_VECTOR_THRUSTER_FUEL_MB_PER_TICK_AT_FULL_THROTTLE = COMMON_BUILDER.comment("Liquid vector thruster fuel consumption in millibuckets per tick at full redstone throttle.")
                 .defineInRange("liquidVectorThrusterFuelMbPerTickAtFullThrottle", 1.0d, 0.0001d, 1000.0d);
-        COMMON_BUILDER.pop();
-
-        COMMON_BUILDER.push("solidFuelThruster");
-        SOLID_FUEL_THRUSTER_BASE_THRUST = COMMON_BUILDER.comment(
-                        "Solid fuel thruster base thrust at redstone 15 and full obstruction efficiency.",
-                        "Defaults lower than liquid thrusters for a compact solid-fuel engine.")
-                .defineInRange("solidFuelThrusterBaseThrust", 200.0d, 1.0d, 10000000.0d);
-        SOLID_FUEL_THRUSTER_NOZZLE_OFFSET = COMMON_BUILDER.comment("Nozzle offset from block center for solid fuel thruster force application.")
-                .defineInRange("solidFuelThrusterNozzleOffset", 0.75d, 0.0d, 1.5d);
-        SOLID_FUEL_THRUSTER_PARTICLE_COUNT_MULTIPLIER = COMMON_BUILDER.comment(
-                        "Scales exhaust particle count for solid fuel thrusters (0 disables extra scaling below base emit logic).")
-                .defineInRange("solidFuelThrusterParticleCountMultiplier", 0.35d, 0.0d, 32.0d);
-        SOLID_FUEL_THRUSTER_PARTICLE_VELOCITY_MULTIPLIER = COMMON_BUILDER.comment(
-                        "Scales exhaust particle velocity for solid fuel thrusters.")
-                .defineInRange("solidFuelThrusterParticleVelocityMultiplier", 0.4d, 0.0d, 32.0d);
         COMMON_BUILDER.pop();
 
         COMMON_BUILDER.push("multiblockThruster");

@@ -23,9 +23,7 @@ import net.neoforged.neoforge.event.AddReloadListenerEvent;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
-import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import org.lightning323.createkinetic.CreateKinetic;
-import org.lightning323.createkinetic.content.thruster.SolidThrusterFuelManager;
 import org.lightning323.createkinetic.content.thruster.ThrusterFuelManager;
 import org.lightning323.createkinetic.network.PropulsionPackets;
 import org.lightning323.createkinetic.network.SyncThrusterFuelsPacket;
@@ -44,7 +42,6 @@ public class ForgeEvents {
     @SubscribeEvent
     public static void onAddReloadListeners(AddReloadListenerEvent event) {
         event.addListener(new ThrusterFuelManager());
-        event.addListener(new SolidThrusterFuelManager());
     }
 
     @SubscribeEvent

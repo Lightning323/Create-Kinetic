@@ -72,6 +72,10 @@ public class CreativeThrusterBlockEntity extends AbstractThrusterBlockEntity {
         behaviours.add(powerBehaviour);
     }
 
+    public boolean isMultiblock(){
+        return false;
+    }
+
     private void onAnyPowerBehaviourChanged(int value) {
         if (isMultiblock() && !isController()) {
             CreativeThrusterBlockEntity ctrl = getControllerBE();
