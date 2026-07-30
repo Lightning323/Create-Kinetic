@@ -9,7 +9,9 @@
     "tracks.WheelMountBlockMixin",
     "tracks.WheelMountOffsetMixin",
     "BasinBlockEntityMixin",
-    "SchematicPlacePacketMixin"
+    "SchematicPlacePacketMixin",
+    "LinkedTypewriterBlockInvoker",
+    "LinkedTypewriterInteractionHandlerMixin"
   ],
   "client": [
     "tracks.KineticBlockEntityRendererMixin",

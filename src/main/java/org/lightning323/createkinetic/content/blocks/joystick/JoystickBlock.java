@@ -2,7 +2,10 @@ package org.lightning323.createkinetic.content.blocks.joystick;
 
 import com.simibubi.create.content.equipment.wrench.IWrenchable;
 import com.simibubi.create.foundation.block.IBE;
+
 import java.util.UUID;
+
+import dev.simulated_team.simulated.content.blocks.redstone.linked_typewriter.LinkedTypewriterBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -30,107 +33,124 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.lightning323.createkinetic.mixin.LinkedTypewriterBlockInvoker;
 import org.lightning323.createkinetic.registries.KineticBlockEntityTypes;
 
 public class JoystickBlock extends Block implements EntityBlock, IBE<JoystickBlockEntity>, IWrenchable {
-   public static final BooleanProperty POWERED;
-   public static final DirectionProperty FACING;
-   public static final BooleanProperty IN_USE;
-   public static final VoxelShape CHASSIS_SHAPE;
-   public static final VoxelShape HANDLE_CORE_SHAPE;
-   public static final VoxelShape BUTTON_SHAPE;
-   public static final VoxelShape HANDLE_SHAPE;
-   private static final VoxelShape COLLISION;
+    public static final BooleanProperty POWERED;
+    public static final DirectionProperty FACING;
+    public static final BooleanProperty IN_USE;
+    public static final VoxelShape CHASSIS_SHAPE;
+    public static final VoxelShape HANDLE_CORE_SHAPE;
+    public static final VoxelShape BUTTON_SHAPE;
+    public static final VoxelShape HANDLE_SHAPE;
+    private static final VoxelShape COLLISION;
 
-   public JoystickBlock(Properties properties) {
-      super(properties);
-      this.registerDefaultState((BlockState)((BlockState)((BlockState)this.defaultBlockState().setValue(POWERED, false)).setValue(IN_USE, false)).setValue(FACING, Direction.SOUTH));
-   }
+    public JoystickBlock(Properties properties) {
+        super(properties);
+        this.registerDefaultState((BlockState) ((BlockState) ((BlockState) this.defaultBlockState().setValue(POWERED, false)).setValue(IN_USE, false)).setValue(FACING, Direction.SOUTH));
+    }
 
-   protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-      builder.add(new Property[]{POWERED, IN_USE, FACING});
-   }
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(new Property[]{POWERED, IN_USE, FACING});
+    }
 
-   public BlockState getStateForPlacement(BlockPlaceContext context) {
-      return (BlockState)this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
-   }
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        return (BlockState) this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
+    }
 
-   public BlockState rotate(BlockState state, Rotation rotation) {
-      return (BlockState)state.setValue(FACING, rotation.rotate((Direction)state.getValue(FACING)));
-   }
+    public BlockState rotate(BlockState state, Rotation rotation) {
+        return (BlockState) state.setValue(FACING, rotation.rotate((Direction) state.getValue(FACING)));
+    }
 
-   public BlockState mirror(BlockState state, Mirror mirror) {
-      return this.rotate(state, mirror.getRotation((Direction)state.getValue(FACING)));
-   }
+    public BlockState mirror(BlockState state, Mirror mirror) {
+        return this.rotate(state, mirror.getRotation((Direction) state.getValue(FACING)));
+    }
 
-   public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-      return CHASSIS_SHAPE;
-   }
+    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        return CHASSIS_SHAPE;
+    }
 
-   public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-      return COLLISION;
-   }
+    public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        return COLLISION;
+    }
 
-   protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-      if (hand == InteractionHand.MAIN_HAND && stack.isEmpty()) {
-         BlockEntity var9 = level.getBlockEntity(pos);
-         if (var9 instanceof JoystickBlockEntity) {
-            JoystickBlockEntity be = (JoystickBlockEntity)var9;
-            if (player.isShiftKeyDown()) {
-               if (be.hasController()) {
-                  if (level.isClientSide) {
-                     player.displayClientMessage(Component.translatable("message.createkinetic.joystick.busy"), true);
-                  }
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        if (hand == InteractionHand.MAIN_HAND && stack.isEmpty()) {
+            BlockEntity var9 = level.getBlockEntity(pos);
+            if (var9 instanceof JoystickBlockEntity be) {
+                if (player.isShiftKeyDown()) {
+                    if (be.hasController()) {
+                        if (level.isClientSide) {
+                            player.displayClientMessage(Component.translatable("message.createkinetic.joystick.busy"), true);
+                        }
+                        return ItemInteractionResult.sidedSuccess(level.isClientSide);
+                    } else {
+                        checkForAndInteractTypewriters(stack, state, level, pos, player, hand, hit);
+                        if (!level.isClientSide && player instanceof ServerPlayer) {
+                            ServerPlayer server = (ServerPlayer) player;
+                            server.openMenu(be, (buf) -> buf.writeBlockPos(pos));
+                        }
+                        return ItemInteractionResult.sidedSuccess(level.isClientSide);
+                    }
+                } else {
+                    UUID uuid = player.getUUID();
+                    if (be.checkAndStartUsing(uuid)) {
+                        checkForAndInteractTypewriters(stack, state, level, pos, player, hand, hit);
+                        return ItemInteractionResult.sidedSuccess(level.isClientSide);
+                    } else {
+                        if (level.isClientSide && !be.checkUser(uuid)) {
+                            player.displayClientMessage(Component.translatable("message.createkinetic.joystick.busy"), true);
+                        }
+                        return ItemInteractionResult.sidedSuccess(level.isClientSide);
+                    }
+                }
 
-                  return ItemInteractionResult.sidedSuccess(level.isClientSide);
-               } else {
-                  if (!level.isClientSide && player instanceof ServerPlayer) {
-                     ServerPlayer server = (ServerPlayer)player;
-                     server.openMenu(be, (buf) -> buf.writeBlockPos(pos));
-                  }
-
-                  return ItemInteractionResult.sidedSuccess(level.isClientSide);
-               }
             } else {
-               UUID uuid = player.getUUID();
-               if (be.checkAndStartUsing(uuid)) {
-                  return ItemInteractionResult.sidedSuccess(level.isClientSide);
-               } else {
-                  if (level.isClientSide && !be.checkUser(uuid)) {
-                     player.displayClientMessage(Component.translatable("message.createkinetic.joystick.busy"), true);
-                  }
-
-                  return ItemInteractionResult.sidedSuccess(level.isClientSide);
-               }
+                return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
             }
-         } else {
+        } else {
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-         }
-      } else {
-         return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-      }
-   }
+        }
+    }
 
-   public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-      return KineticBlockEntityTypes.JOYSTICK.create(pos, state);
-   }
+    private void checkForAndInteractTypewriters(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        System.out.println("Checking for typewriters");
 
-   public Class<JoystickBlockEntity> getBlockEntityClass() {
-      return JoystickBlockEntity.class;
-   }
+        for (int x = -1; x < 2; x++) {
+            for (int z = -1; z < 2; z++) {
+                BlockPos pos1 = new BlockPos(pos.getX() + x, pos.getY(), pos.getZ() + z);
+                BlockState state1 = level.getBlockState(pos1);
+                if (state1.getBlock() instanceof LinkedTypewriterBlock ltb) {
+                    System.out.println("Found typewriter at " + pos1);
+                    ((LinkedTypewriterBlockInvoker) ltb).invokeUseItemOn(stack, state1, level, pos1, player, hand, hit);
+                    return;
+                }
+            }
+        }
+    }
 
-   public BlockEntityType<? extends JoystickBlockEntity> getBlockEntityType() {
-      return (BlockEntityType) KineticBlockEntityTypes.JOYSTICK.get();
-   }
 
-   static {
-      POWERED = BlockStateProperties.POWERED;
-      FACING = BlockStateProperties.HORIZONTAL_FACING;
-      IN_USE = BooleanProperty.create("in_use");
-      CHASSIS_SHAPE = Shapes.or(box((double)0.0F, (double)0.0F, (double)0.0F, (double)16.0F, (double)3.0F, (double)16.0F), box((double)5.0F, (double)3.0F, (double)5.0F, (double)11.0F, (double)4.0F, (double)11.0F));
-      HANDLE_CORE_SHAPE = Shapes.or(box((double)6.0F, (double)3.0F, (double)6.0F, (double)10.0F, (double)5.0F, (double)10.0F), new VoxelShape[]{box((double)7.0F, (double)5.0F, (double)7.0F, (double)9.0F, (double)15.0F, (double)9.0F), box((double)6.75F, (double)15.0F, (double)6.75F, (double)9.25F, (double)21.0F, (double)9.25F)});
-      BUTTON_SHAPE = box((double)7.0F, (double)21.0F, (double)7.0F, (double)9.0F, (double)22.0F, (double)9.0F);
-      HANDLE_SHAPE = Shapes.or(HANDLE_CORE_SHAPE, BUTTON_SHAPE);
-      COLLISION = box((double)0.0F, (double)0.0F, (double)0.0F, (double)16.0F, (double)4.0F, (double)16.0F);
-   }
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return KineticBlockEntityTypes.JOYSTICK.create(pos, state);
+    }
+
+    public Class<JoystickBlockEntity> getBlockEntityClass() {
+        return JoystickBlockEntity.class;
+    }
+
+    public BlockEntityType<? extends JoystickBlockEntity> getBlockEntityType() {
+        return (BlockEntityType) KineticBlockEntityTypes.JOYSTICK.get();
+    }
+
+    static {
+        POWERED = BlockStateProperties.POWERED;
+        FACING = BlockStateProperties.HORIZONTAL_FACING;
+        IN_USE = BooleanProperty.create("in_use");
+        CHASSIS_SHAPE = Shapes.or(box((double) 0.0F, (double) 0.0F, (double) 0.0F, (double) 16.0F, (double) 3.0F, (double) 16.0F), box((double) 5.0F, (double) 3.0F, (double) 5.0F, (double) 11.0F, (double) 4.0F, (double) 11.0F));
+        HANDLE_CORE_SHAPE = Shapes.or(box((double) 6.0F, (double) 3.0F, (double) 6.0F, (double) 10.0F, (double) 5.0F, (double) 10.0F), new VoxelShape[]{box((double) 7.0F, (double) 5.0F, (double) 7.0F, (double) 9.0F, (double) 15.0F, (double) 9.0F), box((double) 6.75F, (double) 15.0F, (double) 6.75F, (double) 9.25F, (double) 21.0F, (double) 9.25F)});
+        BUTTON_SHAPE = box((double) 7.0F, (double) 21.0F, (double) 7.0F, (double) 9.0F, (double) 22.0F, (double) 9.0F);
+        HANDLE_SHAPE = Shapes.or(HANDLE_CORE_SHAPE, BUTTON_SHAPE);
+        COLLISION = box((double) 0.0F, (double) 0.0F, (double) 0.0F, (double) 16.0F, (double) 4.0F, (double) 16.0F);
+    }
 }

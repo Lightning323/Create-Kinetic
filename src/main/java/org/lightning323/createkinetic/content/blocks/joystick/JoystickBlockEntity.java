@@ -251,10 +251,6 @@ public class JoystickBlockEntity extends SmartBlockEntity implements MenuProvide
 
    private static String[] createDefaultBindings() {
       String[] arr = new String[BIND_COUNT];
-      arr[JoystickDirection.FORWARD.index] = "key.keyboard.w";
-      arr[JoystickDirection.RIGHT.index] = "key.keyboard.d";
-      arr[JoystickDirection.BACK.index] = "key.keyboard.s";
-      arr[JoystickDirection.LEFT.index] = "key.keyboard.a";
       arr[BIND_BUTTON_INDEX] = "key.mouse.left";
       return arr;
    }
