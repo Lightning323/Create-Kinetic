@@ -202,9 +202,19 @@ public class JoystickBlockEntity extends SmartBlockEntity implements MenuProvide
    }
 
    public boolean isUseMouseInput() {
-      return true;
+      return this.useMouseInput;
    }
 
+   public void setUseMouseInput(boolean use) {
+      if (this.useMouseInput != use) {
+         this.useMouseInput = use;
+         if (this.level != null && !this.level.isClientSide) {
+            this.setChanged();
+            this.sendData();
+         }
+
+      }
+   }
 
    public boolean isSpringBack() {
       return this.springBack;
@@ -241,6 +251,10 @@ public class JoystickBlockEntity extends SmartBlockEntity implements MenuProvide
 
    private static String[] createDefaultBindings() {
       String[] arr = new String[BIND_COUNT];
+      arr[JoystickDirection.FORWARD.index] = "key.keyboard.w";
+      arr[JoystickDirection.RIGHT.index] = "key.keyboard.d";
+      arr[JoystickDirection.BACK.index] = "key.keyboard.s";
+      arr[JoystickDirection.LEFT.index] = "key.keyboard.a";
       arr[BIND_BUTTON_INDEX] = "key.mouse.left";
       return arr;
    }
