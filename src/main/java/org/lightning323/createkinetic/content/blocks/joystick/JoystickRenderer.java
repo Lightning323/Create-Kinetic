@@ -61,49 +61,49 @@ public class JoystickRenderer extends SafeBlockEntityRenderer<JoystickBlockEntit
 //         }
       }
 
-      Minecraft mc = Minecraft.getInstance();
-      HitResult buttonDrop = mc.hitResult;
-      if (buttonDrop instanceof BlockHitResult hit) {
-         if (hit.getType() != Type.MISS && hit.getBlockPos().equals(be.getBlockPos())) {
-            float buttonDrop2 = -be.buttonPressAt(partialTicks) * 0.03125F;
-            renderHandleOutline(ms, buffer, facingDeg, tx, ty, buttonDrop2);
-         }
-      }
+//      Minecraft mc = Minecraft.getInstance();
+//      HitResult buttonDrop = mc.hitResult;
+//      if (buttonDrop instanceof BlockHitResult hit) {
+//         if (hit.getType() != Type.MISS && hit.getBlockPos().equals(be.getBlockPos())) {
+//            float buttonDrop2 = -be.buttonPressAt(partialTicks) * 0.03125F;
+//            renderHandleOutline(ms, buffer, facingDeg, tx, ty, buttonDrop2);
+//         }
+//      }
 
    }
-
-   private static void renderHandleOutline(PoseStack ms, MultiBufferSource buffer, float facingDeg, float tx, float ty, float buttonDrop) {
-      VertexConsumer lines = buffer.getBuffer(RenderType.lines());
-      float rotXRad = (float)Math.toRadians((double)(ty * 3.0F));
-      float rotZRad = (float)Math.toRadians((double)(-tx * 3.0F));
-      float facingRad = (float)Math.toRadians((double)facingDeg);
-      ms.pushPose();
-      ms.translate(0.5F, 0.0F, 0.5F);
-      ms.mulPose((new Quaternionf()).rotateY(-facingRad));
-      ms.translate(-0.5F, 0.0F, -0.5F);
-      ms.translate(0.5F, 0.15625F, 0.5F);
-      ms.mulPose((new Quaternionf()).rotateZ(rotZRad).rotateX(rotXRad));
-      ms.translate(-0.5F, -0.15625F, -0.5F);
-      drawShapeLines(ms, lines, JoystickBlock.HANDLE_CORE_SHAPE, 0.0F, 0.0F, 0.0F, 0.4F);
-      ms.pushPose();
-      ms.translate(0.0F, buttonDrop, 0.0F);
-      drawShapeLines(ms, lines, JoystickBlock.BUTTON_SHAPE, 0.0F, 0.0F, 0.0F, 0.4F);
-      ms.popPose();
-      ms.popPose();
-   }
-
-   private static void drawShapeLines(PoseStack ms, VertexConsumer vc, VoxelShape shape, float r, float g, float b, float a) {
-      PoseStack.Pose pose = ms.last();
-      shape.forAllEdges((x1, y1, z1, x2, y2, z2) -> {
-         float dx = (float)(x2 - x1);
-         float dy = (float)(y2 - y1);
-         float dz = (float)(z2 - z1);
-         float len = Mth.sqrt(dx * dx + dy * dy + dz * dz);
-         dx /= len;
-         dy /= len;
-         dz /= len;
-         vc.addVertex(pose, (float)x1, (float)y1, (float)z1).setColor(r, g, b, a).setNormal(pose, dx, dy, dz);
-         vc.addVertex(pose, (float)x2, (float)y2, (float)z2).setColor(r, g, b, a).setNormal(pose, dx, dy, dz);
-      });
-   }
+//
+//   private static void renderHandleOutline(PoseStack ms, MultiBufferSource buffer, float facingDeg, float tx, float ty, float buttonDrop) {
+//      VertexConsumer lines = buffer.getBuffer(RenderType.lines());
+//      float rotXRad = (float)Math.toRadians((double)(ty * 3.0F));
+//      float rotZRad = (float)Math.toRadians((double)(-tx * 3.0F));
+//      float facingRad = (float)Math.toRadians((double)facingDeg);
+//      ms.pushPose();
+//      ms.translate(0.5F, 0.0F, 0.5F);
+//      ms.mulPose((new Quaternionf()).rotateY(-facingRad));
+//      ms.translate(-0.5F, 0.0F, -0.5F);
+//      ms.translate(0.5F, 0.15625F, 0.5F);
+//      ms.mulPose((new Quaternionf()).rotateZ(rotZRad).rotateX(rotXRad));
+//      ms.translate(-0.5F, -0.15625F, -0.5F);
+//      drawShapeLines(ms, lines, JoystickBlock.HANDLE_CORE_SHAPE, 0.0F, 0.0F, 0.0F, 0.4F);
+//      ms.pushPose();
+//      ms.translate(0.0F, buttonDrop, 0.0F);
+//      drawShapeLines(ms, lines, JoystickBlock.BUTTON_SHAPE, 0.0F, 0.0F, 0.0F, 0.4F);
+//      ms.popPose();
+//      ms.popPose();
+//   }
+//
+//   private static void drawShapeLines(PoseStack ms, VertexConsumer vc, VoxelShape shape, float r, float g, float b, float a) {
+//      PoseStack.Pose pose = ms.last();
+//      shape.forAllEdges((x1, y1, z1, x2, y2, z2) -> {
+//         float dx = (float)(x2 - x1);
+//         float dy = (float)(y2 - y1);
+//         float dz = (float)(z2 - z1);
+//         float len = Mth.sqrt(dx * dx + dy * dy + dz * dz);
+//         dx /= len;
+//         dy /= len;
+//         dz /= len;
+//         vc.addVertex(pose, (float)x1, (float)y1, (float)z1).setColor(r, g, b, a).setNormal(pose, dx, dy, dz);
+//         vc.addVertex(pose, (float)x2, (float)y2, (float)z2).setColor(r, g, b, a).setNormal(pose, dx, dy, dz);
+//      });
+//   }
 }
