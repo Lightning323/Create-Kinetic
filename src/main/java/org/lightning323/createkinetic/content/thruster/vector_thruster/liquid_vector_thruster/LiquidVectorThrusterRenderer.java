@@ -9,7 +9,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.lightning323.createkinetic.content.thruster.ThrusterDebugRenderer;
 import org.lightning323.createkinetic.content.thruster.vector_thruster.VectorRedstoneLinkRenderer;
 import org.lightning323.createkinetic.content.thruster.vector_thruster.VectorThrusterRenderer;
-import org.lightning323.createkinetic.registries.PropulsionPartialModels;
+import org.lightning323.createkinetic.registries.KineticPartialModels;
 
 public class LiquidVectorThrusterRenderer extends SmartBlockEntityRenderer<LiquidVectorThrusterBlockEntity> {
 
@@ -25,11 +25,11 @@ public class LiquidVectorThrusterRenderer extends SmartBlockEntityRenderer<Liqui
         if (be == null || be.isRemoved()) return;
 
         BlockState state = be.getBlockState();
-        PartialModel bodyModel = PropulsionPartialModels.LIQUID_VECTOR_THRUSTER_BODY;
-        PartialModel flapTop = PropulsionPartialModels.LIQUID_VECTOR_THRUSTER_FLAP_TOP;
-        PartialModel flapBottom = PropulsionPartialModels.LIQUID_VECTOR_THRUSTER_FLAP_BOTTOM;
-        PartialModel flapLeft = PropulsionPartialModels.LIQUID_VECTOR_THRUSTER_FLAP_LEFT;
-        PartialModel flapRight = PropulsionPartialModels.LIQUID_VECTOR_THRUSTER_FLAP_RIGHT;
+        PartialModel bodyModel = KineticPartialModels.LIQUID_VECTOR_THRUSTER_BODY;
+        PartialModel flapTop = KineticPartialModels.LIQUID_VECTOR_THRUSTER_FLAP_TOP;
+        PartialModel flapBottom = KineticPartialModels.LIQUID_VECTOR_THRUSTER_FLAP_BOTTOM;
+        PartialModel flapLeft = KineticPartialModels.LIQUID_VECTOR_THRUSTER_FLAP_LEFT;
+        PartialModel flapRight = KineticPartialModels.LIQUID_VECTOR_THRUSTER_FLAP_RIGHT;
 
         VectorThrusterRenderer.renderThruster(be, partialTick, ms, buffer, light, overlay, state, bodyModel, flapTop, flapBottom, flapLeft, flapRight);
 

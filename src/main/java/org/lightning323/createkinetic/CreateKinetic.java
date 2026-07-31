@@ -38,7 +38,6 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.config.IConfigSpec;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.common.NeoForge;
@@ -59,7 +58,6 @@ import org.lightning323.createkinetic.registries.KineticMenuTypes;
 
 import org.lightning323.createkinetic.compat.computercraft.CCProxy;
 import org.lightning323.createkinetic.events.ModCapabilityEvents;
-import org.lightning323.createkinetic.events.ModSetupEvents;
 import org.lightning323.createkinetic.network.PropulsionPackets;
 import org.lightning323.createkinetic.particles.ParticleTypes;
 import org.lightning323.createkinetic.content.creative_tools.item.ModItems;
@@ -90,10 +88,7 @@ public class CreateKinetic {
         NeoForge.EVENT_BUS.register(JoystickSessions.class);
         NeoForge.EVENT_BUS.register(ReactionWheelController.class);
 
-
-        //Propulsion
         modBus.addListener(ModCapabilityEvents::registerCapabilities);
-        modBus.addListener(ModSetupEvents::onCommonSetup);
         //Content
         ParticleTypes.register(modBus);
         KineticBlocks.register(modBus);
@@ -102,7 +97,7 @@ public class CreateKinetic {
         ModItems.register(modBus);
         PropulsionSoundEvents.register(modBus);
         KineticFluids.register(modBus);
-        PropulsionPartialModels.register();
+        KineticPartialModels.register();
         modBus.addListener(PropulsionPackets::register);
         PropulsionDisplaySources.register();
         PropulsionSableBridge.init();

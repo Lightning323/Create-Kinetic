@@ -68,10 +68,8 @@ public class KineticClient {
 
     public static void init(IEventBus modBus) {
         registerClientHandlers(modBus);
-        KineticPartialModels.init();
         modBus.addListener(KineticClient::clientSetup);
         modBus.addListener(KineticClient::registerKeys);
-//        modBus.addListener(KineticClient::buildContents);
         NeoForge.EVENT_BUS.addListener(EventPriority.NORMAL, KineticClient::clientTick);
         TracksPartialModels.init();
         TracksSpriteShifts.init();
@@ -160,7 +158,6 @@ public class KineticClient {
         }
 
     }
-
 
 
     private static AtomicBoolean built = new AtomicBoolean(false);

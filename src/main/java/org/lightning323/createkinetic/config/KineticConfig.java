@@ -60,7 +60,6 @@ public class KineticConfig {
     public static final Map<String, ModConfigSpec.IntValue> FUEL_EFFICIENCY_ENTRIES = new LinkedHashMap<>();
     public static final Map<String, ModConfigSpec.IntValue> FUEL_BURN_RATE_ENTRIES = new LinkedHashMap<>();
     public static final Map<String, ModConfigSpec.ConfigValue<String>> THRUSTER_DYE_COLORS = new LinkedHashMap<>();
-    public static final ModConfigSpec.IntValue CABLE_ENERGY_TRANSFER;
     public static final ModConfigSpec.BooleanValue ENABLE_RENDER_TUNING_CHEATS;
 
     private static final ModConfigSpec.DoubleValue GYROSCOPE_OMEGA_TARGET;
@@ -180,25 +179,8 @@ public class KineticConfig {
     public static final ModConfigSpec.EnumValue<ThrusterPlumeType> CREATIVE_THRUSTER_PLUME_TYPE;
     public static final ModConfigSpec.EnumValue<ThrusterPlumeType> ION_THRUSTER_PLUME_TYPE;
     public static final ModConfigSpec.EnumValue<ThrusterPlumeType> VECTOR_THRUSTERS_PLUME_TYPE;
-    public static final ModConfigSpec.EnumValue<ThrusterPlumeType> SOLID_FUEL_THRUSTER_PLUME_TYPE;
-
 
     public static final ModConfigSpec.BooleanValue DEBUG_THRUSTER;
-
-    // Stirling engine
-    public static final ModConfigSpec.ConfigValue<Double> STIRLING_GENERATED_SU;
-    public static final ModConfigSpec.ConfigValue<Double> TILT_ADAPTER_ANGLE_RANGE;
-    public static final ModConfigSpec.ConfigValue<Double> STIRLING_REVOLUTION_PERIOD;
-    public static final ModConfigSpec.ConfigValue<Double> STIRLING_CRANK_RADIUS;
-    public static final ModConfigSpec.ConfigValue<Double> STIRLING_CONROD_LENGTH;
-
-    // Burners
-    public static final ModConfigSpec.ConfigValue<Boolean> BURNERS_POWER_HEATED_MIXERS;
-    public static final ModConfigSpec.ConfigValue<Boolean> BURNERS_HEAT_STEAM_ENGINES;
-    public static final ModConfigSpec.ConfigValue<Boolean> BURNERS_SUPERHEAT_STEAM_ENGINES;
-    public static final ModConfigSpec.ConfigValue<Boolean> BLAZE_BURNERS_HEAT_STIRLING_ENGINES;
-    public static final ModConfigSpec.ConfigValue<Double> SOLID_BURNER_FUEL_CONSUMPTION_MULTIPLIER;
-    public static final Map<String, ModConfigSpec.ConfigValue<String>> CORAL_FUEL_CONVERSION_RATE_ENTRIES = new LinkedHashMap<>();
 
     /**
      * Extra fuel lines {@code fluid=efficiency,burnRate}; merged after defaults; duplicates override.
@@ -210,8 +192,47 @@ public class KineticConfig {
      */
     static {
 
-        //#endregion
-        //Common
+        //Joystick
+        CLIENT_BUILDER.push("Joystick");
+        CLIENT_BUILDER.comment("Joystick settings.");
+        JOYSTICK_HUD_SHOW_READOUT = CLIENT_BUILDER.comment("Show readout in the Joystick HUD").define("showReadout", false);
+        JOYSTICK_HUD_SHOW_LINES = CLIENT_BUILDER.comment("Show lines in the Joystick HUD").define("showLines", false);
+        JOYSTICK_PIXELS_PER_STEP = COMMON_BUILDER.comment("Raw mouse pixels per tilt step. Lower = more sensitive. Full deflection (15 steps = 45 deg) is reached after 15x this many pixels of mouse movement.").defineInRange("pixelsPerStep", (double) 30.0F, (double) 1.0F, (double) 500.0F);
+        CLIENT_BUILDER.comment("Client-only joystick feel settings (input pacing).");
+        JOYSTICK_KEY_REPEAT_DELAY_MS = CLIENT_BUILDER.comment("Milliseconds between repeat tilt steps while a direction key is held. Lower = full deflection reached faster (snappier); higher = slower sweep.").defineInRange("keyRepeatDelayMs", 100, 10, 2000);
+        JOYSTICK_SPRING_BACK_DELAY_MS = CLIENT_BUILDER.comment("Grace window after the last direction-key press/release before spring-back starts decaying. Lets you tap a key repeatedly without fighting the spring between taps. Set to 0 to spring back immediately.").defineInRange("springBackDelayMs", 300, 0, 5000);
+        CLIENT_BUILDER.pop();
+
+        //Thrusters
+        CLIENT_BUILDER.push("Thruster");
+
+        CLIENT_BUILDER.push("Debug");
+        DEBUG_THRUSTER = CLIENT_BUILDER.comment("Render thruster debug overlays (plume ray, obstruction hits, damage zones).")
+                .define("Thruster", false);
+        CLIENT_BUILDER.pop();
+
+        CLIENT_BUILDER.push("Thruster Render Types");
+        CLIENT_BUILDER.comment("How the thruster plume should be rendered.");
+        THRUSTER_PLUME_TYPE = CLIENT_BUILDER.defineEnum("Thruster Plume Type", ThrusterPlumeType.PARTICLES);
+        CREATIVE_THRUSTER_PLUME_TYPE = CLIENT_BUILDER.defineEnum("Creative Thruster Plume Type", ThrusterPlumeType.PARTICLES);
+        ION_THRUSTER_PLUME_TYPE = CLIENT_BUILDER.defineEnum("Ion Thruster Plume Type", ThrusterPlumeType.PARTICLES);
+        VECTOR_THRUSTERS_PLUME_TYPE = CLIENT_BUILDER.defineEnum("Vector Thrusters Plume Type", ThrusterPlumeType.PARTICLES);
+        CLIENT_BUILDER.pop();
+
+        CLIENT_BUILDER.pop();
+    }
+
+    /**
+     * COMMON BUILDER
+     */
+    static {
+
+        //Tracks
+        COMMON_BUILDER.comment("Track settings")
+                .push("tracks");
+        ENABLE_RENDER_TUNING_CHEATS = COMMON_BUILDER.comment("Allows operators to open the in-game tracks render tuning menu with J. Disabled by default.").define("enableRenderTuningCheats", false);
+        COMMON_BUILDER.pop();
+
         //Gyro
         COMMON_BUILDER.comment("Settings for the Gyroscope block.")
                 .push("gyroscope");
@@ -224,29 +245,9 @@ public class KineticConfig {
         GYROSCOPE_STRESS_IMPACT = COMMON_BUILDER.comment("Base stress impact in SU per RPM. Total SU draw is roughly impact * |RPM|.").defineInRange("stressImpact", (double) 16.0F, (double) 0.0F, (double) 1024.0F);
         COMMON_BUILDER.pop();
 
-        //Joystick
-        COMMON_BUILDER.comment("Settings for the Joystick").push("joystick");
-        JOYSTICK_PIXELS_PER_STEP = COMMON_BUILDER.comment("Raw mouse pixels per tilt step. Lower = more sensitive. Full deflection (15 steps = 45 deg) is reached after 15x this many pixels of mouse movement.").defineInRange("pixelsPerStep", (double) 30.0F, (double) 1.0F, (double) 500.0F);
-        COMMON_BUILDER.pop();
 
-        //Tracks
-        ENABLE_RENDER_TUNING_CHEATS = COMMON_BUILDER.comment("Allows operators to open the in-game tracks render tuning menu with J. Disabled by default.").define("enableRenderTuningCheats", false);
-
-        //Client
-        CLIENT_BUILDER.comment("Client-only joystick feel settings (input pacing).").push("joystick");
-        JOYSTICK_KEY_REPEAT_DELAY_MS = CLIENT_BUILDER.comment("Milliseconds between repeat tilt steps while a direction key is held. Lower = full deflection reached faster (snappier); higher = slower sweep.").defineInRange("keyRepeatDelayMs", 100, 10, 2000);
-        JOYSTICK_SPRING_BACK_DELAY_MS = CLIENT_BUILDER.comment("Grace window after the last direction-key press/release before spring-back starts decaying. Lets you tap a key repeatedly without fighting the spring between taps. Set to 0 to spring back immediately.").defineInRange("springBackDelayMs", 300, 0, 5000);
-        CLIENT_BUILDER.pop();
-
-    }
-
-    /**
-     * COMMON BUILDER
-     */
-    static {
-        //#region Common (server)
+        //Thrusters
         COMMON_BUILDER.push("thruster");
-
         BASE_THRUST = COMMON_BUILDER.comment("Base thrust at redstone 15 and full obstruction efficiency for the standard thruster.",
                         "Default tuned for 1000-unit thrust scale parity with Sable physics.",
                         "Effective thrust uses: baseThrust * fuel_thrust_percent / 100.")
@@ -265,8 +266,9 @@ public class KineticConfig {
 
         CLIENT_PARTICLES_PER_TICK = COMMON_BUILDER.comment("Max client particles per tick while active.")
                 .defineInRange("clientParticlesPerTick", 4, 0, 64);
-
         COMMON_BUILDER.pop(); // thruster
+
+
 
         COMMON_BUILDER.push("ionThruster");
         ION_THRUSTER_ENERGY_CAPACITY_FE = COMMON_BUILDER.comment("Ion thruster internal FE capacity.")
@@ -282,6 +284,8 @@ public class KineticConfig {
                 .defineInRange("ionMultiblock3xThrustMultiplier", 1.40d, 0.01d, 10.0d);
         COMMON_BUILDER.pop();
 
+
+
         COMMON_BUILDER.push("Creative Thruster");
         CREATIVE_THRUSTER_BASE_THRUST = COMMON_BUILDER.comment("Starting thrust value (kN) when a creative thruster is placed.",
                         "Default tuned for 1000-unit thrust scale parity with Sable physics.")
@@ -295,11 +299,15 @@ public class KineticConfig {
                 .defineInRange("creativeThrusterMultiblock3x3x3MaxThrust", 5000000.0d, 10.0d, 100000000.0d);
         COMMON_BUILDER.pop();
 
+
+
         COMMON_BUILDER.push("vectorThruster");
         VECTOR_THRUSTER_BASE_THRUST = COMMON_BUILDER.comment("Vector thruster base thrust at redstone 15 and full obstruction efficiency.",
                         "Default tuned for 1000-unit thrust scale parity with Sable physics.")
                 .defineInRange("vectorThrusterBaseThrust", 733.333333333d, 1.0d, 10000000.0d);
         COMMON_BUILDER.pop();
+
+
         COMMON_BUILDER.push("liquidVectorThruster");
         LIQUID_VECTOR_THRUSTER_BASE_THRUST = COMMON_BUILDER.comment("Liquid vector thruster base thrust at redstone 15 and full obstruction efficiency.",
                         "Default tuned for 1000-unit thrust scale parity with Sable physics.")
@@ -347,34 +355,6 @@ public class KineticConfig {
                 .defineInRange("thrustUnitsPerKn", 1000.0d, 1.0d, 1000000.0d);
         COMMON_BUILDER.pop();
 
-        COMMON_BUILDER.push("Stirling Engine");
-        STIRLING_GENERATED_SU = COMMON_BUILDER.comment("Change this value to modify the amount of stress units produced by stirling engine. Value of 16 corresponds to 4096 SU.")
-                .defineInRange("Generated stress units", 16.0, 1.0, 64.0);
-        COMMON_BUILDER.pop();
-
-        COMMON_BUILDER.push("Tilt Adapter");
-        TILT_ADAPTER_ANGLE_RANGE = COMMON_BUILDER.comment("Maximum absolute output angle in degrees, reached at full redstone differential.")
-                .defineInRange("Maximum angle range", 90.0, 0.0, 180.0);
-        COMMON_BUILDER.pop();
-
-        COMMON_BUILDER.push("Burners");
-        BURNERS_POWER_HEATED_MIXERS = COMMON_BUILDER.comment("If true - both solid and liquid burners can provide heat to heated mixers allowing for pre-nether brass.")
-                .define("Burners power heated mixers", true);
-        BURNERS_HEAT_STEAM_ENGINES = COMMON_BUILDER.comment("Allow propulsion burners to heat Create steam engines.")
-                .define("Burners heat steam engines", true);
-        BURNERS_SUPERHEAT_STEAM_ENGINES = COMMON_BUILDER.comment("Allow seething burners to count as superheated for steam engines.")
-                .define("Burners superheat steam engines", true);
-        BLAZE_BURNERS_HEAT_STIRLING_ENGINES = COMMON_BUILDER.comment("Allow vanilla blaze burners under stirling engines to provide heat.")
-                .define("Blaze burners heat stirling engines", true);
-        SOLID_BURNER_FUEL_CONSUMPTION_MULTIPLIER = COMMON_BUILDER.comment("Fuel consumption multiplier for solid burners. Higher values make inserted items burn faster.")
-                .defineInRange("Solid burner fuel consumption multiplier", 1.0, 0.01, 100.0);
-        COMMON_BUILDER.pop();
-
-        COMMON_BUILDER.push("Cable");
-        CABLE_ENERGY_TRANSFER = COMMON_BUILDER.comment("Maximum FE moved per tick by a single cable block.")
-                .defineInRange("Energy transfer", 1_000, 1, 100000000);
-        COMMON_BUILDER.pop();
-
         COMMON_BUILDER.push("Fuel Configuration");
         COMMON_BUILDER.comment(
                 "Fuel properties by fluid id. Configure efficiency and burn rate separately as percentages.");
@@ -410,27 +390,13 @@ public class KineticConfig {
                         "Use for fluids that do not have a fuelProperties subsection. Entries here override matching fluids from the table above.")
                 .defineListAllowEmpty("additionalThrusterFuelLines", ArrayList::new, obj -> obj instanceof String);
 
-        COMMON_BUILDER.pop();
-
         COMMON_BUILDER.push("thrusterDyeColors");
         COMMON_BUILDER.comment("Particle color overrides when a dye is applied to a thruster. Values are RRGGBB hex strings.");
         for (String[] e : new String[][]{
-                {"white", "FFFFFF"},
-                {"orange", "FF8000"},
-                {"magenta", "FF00FF"},
-                {"light_blue", "00BFFF"},
-                {"yellow", "FFFF00"},
-                {"lime", "7FFF00"},
-                {"pink", "FF69B4"},
-                {"gray", "808080"},
-                {"light_gray", "C0C0C0"},
-                {"cyan", "00FFFF"},
-                {"purple", "BF00FF"},
-                {"blue", "5555FF"},
-                {"brown", "C86400"},
-                {"green", "00C800"},
-                {"red", "FF0000"},
-                {"black", "2A2A2A"},
+                {"white", "FFFFFF"}, {"orange", "FF8000"}, {"magenta", "FF00FF"}, {"light_blue", "00BFFF"},
+                {"yellow", "FFFF00"}, {"lime", "7FFF00"}, {"pink", "FF69B4"}, {"gray", "808080"},
+                {"light_gray", "C0C0C0"}, {"cyan", "00FFFF"}, {"purple", "BF00FF"}, {"blue", "5555FF"},
+                {"brown", "C86400"}, {"green", "00C800"}, {"red", "FF0000"}, {"black", "2A2A2A"},
         }) {
             THRUSTER_DYE_COLORS.put("minecraft:" + e[0] + "_dye",
                     COMMON_BUILDER.define(e[0], e[1]));
@@ -438,38 +404,6 @@ public class KineticConfig {
         COMMON_BUILDER.pop();
 
         PropulsionDefaultStress.INSTANCE.registerAll(COMMON_BUILDER);
-
-        //#endregion
-
-        //#region Client
-        CLIENT_BUILDER.push("Stirling Engine");
-        STIRLING_REVOLUTION_PERIOD = CLIENT_BUILDER.comment("Revolution period of the simulated shaft (affects only piston movement).")
-                .define("Revolution period", 0.2);
-        STIRLING_CRANK_RADIUS = CLIENT_BUILDER.comment("Radius of the simulated crank.")
-                .define("Crank radius", 0.125);
-        STIRLING_CONROD_LENGTH = CLIENT_BUILDER.comment("Length of the simulated conrod.")
-                .define("Conrod length", 0.5);
-        CLIENT_BUILDER.pop();
-
-
-        CLIENT_BUILDER.push("Debug");
-        DEBUG_THRUSTER = CLIENT_BUILDER.comment("Render thruster debug overlays (plume ray, obstruction hits, damage zones).")
-                .define("Thruster", false);
-        CLIENT_BUILDER.pop();
-
-        CLIENT_BUILDER.push("Thruster Render Types");
-        CLIENT_BUILDER.comment("How the thruster plume should be rendered.");
-        THRUSTER_PLUME_TYPE = CLIENT_BUILDER.defineEnum("Thruster Plume Type", ThrusterPlumeType.PARTICLES);
-        CREATIVE_THRUSTER_PLUME_TYPE = CLIENT_BUILDER.defineEnum("Creative Thruster Plume Type", ThrusterPlumeType.SPRITE_MESH);
-        ION_THRUSTER_PLUME_TYPE = CLIENT_BUILDER.defineEnum("Ion Thruster Plume Type", ThrusterPlumeType.SPRITE_MESH);
-        SOLID_FUEL_THRUSTER_PLUME_TYPE = CLIENT_BUILDER.defineEnum("Solid Fuel Thruster Plume Type", ThrusterPlumeType.PARTICLES);
-        VECTOR_THRUSTERS_PLUME_TYPE = CLIENT_BUILDER.defineEnum("Vector Thrusters Plume Type", ThrusterPlumeType.SPRITE_MESH);
-        CLIENT_BUILDER.pop();
-
-        CLIENT_BUILDER.push("Joystick");
-        JOYSTICK_HUD_SHOW_READOUT = CLIENT_BUILDER.comment("Show readout in the Joystick HUD").define("showReadout", false);
-        JOYSTICK_HUD_SHOW_LINES = CLIENT_BUILDER.comment("Show lines in the Joystick HUD").define("showLines", false);
-        CLIENT_BUILDER.pop();
     }
 
     static {
@@ -633,10 +567,6 @@ public class KineticConfig {
 
     public static ThrusterPlumeType getVectorThrustersPlumeType() {
         return VECTOR_THRUSTERS_PLUME_TYPE.get();
-    }
-
-    public static ThrusterPlumeType getSolidFuelThrusterPlumeType() {
-        return SOLID_FUEL_THRUSTER_PLUME_TYPE.get();
     }
 
 }

@@ -16,7 +16,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.joml.Vector3f;
 import org.lightning323.createkinetic.content.thruster.MeshedThrusterFlameUtils;
 import org.lightning323.createkinetic.content.thruster.ThrusterDebugRenderer;
-import org.lightning323.createkinetic.registries.PropulsionPartialModels;
+import org.lightning323.createkinetic.registries.KineticPartialModels;
 
 public class CreativeThrusterRenderer extends SmartBlockEntityRenderer<CreativeThrusterBlockEntity> {
     public CreativeThrusterRenderer(final BlockEntityRendererProvider.Context context) {
@@ -57,7 +57,7 @@ public class CreativeThrusterRenderer extends SmartBlockEntityRenderer<CreativeT
             return;
         }
 
-        final SuperByteBuffer bracket = CachedBuffers.partial(PropulsionPartialModels.CREATIVE_THRUSTER_BRACKET, state);
+        final SuperByteBuffer bracket = CachedBuffers.partial(KineticPartialModels.CREATIVE_THRUSTER_BRACKET, state);
         final VertexConsumer vb = buffer.getBuffer(RenderType.cutoutMipped());
         final float angle = this.getBracketAngle(facing, placementFacing);
 
@@ -99,8 +99,8 @@ public class CreativeThrusterRenderer extends SmartBlockEntityRenderer<CreativeT
     }
 
     private static PartialModel getMultiblockModel(int width) {
-        if (width == 2) return PropulsionPartialModels.CREATIVE_THRUSTER_MULTIBLOCK_2X2X2;
-        if (width == 3) return PropulsionPartialModels.CREATIVE_THRUSTER_MULTIBLOCK_3X3X3;
+        if (width == 2) return KineticPartialModels.CREATIVE_THRUSTER_MULTIBLOCK_2X2X2;
+        if (width == 3) return KineticPartialModels.CREATIVE_THRUSTER_MULTIBLOCK_3X3X3;
         return null;
     }
 

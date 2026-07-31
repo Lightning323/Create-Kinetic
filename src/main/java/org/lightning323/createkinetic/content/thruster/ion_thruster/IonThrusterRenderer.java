@@ -18,7 +18,7 @@ import org.lightning323.createkinetic.content.thruster.ThrusterDebugRenderer;
 import org.lightning323.createkinetic.content.thruster.vector_thruster.VectorRedstoneLinkRenderer;
 import org.lightning323.createkinetic.content.thruster.vector_thruster.VectorThrusterBlockEntity;
 import org.lightning323.createkinetic.content.thruster.vector_thruster.VectorThrusterRenderer;
-import org.lightning323.createkinetic.registries.PropulsionPartialModels;
+import org.lightning323.createkinetic.registries.KineticPartialModels;
 
 public class IonThrusterRenderer extends SmartBlockEntityRenderer<IonThrusterBlockEntity> {
 
@@ -70,8 +70,8 @@ public class IonThrusterRenderer extends SmartBlockEntityRenderer<IonThrusterBlo
     }
 
     private static PartialModel getMultiblockModel(int width) {
-        if (width == 2) return PropulsionPartialModels.ION_THRUSTER_MULTIBLOCK_2X2X2;
-        if (width == 3) return PropulsionPartialModels.ION_THRUSTER_MULTIBLOCK_3X3X3;
+        if (width == 2) return KineticPartialModels.ION_THRUSTER_MULTIBLOCK_2X2X2;
+        if (width == 3) return KineticPartialModels.ION_THRUSTER_MULTIBLOCK_3X3X3;
         return null;
     }
 

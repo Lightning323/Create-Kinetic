@@ -31,13 +31,6 @@ public final class ThrusterShapes {
             .add(Block.box(2, 14, 2, 14, 16, 14))
             .forDirectional(Direction.UP);
 
-    /** Matches block model after blockstate rotation: fuel at low Z, nozzle at high Z. */
-    public static final VoxelShaper SOLID_FUEL_THRUSTER = ShapeBuilder.shape()
-            .add(Block.box(0, 0, 0, 16, 16, 8))
-            .add(Block.box(4, 4, 8, 12, 12, 14))
-            .add(Block.box(-1, -1, 7, 17, 17, 17))
-            .forDirectional();
-
     public static final VoxelShaper VECTOR_THRUSTER = ShapeBuilder.shape()
             .add(Block.box(2, 2, 0, 14, 14, 4)) // input
             .add(Block.box(1, 9, 0, 2, 13, 4))  // west upper

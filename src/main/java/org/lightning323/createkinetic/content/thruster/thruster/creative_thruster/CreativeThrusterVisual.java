@@ -11,7 +11,7 @@ import net.minecraft.util.Mth;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 import org.lightning323.createkinetic.content.thruster.thruster.ThrusterBlock;
-import org.lightning323.createkinetic.registries.PropulsionPartialModels;
+import org.lightning323.createkinetic.registries.KineticPartialModels;
 
 import java.util.function.Consumer;
 
@@ -34,7 +34,7 @@ public class CreativeThrusterVisual extends AbstractBlockEntityVisual<CreativeTh
             return;
         }
 
-        bracket = instancerProvider().instancer(InstanceTypes.ORIENTED, Models.partial(PropulsionPartialModels.CREATIVE_THRUSTER_BRACKET)).createInstance();
+        bracket = instancerProvider().instancer(InstanceTypes.ORIENTED, Models.partial(KineticPartialModels.CREATIVE_THRUSTER_BRACKET)).createInstance();
 
         float angle = getBracketAngle(facing, placementFacing);
         Quaternionf q = new Quaternionf(facing.getRotation());

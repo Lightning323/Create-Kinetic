@@ -15,7 +15,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.lightning323.createkinetic.content.thruster.AbstractThrusterBlock;
 import org.lightning323.createkinetic.content.thruster.MeshedThrusterFlameUtils;
 import org.lightning323.createkinetic.content.thruster.ThrusterDebugRenderer;
-import org.lightning323.createkinetic.registries.PropulsionPartialModels;
+import org.lightning323.createkinetic.registries.KineticPartialModels;
 
 public class ThrusterRenderer extends SmartBlockEntityRenderer<ThrusterBlockEntity> {
     public ThrusterRenderer(BlockEntityRendererProvider.Context context) {
@@ -54,8 +54,8 @@ public class ThrusterRenderer extends SmartBlockEntityRenderer<ThrusterBlockEnti
     }
 
     private static PartialModel getMultiblockModel(int width) {
-        if (width == 2) return PropulsionPartialModels.THRUSTER_MULTIBLOCK_2X2X2;
-        if (width == 3) return PropulsionPartialModels.THRUSTER_MULTIBLOCK_3X3X3;
+        if (width == 2) return KineticPartialModels.THRUSTER_MULTIBLOCK_2X2X2;
+        if (width == 3) return KineticPartialModels.THRUSTER_MULTIBLOCK_3X3X3;
         return null;
     }
 

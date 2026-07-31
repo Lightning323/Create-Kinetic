@@ -16,7 +16,7 @@ import org.lightning323.createkinetic.content.thruster.AbstractThrusterBlock;
 import org.lightning323.createkinetic.content.thruster.MeshedThrusterFlameUtils;
 import org.lightning323.createkinetic.content.thruster.ThrusterDebugRenderer;
 import org.lightning323.createkinetic.content.thruster.vector_thruster.creative_vector_thruster.CreativeVectorThrusterBlockEntity;
-import org.lightning323.createkinetic.registries.PropulsionPartialModels;
+import org.lightning323.createkinetic.registries.KineticPartialModels;
 
 
 public final class VectorThrusterRenderer {
@@ -48,12 +48,12 @@ public final class VectorThrusterRenderer {
         BlockState state = be.getBlockState();
         boolean creative = be instanceof CreativeVectorThrusterBlockEntity;
         PartialModel bodyModel = creative
-                ? PropulsionPartialModels.CREATIVE_VECTOR_THRUSTER_BODY
-                : PropulsionPartialModels.VECTOR_THRUSTER_BODY;
-        PartialModel flapTop = creative ? PropulsionPartialModels.CREATIVE_VECTOR_THRUSTER_FLAP_TOP : PropulsionPartialModels.VECTOR_THRUSTER_FLAP_TOP;
-        PartialModel flapBottom = creative ? PropulsionPartialModels.CREATIVE_VECTOR_THRUSTER_FLAP_BOTTOM : PropulsionPartialModels.VECTOR_THRUSTER_FLAP_BOTTOM;
-        PartialModel flapLeft = creative ? PropulsionPartialModels.CREATIVE_VECTOR_THRUSTER_FLAP_LEFT : PropulsionPartialModels.VECTOR_THRUSTER_FLAP_LEFT;
-        PartialModel flapRight = creative ? PropulsionPartialModels.CREATIVE_VECTOR_THRUSTER_FLAP_RIGHT : PropulsionPartialModels.VECTOR_THRUSTER_FLAP_RIGHT;
+                ? KineticPartialModels.CREATIVE_VECTOR_THRUSTER_BODY
+                : KineticPartialModels.VECTOR_THRUSTER_BODY;
+        PartialModel flapTop = creative ? KineticPartialModels.CREATIVE_VECTOR_THRUSTER_FLAP_TOP : KineticPartialModels.VECTOR_THRUSTER_FLAP_TOP;
+        PartialModel flapBottom = creative ? KineticPartialModels.CREATIVE_VECTOR_THRUSTER_FLAP_BOTTOM : KineticPartialModels.VECTOR_THRUSTER_FLAP_BOTTOM;
+        PartialModel flapLeft = creative ? KineticPartialModels.CREATIVE_VECTOR_THRUSTER_FLAP_LEFT : KineticPartialModels.VECTOR_THRUSTER_FLAP_LEFT;
+        PartialModel flapRight = creative ? KineticPartialModels.CREATIVE_VECTOR_THRUSTER_FLAP_RIGHT : KineticPartialModels.VECTOR_THRUSTER_FLAP_RIGHT;
 
         renderThruster(be, partialTick, ms, buffer, light, overlay, state, bodyModel, flapTop, flapBottom, flapLeft, flapRight);
     }

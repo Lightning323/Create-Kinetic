@@ -13,7 +13,7 @@
     },
     "facing=south,multi=false": {
       "model": "createkinetic:block/ion_thruster",
-      "x": 180,
+      "x": 0,
       "y": 180
     },
     "facing=east,multi=false": {
