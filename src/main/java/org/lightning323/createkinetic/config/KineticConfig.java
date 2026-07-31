@@ -193,12 +193,9 @@ public class KineticConfig {
     static {
 
         //Joystick
-        CLIENT_BUILDER.push("Joystick");
-        CLIENT_BUILDER.comment("Joystick settings.");
+        CLIENT_BUILDER.comment("Joystick settings.").push("Joystick");
         JOYSTICK_HUD_SHOW_READOUT = CLIENT_BUILDER.comment("Show readout in the Joystick HUD").define("showReadout", false);
         JOYSTICK_HUD_SHOW_LINES = CLIENT_BUILDER.comment("Show lines in the Joystick HUD").define("showLines", false);
-        JOYSTICK_PIXELS_PER_STEP = COMMON_BUILDER.comment("Raw mouse pixels per tilt step. Lower = more sensitive. Full deflection (15 steps = 45 deg) is reached after 15x this many pixels of mouse movement.").defineInRange("pixelsPerStep", (double) 30.0F, (double) 1.0F, (double) 500.0F);
-        CLIENT_BUILDER.comment("Client-only joystick feel settings (input pacing).");
         JOYSTICK_KEY_REPEAT_DELAY_MS = CLIENT_BUILDER.comment("Milliseconds between repeat tilt steps while a direction key is held. Lower = full deflection reached faster (snappier); higher = slower sweep.").defineInRange("keyRepeatDelayMs", 100, 10, 2000);
         JOYSTICK_SPRING_BACK_DELAY_MS = CLIENT_BUILDER.comment("Grace window after the last direction-key press/release before spring-back starts decaying. Lets you tap a key repeatedly without fighting the spring between taps. Set to 0 to spring back immediately.").defineInRange("springBackDelayMs", 300, 0, 5000);
         CLIENT_BUILDER.pop();
@@ -227,15 +224,18 @@ public class KineticConfig {
      */
     static {
 
+        //Joystick
+        COMMON_BUILDER.push("Joystick");
+        JOYSTICK_PIXELS_PER_STEP = COMMON_BUILDER.comment("Raw mouse pixels per tilt step. Lower = more sensitive. Full deflection (15 steps = 45 deg) is reached after 15x this many pixels of mouse movement.").defineInRange("pixelsPerStep", (double) 30.0F, (double) 1.0F, (double) 500.0F);
+        COMMON_BUILDER.pop();
+
         //Tracks
-        COMMON_BUILDER.comment("Track settings")
-                .push("tracks");
+        COMMON_BUILDER.comment("Track settings").push("tracks");
         ENABLE_RENDER_TUNING_CHEATS = COMMON_BUILDER.comment("Allows operators to open the in-game tracks render tuning menu with J. Disabled by default.").define("enableRenderTuningCheats", false);
         COMMON_BUILDER.pop();
 
         //Gyro
-        COMMON_BUILDER.comment("Settings for the Gyroscope block.")
-                .push("gyroscope");
+        COMMON_BUILDER.comment("Settings for the Gyroscope block.").push("gyroscope");
         GYROSCOPE_OMEGA_TARGET = COMMON_BUILDER.comment("Target natural frequency of the closed loop in rad/s. Higher = snappier correction. 3.0 rad/s gives ~2 second natural period. Goes up to ~10 before discretization at 80 Hz starts to bite.").defineInRange("omegaTarget", (double) 3.0F, 0.1, (double) 10.0F);
         GYROSCOPE_DAMPING_RATIO = COMMON_BUILDER.comment("Target damping ratio of the closed loop. 0.9 settles fast with negligible overshoot, 0.7 is faster to first peak but bounces ~5%, 1.0 is critically damped (no overshoot, slower).").defineInRange("dampingRatio", 0.9, 0.1, (double) 2.0F);
         GYROSCOPE_AUTHORITY_PER_UNIT = COMMON_BUILDER.comment("How much ship inertia (kg*m^2) one gyro fully stabilizes at reference RPM. Bigger ship needs more gyros, ratio determines how many. Under-powered fleets degrade gracefully (slower correction, still stable).").defineInRange("authorityPerUnit", (double) 5000.0F, (double) 100.0F, (double) 1000000.0F);

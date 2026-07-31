@@ -23,9 +23,9 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.lightning323.createkinetic.content.thruster.AbstractThrusterBlock;
 import org.lightning323.createkinetic.content.thruster.AbstractThrusterBlockEntity;
+import org.lightning323.createkinetic.content.thruster.ThrusterShapes;
 import org.lightning323.createkinetic.content.thruster.thruster.ThrusterBlock;
 import org.lightning323.createkinetic.registries.KineticBlockEntities;
-import org.lightning323.createkinetic.registries.PropulsionShapes;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -79,14 +79,14 @@ public class CreativeThrusterBlock extends AbstractThrusterBlock implements IWre
     @Override
     public VoxelShape getShape(@Nullable BlockState pState, @Nullable BlockGetter pLevel, @Nullable BlockPos pPos, @Nullable CollisionContext pContext) {
         if (pState == null) {
-            return PropulsionShapes.CREATIVE_THRUSTER.get(Direction.NORTH);
+            return ThrusterShapes.CREATIVE_THRUSTER.get(Direction.NORTH);
         }
         if (pState.hasProperty(ThrusterBlock.MULTIBLOCK) && pState.getValue(ThrusterBlock.MULTIBLOCK)) {
             return Shapes.block();
         }
         Direction direction = pState.getValue(FACING);
         if (direction == Direction.UP || direction == Direction.DOWN) direction = direction.getOpposite();
-        return PropulsionShapes.CREATIVE_THRUSTER.get(direction);
+        return ThrusterShapes.CREATIVE_THRUSTER.get(direction);
     }
 
     @Override

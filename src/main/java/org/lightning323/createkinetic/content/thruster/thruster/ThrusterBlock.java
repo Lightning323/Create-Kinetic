@@ -47,7 +47,8 @@ public class ThrusterBlock extends AbstractThrusterBlock {
         if (state.hasProperty(MULTIBLOCK) && state.getValue(MULTIBLOCK)) {
             return Shapes.block();
         }
-        final Direction direction = state.getValue(FACING);
+        Direction direction = state.getValue(FACING);
+        if (direction == Direction.UP || direction == Direction.DOWN) direction = direction.getOpposite();
         return ThrusterShapes.THRUSTER.get(direction);
     }
 

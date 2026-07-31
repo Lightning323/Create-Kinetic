@@ -45,7 +45,8 @@ public class IonThrusterBlock extends AbstractThrusterBlock {
         if (state.hasProperty(ThrusterBlock.MULTIBLOCK) && state.getValue(ThrusterBlock.MULTIBLOCK)) {
             return Shapes.block();
         }
-        final Direction direction = state.getValue(FACING);
+        Direction direction = state.getValue(FACING);
+        if (direction == Direction.UP || direction == Direction.DOWN) direction = direction.getOpposite();
         return ThrusterShapes.ION_THRUSTER.get(direction);
     }
 

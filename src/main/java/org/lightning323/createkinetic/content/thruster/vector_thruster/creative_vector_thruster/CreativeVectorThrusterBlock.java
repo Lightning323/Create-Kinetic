@@ -18,9 +18,9 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.lightning323.createkinetic.content.thruster.AbstractThrusterBlockEntity;
+import org.lightning323.createkinetic.content.thruster.ThrusterShapes;
 import org.lightning323.createkinetic.content.thruster.vector_thruster.VectorThrusterBlock;
 import org.lightning323.createkinetic.registries.KineticBlockEntities;
-import org.lightning323.createkinetic.registries.PropulsionShapes;
 
 public class CreativeVectorThrusterBlock extends VectorThrusterBlock implements IWrenchable {
     public static final MapCodec<CreativeVectorThrusterBlock> CODEC = simpleCodec(CreativeVectorThrusterBlock::new);
@@ -66,11 +66,11 @@ public class CreativeVectorThrusterBlock extends VectorThrusterBlock implements 
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         Direction facing = state.getValue(FACING);
         if (facing == Direction.UP) {
-            return PropulsionShapes.CREATIVE_VECTOR_THRUSTER.get(Direction.DOWN);
+            return ThrusterShapes.CREATIVE_VECTOR_THRUSTER.get(Direction.DOWN);
         } else if (facing == Direction.DOWN) {
-            return PropulsionShapes.CREATIVE_VECTOR_THRUSTER.get(Direction.UP);
+            return ThrusterShapes.CREATIVE_VECTOR_THRUSTER.get(Direction.UP);
         }
-        return PropulsionShapes.CREATIVE_VECTOR_THRUSTER.get(facing);
+        return ThrusterShapes.CREATIVE_VECTOR_THRUSTER.get(facing);
     }
 
     @Nullable

@@ -37,7 +37,7 @@ import org.joml.Vector3d;
 import org.joml.Vector3dc;
 import org.lightning323.createkinetic.registries.KineticBlocks;
 import org.lightning323.createkinetic.registries.KineticBlockEntities;
-import org.lightning323.createkinetic.registries.PropulsionShapes;
+import org.lightning323.createkinetic.registries.KineticShapes;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -61,9 +61,9 @@ public class CopycatWingBlock extends CopycatBlock implements BlockSubLevelLiftP
     private static final int placementHelperId = PlacementHelpers.register(new WingPlacementHelper(entires));
 
     private static final Map<Integer, VoxelShaper> wingShapers = Map.of(
-        4, PropulsionShapes.WING,
-        8, PropulsionShapes.WING_8,
-        12, PropulsionShapes.WING_12
+        4, KineticShapes.WING,
+        8, KineticShapes.WING_8,
+        12, KineticShapes.WING_12
     );
 
     public CopycatWingBlock(Properties properties, int width) {

@@ -25,7 +25,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.joml.Vector3d;
 import org.joml.Vector3dc;
 import org.lightning323.createkinetic.registries.KineticBlocks;
-import org.lightning323.createkinetic.registries.PropulsionShapes;
+import org.lightning323.createkinetic.registries.KineticShapes;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -92,9 +92,9 @@ public class WingBlock extends DirectionalBlock implements BlockSubLevelLiftProv
     @Override
     public VoxelShape getShape(@Nullable BlockState pState, @Nullable BlockGetter pLevel, @Nullable BlockPos pPos, @Nullable CollisionContext pContext) {
         if (pState == null) {
-            return PropulsionShapes.WING.get(Direction.UP);
+            return KineticShapes.WING.get(Direction.UP);
         }
-        return PropulsionShapes.WING.get(pState.getValue(FACING));
+        return KineticShapes.WING.get(pState.getValue(FACING));
     }
 
     @Override

@@ -12,88 +12,8 @@ import java.util.function.BiFunction;
 
 import static net.minecraft.core.Direction.NORTH;
 
-public class PropulsionShapes {
+public class KineticShapes {
     public static final VoxelShaper
-        THRUSTER = ShapeBuilder.shape()
-            .add(Block.box(2, 2, 0, 14, 14, 2))
-            .add(Block.box(1, 1, 2, 15, 15, 14))
-            .add(Block.box(3, 3, 14, 13, 13, 16))
-            .forDirectional(),
-
-        VECTOR_THRUSTER = ShapeBuilder.shape()
-            .add(Block.box(2, 2, 0, 14, 14, 4))
-            .add(Block.box(1, 9, 0, 2, 13, 4))
-            .add(Block.box(1, 3, 0, 2, 7, 4))
-            .add(Block.box(14, 9, 0, 15, 13, 4))
-            .add(Block.box(14, 3, 0, 15, 7, 4))
-            .add(Block.box(3, 1, 0, 7, 2, 4))
-            .add(Block.box(9, 1, 0, 13, 2, 4))
-            .add(Block.box(3, 14, 0, 7, 15, 4))
-            .add(Block.box(9, 14, 0, 13, 15, 4))
-            .add(Block.box(4, 4, 4, 12, 12, 5))
-            .forDirectional(),
-
-        CREATIVE_VECTOR_THRUSTER = ShapeBuilder.shape()
-            .add(Block.box(2, 2, 0, 14, 14, 4))
-            .add(Block.box(1, 9, 0, 2, 13, 4))
-            .add(Block.box(1, 3, 0, 2, 7, 4))
-            .add(Block.box(14, 9, 0, 15, 13, 4))
-            .add(Block.box(14, 3, 0, 15, 7, 4))
-            .add(Block.box(3, 1, 0, 7, 2, 4))
-            .add(Block.box(9, 1, 0, 13, 2, 4))
-            .add(Block.box(3, 14, 0, 7, 15, 4))
-            .add(Block.box(9, 14, 0, 13, 15, 4))
-            .add(Block.box(4, 4, 4, 12, 12, 5))
-            .forDirectional(),
-
-        CREATIVE_THRUSTER = ShapeBuilder.shape()
-            .add(Block.box(3, 3, 0, 13, 13, 10))
-            .add(Block.box(4, 4, 10, 12, 12, 12))
-            .forDirectional(),
-
-        INLINE_OPTICAL_SENSOR = ShapeBuilder.shape()
-            .add(Block.box(4, 4, 10, 12, 12, 16))
-            .forDirectional(),
-
-        OPTICAL_SENSOR = ShapeBuilder.shape()
-            .add(Block.box(0, 0, 4, 16, 16, 16))
-            .add(Block.box(4, 4, 0, 12, 12, 4))
-            .forDirectional(),
-
-        LODESTONE_TRACKER = ShapeBuilder.shape()
-            .add(Block.box(1, 0, 1, 15, 2, 15))
-            .add(Block.box(2, 2, 2, 14, 9, 14))
-            .add(Block.box(0, 9, 0, 16, 14, 16))
-            .forDirectional(),
-
-        PHYSICS_ASSEMBLER = ShapeBuilder.shape()
-            .add(Block.box(0, 0, 0, 16, 14, 16))
-            .add(Block.box(1, 14, 1, 15, 16, 15))
-            .forDirectional(),
-
-        CORAL_GENERATOR = ShapeBuilder.shape()
-            .add(Block.box(1, 0, 1, 15, 16, 15))
-            .add(Block.box(0, 1, 0, 16, 15, 16))
-            .forDirectional(Direction.UP),
-        
-        PROPELLER = ShapeBuilder.shape()
-            .add(Block.box(0, 0, 4, 16, 16, 16))
-            .forDirectional(),
-
-        STIRLING_ENGINE = ShapeBuilder.shape()
-            .add(Block.box(0, 0, 0, 16, 3, 16))
-            .add(Block.box(0, 3, 0, 16, 5, 14))
-            .add(Block.box(2, 5, 0, 14, 13, 14))
-            .forDirectional(Direction.SOUTH),
-
-        TILT_ADAPTER = ShapeBuilder.shape()
-            .add(Block.box(0, 0, 3, 16, 16, 16))
-            .forDirectional(),
-
-        ADVANCED_TILT_ADAPTER = ShapeBuilder.shape()
-            .add(Block.box(0, 0, 0, 16, 16, 16))
-            .forDirectional(),
-
         WING = getWingShape(4),
         WING_8 = getWingShape(8),
         WING_12 = getWingShape(12);
