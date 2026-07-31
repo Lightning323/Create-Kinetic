@@ -35,6 +35,7 @@ import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsE
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.lightning323.createkinetic.CreateKinetic;
 import org.lightning323.createkinetic.config.KineticConfig;
@@ -48,6 +49,7 @@ import org.lightning323.createkinetic.registries.*;
 import org.lightning323.createkinetic.network.RequestOpenTuningPayload;
 
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Supplier;
 
 import static org.lightning323.createkinetic.CreateKinetic.ID;
@@ -160,26 +162,16 @@ public class KineticClient {
     }
 
 
-//    /**
-//     * Register items in the existing tabs
-//     */
-//    private static AtomicBoolean built = new AtomicBoolean(false);
 
-//    private static void registerSectionItem(ResourceLocation sectionId, String itemPath, Supplier<Item> itemSupplier) {
-//        SimulatedRegistrate.TAB_ITEMS.add(itemSupplier);
-//        SimulatedRegistrate.ITEM_TO_SECTION.put(ResourceLocation.fromNamespaceAndPath(ID, itemPath), sectionId);
-//    }
-//
-//    public static void buildContents(BuildCreativeModeTabContentsEvent event) {
-//        if (!built.get()) {
-//            registerSectionItem(OFFROAD_CREATIVE_SECTION, "small_suspension_track", KineticItems.SMALL_SUSPENSION_TRACK::get);
-//            registerSectionItem(OFFROAD_CREATIVE_SECTION, "small_track_drive_wheel", KineticItems.SMALL_TRACK_DRIVE_WHEEL::get);
-//            registerSectionItem(OFFROAD_CREATIVE_SECTION, "track_mount", KineticBlocks.TRACK_MOUNT::asItem);
-//            registerSectionItem(SIMULATED_CREATIVE_SECTION, "gyroscope", () -> KineticBlocks.GYROSCOPE.asItem());
-//            registerSectionItem(SIMULATED_CREATIVE_SECTION, "joystick", () -> KineticBlocks.JOYSTICK.asItem());
-//            built.set(true);
-//        }
-//    }
+    private static AtomicBoolean built = new AtomicBoolean(false);
+
+    @SubscribeEvent
+    public static void buildContents(BuildCreativeModeTabContentsEvent event) {
+        if (!built.get()) {
+            KineticCreativeTabs.registerSections();
+            built.set(true);
+        }
+    }
 
 }
 

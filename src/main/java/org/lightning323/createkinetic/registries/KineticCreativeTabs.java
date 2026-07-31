@@ -4,7 +4,6 @@ import dev.simulated_team.simulated.registrate.SimulatedRegistrate;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import org.lightning323.createkinetic.CreateKinetic;
-import org.lightning323.createkinetic.content.creative_tools.item.ModItems;
 
 import java.util.function.Supplier;
 
@@ -19,7 +18,7 @@ public class KineticCreativeTabs {
 //    private static final ResourceLocation CREATIVE_SECTION = ResourceLocation.fromNamespaceAndPath(CreateKinetic.ID, "kinetic_creative");
     private static boolean sectionsInitialized = false;
 
-    public static synchronized void registerAeronauticsSections() {
+    public static synchronized void registerSections() {
         if (sectionsInitialized) {
             return;
         }

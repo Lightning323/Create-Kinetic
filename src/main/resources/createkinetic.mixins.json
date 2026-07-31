@@ -16,8 +16,7 @@
     "tracks.KineticBlockEntityRendererMixin",
     "client.MouseHandlerMixin",
     "client.KeyboardHandlerMixin",
-    "client.GameRendererMixin",
-    "SimulatedCreativeTabMixin"
+    "client.GameRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

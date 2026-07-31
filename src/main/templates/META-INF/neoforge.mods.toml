@@ -45,7 +45,35 @@ config = "${mod_id}.mixins.json"
 # The coremods config file path is not configurable and is always loaded from META-INF/coremods.json
 
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
-[[dependencies."${mod_id}"]] #optional
+#[[dependencies."${mod_id}"]]
+#modId = "create"
+#type = "required"
+#versionRange = "[6.0.6,)"
+#ordering = "AFTER"
+#side = "BOTH"
+#
+#[[dependencies."${mod_id}"]]
+#modId = "computercraft"
+#type = "optional"
+#versionRange = "*"
+#ordering = "AFTER"
+#side = "BOTH"
+#
+#[[dependencies."${mod_id}"]]
+#modId = "jei"
+#type = "optional"
+#versionRange = "*"
+#ordering = "AFTER"
+#side = "BOTH"
+#
+#[[dependencies."${mod_id}"]]
+#modId = "sable"
+#type = "required"
+#versionRange = "[${sable_version},)"
+#ordering = "AFTER"
+#side = "BOTH"
+
+
 # the modid of the dependency
 modId = "neoforge" #mandatory
 # The type of the dependency. Can be one of "required", "optional", "incompatible" or "discouraged" (case insensitive).
