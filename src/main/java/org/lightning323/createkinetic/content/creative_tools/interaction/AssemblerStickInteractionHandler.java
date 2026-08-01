@@ -48,26 +48,30 @@ public final class AssemblerStickInteractionHandler {
 
     @SubscribeEvent
     public static void onRightClickBlock(final PlayerInteractEvent.RightClickBlock event) {
+
         final boolean usingAssemblerStick = event.getItemStack().is(ModItems.ASSEMBLER_STICK.get());
         final boolean usingAutoGlue = event.getItemStack().is(ModItems.CREATIVE_HONEY_GLUE.get());
-        final boolean usingMover = event.getItemStack().is(ModItems.GLUED_CONTRAPTION_MOVER.get());
-        final boolean usingCloner = event.getItemStack().is(ModItems.GLUED_CONTRAPTION_CLONER.get());
-        final boolean usingRemover = event.getItemStack().is(ModItems.CONTRAPTION_REMOVER.get());
+        final boolean usingMover = false;//event.getItemStack().is(ModItems.GLUED_CONTRAPTION_MOVER.get());
+        final boolean usingCloner = false;//event.getItemStack().is(ModItems.GLUED_CONTRAPTION_CLONER.get());
+        final boolean usingRemover = false;//event.getItemStack().is(ModItems.CONTRAPTION_REMOVER.get());
+
         if (!usingAssemblerStick && !usingAutoGlue && !usingMover && !usingCloner && !usingRemover) {
             return;
         }
         final Item usedItem;
+
         if (usingMover) {
-            usedItem = ModItems.GLUED_CONTRAPTION_MOVER.get();
+//            usedItem = ModItems.GLUED_CONTRAPTION_MOVER.get();
         } else if (usingCloner) {
-            usedItem = ModItems.GLUED_CONTRAPTION_CLONER.get();
+//            usedItem = ModItems.GLUED_CONTRAPTION_CLONER.get();
         } else if (usingRemover) {
-            usedItem = ModItems.CONTRAPTION_REMOVER.get();
+//            usedItem = ModItems.CONTRAPTION_REMOVER.get();
         } else if (usingAutoGlue) {
             usedItem = ModItems.CREATIVE_HONEY_GLUE.get();
         } else {
             usedItem = ModItems.ASSEMBLER_STICK.get();
         }
+
 
         if (event.getLevel().isClientSide()) {
             event.setCancellationResult(InteractionResult.SUCCESS);
@@ -102,9 +106,9 @@ public final class AssemblerStickInteractionHandler {
                 player.displayClientMessage(Component.translatable("message.assemblystick.mover_create_missing"), true);
                 success = false;
             } else if (usingRemover) {
-                success = GluedContraptionMoverService.tryHardWipe(level, player, clickedPos);
+//                success = GluedContraptionMoverService.tryHardWipe(level, player, clickedPos);
             } else {
-                success = GluedContraptionMoverService.tryPrepare(level, player, clickedPos, event.getHand(), usingMover);
+//                success = GluedContraptionMoverService.tryPrepare(level, player, clickedPos, event.getHand(), usingMover);
             }
         } else if (usingAutoGlue) {
             success = tryAutoGlue(level, player, clickedPos);

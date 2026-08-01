@@ -8,7 +8,6 @@
   "mixins": [
     "tracks.WheelMountBlockMixin",
     "tracks.WheelMountOffsetMixin",
-    "SchematicPlacePacketMixin",
     "linked_typewriter.LinkedTypewriterBlockInvoker",
     "client.MinecraftMixin"
   ],
