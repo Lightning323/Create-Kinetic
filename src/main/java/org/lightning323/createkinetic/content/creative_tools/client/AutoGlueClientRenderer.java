@@ -23,7 +23,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import org.jetbrains.annotations.Nullable;
 import org.lightning323.createkinetic.CreateKinetic;
-import org.lightning323.createkinetic.content.creative_tools.item.ModItems;
+import org.lightning323.createkinetic.content.creative_tools.item.CreativeToolItems;
 
 import java.util.List;
 import java.util.Optional;
@@ -42,8 +42,8 @@ public final class AutoGlueClientRenderer {
             return;
         }
 
-        final boolean holdingAutoGlue = player.getItemInHand(InteractionHand.MAIN_HAND).is(ModItems.CREATIVE_HONEY_GLUE.get()) ||
-                player.getItemInHand(InteractionHand.OFF_HAND).is(ModItems.CREATIVE_HONEY_GLUE.get());
+        final boolean holdingAutoGlue = player.getItemInHand(InteractionHand.MAIN_HAND).is(CreativeToolItems.CREATIVE_HONEY_GLUE.get()) ||
+                player.getItemInHand(InteractionHand.OFF_HAND).is(CreativeToolItems.CREATIVE_HONEY_GLUE.get());
         if (!holdingAutoGlue) {
             return;
         }

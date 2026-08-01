@@ -32,7 +32,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import org.joml.Vector3d;
 import org.lightning323.createkinetic.CreateKinetic;
-import org.lightning323.createkinetic.content.creative_tools.item.ModItems;
+import org.lightning323.createkinetic.content.creative_tools.item.CreativeToolItems;
 
 import java.util.ArrayDeque;
 import java.util.HashSet;
@@ -49,8 +49,8 @@ public final class AssemblerStickInteractionHandler {
     @SubscribeEvent
     public static void onRightClickBlock(final PlayerInteractEvent.RightClickBlock event) {
 
-        final boolean usingAssemblerStick = event.getItemStack().is(ModItems.ASSEMBLER_STICK.get());
-        final boolean usingAutoGlue = event.getItemStack().is(ModItems.CREATIVE_HONEY_GLUE.get());
+        final boolean usingAssemblerStick = event.getItemStack().is(CreativeToolItems.ASSEMBLER_STICK.get());
+        final boolean usingAutoGlue = event.getItemStack().is(CreativeToolItems.CREATIVE_HONEY_GLUE.get());
         final boolean usingMover = false;//event.getItemStack().is(ModItems.GLUED_CONTRAPTION_MOVER.get());
         final boolean usingCloner = false;//event.getItemStack().is(ModItems.GLUED_CONTRAPTION_CLONER.get());
         final boolean usingRemover = false;//event.getItemStack().is(ModItems.CONTRAPTION_REMOVER.get());
@@ -67,9 +67,9 @@ public final class AssemblerStickInteractionHandler {
         } else if (usingRemover) {
 //            usedItem = ModItems.CONTRAPTION_REMOVER.get();
         } else if (usingAutoGlue) {
-            usedItem = ModItems.CREATIVE_HONEY_GLUE.get();
+            usedItem = CreativeToolItems.CREATIVE_HONEY_GLUE.get();
         } else {
-            usedItem = ModItems.ASSEMBLER_STICK.get();
+            usedItem = CreativeToolItems.ASSEMBLER_STICK.get();
         }
 
 
@@ -133,7 +133,7 @@ public final class AssemblerStickInteractionHandler {
 
     @SubscribeEvent
     public static void onLeftClickBlock(final PlayerInteractEvent.LeftClickBlock event) {
-        if (!event.getItemStack().is(ModItems.CREATIVE_HONEY_GLUE.get())) {
+        if (!event.getItemStack().is(CreativeToolItems.CREATIVE_HONEY_GLUE.get())) {
             return;
         }
 
@@ -147,7 +147,7 @@ public final class AssemblerStickInteractionHandler {
             return;
         }
 
-        if (player.isSpectator() || player.getCooldowns().isOnCooldown(ModItems.CREATIVE_HONEY_GLUE.get())) {
+        if (player.isSpectator() || player.getCooldowns().isOnCooldown(CreativeToolItems.CREATIVE_HONEY_GLUE.get())) {
             event.setCanceled(true);
             return;
         }
@@ -160,7 +160,7 @@ public final class AssemblerStickInteractionHandler {
         }
 
         if (tryRemoveHoneyGlue(level, clickedPos)) {
-            player.getCooldowns().addCooldown(ModItems.CREATIVE_HONEY_GLUE.get(), COOLDOWN_TICKS);
+            player.getCooldowns().addCooldown(CreativeToolItems.CREATIVE_HONEY_GLUE.get(), COOLDOWN_TICKS);
             event.setCanceled(true);
             return;
         }

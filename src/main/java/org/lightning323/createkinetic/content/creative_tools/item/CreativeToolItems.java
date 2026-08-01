@@ -6,7 +6,7 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.lightning323.createkinetic.CreateKinetic;
 
-public final class ModItems {
+public final class CreativeToolItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(CreateKinetic.ID);
 
     public static final DeferredHolder<Item, AssemblerStickItem> ASSEMBLER_STICK = ITEMS.register("assembler_stick",
@@ -25,7 +25,7 @@ public final class ModItems {
 //            () -> new ContraptionRemoverItem(new Item.Properties().stacksTo(1)));
 
 
-    private ModItems() {
+    private CreativeToolItems() {
     }
 
     public static void register(final IEventBus modEventBus) {

@@ -60,7 +60,7 @@ import org.lightning323.createkinetic.compat.computercraft.CCProxy;
 import org.lightning323.createkinetic.events.ModCapabilityEvents;
 import org.lightning323.createkinetic.network.PropulsionPackets;
 import org.lightning323.createkinetic.particles.ParticleTypes;
-import org.lightning323.createkinetic.content.creative_tools.item.ModItems;
+import org.lightning323.createkinetic.content.creative_tools.item.CreativeToolItems;
 import org.lightning323.createkinetic.registries.*;
 
 @Mod(value = CreateKinetic.ID)
@@ -94,7 +94,7 @@ public class CreateKinetic {
         KineticBlocks.register(modBus);
 
         KineticItems.register(modBus);
-        ModItems.register(modBus);
+        CreativeToolItems.register(modBus);
         PropulsionSoundEvents.register(modBus);
         KineticFluids.register(modBus);
         KineticPartialModels.register();
