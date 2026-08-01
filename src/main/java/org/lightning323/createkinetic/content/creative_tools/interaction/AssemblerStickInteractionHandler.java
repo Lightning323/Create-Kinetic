@@ -49,7 +49,7 @@ public final class AssemblerStickInteractionHandler {
     @SubscribeEvent
     public static void onRightClickBlock(final PlayerInteractEvent.RightClickBlock event) {
 
-        final boolean usingAssemblerStick = event.getItemStack().is(CreativeToolItems.ASSEMBLER_STICK.get());
+        final boolean usingAssemblerStick = false;//event.getItemStack().is(CreativeToolItems.ASSEMBLER_STICK.get());
         final boolean usingAutoGlue = event.getItemStack().is(CreativeToolItems.CREATIVE_HONEY_GLUE.get());
         final boolean usingMover = false;//event.getItemStack().is(ModItems.GLUED_CONTRAPTION_MOVER.get());
         final boolean usingCloner = false;//event.getItemStack().is(ModItems.GLUED_CONTRAPTION_CLONER.get());
@@ -58,19 +58,19 @@ public final class AssemblerStickInteractionHandler {
         if (!usingAssemblerStick && !usingAutoGlue && !usingMover && !usingCloner && !usingRemover) {
             return;
         }
-        final Item usedItem;
 
-        if (usingMover) {
+        Item usedItem = CreativeToolItems.CREATIVE_HONEY_GLUE.get();
+//        if (usingMover) {
 //            usedItem = ModItems.GLUED_CONTRAPTION_MOVER.get();
-        } else if (usingCloner) {
+//        } else if (usingCloner) {
 //            usedItem = ModItems.GLUED_CONTRAPTION_CLONER.get();
-        } else if (usingRemover) {
+//        } else if (usingRemover) {
 //            usedItem = ModItems.CONTRAPTION_REMOVER.get();
-        } else if (usingAutoGlue) {
-            usedItem = CreativeToolItems.CREATIVE_HONEY_GLUE.get();
-        } else {
-            usedItem = CreativeToolItems.ASSEMBLER_STICK.get();
-        }
+//        } else if (usingAutoGlue) {
+//            usedItem = CreativeToolItems.CREATIVE_HONEY_GLUE.get();
+//        } else {
+//            usedItem = CreativeToolItems.ASSEMBLER_STICK.get();
+//        }
 
 
         if (event.getLevel().isClientSide()) {

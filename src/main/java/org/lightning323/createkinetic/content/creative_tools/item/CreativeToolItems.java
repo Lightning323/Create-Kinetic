@@ -9,8 +9,8 @@ import org.lightning323.createkinetic.CreateKinetic;
 public final class CreativeToolItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(CreateKinetic.ID);
 
-    public static final DeferredHolder<Item, AssemblerStickItem> ASSEMBLER_STICK = ITEMS.register("assembler_stick",
-            () -> new AssemblerStickItem(new Item.Properties().stacksTo(1)));
+//    public static final DeferredHolder<Item, AssemblerStickItem> ASSEMBLER_STICK = ITEMS.register("assembler_stick",
+//            () -> new AssemblerStickItem(new Item.Properties().stacksTo(1)));
 
     public static final DeferredHolder<Item, AutoGlueItem> CREATIVE_HONEY_GLUE = ITEMS.register("creative_honey_glue",
             () -> new AutoGlueItem(new Item.Properties().stacksTo(1)));
