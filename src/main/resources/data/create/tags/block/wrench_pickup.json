@@ -7,10 +7,6 @@
     "createkinetic:vector_thruster",
     "createkinetic:liquid_vector_thruster",
     "createkinetic:creative_vector_thruster",
-    "createkinetic:wing",
-    "createkinetic:joystick",
-    "createkinetic:copycat_wing",
-    "createkinetic:copycat_wing_8",
-    "createkinetic:copycat_wing_12"
+    "createkinetic:joystick"
   ]
 }

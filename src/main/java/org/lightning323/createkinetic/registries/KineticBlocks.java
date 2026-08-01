@@ -55,37 +55,35 @@ public class KineticBlocks {
     public static final DeferredRegister.Items BLOCK_ITEMS = DeferredRegister.createItems(CreateKinetic.ID);
     private static final KineticRegistrate REGISTRATE = CreateKinetic.getRegistrate();
 
-
-
-
     public static final DeferredBlock<CopycatWingBlock> COPYCAT_WING_12 = BLOCKS.register("copycat_wing_12",
         () -> new CopycatWingBlock(Block.Properties.of().strength(1.5f, 2.0f), 12));
     public static final DeferredBlock<CopycatWingBlock> COPYCAT_WING_8 = BLOCKS.register("copycat_wing_8",
         () -> new CopycatWingBlock(Block.Properties.of().strength(1.5f, 2.0f), 8));
     public static final DeferredBlock<CopycatWingBlock> COPYCAT_WING = BLOCKS.register("copycat_wing",
         () -> new CopycatWingBlock(Block.Properties.of().strength(1.5f, 2.0f), 4));
-    public static final DeferredBlock<WingBlock> WING_BLOCK = BLOCKS.register("wing",
-        () -> new WingBlock(Block.Properties.of().mapColor(MapColor.COLOR_LIGHT_GRAY).sound(SoundType.COPPER)
-            .strength(1.5f, 2.0f).noOcclusion()));
+
+//    public static final DeferredBlock<WingBlock> WING_BLOCK = BLOCKS.register("wing",
+//        () -> new WingBlock(Block.Properties.of().mapColor(MapColor.COLOR_LIGHT_GRAY).sound(SoundType.COPPER)
+//            .strength(1.5f, 2.0f).noOcclusion()));
 
     public static final DeferredBlock<CreativeVectorThrusterBlock> CREATIVE_VECTOR_THRUSTER_BLOCK = BLOCKS.register("creative_vector_thruster",
-        () -> new CreativeVectorThrusterBlock(Block.Properties.of().mapColor(MapColor.METAL)
-            .sound(SoundType.METAL).strength(5.5f, 4.0f).noOcclusion()));
+            () -> new CreativeVectorThrusterBlock(Block.Properties.of().mapColor(MapColor.METAL)
+                    .sound(SoundType.METAL).strength(5.5f, 4.0f).noOcclusion()));
     public static final DeferredBlock<LiquidVectorThrusterBlock> LIQUID_VECTOR_THRUSTER_BLOCK = BLOCKS.register("liquid_vector_thruster",
-        () -> new LiquidVectorThrusterBlock(Block.Properties.of().mapColor(MapColor.METAL).requiresCorrectToolForDrops()
-            .sound(SoundType.METAL).strength(5.5f, 4.0f).noOcclusion()));
+            () -> new LiquidVectorThrusterBlock(Block.Properties.of().mapColor(MapColor.METAL).requiresCorrectToolForDrops()
+                    .sound(SoundType.METAL).strength(5.5f, 4.0f).noOcclusion()));
     public static final DeferredBlock<VectorThrusterBlock> VECTOR_THRUSTER_BLOCK = BLOCKS.register("vector_thruster",
-        () -> new VectorThrusterBlock(Block.Properties.of().mapColor(MapColor.METAL).requiresCorrectToolForDrops()
-            .sound(SoundType.METAL).strength(5.5f, 4.0f).noOcclusion()));
+            () -> new VectorThrusterBlock(Block.Properties.of().mapColor(MapColor.METAL).requiresCorrectToolForDrops()
+                    .sound(SoundType.METAL).strength(5.5f, 4.0f).noOcclusion()));
     public static final DeferredBlock<IonThrusterBlock> ION_THRUSTER_BLOCK = BLOCKS.register("ion_thruster",
-        () -> new IonThrusterBlock(Block.Properties.of().mapColor(MapColor.METAL)
-            .sound(SoundType.METAL).strength(5.5f, 4.0f).noOcclusion()));
+            () -> new IonThrusterBlock(Block.Properties.of().mapColor(MapColor.METAL)
+                    .sound(SoundType.METAL).strength(5.5f, 4.0f).noOcclusion()));
     public static final DeferredBlock<CreativeThrusterBlock> CREATIVE_THRUSTER_BLOCK = BLOCKS.register("creative_thruster",
-        () -> new CreativeThrusterBlock(Block.Properties.of().mapColor(MapColor.METAL)
-            .sound(SoundType.METAL).strength(5.5f, 4.0f).noOcclusion()));
+            () -> new CreativeThrusterBlock(Block.Properties.of().mapColor(MapColor.METAL)
+                    .sound(SoundType.METAL).strength(5.5f, 4.0f).noOcclusion()));
     public static final DeferredBlock<ThrusterBlock> THRUSTER_BLOCK = BLOCKS.register("thruster",
-        () -> new ThrusterBlock(Block.Properties.of().mapColor(MapColor.METAL).requiresCorrectToolForDrops()
-            .sound(SoundType.METAL).strength(5.5f, 4.0f).noOcclusion()));
+            () -> new ThrusterBlock(Block.Properties.of().mapColor(MapColor.METAL).requiresCorrectToolForDrops()
+                    .sound(SoundType.METAL).strength(5.5f, 4.0f).noOcclusion()));
 
     public static final BlockEntry<ReactionWheelBlock> REACTION_WHEEL = REGISTRATE
             .block("reaction_wheel", ReactionWheelBlock::new).initialProperties(SharedProperties::softMetal)
@@ -109,9 +107,11 @@ public class KineticBlocks {
             .tag(AllTags.AllBlockTags.SAFE_NBT.tag)
             //We have to change this registration to tell registrate to not generate blockstate or item models for us (We already have them)
 //            .blockstate(BlockStateGen.horizontalBlockProvider(true))
-            .blockstate((ctx, prov) -> {})
+            .blockstate((ctx, prov) -> {
+            })
             .item(TrackMountBlockItem::new)
-            .model((ctx, prov) -> {})
+            .model((ctx, prov) -> {
+            })
 //            .transform(ModelGen.customItemModel())
             .build()
             .register();
@@ -125,7 +125,7 @@ public class KineticBlocks {
         registerBlockItem("liquid_vector_thruster", KineticBlocks.LIQUID_VECTOR_THRUSTER_BLOCK, new BlockItem.Properties().rarity(Rarity.UNCOMMON));
         registerBlockItem("creative_vector_thruster", KineticBlocks.CREATIVE_VECTOR_THRUSTER_BLOCK, new BlockItem.Properties().rarity(Rarity.EPIC));
 
-        registerDefaultBlockItem("wing", KineticBlocks.WING_BLOCK);
+//        registerDefaultBlockItem("wing", KineticBlocks.WING_BLOCK);
         KineticBlocks.BLOCK_ITEMS.register("copycat_wing", () -> new CopycatWingItem(KineticBlocks.COPYCAT_WING.get(), new BlockItem.Properties()));
         KineticBlocks.BLOCK_ITEMS.register("copycat_wing_8", () -> new CopycatWingItem(KineticBlocks.COPYCAT_WING_8.get(), new BlockItem.Properties()));
         KineticBlocks.BLOCK_ITEMS.register("copycat_wing_12", () -> new CopycatWingItem(KineticBlocks.COPYCAT_WING_12.get(), new BlockItem.Properties()));

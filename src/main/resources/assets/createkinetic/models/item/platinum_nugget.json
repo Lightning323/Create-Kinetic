@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "createkinetic:item/platinum_nugget"
-  }
-}
-

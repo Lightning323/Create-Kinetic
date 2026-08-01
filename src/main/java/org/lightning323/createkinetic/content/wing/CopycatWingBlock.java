@@ -57,8 +57,7 @@ public class CopycatWingBlock extends CopycatBlock implements BlockSubLevelLiftP
                     List.of(
                             KineticBlocks.COPYCAT_WING,
                             KineticBlocks.COPYCAT_WING_8,
-                            KineticBlocks.COPYCAT_WING_12,
-                            KineticBlocks.WING_BLOCK
+                            KineticBlocks.COPYCAT_WING_12
                     )
             ));
 
@@ -119,15 +118,6 @@ public class CopycatWingBlock extends CopycatBlock implements BlockSubLevelLiftP
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult ray) {
         // Placement with an item is handled in useItemOn() to support Create's helper arrows.
         return InteractionResult.PASS;
-    }
-
-    public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter level, BlockPos pos, Player player) {
-        BlockState material = getMaterial(level, pos);
-        if (player != null && player.isShiftKeyDown()) {
-            return new ItemStack(KineticBlocks.COPYCAT_WING.get());
-        }
-
-        return material.getBlock().asItem().getDefaultInstance();
     }
 
     @Override

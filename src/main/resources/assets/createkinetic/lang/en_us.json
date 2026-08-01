@@ -291,10 +291,10 @@
   "createkinetic.ponder.shared.vector_thruster_liquid.intro.pumped": "Once fuel is pumped in, the internal tank can feed the thruster while it is powered.",
   "createkinetic.ponder.shared.vector_thruster_liquid.powering.intro": "Apply redstone power to throttle the liquid vector thruster, from 0-15.",
 
-  "block.createkinetic.vector_thruster": "Vector Thruster",
+  "block.createkinetic.vector_thruster": "Ion Vector Thruster",
   "block.createkinetic.creative_vector_thruster": "Creative Vector Thruster",
   "createkinetic.creative_vector_thruster.tooltip.summary": "Vector thruster with configurable creative thrust and wrench-cycled particle mode.",
-  "block.createkinetic.liquid_vector_thruster": "Liquid Vector Thruster",
+  "block.createkinetic.liquid_vector_thruster": "Vector Thruster",
   "block.createkinetic.platinum_casing": "Platinum Casing",
   "block.createkinetic.platinum_fluid_tank": "Platinum Fluid Tank",
   "block.createkinetic.platinum_fluid_vessel": "Platinum Fluid Vessel",
