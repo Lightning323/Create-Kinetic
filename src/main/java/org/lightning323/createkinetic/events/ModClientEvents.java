@@ -1,11 +1,6 @@
 package org.lightning323.createkinetic.events;
 
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-import com.simibubi.create.content.decoration.encasing.EncasedCTBehaviour;
-import com.simibubi.create.content.fluids.tank.FluidTankRenderer;
-import com.simibubi.create.foundation.model.ModelSwapper;
-import dev.engine_room.flywheel.api.visualization.VisualizationManager;
-import dev.engine_room.flywheel.lib.visualization.SimpleBlockEntityVisualizer;
 import net.createmod.catnip.config.ui.BaseConfigScreen;
 import net.createmod.catnip.gui.ScreenOpener;
 import net.createmod.ponder.foundation.PonderIndex;
@@ -26,7 +21,6 @@ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.*;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
-import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.fluids.FluidStack;
 import org.lightning323.createkinetic.CreateKinetic;
 import org.lightning323.createkinetic.content.thruster.ion_thruster.IonThrusterRenderer;
@@ -34,7 +28,7 @@ import org.lightning323.createkinetic.content.thruster.thruster.ThrusterRenderer
 import org.lightning323.createkinetic.content.thruster.thruster.creative_thruster.CreativeThrusterRenderer;
 import org.lightning323.createkinetic.content.thruster.vector_thruster.VectorRedstoneLinkRenderer;
 import org.lightning323.createkinetic.content.thruster.vector_thruster.liquid_vector_thruster.LiquidVectorThrusterRenderer;
-import org.lightning323.createkinetic.ponder.DeltaPonderPlugin;
+import org.lightning323.createkinetic.ponder.KineticPonderPlugin;
 import org.lightning323.createkinetic.registries.*;
 import org.lightning323.createkinetic.utility.value_boxes.DualRowValueRenderer;
 
@@ -146,7 +140,7 @@ public class ModClientEvents {
             ItemBlockRenderTypes.setRenderLayer(KineticFluids.FLOWING_OXIDIZER.get(), RenderType.translucent());
         });
 
-        PonderIndex.addPlugin(new DeltaPonderPlugin());
+        PonderIndex.addPlugin(new KineticPonderPlugin());
         PropulsionInstanceTypes.register();
 
     }
