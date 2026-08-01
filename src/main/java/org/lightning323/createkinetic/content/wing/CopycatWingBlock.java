@@ -52,18 +52,20 @@ public class CopycatWingBlock extends CopycatBlock implements BlockSubLevelLiftP
     private static final float BASE_LIFT_SCALAR = 0.475f;
     private final int width;
 
-    private static final List<Supplier<? extends Block>> entires =
-        List.of(
-                KineticBlocks.COPYCAT_WING,
-                KineticBlocks.COPYCAT_WING_8,
-                KineticBlocks.COPYCAT_WING_12,
-            KineticBlocks.WING_BLOCK);
-    private static final int placementHelperId = PlacementHelpers.register(new WingPlacementHelper(entires));
+    private static final int placementHelperId = PlacementHelpers.register(
+            new WingPlacementHelper(
+                    List.of(
+                            KineticBlocks.COPYCAT_WING,
+                            KineticBlocks.COPYCAT_WING_8,
+                            KineticBlocks.COPYCAT_WING_12,
+                            KineticBlocks.WING_BLOCK
+                    )
+            ));
 
     private static final Map<Integer, VoxelShaper> wingShapers = Map.of(
-        4, KineticShapes.WING,
-        8, KineticShapes.WING_8,
-        12, KineticShapes.WING_12
+            4, KineticShapes.WING,
+            8, KineticShapes.WING_8,
+            12, KineticShapes.WING_12
     );
 
     public CopycatWingBlock(Properties properties, int width) {
@@ -114,17 +116,17 @@ public class CopycatWingBlock extends CopycatBlock implements BlockSubLevelLiftP
         return super.useItemOn(stack, state, world, pos, player, hand, ray);
     }
 
-	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult ray) {
+    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult ray) {
         // Placement with an item is handled in useItemOn() to support Create's helper arrows.
         return InteractionResult.PASS;
     }
-    
+
     public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter level, BlockPos pos, Player player) {
         BlockState material = getMaterial(level, pos);
         if (player != null && player.isShiftKeyDown()) {
             return new ItemStack(KineticBlocks.COPYCAT_WING.get());
         }
-        
+
         return material.getBlock().asItem().getDefaultInstance();
     }
 
@@ -196,18 +198,14 @@ public class CopycatWingBlock extends CopycatBlock implements BlockSubLevelLiftP
 
     @Override
     public float sable$getLiftScalar() {
-        return switch (width) {
-            case 8 -> BASE_LIFT_SCALAR * 1.5f;
-            case 12 -> BASE_LIFT_SCALAR * 2.0f;
-            default -> BASE_LIFT_SCALAR;
-        };
+        return BASE_LIFT_SCALAR;
     }
 
     @Override
     public ItemRequirement getRequiredItems(BlockState state, BlockEntity blockEntity) {
         return new ItemRequirement(
-            ItemRequirement.ItemUseType.CONSUME,
-            new ItemStack(KineticBlocks.COPYCAT_WING.get(), Math.max(1, width / 4))
+                ItemRequirement.ItemUseType.CONSUME,
+                new ItemStack(KineticBlocks.COPYCAT_WING.get(), Math.max(1, width / 4))
         );
     }
 }

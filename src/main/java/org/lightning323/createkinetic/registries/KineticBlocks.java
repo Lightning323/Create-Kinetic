@@ -124,14 +124,11 @@ public class KineticBlocks {
         registerBlockItem("vector_thruster", KineticBlocks.VECTOR_THRUSTER_BLOCK, new BlockItem.Properties().rarity(Rarity.UNCOMMON));
         registerBlockItem("liquid_vector_thruster", KineticBlocks.LIQUID_VECTOR_THRUSTER_BLOCK, new BlockItem.Properties().rarity(Rarity.UNCOMMON));
         registerBlockItem("creative_vector_thruster", KineticBlocks.CREATIVE_VECTOR_THRUSTER_BLOCK, new BlockItem.Properties().rarity(Rarity.EPIC));
+
         registerDefaultBlockItem("wing", KineticBlocks.WING_BLOCK);
         KineticBlocks.BLOCK_ITEMS.register("copycat_wing", () -> new CopycatWingItem(KineticBlocks.COPYCAT_WING.get(), new BlockItem.Properties()));
         KineticBlocks.BLOCK_ITEMS.register("copycat_wing_8", () -> new CopycatWingItem(KineticBlocks.COPYCAT_WING_8.get(), new BlockItem.Properties()));
         KineticBlocks.BLOCK_ITEMS.register("copycat_wing_12", () -> new CopycatWingItem(KineticBlocks.COPYCAT_WING_12.get(), new BlockItem.Properties()));
-
-        PropulsionDefaultStress.setImpact(ResourceLocation.fromNamespaceAndPath(CreateKinetic.ID, "redstone_transmission"), 0, false);
-        PropulsionDefaultStress.setImpact(ResourceLocation.fromNamespaceAndPath(CreateKinetic.ID, "tilt_adapter"), 0, false);
-        PropulsionDefaultStress.setImpact(ResourceLocation.fromNamespaceAndPath(CreateKinetic.ID, "advanced_tilt_adapter"), 0, false);
     }
 
     private static <T extends Block> void registerDefaultBlockItem(String name, DeferredBlock<T> block) {

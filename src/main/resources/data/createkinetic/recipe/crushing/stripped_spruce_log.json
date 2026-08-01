@@ -2,13 +2,13 @@
     "type": "create:crushing",
     "ingredients": [
       {
-        "item": "minecraft:spruce_log"
+        "item": "minecraft:stripped_spruce_log"
       }
     ],
     "processingTime": 150,
     "results": [
       {
-        "chance": 0.6,
+        "chance": 0.5,
         "id": "createkinetic:pine_resin"
       }
     ]

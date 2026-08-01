@@ -9,6 +9,12 @@
       "item": "create:iron_sheet"
     },
     {
+      "item": "create:iron_sheet"
+    },
+    {
+      "item": "create:iron_sheet"
+    },
+    {
       "type": "neoforge:single",
       "amount": 1000,
       "fluid": "minecraft:water"

@@ -32,7 +32,6 @@
     "createkinetic.gui.goggles.redstone_transmission.internal_shift_number": "%s / %s",
     "createkinetic.gui.goggles.thruster.status.wrong_fuel": "Wrong Fuel",
     "createkinetic.gui.goggles.stirling_engine.status.no_heat": "No Heat",
-    "block.createkinetic.tempered_wing": "Tempered Wing",
     "createkinetic": "Createpropulsion",
     "block.createkinetic.copycat_wing": "Copycat Wing",
     "createkinetic.gui.goggles.burner.heat.hot": "Hot",
