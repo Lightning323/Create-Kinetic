@@ -269,13 +269,13 @@
   "createkinetic.ponder.ponder_liquid_vector_thruster.header": "Vector Thruster",
   "createkinetic.ponder.shared.vector_thruster_fe.header": "Powering a Vector Thruster",
 
-  "createkinetic.ponder.shared.vector_thruster_fe.intro.main": "Vector Thruster uses Forge energy to produce thrust.",
+  "createkinetic.ponder.shared.vector_thruster_fe.intro.main": "Ion Vector Thruster uses Forge energy to produce thrust.",
   "createkinetic.ponder.shared.vector_thruster_fe.intro.fe": "Forge energy is stored in the thruster's internal energy storage.",
   "createkinetic.ponder.shared.vector_thruster_fe.intro.fe_storage": "Currently %s FE is able to be stored in the thruster's internal storage.",
   "createkinetic.ponder.shared.vector_thruster_fe.intro.generators": "Generators can power from below, this can be anything that uses forge energy system.",
-  "createkinetic.ponder.shared.vector_thruster_fe.moving.intro": "Vector Thrusters can rotate in all directions, this is controlled by redstone signals directly embedded into the thruster itself.",
+  "createkinetic.ponder.shared.vector_thruster_fe.moving.intro": "Vector Thrusters can rotate in all directions, this is controlled by the frequencies on the thruster.",
   "createkinetic.ponder.shared.vector_thruster_fe.moving.text_1": "A redstone power can be anything from 0-15, this will increase the distance of rotation from the base.",
-  "createkinetic.ponder.shared.vector_thruster_fe.moving.text_3": "Each side except front and back has a redstone signal place, that direction is where it will be rotated towards when that signal is powered.",
+  "createkinetic.ponder.shared.vector_thruster_fe.moving.text_3": "The thruster will tilt towards any direction the signal is powered on.",
 
   "createkinetic.ponder.shared.vector_thruster_fe.powering.intro": "Powering a thruster is easy, any external signal to the thruster will be the power, this can range from 0-15, and will use power accordingly.",
   "createkinetic.ponder.shared.vector_thruster_creative.intro.main": "Creative Vector Thrusters produce configurable thrust without fuel or Forge energy.",
