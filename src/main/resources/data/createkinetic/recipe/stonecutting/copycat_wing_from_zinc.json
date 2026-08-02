@@ -1,10 +1,15 @@
 {
-    "type": "minecraft:stonecutting",
-    "ingredient": {
-        "item": "createkinetic:wing"
-    },
+    "type": "minecraft:shapeless",
+    "ingredients": [
+        {
+            "item": "create:sail_frame"
+        },
+        {
+            "item": "create:copycat_panel"
+        }
+    ],
     "result": {
         "id": "createkinetic:copycat_wing",
-        "count": 4
+        "count": 2
     }
 }
