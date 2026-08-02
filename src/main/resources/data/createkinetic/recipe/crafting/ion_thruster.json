@@ -2,14 +2,11 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "pattern": [
-    "RBI",
+    "BIB",
     "SPS",
     "SCS"
   ],
   "key": {
-    "R": {
-      "item": "simulated:redstone_accumulator"
-    },
     "B": {
       "item": "create:brass_sheet"
     },
