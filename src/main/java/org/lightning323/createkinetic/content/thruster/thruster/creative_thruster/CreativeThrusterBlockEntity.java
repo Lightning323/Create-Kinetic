@@ -33,15 +33,10 @@ import java.util.List;
 
 public class CreativeThrusterBlockEntity extends AbstractThrusterBlockEntity {
     public static final int MAX_WIDTH = 3;
-
     protected boolean updateConnectivity = true;
     private static final int DISASSEMBLY_GRACE_TICKS = 5;
     private int disassemblyCooldown = 0;
     private CreativeThrusterPowerScrollValueBehaviour powerBehaviour;
-
-    public enum PlumeType {
-        PLASMA, ION, PLUME, NONE
-    }
 
     public PlumeType plumeType = PlumeType.PLASMA;
 

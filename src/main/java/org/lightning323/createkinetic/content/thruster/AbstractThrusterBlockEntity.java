@@ -49,6 +49,11 @@ import java.util.Random;
 
 public abstract class AbstractThrusterBlockEntity extends SmartBlockEntity
         implements IHaveGoggleInformation, dev.ryanhcode.sable.api.block.BlockEntitySubLevelActor, BlockSubLevelAssemblyListener {
+
+    public static enum PlumeType {
+        PLASMA, ION, PLUME, NONE
+    }
+
     // ThrusterData thrust is stored in pN-like units where `thrustUnitsPerKn` units == 1 displayed kN.
     // Sable impulse conversion must use the same basis so display/diagram and applied force match.
     protected static final double PARTICLE_BROADCAST_RANGE_BLOCKS = 150.0d;
@@ -95,10 +100,12 @@ public abstract class AbstractThrusterBlockEntity extends SmartBlockEntity
     @OnlyIn(Dist.CLIENT)
     protected AABB multiblockBoundingBox;
 
+    @OnlyIn(Dist.CLIENT)
     protected AABB getSingleRenderBox() {
         return super.getRenderBoundingBox();
     }
 
+    @OnlyIn(Dist.CLIENT)
     protected AABB getMultiblockRenderBox() {
         if (multiblockBoundingBox == null) {
             multiblockBoundingBox = new AABB(
@@ -108,6 +115,7 @@ public abstract class AbstractThrusterBlockEntity extends SmartBlockEntity
         return multiblockBoundingBox;
     }
 
+    @OnlyIn(Dist.CLIENT)
     @Override
     public AABB getRenderBoundingBox() {
         if (isMultiblock()) {
