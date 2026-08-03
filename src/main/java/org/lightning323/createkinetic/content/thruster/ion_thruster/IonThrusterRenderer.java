@@ -17,7 +17,7 @@ import org.lightning323.createkinetic.content.thruster.MeshedThrusterFlameUtils;
 import org.lightning323.createkinetic.content.thruster.ThrusterDebugRenderer;
 import org.lightning323.createkinetic.content.thruster.vector_thruster.VectorRedstoneLinkRenderer;
 import org.lightning323.createkinetic.content.thruster.vector_thruster.ion_vector_thruster.IonVectorThrusterBlockEntity;
-import org.lightning323.createkinetic.content.thruster.vector_thruster.ion_vector_thruster.IonVectorThrusterRenderer;
+import org.lightning323.createkinetic.content.thruster.vector_thruster.VectorThrusterRenderer;
 import org.lightning323.createkinetic.registries.KineticPartialModels;
 
 public class IonThrusterRenderer extends SmartBlockEntityRenderer<IonThrusterBlockEntity> {
@@ -33,7 +33,7 @@ public class IonThrusterRenderer extends SmartBlockEntityRenderer<IonThrusterBlo
         ThrusterDebugRenderer.render(be, ms, buffer);
 
         if (be instanceof IonVectorThrusterBlockEntity vector) {
-            IonVectorThrusterRenderer.renderThruster(vector, partialTick, ms, buffer, light, overlay);
+            VectorThrusterRenderer.renderThruster(vector, partialTick, ms, buffer, light, overlay);
             VectorRedstoneLinkRenderer.renderOnBlockEntity(vector, partialTick, ms, buffer, light, overlay);
         } else {
             if (be.isMultiblock()) {

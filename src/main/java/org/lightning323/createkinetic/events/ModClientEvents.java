@@ -158,5 +158,6 @@ public class ModClientEvents {
         event.registerBlockEntityRenderer(KineticBlockEntities.ION_THRUSTER_BLOCK_ENTITY.get(), IonThrusterRenderer::new);
         event.registerBlockEntityRenderer(KineticBlockEntities.CREATIVE_VECTOR_THRUSTER_BLOCK_ENTITY.get(), IonThrusterRenderer::new);
         event.registerBlockEntityRenderer(KineticBlockEntities.LIQUID_VECTOR_THRUSTER_BLOCK_ENTITY.get(), LiquidVectorThrusterRenderer::new);
+//        event.registerBlockEntityRenderer(KineticBlockEntities.VECTOR_THRUSTER_BLOCK_ENTITY.get(), IonVectorThrusterRenderer::new);
     }
 }

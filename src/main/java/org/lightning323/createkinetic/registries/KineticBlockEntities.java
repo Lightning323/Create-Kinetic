@@ -62,6 +62,7 @@ public class KineticBlockEntities {
                     return new IonVectorThrusterBlockEntity(pos, state);
                 }
                 return new IonThrusterBlockEntity(pos, state);
+
             }, KineticBlocks.ION_THRUSTER_BLOCK.get(), KineticBlocks.VECTOR_THRUSTER_BLOCK.get()).build(null));
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<LiquidVectorThrusterBlockEntity>> LIQUID_VECTOR_THRUSTER_BLOCK_ENTITY =
         BLOCK_ENTITY_TYPES.register("liquid_vector_thruster_block_entity",
