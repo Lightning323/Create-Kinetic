@@ -21,6 +21,7 @@ import org.joml.*;
 import org.lightning323.createkinetic.CreateKinetic;
 import org.lightning323.createkinetic.config.KineticConfig;
 import org.lightning323.createkinetic.content.thruster.thruster.ThrusterBlock;
+import org.lightning323.createkinetic.content.thruster.vector_thruster.VectorThruster_I;
 import org.lightning323.createkinetic.content.thruster.vector_thruster.ion_vector_thruster.IonVectorThrusterBlockEntity;
 
 import java.lang.Math;
@@ -177,7 +178,7 @@ public class MeshedThrusterFlameUtils {
     /**
      * inflates the render bounding box of a thruster for
      *
-     * @param be
+     * @param be Thruster Block Entity
      * @param box
      * @return the inflated render bounding box if a change was detected, otherwise null
      */
@@ -212,13 +213,14 @@ public class MeshedThrusterFlameUtils {
 
     /**
      *
-     * @param be
+     * @param vbe Vector Thruster Block Entity
      * @param box
      * @return the inflated render bounding box if a change was detected, otherwise null
      */
-    public static AABB inflateVectorRenderBoundingBox(IonVectorThrusterBlockEntity be, AABB box) {
-        float xInflate = be.getInterpolatedVectorX(1) * 3.5f;
-        float yInflate = be.getInterpolatedVectorY(1) * 3.5f;
+    public static AABB inflateVectorRenderBoundingBox(VectorThruster_I vbe, AABB box) {
+        AbstractThrusterBlockEntity be = (AbstractThrusterBlockEntity) vbe;
+        float xInflate = vbe.getInterpolatedVectorX(1) * 3.5f;
+        float yInflate = vbe.getInterpolatedVectorY(1) * 3.5f;
         float length = Math.max(0, getRenderBoxLength(be) - Math.max(Math.abs(xInflate), Math.abs(yInflate)) * 0.8f);
 
         //Hash the state of the thruster
