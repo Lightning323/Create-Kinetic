@@ -70,7 +70,7 @@ public class KineticBlocks {
     public static final DeferredBlock<LiquidVectorThrusterBlock> LIQUID_VECTOR_THRUSTER_BLOCK = BLOCKS.register("liquid_vector_thruster",
             () -> new LiquidVectorThrusterBlock(Block.Properties.of().mapColor(MapColor.METAL).requiresCorrectToolForDrops()
                     .sound(SoundType.METAL).strength(5.5f, 4.0f).noOcclusion()));
-    public static final DeferredBlock<IonVectorThrusterBlock> VECTOR_THRUSTER_BLOCK = BLOCKS.register("vector_thruster",
+    public static final DeferredBlock<IonVectorThrusterBlock> ION_VECTOR_THRUSTER_BLOCK = BLOCKS.register("vector_thruster",
             () -> new IonVectorThrusterBlock(Block.Properties.of().mapColor(MapColor.METAL).requiresCorrectToolForDrops()
                     .sound(SoundType.METAL).strength(5.5f, 4.0f).noOcclusion()));
     public static final DeferredBlock<IonThrusterBlock> ION_THRUSTER_BLOCK = BLOCKS.register("ion_thruster",
@@ -119,7 +119,7 @@ public class KineticBlocks {
         registerDefaultBlockItem("thruster", KineticBlocks.THRUSTER_BLOCK);
         registerBlockItem("creative_thruster", KineticBlocks.CREATIVE_THRUSTER_BLOCK, new BlockItem.Properties().rarity(Rarity.EPIC));
         registerBlockItem("ion_thruster", KineticBlocks.ION_THRUSTER_BLOCK, new BlockItem.Properties().rarity(Rarity.UNCOMMON));
-        registerBlockItem("vector_thruster", KineticBlocks.VECTOR_THRUSTER_BLOCK, new BlockItem.Properties().rarity(Rarity.UNCOMMON));
+        registerBlockItem("vector_thruster", KineticBlocks.ION_VECTOR_THRUSTER_BLOCK, new BlockItem.Properties().rarity(Rarity.UNCOMMON));
         registerBlockItem("liquid_vector_thruster", KineticBlocks.LIQUID_VECTOR_THRUSTER_BLOCK, new BlockItem.Properties().rarity(Rarity.UNCOMMON));
         registerBlockItem("creative_vector_thruster", KineticBlocks.CREATIVE_VECTOR_THRUSTER_BLOCK, new BlockItem.Properties().rarity(Rarity.EPIC));
 

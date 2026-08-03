@@ -26,6 +26,7 @@ import org.lightning323.createkinetic.content.thruster.ion_thruster.IonThrusterB
 import org.lightning323.createkinetic.content.thruster.vector_thruster.VectorRedstoneLinkBehaviour;
 import org.lightning323.createkinetic.content.thruster.vector_thruster.VectorThruster_I;
 import org.lightning323.createkinetic.particles.ion.IonParticleData;
+import org.lightning323.createkinetic.registries.KineticBlockEntities;
 
 import java.util.List;
 
@@ -67,7 +68,7 @@ public class IonVectorThrusterBlockEntity extends IonThrusterBlockEntity impleme
     }
 
     protected IonVectorThrusterBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
-        super(type, pos, state);
+        super(KineticBlockEntities.ION_VECTOR_THRUSTER_BLOCK_ENTITY.get(), pos, state);
     }
 
     public KineticConfig.ThrusterPlumeType getPlumeRenderType() {

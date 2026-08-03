@@ -27,6 +27,7 @@ import org.lightning323.createkinetic.content.thruster.ion_thruster.IonThrusterR
 import org.lightning323.createkinetic.content.thruster.thruster.ThrusterRenderer;
 import org.lightning323.createkinetic.content.thruster.thruster.creative_thruster.CreativeThrusterRenderer;
 import org.lightning323.createkinetic.content.thruster.vector_thruster.VectorRedstoneLinkRenderer;
+import org.lightning323.createkinetic.content.thruster.vector_thruster.ion_vector_thruster.IonVectorThrusterRenderer;
 import org.lightning323.createkinetic.content.thruster.vector_thruster.liquid_vector_thruster.LiquidVectorThrusterRenderer;
 import org.lightning323.createkinetic.ponder.KineticPonderPlugin;
 import org.lightning323.createkinetic.registries.*;
@@ -158,6 +159,6 @@ public class ModClientEvents {
         event.registerBlockEntityRenderer(KineticBlockEntities.ION_THRUSTER_BLOCK_ENTITY.get(), IonThrusterRenderer::new);
         event.registerBlockEntityRenderer(KineticBlockEntities.CREATIVE_VECTOR_THRUSTER_BLOCK_ENTITY.get(), IonThrusterRenderer::new);
         event.registerBlockEntityRenderer(KineticBlockEntities.LIQUID_VECTOR_THRUSTER_BLOCK_ENTITY.get(), LiquidVectorThrusterRenderer::new);
-//        event.registerBlockEntityRenderer(KineticBlockEntities.VECTOR_THRUSTER_BLOCK_ENTITY.get(), IonVectorThrusterRenderer::new);
+        event.registerBlockEntityRenderer(KineticBlockEntities.ION_VECTOR_THRUSTER_BLOCK_ENTITY.get(), IonVectorThrusterRenderer::new);
     }
 }

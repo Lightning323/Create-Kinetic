@@ -9,6 +9,7 @@ import net.neoforged.neoforge.items.IItemHandler;
 import org.lightning323.createkinetic.compat.PropulsionCompatibility;
 import org.lightning323.createkinetic.content.thruster.ion_thruster.IonThrusterBlockEntity;
 import org.lightning323.createkinetic.content.thruster.thruster.ThrusterBlockEntity;
+import org.lightning323.createkinetic.content.thruster.vector_thruster.ion_vector_thruster.IonVectorThrusterBlockEntity;
 import org.lightning323.createkinetic.content.thruster.vector_thruster.liquid_vector_thruster.LiquidVectorThrusterBlockEntity;
 import org.lightning323.createkinetic.registries.KineticBlockEntities;
 
@@ -24,11 +25,15 @@ public class ModCapabilityEvents {
             KineticBlockEntities.LIQUID_VECTOR_THRUSTER_BLOCK_ENTITY.get(),
             ModCapabilityEvents::getLiquidVectorThrusterFluidHandler
         );
-
         event.registerBlockEntity(
             Capabilities.EnergyStorage.BLOCK,
             KineticBlockEntities.ION_THRUSTER_BLOCK_ENTITY.get(),
             (be, side) -> ((IonThrusterBlockEntity) be).getEnergyHandler(side)
+        );
+        event.registerBlockEntity(
+            Capabilities.EnergyStorage.BLOCK,
+            KineticBlockEntities.ION_VECTOR_THRUSTER_BLOCK_ENTITY.get(),
+            (be, side) -> ((IonVectorThrusterBlockEntity) be).getEnergyHandler(side)
         );
 
         registerComputerCraftCapabilitiesIfAvailable(event);

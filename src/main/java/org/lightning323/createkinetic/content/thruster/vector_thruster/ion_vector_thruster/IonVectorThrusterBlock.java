@@ -1,10 +1,14 @@
 package org.lightning323.createkinetic.content.thruster.vector_thruster.ion_vector_thruster;
 
 import com.mojang.serialization.MapCodec;
+import com.simibubi.create.foundation.blockEntity.SmartBlockEntityTicker;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.DirectionalBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -14,6 +18,8 @@ import org.lightning323.createkinetic.content.thruster.AbstractThrusterBlockEnti
 import org.lightning323.createkinetic.content.thruster.ThrusterShapes;
 import org.lightning323.createkinetic.content.thruster.ion_thruster.IonThrusterBlock;
 import org.lightning323.createkinetic.registries.KineticBlockEntities;
+
+import javax.annotation.Nonnull;
 
 public class IonVectorThrusterBlock extends IonThrusterBlock {
     public static final MapCodec<IonVectorThrusterBlock> CODEC = simpleCodec(IonVectorThrusterBlock::new);
@@ -51,6 +57,15 @@ public class IonVectorThrusterBlock extends IonThrusterBlock {
 
     @Override
     public BlockEntityType<? extends AbstractThrusterBlockEntity> getBlockEntityType() {
-        return KineticBlockEntities.ION_THRUSTER_BLOCK_ENTITY.get();
+        return KineticBlockEntities.ION_VECTOR_THRUSTER_BLOCK_ENTITY.get();
     }
+
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@Nonnull Level level, @Nonnull BlockState state, @Nonnull BlockEntityType<T> type) {
+        if (type == KineticBlockEntities.ION_VECTOR_THRUSTER_BLOCK_ENTITY.get()) {
+            return new SmartBlockEntityTicker<>();
+        }
+        return null;
+    }
+
 }

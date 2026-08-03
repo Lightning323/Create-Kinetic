@@ -22,7 +22,7 @@ public class KineticPonderPlugin implements PonderPlugin {
                 .addStoryBoard("ponder_thruster_2x2", ThrusterScenes::multiblock2x2)
                 .addStoryBoard("ponder_thruster_3x3", ThrusterScenes::multiblock3x3);
         //TODO: Fix vector and liquid vector thruster ponders
-        HELPER.forComponents(KineticBlocks.VECTOR_THRUSTER_BLOCK.get())
+        HELPER.forComponents(KineticBlocks.ION_VECTOR_THRUSTER_BLOCK.get())
                 .addStoryBoard("ponder_vector_thruster_normal", VectorThrusterScenes::vectorThrusterFe);
         HELPER.forComponents(KineticBlocks.CREATIVE_VECTOR_THRUSTER_BLOCK.get())
                 .addStoryBoard("ponder_creative_vector_thruster", VectorThrusterScenes::creativeVectorThruster);
@@ -44,7 +44,7 @@ public class KineticPonderPlugin implements PonderPlugin {
     public void registerTags(@Nonnull PonderTagRegistrationHelper<ResourceLocation> helper) {
         final PonderTagRegistrationHelper<Block> HELPER = helper.withKeyFunction(BuiltInRegistries.BLOCK::getKey);
         HELPER.addToTag(AllCreatePonderTags.KINETIC_APPLIANCES)
-            .add(KineticBlocks.VECTOR_THRUSTER_BLOCK.get())
+            .add(KineticBlocks.ION_VECTOR_THRUSTER_BLOCK.get())
             .add(KineticBlocks.CREATIVE_VECTOR_THRUSTER_BLOCK.get())
             .add(KineticBlocks.LIQUID_VECTOR_THRUSTER_BLOCK.get());
     }

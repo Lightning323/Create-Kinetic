@@ -51,23 +51,34 @@ public class KineticBlockEntities {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CreativeThrusterBlockEntity>> CREATIVE_THRUSTER_BLOCK_ENTITY =
         BLOCK_ENTITY_TYPES.register("creative_thruster_block_entity",
             () -> BlockEntityType.Builder.of((pos, state) -> new CreativeThrusterBlockEntity(pos, state), KineticBlocks.CREATIVE_THRUSTER_BLOCK.get()).build(null));
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CreativeVectorThrusterBlockEntity>> CREATIVE_VECTOR_THRUSTER_BLOCK_ENTITY =
-        BLOCK_ENTITY_TYPES.register("creative_vector_thruster_block_entity",
-            () -> BlockEntityType.Builder.of((pos, state) -> new CreativeVectorThrusterBlockEntity(pos, state), KineticBlocks.CREATIVE_VECTOR_THRUSTER_BLOCK.get()).build(null));
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<IonThrusterBlockEntity>> ION_THRUSTER_BLOCK_ENTITY =
         BLOCK_ENTITY_TYPES.register("ion_thruster_block_entity",
-            () -> BlockEntityType.Builder.of((pos, state) -> {
-                if (state.getBlock() == KineticBlocks.VECTOR_THRUSTER_BLOCK.get()) {
-                    return new IonVectorThrusterBlockEntity(pos, state);
-                }
-                return new IonThrusterBlockEntity(pos, state);
+            () -> BlockEntityType.Builder.of((pos, state) ->  new IonThrusterBlockEntity(pos, state),
+                    KineticBlocks.ION_THRUSTER_BLOCK.get()).build(null));
 
-            }, KineticBlocks.ION_THRUSTER_BLOCK.get(), KineticBlocks.VECTOR_THRUSTER_BLOCK.get()).build(null));
+    //------------------------------------------------------------------------------------------------------------------
+    //VECTOR THRUSTER
+    //------------------------------------------------------------------------------------------------------------------
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<IonVectorThrusterBlockEntity>> ION_VECTOR_THRUSTER_BLOCK_ENTITY =
+            BLOCK_ENTITY_TYPES.register("vector_thruster_block_entity",
+                    () -> BlockEntityType.Builder.of((pos, state) -> new IonVectorThrusterBlockEntity(pos, state),
+                            KineticBlocks.ION_VECTOR_THRUSTER_BLOCK.get()).build(null));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CreativeVectorThrusterBlockEntity>> CREATIVE_VECTOR_THRUSTER_BLOCK_ENTITY =
+            BLOCK_ENTITY_TYPES.register("creative_vector_thruster_block_entity",
+                    () -> BlockEntityType.Builder.of((pos, state) -> new CreativeVectorThrusterBlockEntity(pos, state),
+                            KineticBlocks.CREATIVE_VECTOR_THRUSTER_BLOCK.get()).build(null));
+
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<LiquidVectorThrusterBlockEntity>> LIQUID_VECTOR_THRUSTER_BLOCK_ENTITY =
         BLOCK_ENTITY_TYPES.register("liquid_vector_thruster_block_entity",
             () -> BlockEntityType.Builder.of((pos, state) -> new LiquidVectorThrusterBlockEntity(pos, state),
                 KineticBlocks.LIQUID_VECTOR_THRUSTER_BLOCK.get()).build(null));
+
+    //------------------------------------------------------------------------------------------------------------------
+    //COPYCAT BLOCKS
+    //------------------------------------------------------------------------------------------------------------------
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<PropulsionCopycatWingBlockEntity>> COPYCAT_WING_BLOCK_ENTITY =
         BLOCK_ENTITY_TYPES.register("copycat_wing_block_entity",
