@@ -58,16 +58,16 @@ public class IonVectorThrusterBlockEntity extends IonThrusterBlockEntity impleme
     private float currentFlapProgress;
     private float prevFlapProgress;
 
-    public IonVectorThrusterBlockEntity(BlockPos pos, BlockState state) {
-        super(pos, state);
-    }
-
     @Override
     public boolean supportsMultiblock() {
         return false;
     }
 
-    protected IonVectorThrusterBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+    public IonVectorThrusterBlockEntity(final BlockEntityType<?> type, BlockPos pos, BlockState state) {
+        super(type, pos, state);
+    }
+
+    public IonVectorThrusterBlockEntity(BlockPos pos, BlockState state) {
         super(KineticBlockEntities.ION_VECTOR_THRUSTER_BLOCK_ENTITY.get(), pos, state);
     }
 

@@ -25,32 +25,40 @@ import org.lightning323.createkinetic.content.thruster.vector_thruster.liquid_ve
 import org.lightning323.createkinetic.content.wing.PropulsionCopycatWingBlockEntity;
 
 public class KineticBlockEntities {
-    private static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES =
-        DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, CreateKinetic.ID);
-
+    private static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES =        DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, CreateKinetic.ID);
     public static final KineticRegistrate REGISTRATE = CreateKinetic.getRegistrate();
+
+
     public static final BlockEntityEntry<JoystickBlockEntity> JOYSTICK = REGISTRATE
             .blockEntity("joystick", JoystickBlockEntity::new)
             .validBlocks(KineticBlocks.JOYSTICK)
             .renderer(() -> JoystickRenderer::new)
             .register();
+
     public static final BlockEntityEntry<ReactionWheelBlockEntity> GYROSCOPE = REGISTRATE
             .blockEntity("gyroscope", ReactionWheelBlockEntity::new)
             .validBlocks(KineticBlocks.REACTION_WHEEL)
             .renderer(() -> ReactionWheelRenderer::new)
             .register();
+
     public static final BlockEntityEntry<SableTrackBlockEntity> SABLE_TRACK = REGISTRATE.blockEntity("sable_track", SableTrackBlockEntity::new)
             .validBlocks(new NonNullSupplier[]{KineticBlocks.TRACK_MOUNT})
             .renderer(() -> (BlockEntityRendererProvider<SableTrackBlockEntity>) SableTrackRenderer::new)
             .register();
 
+    //------------------------------------------------------------------------------------------------------------------
+    // THRUSTER
+    //------------------------------------------------------------------------------------------------------------------
+
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ThrusterBlockEntity>> THRUSTER_BLOCK_ENTITY =
         BLOCK_ENTITY_TYPES.register("thruster_block_entity",
-            () -> BlockEntityType.Builder.of((pos, state) -> new ThrusterBlockEntity(pos, state), KineticBlocks.THRUSTER_BLOCK.get()).build(null));
+            () -> BlockEntityType.Builder.of((pos, state) -> new ThrusterBlockEntity(pos, state),
+                    KineticBlocks.THRUSTER_BLOCK.get()).build(null));
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CreativeThrusterBlockEntity>> CREATIVE_THRUSTER_BLOCK_ENTITY =
         BLOCK_ENTITY_TYPES.register("creative_thruster_block_entity",
-            () -> BlockEntityType.Builder.of((pos, state) -> new CreativeThrusterBlockEntity(pos, state), KineticBlocks.CREATIVE_THRUSTER_BLOCK.get()).build(null));
+            () -> BlockEntityType.Builder.of((pos, state) -> new CreativeThrusterBlockEntity(pos, state),
+                    KineticBlocks.CREATIVE_THRUSTER_BLOCK.get()).build(null));
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<IonThrusterBlockEntity>> ION_THRUSTER_BLOCK_ENTITY =
         BLOCK_ENTITY_TYPES.register("ion_thruster_block_entity",

@@ -27,6 +27,7 @@ import org.lightning323.createkinetic.content.thruster.ion_thruster.IonThrusterR
 import org.lightning323.createkinetic.content.thruster.thruster.ThrusterRenderer;
 import org.lightning323.createkinetic.content.thruster.thruster.creative_thruster.CreativeThrusterRenderer;
 import org.lightning323.createkinetic.content.thruster.vector_thruster.VectorRedstoneLinkRenderer;
+import org.lightning323.createkinetic.content.thruster.vector_thruster.creative_vector_thruster.CreativeVectorThrusterRenderer;
 import org.lightning323.createkinetic.content.thruster.vector_thruster.ion_vector_thruster.IonVectorThrusterRenderer;
 import org.lightning323.createkinetic.content.thruster.vector_thruster.liquid_vector_thruster.LiquidVectorThrusterRenderer;
 import org.lightning323.createkinetic.ponder.KineticPonderPlugin;
@@ -146,11 +147,6 @@ public class ModClientEvents {
 
     }
 
-//    @SubscribeEvent
-//    private static void buildContents(BuildCreativeModeTabContentsEvent event) {
-////       System.out.println("BuildCreativeModeTabContentsEvent "+event.getTabKey());
-//    }
-
 
     @SubscribeEvent
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
@@ -160,5 +156,6 @@ public class ModClientEvents {
         event.registerBlockEntityRenderer(KineticBlockEntities.CREATIVE_VECTOR_THRUSTER_BLOCK_ENTITY.get(), IonThrusterRenderer::new);
         event.registerBlockEntityRenderer(KineticBlockEntities.LIQUID_VECTOR_THRUSTER_BLOCK_ENTITY.get(), LiquidVectorThrusterRenderer::new);
         event.registerBlockEntityRenderer(KineticBlockEntities.ION_VECTOR_THRUSTER_BLOCK_ENTITY.get(), IonVectorThrusterRenderer::new);
+        event.registerBlockEntityRenderer(KineticBlockEntities.CREATIVE_VECTOR_THRUSTER_BLOCK_ENTITY.get(), CreativeVectorThrusterRenderer::new);
     }
 }
