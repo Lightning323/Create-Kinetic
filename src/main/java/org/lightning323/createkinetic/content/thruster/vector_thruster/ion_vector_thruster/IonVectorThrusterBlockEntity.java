@@ -1,4 +1,4 @@
-package org.lightning323.createkinetic.content.thruster.vector_thruster;
+package org.lightning323.createkinetic.content.thruster.vector_thruster.ion_vector_thruster;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
@@ -23,11 +23,13 @@ import org.lightning323.createkinetic.config.KineticConfig;
 import org.lightning323.createkinetic.content.thruster.AbstractThrusterBlock;
 import org.lightning323.createkinetic.content.thruster.MeshedThrusterFlameUtils;
 import org.lightning323.createkinetic.content.thruster.ion_thruster.IonThrusterBlockEntity;
+import org.lightning323.createkinetic.content.thruster.vector_thruster.VectorRedstoneLinkBehaviour;
+import org.lightning323.createkinetic.content.thruster.vector_thruster.VectorThruster_I;
 import org.lightning323.createkinetic.particles.ion.IonParticleData;
 
 import java.util.List;
 
-public class VectorThrusterBlockEntity extends IonThrusterBlockEntity {
+public class IonVectorThrusterBlockEntity extends IonThrusterBlockEntity implements VectorThruster_I {
     public static final float MAX_VISUAL_TILT_DEGREES = 30.0f;
     private static final float TWEEN_SPEED = 0.2f;
 
@@ -55,7 +57,7 @@ public class VectorThrusterBlockEntity extends IonThrusterBlockEntity {
     private float currentFlapProgress;
     private float prevFlapProgress;
 
-    public VectorThrusterBlockEntity(BlockPos pos, BlockState state) {
+    public IonVectorThrusterBlockEntity(BlockPos pos, BlockState state) {
         super(pos, state);
     }
 
@@ -64,7 +66,7 @@ public class VectorThrusterBlockEntity extends IonThrusterBlockEntity {
         return false;
     }
 
-    protected VectorThrusterBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+    protected IonVectorThrusterBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
     }
 

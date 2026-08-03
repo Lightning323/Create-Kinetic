@@ -6,7 +6,7 @@ import dan200.computercraft.api.peripheral.IPeripheral;
 import org.lightning323.createkinetic.content.thruster.ion_thruster.IonThrusterBlockEntity;
 import org.lightning323.createkinetic.content.thruster.thruster.ThrusterBlockEntity;
 import org.lightning323.createkinetic.content.thruster.thruster.creative_thruster.CreativeThrusterBlockEntity;
-import org.lightning323.createkinetic.content.thruster.vector_thruster.VectorThrusterBlockEntity;
+import org.lightning323.createkinetic.content.thruster.vector_thruster.ion_vector_thruster.IonVectorThrusterBlockEntity;
 import org.lightning323.createkinetic.content.thruster.vector_thruster.creative_vector_thruster.CreativeVectorThrusterBlockEntity;
 import org.lightning323.createkinetic.content.thruster.vector_thruster.liquid_vector_thruster.LiquidVectorThrusterBlockEntity;
 
@@ -32,7 +32,7 @@ public class ComputerBehaviour extends AbstractComputerBehaviour {
         register(IonThrusterBlockEntity.class, IonThrusterPeripheral::new);
         register(ThrusterBlockEntity.class, ThrusterPeripheral::new);
         register(CreativeVectorThrusterBlockEntity.class, CreativeVectorThrusterPeripheral::new);
-        register(VectorThrusterBlockEntity.class, VectorThrusterPeripheral::new);
+        register(IonVectorThrusterBlockEntity.class, VectorThrusterPeripheral::new);
         register(LiquidVectorThrusterBlockEntity.class, LiquidVectorThrusterPeripheral::new);
         register(CreativeThrusterBlockEntity.class, CreativeThrusterPeripheral::new);
     }

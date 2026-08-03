@@ -9,12 +9,13 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.lightning323.createkinetic.content.thruster.AbstractThrusterBlockEntity;
-import org.lightning323.createkinetic.content.thruster.vector_thruster.VectorThrusterBlock;
+import org.lightning323.createkinetic.content.thruster.vector_thruster.VectorThruster_I;
+import org.lightning323.createkinetic.content.thruster.vector_thruster.ion_vector_thruster.IonVectorThrusterBlock;
 import org.lightning323.createkinetic.registries.KineticBlockEntities;
 
 import javax.annotation.Nonnull;
 
-public class LiquidVectorThrusterBlock extends VectorThrusterBlock {
+public class LiquidVectorThrusterBlock extends IonVectorThrusterBlock  {
     public static final MapCodec<LiquidVectorThrusterBlock> CODEC = simpleCodec(LiquidVectorThrusterBlock::new);
 
     public LiquidVectorThrusterBlock(Properties properties) {

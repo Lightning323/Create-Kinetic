@@ -19,6 +19,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import org.lightning323.createkinetic.content.thruster.vector_thruster.ion_vector_thruster.IonVectorThrusterBlockEntity;
 import org.lightning323.createkinetic.content.thruster.vector_thruster.liquid_vector_thruster.LiquidVectorThrusterBlockEntity;
 
 import java.util.ArrayList;
@@ -82,7 +83,7 @@ public class VectorRedstoneLinkRenderer {
         }
     }
 
-    public static void renderOnBlockEntity(VectorThrusterBlockEntity be, float partialTicks, PoseStack ms,
+    public static void renderOnBlockEntity(IonVectorThrusterBlockEntity be, float partialTicks, PoseStack ms,
                                            MultiBufferSource buffer, int light, int overlay) {
         if (be == null || be.isRemoved())
             return;

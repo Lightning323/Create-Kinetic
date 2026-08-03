@@ -1,4 +1,4 @@
-package org.lightning323.createkinetic.content.thruster.vector_thruster;
+package org.lightning323.createkinetic.content.thruster.vector_thruster.ion_vector_thruster;
 
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
@@ -15,10 +15,10 @@ import org.lightning323.createkinetic.content.thruster.ThrusterShapes;
 import org.lightning323.createkinetic.content.thruster.ion_thruster.IonThrusterBlock;
 import org.lightning323.createkinetic.registries.KineticBlockEntities;
 
-public class VectorThrusterBlock extends IonThrusterBlock {
-    public static final MapCodec<VectorThrusterBlock> CODEC = simpleCodec(VectorThrusterBlock::new);
+public class IonVectorThrusterBlock extends IonThrusterBlock {
+    public static final MapCodec<IonVectorThrusterBlock> CODEC = simpleCodec(IonVectorThrusterBlock::new);
 
-    public VectorThrusterBlock(Properties properties) {
+    public IonVectorThrusterBlock(Properties properties) {
         super(properties);
     }
 
@@ -46,7 +46,7 @@ public class VectorThrusterBlock extends IonThrusterBlock {
     @Override
     @SuppressWarnings("unchecked")
     public Class<AbstractThrusterBlockEntity> getBlockEntityClass() {
-        return (Class<AbstractThrusterBlockEntity>) (Object) VectorThrusterBlockEntity.class;
+        return (Class<AbstractThrusterBlockEntity>) (Object) IonVectorThrusterBlockEntity.class;
     }
 
     @Override

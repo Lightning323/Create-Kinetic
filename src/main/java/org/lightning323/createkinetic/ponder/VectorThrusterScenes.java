@@ -16,7 +16,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.fluids.FluidStack;
 import org.lightning323.createkinetic.config.KineticConfig;
 import org.lightning323.createkinetic.content.thruster.ion_thruster.IonThrusterBlockEntity;
-import org.lightning323.createkinetic.content.thruster.vector_thruster.VectorThrusterBlockEntity;
+import org.lightning323.createkinetic.content.thruster.vector_thruster.ion_vector_thruster.IonVectorThrusterBlockEntity;
 import org.lightning323.createkinetic.content.thruster.vector_thruster.creative_vector_thruster.CreativeVectorThrusterBlockEntity;
 import org.lightning323.createkinetic.content.thruster.vector_thruster.liquid_vector_thruster.LiquidVectorThrusterBlockEntity;
 import org.lightning323.createkinetic.particles.ion.IonParticleData;
@@ -371,7 +371,7 @@ public final class VectorThrusterScenes {
             });
             return;
         }
-        scene.world().modifyBlockEntity(thrusterPos, VectorThrusterBlockEntity.class, be -> {
+        scene.world().modifyBlockEntity(thrusterPos, IonVectorThrusterBlockEntity.class, be -> {
             be.applyVectorSignalsForScene(vx, vy);
             be.animateVectorForScene();
         });

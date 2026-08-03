@@ -1,4 +1,4 @@
-package org.lightning323.createkinetic.content.thruster.vector_thruster;
+package org.lightning323.createkinetic.content.thruster.vector_thruster.ion_vector_thruster;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -19,7 +19,7 @@ import org.lightning323.createkinetic.content.thruster.vector_thruster.creative_
 import org.lightning323.createkinetic.registries.KineticPartialModels;
 
 
-public final class VectorThrusterRenderer {
+public final class IonVectorThrusterRenderer {
     private static final float PIVOT_X = 7.0f / 16.0f;
     private static final float PIVOT_Y = 9.0f / 16.0f;
     private static final float PIVOT_Z = 1.0f / 16.0f;
@@ -37,11 +37,11 @@ public final class VectorThrusterRenderer {
     private static final float FLAP_ANGLE_IDLE = 22.5f;
     private static final float FLAP_ANGLE_DELTA = 30.0f;
 
-    private VectorThrusterRenderer() {
+    private IonVectorThrusterRenderer() {
 
     }
 
-    public static void renderThruster(VectorThrusterBlockEntity be, float partialTick, PoseStack ms, MultiBufferSource buffer, int light, int overlay) {
+    public static void renderThruster(IonVectorThrusterBlockEntity be, float partialTick, PoseStack ms, MultiBufferSource buffer, int light, int overlay) {
         if (be == null || be.isRemoved()) return;
         ThrusterDebugRenderer.render(be, ms, buffer);
 
@@ -58,7 +58,7 @@ public final class VectorThrusterRenderer {
         renderThruster(be, partialTick, ms, buffer, light, overlay, state, bodyModel, flapTop, flapBottom, flapLeft, flapRight);
     }
 
-    public static void renderThruster(VectorThrusterBlockEntity be, float partialTick, PoseStack ms, MultiBufferSource buffer,
+    public static void renderThruster(IonVectorThrusterBlockEntity be, float partialTick, PoseStack ms, MultiBufferSource buffer,
                                       int light, int overlay, BlockState state,
                                       PartialModel bodyModel, PartialModel flapTop, PartialModel flapBottom, PartialModel flapLeft, PartialModel flapRight) {
         if (!state.hasProperty(AbstractThrusterBlock.FACING)) return;
@@ -66,8 +66,8 @@ public final class VectorThrusterRenderer {
 
         float xAxis = Mth.clamp(be.getInterpolatedVectorX(partialTick), -1.0f, 1.0f);
         float yAxis = Mth.clamp(be.getInterpolatedVectorY(partialTick), -1.0f, 1.0f);
-        float yawDegrees = xAxis * VectorThrusterBlockEntity.MAX_VISUAL_TILT_DEGREES;
-        float pitchDegrees = -yAxis * VectorThrusterBlockEntity.MAX_VISUAL_TILT_DEGREES;
+        float yawDegrees = xAxis * IonVectorThrusterBlockEntity.MAX_VISUAL_TILT_DEGREES;
+        float pitchDegrees = -yAxis * IonVectorThrusterBlockEntity.MAX_VISUAL_TILT_DEGREES;
         if (facing == Direction.UP) {
             yawDegrees = -yawDegrees;
             pitchDegrees = -pitchDegrees;

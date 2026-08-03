@@ -21,7 +21,7 @@ import org.joml.*;
 import org.lightning323.createkinetic.CreateKinetic;
 import org.lightning323.createkinetic.config.KineticConfig;
 import org.lightning323.createkinetic.content.thruster.thruster.ThrusterBlock;
-import org.lightning323.createkinetic.content.thruster.vector_thruster.VectorThrusterBlockEntity;
+import org.lightning323.createkinetic.content.thruster.vector_thruster.ion_vector_thruster.IonVectorThrusterBlockEntity;
 
 import java.lang.Math;
 
@@ -216,7 +216,7 @@ public class MeshedThrusterFlameUtils {
      * @param box
      * @return the inflated render bounding box if a change was detected, otherwise null
      */
-    public static AABB inflateVectorRenderBoundingBox(VectorThrusterBlockEntity be, AABB box) {
+    public static AABB inflateVectorRenderBoundingBox(IonVectorThrusterBlockEntity be, AABB box) {
         float xInflate = be.getInterpolatedVectorX(1) * 3.5f;
         float yInflate = be.getInterpolatedVectorY(1) * 3.5f;
         float length = Math.max(0, getRenderBoxLength(be) - Math.max(Math.abs(xInflate), Math.abs(yInflate)) * 0.8f);

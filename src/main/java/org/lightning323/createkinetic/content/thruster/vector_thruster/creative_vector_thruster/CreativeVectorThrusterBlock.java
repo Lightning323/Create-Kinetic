@@ -19,10 +19,10 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.lightning323.createkinetic.content.thruster.AbstractThrusterBlockEntity;
 import org.lightning323.createkinetic.content.thruster.ThrusterShapes;
-import org.lightning323.createkinetic.content.thruster.vector_thruster.VectorThrusterBlock;
+import org.lightning323.createkinetic.content.thruster.vector_thruster.ion_vector_thruster.IonVectorThrusterBlock;
 import org.lightning323.createkinetic.registries.KineticBlockEntities;
 
-public class CreativeVectorThrusterBlock extends VectorThrusterBlock implements IWrenchable {
+public class CreativeVectorThrusterBlock extends IonVectorThrusterBlock implements IWrenchable {
     public static final MapCodec<CreativeVectorThrusterBlock> CODEC = simpleCodec(CreativeVectorThrusterBlock::new);
 
     public CreativeVectorThrusterBlock(Properties properties) {

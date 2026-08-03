@@ -19,7 +19,7 @@ import org.lightning323.createkinetic.content.blocks.track.SableTrackRenderer;
 import org.lightning323.createkinetic.content.thruster.ion_thruster.IonThrusterBlockEntity;
 import org.lightning323.createkinetic.content.thruster.thruster.ThrusterBlockEntity;
 import org.lightning323.createkinetic.content.thruster.thruster.creative_thruster.CreativeThrusterBlockEntity;
-import org.lightning323.createkinetic.content.thruster.vector_thruster.VectorThrusterBlockEntity;
+import org.lightning323.createkinetic.content.thruster.vector_thruster.ion_vector_thruster.IonVectorThrusterBlockEntity;
 import org.lightning323.createkinetic.content.thruster.vector_thruster.creative_vector_thruster.CreativeVectorThrusterBlockEntity;
 import org.lightning323.createkinetic.content.thruster.vector_thruster.liquid_vector_thruster.LiquidVectorThrusterBlockEntity;
 import org.lightning323.createkinetic.content.wing.PropulsionCopycatWingBlockEntity;
@@ -59,7 +59,7 @@ public class KineticBlockEntities {
         BLOCK_ENTITY_TYPES.register("ion_thruster_block_entity",
             () -> BlockEntityType.Builder.of((pos, state) -> {
                 if (state.getBlock() == KineticBlocks.VECTOR_THRUSTER_BLOCK.get()) {
-                    return new VectorThrusterBlockEntity(pos, state);
+                    return new IonVectorThrusterBlockEntity(pos, state);
                 }
                 return new IonThrusterBlockEntity(pos, state);
             }, KineticBlocks.ION_THRUSTER_BLOCK.get(), KineticBlocks.VECTOR_THRUSTER_BLOCK.get()).build(null));

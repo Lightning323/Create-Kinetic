@@ -22,7 +22,6 @@ import com.simibubi.create.api.stress.BlockStressValues;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.foundation.data.TagGen;
 import com.tterrag.registrate.util.entry.BlockEntry;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.block.Block;
@@ -43,12 +42,11 @@ import org.lightning323.createkinetic.content.blocks.joystick.JoystickBlock;
 import org.lightning323.createkinetic.content.thruster.ion_thruster.IonThrusterBlock;
 import org.lightning323.createkinetic.content.thruster.thruster.ThrusterBlock;
 import org.lightning323.createkinetic.content.thruster.thruster.creative_thruster.CreativeThrusterBlock;
-import org.lightning323.createkinetic.content.thruster.vector_thruster.VectorThrusterBlock;
+import org.lightning323.createkinetic.content.thruster.vector_thruster.ion_vector_thruster.IonVectorThrusterBlock;
 import org.lightning323.createkinetic.content.thruster.vector_thruster.creative_vector_thruster.CreativeVectorThrusterBlock;
 import org.lightning323.createkinetic.content.thruster.vector_thruster.liquid_vector_thruster.LiquidVectorThrusterBlock;
 import org.lightning323.createkinetic.content.wing.CopycatWingBlock;
 import org.lightning323.createkinetic.content.wing.CopycatWingItem;
-import org.lightning323.createkinetic.content.wing.WingBlock;
 
 public class KineticBlocks {
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(CreateKinetic.ID);
@@ -72,8 +70,8 @@ public class KineticBlocks {
     public static final DeferredBlock<LiquidVectorThrusterBlock> LIQUID_VECTOR_THRUSTER_BLOCK = BLOCKS.register("liquid_vector_thruster",
             () -> new LiquidVectorThrusterBlock(Block.Properties.of().mapColor(MapColor.METAL).requiresCorrectToolForDrops()
                     .sound(SoundType.METAL).strength(5.5f, 4.0f).noOcclusion()));
-    public static final DeferredBlock<VectorThrusterBlock> VECTOR_THRUSTER_BLOCK = BLOCKS.register("vector_thruster",
-            () -> new VectorThrusterBlock(Block.Properties.of().mapColor(MapColor.METAL).requiresCorrectToolForDrops()
+    public static final DeferredBlock<IonVectorThrusterBlock> VECTOR_THRUSTER_BLOCK = BLOCKS.register("vector_thruster",
+            () -> new IonVectorThrusterBlock(Block.Properties.of().mapColor(MapColor.METAL).requiresCorrectToolForDrops()
                     .sound(SoundType.METAL).strength(5.5f, 4.0f).noOcclusion()));
     public static final DeferredBlock<IonThrusterBlock> ION_THRUSTER_BLOCK = BLOCKS.register("ion_thruster",
             () -> new IonThrusterBlock(Block.Properties.of().mapColor(MapColor.METAL)

@@ -8,7 +8,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.world.level.block.state.BlockState;
 import org.lightning323.createkinetic.content.thruster.ThrusterDebugRenderer;
 import org.lightning323.createkinetic.content.thruster.vector_thruster.VectorRedstoneLinkRenderer;
-import org.lightning323.createkinetic.content.thruster.vector_thruster.VectorThrusterRenderer;
+import org.lightning323.createkinetic.content.thruster.vector_thruster.ion_vector_thruster.IonVectorThrusterRenderer;
 import org.lightning323.createkinetic.registries.KineticPartialModels;
 
 public class LiquidVectorThrusterRenderer extends SmartBlockEntityRenderer<LiquidVectorThrusterBlockEntity> {
@@ -31,7 +31,7 @@ public class LiquidVectorThrusterRenderer extends SmartBlockEntityRenderer<Liqui
         PartialModel flapLeft = KineticPartialModels.LIQUID_VECTOR_THRUSTER_FLAP_LEFT;
         PartialModel flapRight = KineticPartialModels.LIQUID_VECTOR_THRUSTER_FLAP_RIGHT;
 
-        VectorThrusterRenderer.renderThruster(be, partialTick, ms, buffer, light, overlay, state, bodyModel, flapTop, flapBottom, flapLeft, flapRight);
+        IonVectorThrusterRenderer.renderThruster(be, partialTick, ms, buffer, light, overlay, state, bodyModel, flapTop, flapBottom, flapLeft, flapRight);
 
         VectorRedstoneLinkRenderer.renderOnBlockEntity(be, partialTick, ms, buffer, light, overlay);
     }

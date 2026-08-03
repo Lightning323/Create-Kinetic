@@ -18,12 +18,13 @@ import org.joml.Vector3d;
 import org.lightning323.createkinetic.config.KineticConfig;
 import org.lightning323.createkinetic.content.thruster.AbstractThrusterBlock;
 import org.lightning323.createkinetic.content.thruster.vector_thruster.VectorRedstoneLinkBehaviour;
-import org.lightning323.createkinetic.content.thruster.vector_thruster.VectorThrusterBlockEntity;
+import org.lightning323.createkinetic.content.thruster.vector_thruster.VectorThruster_I;
+import org.lightning323.createkinetic.content.thruster.vector_thruster.ion_vector_thruster.IonVectorThrusterBlockEntity;
 import org.lightning323.createkinetic.registries.KineticBlockEntities;
 
 import java.util.List;
 
-public class LiquidVectorThrusterBlockEntity extends VectorThrusterBlockEntity {
+public class LiquidVectorThrusterBlockEntity extends IonVectorThrusterBlockEntity implements VectorThruster_I {
     public static final float MAX_VISUAL_TILT_DEGREES = 30.0f;
     private static final float TWEEN_SPEED = 0.2f;
 

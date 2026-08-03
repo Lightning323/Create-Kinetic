@@ -17,7 +17,8 @@ import org.lightning323.createkinetic.config.KineticConfig;
 import org.lightning323.createkinetic.content.thruster.SimulatedThrustAdapter;
 import org.lightning323.createkinetic.content.thruster.thruster.creative_thruster.CreativeThrusterBlockEntity;
 import org.lightning323.createkinetic.content.thruster.thruster.creative_thruster.CreativeThrusterPowerScrollValueBehaviour;
-import org.lightning323.createkinetic.content.thruster.vector_thruster.VectorThrusterBlockEntity;
+import org.lightning323.createkinetic.content.thruster.vector_thruster.VectorThruster_I;
+import org.lightning323.createkinetic.content.thruster.vector_thruster.ion_vector_thruster.IonVectorThrusterBlockEntity;
 import org.lightning323.createkinetic.particles.ion.IonParticleData;
 import org.lightning323.createkinetic.particles.plasma.PlasmaParticleData;
 import org.lightning323.createkinetic.particles.plume.PlumeParticleData;
@@ -27,7 +28,7 @@ import org.lightning323.createkinetic.utility.GoggleUtils;
 import java.util.List;
 import java.util.Locale;
 
-public class CreativeVectorThrusterBlockEntity extends VectorThrusterBlockEntity {
+public class CreativeVectorThrusterBlockEntity extends IonVectorThrusterBlockEntity implements VectorThruster_I {
     private CreativeThrusterPowerScrollValueBehaviour powerBehaviour;
     private CreativeThrusterBlockEntity.PlumeType plumeType = CreativeThrusterBlockEntity.PlumeType.PLASMA;
     private float peripheralThrustOutput = -1.0f;
