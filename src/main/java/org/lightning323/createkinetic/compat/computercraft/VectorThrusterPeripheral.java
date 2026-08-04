@@ -6,11 +6,12 @@ import dan200.computercraft.api.peripheral.IComputerAccess;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
 import org.lightning323.createkinetic.content.thruster.AbstractThrusterBlockEntity.ControlMode;
+import org.lightning323.createkinetic.content.thruster.vector_thruster.AbstractVectorThrusterBlockEntity;
 import org.lightning323.createkinetic.content.thruster.vector_thruster.ion_vector_thruster.IonVectorThrusterBlockEntity;
 
 /** Fuel vector thrusters only; creative vectors use {@link CreativeVectorThrusterPeripheral}. */
-public class VectorThrusterPeripheral extends SyncedPeripheral<IonVectorThrusterBlockEntity> {
-    public VectorThrusterPeripheral(IonVectorThrusterBlockEntity blockEntity) {
+public class VectorThrusterPeripheral extends SyncedPeripheral<AbstractVectorThrusterBlockEntity> {
+    public VectorThrusterPeripheral(AbstractVectorThrusterBlockEntity blockEntity) {
         super(blockEntity);
     }
 

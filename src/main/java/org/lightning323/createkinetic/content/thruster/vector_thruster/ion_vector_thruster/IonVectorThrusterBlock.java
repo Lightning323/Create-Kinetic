@@ -17,11 +17,12 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.lightning323.createkinetic.content.thruster.AbstractThrusterBlockEntity;
 import org.lightning323.createkinetic.content.thruster.ThrusterShapes;
 import org.lightning323.createkinetic.content.thruster.ion_thruster.IonThrusterBlock;
+import org.lightning323.createkinetic.content.thruster.vector_thruster.AbstractVectorThrusterBlock;
 import org.lightning323.createkinetic.registries.KineticBlockEntities;
 
 import javax.annotation.Nonnull;
 
-public class IonVectorThrusterBlock extends IonThrusterBlock {
+public class IonVectorThrusterBlock extends AbstractVectorThrusterBlock {
     public static final MapCodec<IonVectorThrusterBlock> CODEC = simpleCodec(IonVectorThrusterBlock::new);
 
     public IonVectorThrusterBlock(Properties properties) {
@@ -31,22 +32,6 @@ public class IonVectorThrusterBlock extends IonThrusterBlock {
     @Override
     protected MapCodec<? extends DirectionalBlock> codec() {
         return CODEC;
-    }
-
-    @Override
-    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        Direction facing = state.getValue(FACING);
-        if (facing == Direction.UP) {
-            return ThrusterShapes.VECTOR_THRUSTER.get(Direction.DOWN);
-        } else if (facing == Direction.DOWN) {
-            return ThrusterShapes.VECTOR_THRUSTER.get(Direction.UP);
-        }
-        return ThrusterShapes.VECTOR_THRUSTER.get(facing);
-    }
-
-    @Override
-    protected VoxelShape getBlockSupportShape(BlockState state, BlockGetter level, BlockPos pos) {
-        return Shapes.block();
     }
 
     @Override

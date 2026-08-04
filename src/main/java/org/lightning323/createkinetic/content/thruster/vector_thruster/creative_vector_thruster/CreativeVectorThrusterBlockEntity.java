@@ -7,28 +7,21 @@ import net.createmod.catnip.lang.LangBuilder;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import org.lightning323.createkinetic.config.KineticConfig;
 import org.lightning323.createkinetic.content.thruster.SimulatedThrustAdapter;
 import org.lightning323.createkinetic.content.thruster.thruster.creative_thruster.CreativeThrusterBlockEntity;
 import org.lightning323.createkinetic.content.thruster.thruster.creative_thruster.CreativeThrusterPowerScrollValueBehaviour;
+import org.lightning323.createkinetic.content.thruster.vector_thruster.AbstractVectorThrusterBlockEntity;
 import org.lightning323.createkinetic.content.thruster.vector_thruster.VectorThruster_I;
-import org.lightning323.createkinetic.content.thruster.vector_thruster.ion_vector_thruster.IonVectorThrusterBlockEntity;
-import org.lightning323.createkinetic.particles.ion.IonParticleData;
-import org.lightning323.createkinetic.particles.plasma.PlasmaParticleData;
-import org.lightning323.createkinetic.particles.plume.PlumeParticleData;
 import org.lightning323.createkinetic.registries.KineticBlockEntities;
-import org.lightning323.createkinetic.utility.GoggleUtils;
 
 import java.util.List;
-import java.util.Locale;
 
-public class CreativeVectorThrusterBlockEntity extends IonVectorThrusterBlockEntity implements VectorThruster_I {
+public class CreativeVectorThrusterBlockEntity extends AbstractVectorThrusterBlockEntity implements VectorThruster_I {
     private CreativeThrusterPowerScrollValueBehaviour powerBehaviour;
     private CreativeThrusterBlockEntity.PlumeType plumeType = CreativeThrusterBlockEntity.PlumeType.PLASMA;
     private float peripheralThrustOutput = -1.0f;
@@ -76,7 +69,6 @@ public class CreativeVectorThrusterBlockEntity extends IonVectorThrusterBlockEnt
         return true;
     }
 
-
     @Override
     public CreativeThrusterBlockEntity.PlumeType getPlumeType() {
         return plumeType;
@@ -109,24 +101,6 @@ public class CreativeVectorThrusterBlockEntity extends IonVectorThrusterBlockEnt
         setChanged();
         sendData();
     }
-
-    @Override
-    protected ParticleOptions createParticleOptions() {
-        Integer color = getDyeColor();
-        if (plumeType == CreativeThrusterBlockEntity.PlumeType.PLASMA) {
-            return new PlasmaParticleData(List.of(), color);
-        }
-        if (plumeType == CreativeThrusterBlockEntity.PlumeType.ION) {
-            float size = Mth.lerp(getInterpolatedFlapProgress(1.0f), 0.85f, 0.35f);
-            return new IonParticleData(List.of(), color, size);
-        }
-        if (plumeType == CreativeThrusterBlockEntity.PlumeType.PLUME) {
-            return new PlumeParticleData(List.of(), color);
-        }
-        return new PlumeParticleData(List.of(), color);
-    }
-
-
 
     @Override
     protected LangBuilder getGoggleStatus() {
@@ -179,66 +153,6 @@ public class CreativeVectorThrusterBlockEntity extends IonVectorThrusterBlockEnt
 
     public void clearPeripheralThrustOutput() {
         setThrustOutput(-1.0f);
-    }
-
-    @Override
-    public void calculateObstruction(Level level, BlockPos pos, Direction forwardDirection) {
-        this.emptyBlocks = KineticConfig.OBSTRUCTION_SCAN_LENGTH.get();
-    }
-
-    @Override
-    protected void addThrusterDetails(List<Component> tooltip, boolean isPlayerSneaking) {
-        float obstructionEfficiency = 100;
-        ChatFormatting tooltipColor = ChatFormatting.GREEN;
-        int scanLength = KineticConfig.OBSTRUCTION_SCAN_LENGTH.get();
-        if (emptyBlocks < scanLength) {
-            obstructionEfficiency = calculateObstructionEffect() * 100;
-            tooltipColor = GoggleUtils.efficiencyColor(obstructionEfficiency);
-            CreateLang.builder().add(Component.translatable("createkinetic.gui.goggles.thruster.obstructed")).space()
-                    .add(CreateLang.text(GoggleUtils.makeObstructionBar(emptyBlocks, scanLength))).style(tooltipColor).forGoggles(tooltip);
-        }
-
-        CreateLang.builder()
-                .add(Component.translatable("createkinetic.gui.goggles.thruster.efficiency")).text(": ")
-                .add(CreateLang.number(obstructionEfficiency)).add(CreateLang.text("%"))
-                .style(tooltipColor).forGoggles(tooltip);
-
-        CreateLang.builder()
-                .add(Component.translatable("createkinetic.gui.goggles.thruster.thrust_output"))
-                .style(ChatFormatting.WHITE)
-                .forGoggles(tooltip);
-
-        CreateLang.builder()
-                .add(Component.literal("  "))
-                .add(Component.translatable("createkinetic.tooltip.thrust1").withStyle(ChatFormatting.GRAY))
-                .add(Component.literal(String.format(Locale.ROOT, "%.2f", this.getDisplayedThrustPnForTooltip() / getThrustUnitsPerKn())).withStyle(ChatFormatting.AQUA))
-                .add(Component.literal(" pN").withStyle(ChatFormatting.GRAY))
-                .forGoggles(tooltip);
-
-        addParticleCategory(tooltip);
-    }
-
-    private void addParticleCategory(List<Component> tooltip) {
-        CreateLang.builder()
-                .add(Component.translatable("createkinetic.gui.goggles.creative_thruster.particle"))
-                .style(ChatFormatting.WHITE)
-                .forGoggles(tooltip);
-
-        Component particleValue = switch (plumeType) {
-            case PLASMA -> Component.translatable("createkinetic.gui.goggles.creative_thruster.particle.plasma")
-                    .withStyle(ChatFormatting.AQUA);
-            case ION -> Component.translatable("createkinetic.gui.goggles.creative_thruster.particle.ion")
-                    .withStyle(ChatFormatting.BLUE);
-            case PLUME -> Component.translatable("createkinetic.gui.goggles.creative_thruster.particle.plume")
-                    .withStyle(ChatFormatting.GOLD);
-            case NONE -> Component.translatable("createkinetic.gui.goggles.creative_thruster.particle.none")
-                    .withStyle(ChatFormatting.DARK_GRAY);
-        };
-
-        CreateLang.builder()
-                .add(Component.literal("  "))
-                .add(particleValue)
-                .forGoggles(tooltip);
     }
 
     @Override

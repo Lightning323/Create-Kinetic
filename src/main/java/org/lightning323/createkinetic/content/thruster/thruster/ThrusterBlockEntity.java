@@ -1112,14 +1112,3 @@ public class ThrusterBlockEntity extends AbstractThrusterBlockEntity {
         return KineticConfig.FUEL_TANK_CAPACITY_MB.get();
     }
 }
-
-
-
-
-
-
-
-
-
-
-

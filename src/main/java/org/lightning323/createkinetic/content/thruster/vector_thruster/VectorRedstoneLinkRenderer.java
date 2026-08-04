@@ -83,7 +83,7 @@ public class VectorRedstoneLinkRenderer {
         }
     }
 
-    public static void renderOnBlockEntity(IonVectorThrusterBlockEntity be, float partialTicks, PoseStack ms,
+    public static void renderOnBlockEntity(AbstractVectorThrusterBlockEntity be, float partialTicks, PoseStack ms,
                                            MultiBufferSource buffer, int light, int overlay) {
         if (be == null || be.isRemoved())
             return;

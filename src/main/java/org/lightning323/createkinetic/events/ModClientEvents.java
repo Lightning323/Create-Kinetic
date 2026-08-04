@@ -153,7 +153,7 @@ public class ModClientEvents {
         event.registerBlockEntityRenderer(KineticBlockEntities.CREATIVE_THRUSTER_BLOCK_ENTITY.get(), CreativeThrusterRenderer::new);
         event.registerBlockEntityRenderer(KineticBlockEntities.THRUSTER_BLOCK_ENTITY.get(), ThrusterRenderer::new);
         event.registerBlockEntityRenderer(KineticBlockEntities.ION_THRUSTER_BLOCK_ENTITY.get(), IonThrusterRenderer::new);
-        event.registerBlockEntityRenderer(KineticBlockEntities.CREATIVE_VECTOR_THRUSTER_BLOCK_ENTITY.get(), IonThrusterRenderer::new);
+
         event.registerBlockEntityRenderer(KineticBlockEntities.LIQUID_VECTOR_THRUSTER_BLOCK_ENTITY.get(), LiquidVectorThrusterRenderer::new);
         event.registerBlockEntityRenderer(KineticBlockEntities.ION_VECTOR_THRUSTER_BLOCK_ENTITY.get(), IonVectorThrusterRenderer::new);
         event.registerBlockEntityRenderer(KineticBlockEntities.CREATIVE_VECTOR_THRUSTER_BLOCK_ENTITY.get(), CreativeVectorThrusterRenderer::new);
