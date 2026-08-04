@@ -82,14 +82,13 @@ public class LiquidVectorThrusterBlockEntity extends AbstractVectorThrusterBlock
     }
 
     protected void updateSingleThrust(BlockState currentBlockState) {
-        System.out.println("LiquidVectorThrusterBlockEntity.updateSingleThrust");
         final double prevConsumedMbPerTick = lastConsumedMbPerTick;
         final int prevFuelAmount = tank != null ? tank.getPrimaryHandler().getFluidAmount() : 0;
         float thrust = 0;
         float currentPower = getPower();
         lastConsumedMbPerTick = 0.0d;
+        System.out.println("LiquidVectorThrusterBlockEntity.updateSingleThrust: currentPower = "+ isWorking()+", " + currentPower);
         if (isWorking() && currentPower > 0) {
-            System.out.println("LiquidVectorThrusterBlockEntity.updateSingleThrust: currentPower = " + currentPower);
             FluidThrusterProperties properties = getFuelProperties(fluidStack().getFluid());
             float obstructionEffect = calculateObstructionEffect();
             float thrustPercentage = Math.min(currentPower, obstructionEffect);
@@ -153,6 +152,17 @@ public class LiquidVectorThrusterBlockEntity extends AbstractVectorThrusterBlock
     protected boolean isWorking() {
         return validFluid();
     }
+
+
+    public FluidStack fluidStack() {
+        return tank.getPrimaryHandler().getFluid();
+    }
+
+    public boolean validFluid() {
+        if (fluidStack().isEmpty()) return false;
+        return getFuelProperties(fluidStack().getFluid()) != null;
+    }
+
 
     @Override
     protected LangBuilder getGoggleStatus() {
