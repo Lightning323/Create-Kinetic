@@ -31,6 +31,12 @@ public class ModCapabilityEvents {
             (be, side) -> ((IonThrusterBlockEntity) be).getEnergyHandler(side)
         );
 
+        event.registerBlockEntity(
+                Capabilities.EnergyStorage.BLOCK,
+                KineticBlockEntities.ION_VECTOR_THRUSTER_BLOCK_ENTITY.get(),
+                (be, side) -> ((IonVectorThrusterBlockEntity) be).getEnergyHandler(side)
+        );
+
         registerComputerCraftCapabilitiesIfAvailable(event);
     }
 
