@@ -30,6 +30,7 @@ import org.lightning323.createkinetic.content.thruster.SimulatedThrustAdapter;
 import org.lightning323.createkinetic.content.thruster.ThrusterFuelManager;
 import org.lightning323.createkinetic.content.thruster.thruster.ThrusterBlock;
 import org.lightning323.createkinetic.content.thruster.thruster.ThrusterBlockEntity;
+import org.lightning323.createkinetic.content.thruster.thruster.creative_thruster.CreativeThrusterBlockEntity;
 import org.lightning323.createkinetic.content.thruster.vector_thruster.AbstractVectorThrusterBlockEntity;
 import org.lightning323.createkinetic.content.thruster.vector_thruster.VectorRedstoneLinkBehaviour;
 import org.lightning323.createkinetic.content.thruster.vector_thruster.VectorThruster_I;
@@ -52,6 +53,13 @@ public class LiquidVectorThrusterBlockEntity extends AbstractVectorThrusterBlock
 
     public LiquidVectorThrusterBlockEntity(BlockPos pos, BlockState state) {
         super(KineticBlockEntities.LIQUID_VECTOR_THRUSTER_BLOCK_ENTITY.get(), pos, state);
+    }
+
+    private static CreativeThrusterBlockEntity.PlumeType plumeType = PlumeType.PLUME;
+
+    @Override
+    public CreativeThrusterBlockEntity.PlumeType getPlumeType() {
+        return plumeType;
     }
 
     @Override
@@ -87,7 +95,7 @@ public class LiquidVectorThrusterBlockEntity extends AbstractVectorThrusterBlock
         float thrust = 0;
         float currentPower = getPower();
         lastConsumedMbPerTick = 0.0d;
-        System.out.println("LiquidVectorThrusterBlockEntity.updateSingleThrust: currentPower = "+ isWorking()+", " + currentPower);
+        System.out.println("LiquidVectorThrusterBlockEntity.updateSingleThrust: currentPower = " + isWorking() + ", " + currentPower);
         if (isWorking() && currentPower > 0) {
             FluidThrusterProperties properties = getFuelProperties(fluidStack().getFluid());
             float obstructionEffect = calculateObstructionEffect();
