@@ -50,6 +50,7 @@ public class CreativeVectorThrusterBlockEntity extends AbstractVectorThrusterBlo
     public void updateThrust(BlockState currentBlockState) {
         float thrust = 0;
         float currentPower = getPower();
+
         if (currentPower > 0) {
             float baseThrustPn = peripheralThrustOutput >= 0.0f ? peripheralThrustOutput : (float) (powerBehaviour.getTargetThrust() * getThrustUnitsPerKn());
             baseThrustPn *= (float) calculateAtmosphericFactor();

@@ -272,9 +272,11 @@ public abstract class AbstractVectorThrusterBlockEntity extends AbstractThruster
         float newEfficiency = scanLength <= 0
                 ? 0.0f
                 : Math.clamp((float) (firstHitDistance / scanLength), 0.0f, 1.0f);
-        int newEmptyBlocks = sample.emptyBlocksEstimate();
+        int newEmptyBlocks = sample.emptyBlocksEstimate()+1; //TODO: Added 1 because somehow, the creative thruster has 0 of obsstruction distance when rotated no matter what
 
         if (this.emptyBlocks != newEmptyBlocks || Math.abs(this.obstructionEfficiency - newEfficiency) > 1e-4f) {
+            System.out.println("AbstractVectorThrusterBlockEntity: calculateObstruction "+newEmptyBlocks+" "+newEfficiency);
+
             this.emptyBlocks = newEmptyBlocks;
             this.obstructionEfficiency = newEfficiency;
             this.isThrustDirty = true;
