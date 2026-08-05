@@ -36,10 +36,10 @@ public class KineticCreativeTabs {
         registerSectionItem(AERONAUTICS_CREATIVE_SECTION, "thruster", () -> KineticBlocks.THRUSTER_BLOCK.get().asItem());
         registerSectionItem(AERONAUTICS_CREATIVE_SECTION, "creative_thruster", () -> KineticBlocks.CREATIVE_THRUSTER_BLOCK.get().asItem());
         registerSectionItem(AERONAUTICS_CREATIVE_SECTION, "ion_thruster", () -> KineticBlocks.ION_THRUSTER_BLOCK.get().asItem());
+
         registerSectionItem(AERONAUTICS_CREATIVE_SECTION, "vector_thruster", () -> KineticBlocks.ION_VECTOR_THRUSTER_BLOCK.get().asItem());
         registerSectionItem(AERONAUTICS_CREATIVE_SECTION, "creative_vector_thruster", () -> KineticBlocks.CREATIVE_VECTOR_THRUSTER_BLOCK.get().asItem());
-        //TODO: Liquid vector thruster doesnt emit plumes even with fuel (It needs to be changed from IONthruster to Thruster base class)
-//        registerSectionItem(AERONAUTICS_CREATIVE_SECTION, "liquid_vector_thruster", () -> KineticBlocks.LIQUID_VECTOR_THRUSTER_BLOCK.get().asItem());
+        registerSectionItem(AERONAUTICS_CREATIVE_SECTION, "liquid_vector_thruster", () -> KineticBlocks.LIQUID_VECTOR_THRUSTER_BLOCK.get().asItem());
 
         registerSectionItem(AERONAUTICS_CREATIVE_SECTION, "pine_resin", () -> KineticItems.PINE_RESIN.get());
         registerSectionItem(AERONAUTICS_CREATIVE_SECTION, "turpentine_bucket", () -> KineticItems.TURPENTINE_BUCKET.get());
