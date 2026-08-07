@@ -247,7 +247,6 @@ public abstract class AbstractThrusterBlockEntity extends SmartBlockEntity
         return getPower();
     }
 
-    @OnlyIn(Dist.CLIENT)
     //Used for client-side interpolation
     protected LerpedFloat interpolatedPlumePower = LerpedFloat.linear().chase(0, 0.01, LerpedFloat.Chaser.LINEAR);
 
