@@ -154,6 +154,9 @@ public abstract class AbstractVectorThrusterBlockEntity extends AbstractThruster
     @OnlyIn(Dist.CLIENT)
     @Override
     public AABB getRenderBoundingBox() {
+        if(boundingBox == null){
+            boundingBox = getSingleRenderBox();
+        }
         if (getPlumeRenderType() == KineticConfig.ThrusterPlumeType.PARTICLES) return getSingleRenderBox();
 
         AABB box = MeshedThrusterFlameUtils.inflateVectorRenderBoundingBox(this, getSingleRenderBox());

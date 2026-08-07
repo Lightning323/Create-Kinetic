@@ -72,7 +72,10 @@ public abstract class AbstractThrusterBlockEntity extends SmartBlockEntity
 
     protected static final float LOWEST_POWER_THRESHOLD = 5.0f / 15.0f;
 
-    //Common State
+    protected ControlMode controlMode = ControlMode.NORMAL;
+    protected int redstoneInput = 0;
+    protected float digitalInput = 0.0f;
+
     protected ThrusterData thrusterData;
     @Nullable
     protected BlockPos controllerPos;
@@ -80,6 +83,11 @@ public abstract class AbstractThrusterBlockEntity extends SmartBlockEntity
     protected String dyeId = null;
     protected int emptyBlocks;
     protected boolean isThrustDirty = false;
+
+    public AbstractThrusterBlockEntity(BlockEntityType<?> typeIn, BlockPos pos, BlockState state) {
+        super(typeIn, pos, state);
+        thrusterData = new ThrusterData();
+    }
 
     public boolean isMultiblock() {
         return width > 1;
@@ -92,12 +100,9 @@ public abstract class AbstractThrusterBlockEntity extends SmartBlockEntity
     abstract public boolean supportsMultiblock();
 
     //We need to cache the bounding box to avoid recalculating it every tick
-    @OnlyIn(Dist.CLIENT)
     //Used for tracking the state of the thruster so we dont have to recalculate the bounding box every time
     protected int boundingBoxHash;
-    @OnlyIn(Dist.CLIENT)
-    public AABB boundingBox = getSingleRenderBox();
-    @OnlyIn(Dist.CLIENT)
+    protected AABB boundingBox;
     protected AABB multiblockBoundingBox;
 
     @OnlyIn(Dist.CLIENT)
@@ -118,6 +123,9 @@ public abstract class AbstractThrusterBlockEntity extends SmartBlockEntity
     @OnlyIn(Dist.CLIENT)
     @Override
     public AABB getRenderBoundingBox() {
+        if(boundingBox == null){
+            boundingBox = getSingleRenderBox();
+        }
         if (isMultiblock()) {
             if (isController()) { //If this is multiblock controller
                 //If this is a particle thruster, return the bounding box
@@ -177,14 +185,8 @@ public abstract class AbstractThrusterBlockEntity extends SmartBlockEntity
         PERIPHERAL
     }
 
-    protected ControlMode controlMode = ControlMode.NORMAL;
-    protected int redstoneInput = 0;
-    protected float digitalInput = 0.0f;
 
-    public AbstractThrusterBlockEntity(BlockEntityType<?> typeIn, BlockPos pos, BlockState state) {
-        super(typeIn, pos, state);
-        thrusterData = new ThrusterData();
-    }
+
 
     @Override
     public void initialize() {
