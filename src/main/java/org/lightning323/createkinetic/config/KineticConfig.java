@@ -76,6 +76,8 @@ public class KineticConfig {
     private static final ModConfigSpec.BooleanValue JOYSTICK_HUD_SHOW_READOUT;
     private static final ModConfigSpec.BooleanValue JOYSTICK_HUD_SHOW_LINES;
 
+    public static final ModConfigSpec.IntValue DOCK_ENERGY_CAPACITY;
+
     private static volatile double gyroscopeOmegaTarget;
     private static volatile double gyroscopeDampingRatio;
     private static volatile double gyroscopeAuthorityPerUnit;
@@ -223,6 +225,9 @@ public class KineticConfig {
      * COMMON BUILDER
      */
     static {
+
+        DOCK_ENERGY_CAPACITY = COMMON_BUILDER.comment("Energy capacity of the docking connector energy buffer")
+                .defineInRange("dockEnergyCapacity", 80000, 1, Integer.MAX_VALUE);
 
         //Joystick
         COMMON_BUILDER.push("Joystick");

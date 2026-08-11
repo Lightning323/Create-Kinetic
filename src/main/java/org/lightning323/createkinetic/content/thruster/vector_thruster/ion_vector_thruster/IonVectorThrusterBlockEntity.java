@@ -9,13 +9,11 @@ import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.energy.IEnergyStorage;
-import org.lightning323.createkinetic.compat.PropulsionCompatibility;
+import org.lightning323.createkinetic.compat.KineticCompat;
 import org.lightning323.createkinetic.compat.computercraft.ComputerBehaviour;
 import org.lightning323.createkinetic.config.KineticConfig;
 import org.lightning323.createkinetic.content.thruster.SimulatedThrustAdapter;
 import org.lightning323.createkinetic.content.thruster.ThrusterDamager;
-import org.lightning323.createkinetic.content.thruster.ion_thruster.IonThrusterBlockEntity;
-import org.lightning323.createkinetic.content.thruster.thruster.ThrusterBlockEntity;
 import org.lightning323.createkinetic.content.thruster.vector_thruster.AbstractVectorThrusterBlockEntity;
 import org.lightning323.createkinetic.content.thruster.vector_thruster.VectorThruster_I;
 import org.lightning323.createkinetic.registries.KineticBlockEntities;
@@ -137,7 +135,7 @@ public class IonVectorThrusterBlockEntity extends AbstractVectorThrusterBlockEnt
     public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
         super.addBehaviours(behaviours);
         // Keep ion/vector tankless, but still inherit base behaviours like CC + plume damage.
-        if (PropulsionCompatibility.CC_ACTIVE) {
+        if (KineticCompat.CC_ACTIVE) {
             behaviours.add(computerBehaviour = new ComputerBehaviour(this));
         }
         behaviours.add(new ThrusterDamager(this));

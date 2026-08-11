@@ -8,7 +8,8 @@
   "mixins": [
     "tracks.WheelMountBlockMixin",
     "tracks.WheelMountOffsetMixin",
-    "linked_typewriter.LinkedTypewriterBlockInvoker",
+    "simulated.linked_typewriter.LinkedTypewriterBlockInvoker",
+    "simulated.dockingConnector.DockingConnectorBEMixin",
     "client.MinecraftMixin"
   ],
   "client": [

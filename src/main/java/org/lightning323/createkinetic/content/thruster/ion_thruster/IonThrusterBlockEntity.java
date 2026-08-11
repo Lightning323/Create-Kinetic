@@ -19,7 +19,7 @@ import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import org.lightning323.createkinetic.config.KineticConfig;
-import org.lightning323.createkinetic.compat.PropulsionCompatibility;
+import org.lightning323.createkinetic.compat.KineticCompat;
 import org.lightning323.createkinetic.compat.computercraft.ComputerBehaviour;
 import org.lightning323.createkinetic.content.thruster.SimulatedThrustAdapter;
 import org.lightning323.createkinetic.content.thruster.ThrusterDamager;
@@ -101,7 +101,7 @@ public class IonThrusterBlockEntity extends ThrusterBlockEntity {
     @Override
     public void addBehaviours(final List<BlockEntityBehaviour> behaviours) {
         // Keep ion/vector tankless, but still inherit base behaviours like CC + plume damage.
-        if (PropulsionCompatibility.CC_ACTIVE) {
+        if (KineticCompat.CC_ACTIVE) {
             behaviours.add(computerBehaviour = new ComputerBehaviour(this));
         }
         behaviours.add(new ThrusterDamager(this));

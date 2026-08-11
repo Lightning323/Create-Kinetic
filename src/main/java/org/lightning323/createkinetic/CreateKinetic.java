@@ -21,6 +21,7 @@
  */
 package org.lightning323.createkinetic;
 
+import com.mojang.logging.LogUtils;
 import com.simibubi.create.compat.Mods;
 import com.simibubi.create.foundation.item.ItemDescription;
 import com.simibubi.create.foundation.item.KineticStats;
@@ -31,19 +32,27 @@ import dev.ryanhcode.sable.platform.SableEventPlatform;
 import dev.simulated_team.simulated.util.SimColors;
 import net.createmod.catnip.lang.FontHelper;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.loading.FMLEnvironment;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import org.lightning323.createkinetic.client.KineticClient;
+import org.lightning323.createkinetic.compat.simulated.DockingConnectorBEAccess;
 import org.lightning323.createkinetic.config.KineticConfig;
 import org.lightning323.createkinetic.content.blocks.reaction_wheel.ReactionWheelController;
 import org.lightning323.createkinetic.content.blocks.joystick.JoystickSessions;
@@ -62,12 +71,13 @@ import org.lightning323.createkinetic.network.PropulsionPackets;
 import org.lightning323.createkinetic.particles.ParticleTypes;
 import org.lightning323.createkinetic.content.creative_tools.item.CreativeToolItems;
 import org.lightning323.createkinetic.registries.*;
+import org.slf4j.Logger;
 
 @Mod(value = CreateKinetic.ID)
 public class CreateKinetic {
     public static final String ID = "createkinetic";
     public static final String trackHiddenTag = "tracks_hidden";
-
+    public static final Logger LOGGER = LogUtils.getLogger();
     private static final NonNullSupplier<KineticRegistrate> REGISTRATE = KineticRegistrate.getKineticRegistrate(ID);
 
     public static KineticRegistrate getRegistrate() {

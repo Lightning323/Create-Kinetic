@@ -35,7 +35,7 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import org.joml.Math;
 import org.joml.Vector3d;
 import org.lightning323.createkinetic.config.KineticConfig;
-import org.lightning323.createkinetic.compat.PropulsionCompatibility;
+import org.lightning323.createkinetic.compat.KineticCompat;
 import org.lightning323.createkinetic.compat.computercraft.ComputerBehaviour;
 import org.lightning323.createkinetic.content.thruster.thruster.creative_thruster.CreativeThrusterBlockEntity;
 import org.lightning323.createkinetic.particles.plume.PlumeParticleData;
@@ -256,7 +256,7 @@ public abstract class AbstractThrusterBlockEntity extends SmartBlockEntity
 
     @Override
     public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
-        if (PropulsionCompatibility.CC_ACTIVE) {
+        if (KineticCompat.CC_ACTIVE) {
             ComputerBehaviour behaviour = ComputerBehaviour.tryCreate(this);
             if (behaviour != null) {
                 behaviours.add(computerBehaviour = behaviour);

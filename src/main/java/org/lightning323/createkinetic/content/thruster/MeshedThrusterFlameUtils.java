@@ -321,16 +321,20 @@ public class MeshedThrusterFlameUtils {
     }
 
 
-    private static Vec3 getCameraPos(AbstractThrusterBlockEntity be, float partialTicks) {
-        final var mc = Minecraft.getInstance();
-        var cam = mc.gameRenderer.getMainCamera().getPosition();
+    private static Vec3 getCameraPos(
+            AbstractThrusterBlockEntity be,
+            float partialTicks) {
 
-        if (be.getLevel() instanceof PonderLevel && mc.getCameraEntity() instanceof Entity camE)
-            cam = camE.getPosition(partialTicks);
-        if (Sable.HELPER.getContaining(be) instanceof SubLevel subLevel)
-            cam = subLevel.logicalPose().transformPositionInverse(cam);
+        Minecraft mc = Minecraft.getInstance();
 
-        return cam;
+        var cam = mc.gameRenderer.getMainCamera();
+
+        if (be.getLevel() instanceof PonderLevel
+                && mc.getCameraEntity() instanceof Entity camE) {
+            return camE.getPosition(partialTicks);
+        }
+
+        return cam.getPosition();
     }
 
     private static float snapToBlockPixel(float value) {
