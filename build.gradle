@@ -222,8 +222,10 @@ dependencies {
     compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.4.1"))
     implementation "io.github.llamalad7:mixinextras-neoforge:0.4.1"
 
-    //Sable
+    //Sable  https://maven.ryanhcode.dev/#/releases/dev/ryanhcode/sable/
     implementation("dev.ryanhcode.sable:sable-neoforge-${minecraft_version}:${sable_version}")
+
+    //Sable Companion
     api("dev.ryanhcode.sable-companion:sable-companion-common-${minecraft_version}:${sable_companion_version}")
     implementation "dev.ryanhcode.sable-companion:sable-companion-common-${minecraft_version}:${sable_companion_version}"
 
@@ -235,7 +237,7 @@ dependencies {
     //https://maven.ryanhcode.dev/#/releases/dev/ryanhcode/offroad/offroad-neoforge-1.21.1/1.2.1
     implementation "dev.ryanhcode.offroad:offroad-neoforge-1.21.1:${offroad_version}"
 
-    //other mods
+    //Runtime/Testing only
     runtimeOnly files("libs/createaddition-1.5.10.jar")
     runtimeOnly files("libs/Jade-${minecraft_version}-NeoForge-15.10.5.jar")
     runtimeOnly "curse.maven:forge-config-api-port-547434:7213611"

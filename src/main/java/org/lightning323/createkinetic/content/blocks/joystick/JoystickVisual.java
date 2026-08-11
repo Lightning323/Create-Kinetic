@@ -22,25 +22,24 @@ public class JoystickVisual extends AbstractBlockEntityVisual<JoystickBlockEntit
    private static final float BUTTON_PRESS_DEPTH = 0.03125F;
    private final TransformedInstance handle;
    private final TransformedInstance button;
-   private final TransformedInstance[] indicators;
+//   private final TransformedInstance[] indicators;
 
    public JoystickVisual(VisualizationContext ctx, JoystickBlockEntity be, float partialTick) {
       super(ctx, be, partialTick);
-      this.indicators = new TransformedInstance[JoystickDirection.VALUES.length];
+//      this.indicators = new TransformedInstance[JoystickDirection.VALUES.length];
       this.handle = (TransformedInstance)this.instancerProvider().instancer(InstanceTypes.TRANSFORMED, Models.partial(KineticPartialModels.JOYSTICK_HANDLE)).createInstance();
       this.button = (TransformedInstance)this.instancerProvider().instancer(InstanceTypes.TRANSFORMED, Models.partial(KineticPartialModels.JOYSTICK_BUTTON)).createInstance();
 
-      for(JoystickDirection dir : JoystickDirection.VALUES) {
-         this.indicators[dir.index] = (TransformedInstance)this.instancerProvider().instancer(InstanceTypes.TRANSFORMED, Models.partial(KineticPartialModels.JOYSTICK_INDICATOR)).createInstance();
-      }
+//      for(JoystickDirection dir : JoystickDirection.VALUES) {
+//         this.indicators[dir.index] = (TransformedInstance)this.instancerProvider().instancer(InstanceTypes.TRANSFORMED, Models.partial(KineticPartialModels.JOYSTICK_INDICATOR)).createInstance();
+//      }
 
       this.applyTransforms(partialTick);
       this.relight(new FlatLit[]{this.handle});
       this.relight(new FlatLit[]{this.button});
-
-      for(TransformedInstance ind : this.indicators) {
-         this.relight(new FlatLit[]{ind});
-      }
+//      for(TransformedInstance ind : this.indicators) {
+//         this.relight(new FlatLit[]{ind});
+//      }
 
    }
 
@@ -93,9 +92,9 @@ public class JoystickVisual extends AbstractBlockEntityVisual<JoystickBlockEntit
       this.relight(new FlatLit[]{this.handle});
       this.relight(new FlatLit[]{this.button});
 
-      for(TransformedInstance ind : this.indicators) {
-         this.relight(new FlatLit[]{ind});
-      }
+//      for(TransformedInstance ind : this.indicators) {
+//         this.relight(new FlatLit[]{ind});
+//      }
 
    }
 
@@ -103,9 +102,9 @@ public class JoystickVisual extends AbstractBlockEntityVisual<JoystickBlockEntit
       consumer.accept(this.handle);
       consumer.accept(this.button);
 
-      for(TransformedInstance ind : this.indicators) {
-         consumer.accept(ind);
-      }
+//      for(TransformedInstance ind : this.indicators) {
+//         consumer.accept(ind);
+//      }
 
    }
 
@@ -113,9 +112,9 @@ public class JoystickVisual extends AbstractBlockEntityVisual<JoystickBlockEntit
       this.handle.delete();
       this.button.delete();
 
-      for(TransformedInstance ind : this.indicators) {
-         ind.delete();
-      }
+//      for(TransformedInstance ind : this.indicators) {
+//         ind.delete();
+//      }
 
    }
 }
