@@ -287,18 +287,27 @@ public abstract class AbstractThrusterBlockEntity extends SmartBlockEntity
         thrusterData.setDirection(getThrustDirectionLocal());
         BlockState currentBlockState = isOutsideWorldHeight ? getBlockState() : SimulatedThrustAdapter.getBlockStateSafe(level, worldPosition);
         if (level.isClientSide) {
+            /**
+             * CLIENT SIDE
+             */
             ThrusterSoundHooks.clientTick(this);
             interpolatedPlumePower.updateChaseTarget(shouldEmitPlume() ? getPower() : 0);
             interpolatedPlumePower.tickChaser();
+//            System.out.println(interpolatedPlumePower.getValue());
+
+            if (shouldEmitPlume()) {
+                if (getPlumeRenderType() == KineticConfig.ThrusterPlumeType.PARTICLES)
+                    emitPlumeParticles(level, worldPosition, currentBlockState);
+                else emitMeshedParticles(level, worldPosition, currentBlockState);
+            }
+
             return;
         }
 
-        if (shouldEmitPlume()) {
-            if (getPlumeRenderType() == KineticConfig.ThrusterPlumeType.PARTICLES)
-                emitPlumeParticles(level, worldPosition, currentBlockState);
-            else emitMeshedParticles(level, worldPosition, currentBlockState);
-        }
 
+        /**
+         * SERVER SIDE
+         */
         currentTick++;
         //Periodically recalculate obstruction
         if (currentTick % (tick_rate * 2) == 0) {
@@ -678,6 +687,7 @@ public abstract class AbstractThrusterBlockEntity extends SmartBlockEntity
 
     protected final Random particleRandom = new Random();
 
+    @OnlyIn(Dist.CLIENT)
     public void emitMeshedParticles(Level level, BlockPos pos, BlockState state) {
         if (emptyBlocks == 0) return;
         float power = getPower();
@@ -722,6 +732,7 @@ public abstract class AbstractThrusterBlockEntity extends SmartBlockEntity
         }
     }
 
+    @OnlyIn(Dist.CLIENT)
     public void emitPlumeParticles(Level level, BlockPos pos, BlockState state) {
         if (emptyBlocks == 0) return;
         float power = getPower();

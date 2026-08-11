@@ -203,6 +203,14 @@ public class KineticConfig {
         //Thrusters
         CLIENT_BUILDER.push("Thruster");
 
+        CLIENT_BUILDER.push("Thruster Render Types");
+        CLIENT_BUILDER.comment("How the thruster plume should be rendered.");
+        THRUSTER_PLUME_TYPE = CLIENT_BUILDER.defineEnum("Thruster Plume Type", ThrusterPlumeType.PARTICLES);
+        CREATIVE_THRUSTER_PLUME_TYPE = CLIENT_BUILDER.defineEnum("Creative Thruster Plume Type", ThrusterPlumeType.PARTICLES);
+        ION_THRUSTER_PLUME_TYPE = CLIENT_BUILDER.defineEnum("Ion Thruster Plume Type", ThrusterPlumeType.PARTICLES);
+        VECTOR_THRUSTERS_PLUME_TYPE = CLIENT_BUILDER.defineEnum("Vector Thrusters Plume Type", ThrusterPlumeType.PARTICLES);
+        CLIENT_BUILDER.pop();
+
         CLIENT_BUILDER.push("Debug");
         DEBUG_THRUSTER = CLIENT_BUILDER.comment("Render thruster debug overlays (plume ray, obstruction hits, damage zones).")
                 .define("Thruster", false);
@@ -240,15 +248,6 @@ public class KineticConfig {
 
         //Thrusters
         COMMON_BUILDER.push("thruster");
-
-        COMMON_BUILDER.push("Thruster Render Types");
-        COMMON_BUILDER.comment("How the thruster plume should be rendered.");
-        THRUSTER_PLUME_TYPE = COMMON_BUILDER.defineEnum("Thruster Plume Type", ThrusterPlumeType.PARTICLES);
-        CREATIVE_THRUSTER_PLUME_TYPE = COMMON_BUILDER.defineEnum("Creative Thruster Plume Type", ThrusterPlumeType.PARTICLES);
-        ION_THRUSTER_PLUME_TYPE = COMMON_BUILDER.defineEnum("Ion Thruster Plume Type", ThrusterPlumeType.PARTICLES);
-        VECTOR_THRUSTERS_PLUME_TYPE = COMMON_BUILDER.defineEnum("Vector Thrusters Plume Type", ThrusterPlumeType.PARTICLES);
-        COMMON_BUILDER.pop();
-
         BASE_THRUST = COMMON_BUILDER.comment("Base thrust at redstone 15 and full obstruction efficiency for the standard thruster.",
                         "Default tuned for 1000-unit thrust scale parity with Sable physics.",
                         "Effective thrust uses: baseThrust * fuel_thrust_percent / 100.")
