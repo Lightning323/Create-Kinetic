@@ -74,15 +74,15 @@ public class TracksSpriteShifts {
             String colorName = color.getName();
             colorName = switch (colorName) {
                 case "maroon" -> "red";
-                case "olive" -> "green";
+                case "ginger" -> "orange";
                 case "beige","tan","amber" -> "yellow";
+                case "olive" -> "lime";
                 case "teal", "aqua", "mint" -> "cyan";
                 case "forest", "verdant" -> "green";
-                case "ginger" -> "orange";
                 case "coral" -> "pink";
+                case "rose" -> "magenta";
                 case "indigo", "navy" -> "blue";
                 case "slate" -> "gray";
-                case "rose" -> "magenta";
                 default -> colorName;
             };
             COLORED_BELTS.put(color, TracksSpriteShifts.get("block/belt", "block/belt_" + colorName + "_scroll"));
