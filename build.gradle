@@ -241,6 +241,7 @@ dependencies {
     runtimeOnly files("libs/createaddition-1.5.10.jar")
     runtimeOnly files("libs/Jade-${minecraft_version}-NeoForge-15.10.5.jar")
     runtimeOnly "curse.maven:forge-config-api-port-547434:7213611"
+    implementation "curse.maven:dye-depot-988504:8493712"
 
     //libraries
     implementation "com.fasterxml.jackson.core:jackson-annotations:2.18.2"
