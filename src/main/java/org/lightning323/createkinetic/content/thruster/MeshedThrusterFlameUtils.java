@@ -3,18 +3,14 @@ package org.lightning323.createkinetic.content.thruster;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Axis;
-import dev.ryanhcode.sable.Sable;
-import dev.ryanhcode.sable.sublevel.SubLevel;
 import foundry.veil.api.client.render.VeilRenderSystem;
 import foundry.veil.api.client.render.shader.program.ShaderProgram;
-import net.createmod.ponder.api.level.PonderLevel;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.joml.*;
@@ -105,14 +101,13 @@ public class MeshedThrusterFlameUtils {
             ms.translate(offsetX, offsetY, offsetZ);
 
             float r = random01((pos.getY() + offsetY + pos.getZ() + offsetZ * 31) * 31 + pos.getX() + offsetX); //Randomness of the flame to prevent flames next to each other from looking the same
-            float shaderTime = r + (be.getLevel().getGameTime() + partialTicks) * 0.1f;
-            shader.getUniformSafe("FlameRenderTime").setFloat(shaderTime);
+            shader.getUniformSafe("FlameRenderTime").setFloat(getFlameRenderTime(be, partialTicks, r));
             shader.getUniformSafe("Intensity").setFloat(Mth.clamp(power * 2f - .35f, 0.25f, 1.5f));
             shader.getUniformSafe("Palette").setFloat(soulFlame ? 1 : 0); //Soul Fire modifier
             shader.getUniformSafe("LengthMultiplier").setFloat(Math.max(lengthMultiplier, FLAME_PIXEL));
             shader.getUniformSafe("WidthMultiplier").setFloat(Math.max(widthMultiplier, FLAME_PIXEL));
 
-            ms.mulPose(Axis.YP.rotation(getBillboardAngleV1(be, pos, facing, flameOffset, partialTicks)));
+            ms.mulPose(Axis.YP.rotation(getBillboardAngle(ms)));
             if (crossed) ms.mulPose(Axis.YP.rotation((float) (Math.PI / 4)));
             renderFlame(ms, FLAME_SIZE, lengthMultiplier, widthMultiplier);
             if (crossed) {
@@ -141,11 +136,10 @@ public class MeshedThrusterFlameUtils {
             var lengthMultiplier = snapToFlamePixel((power * 4f + 1f + (0.5f - power * power * power)));
             var widthMultiplier = snapToFlamePixel((power * 1.5f + 1));
 
-            ms.mulPose(Axis.YP.rotation(getBillboardAngleV2(be, pos, ms, partialTicks)));
+            ms.mulPose(Axis.YP.rotation(getBillboardAngle(ms)));
 
             float r = random01(pos.hashCode());
-            float shaderTime = r + (be.getLevel().getGameTime() + partialTicks) * 0.1f;
-            shader.getUniformSafe("FlameRenderTime").setFloat(shaderTime);
+            shader.getUniformSafe("FlameRenderTime").setFloat(getFlameRenderTime(be, partialTicks, r));
             shader.getUniformSafe("Intensity").setFloat(Mth.clamp(power * 2f - .35f, 0.25f, 1.5f));
             shader.getUniformSafe("Palette").setFloat(soulFlame ? 1 : 0); //Soul Fire modifier
             shader.getUniformSafe("LengthMultiplier").setFloat(Math.max(lengthMultiplier, FLAME_PIXEL));
@@ -277,60 +271,37 @@ public class MeshedThrusterFlameUtils {
         }
     }
 
-    private static float getBillboardAngleV1(AbstractThrusterBlockEntity be, BlockPos pos, Direction facing, float offset, float partialTicks) {
-        final var origin = pos.getCenter().add(facing.getStepX() * offset, facing.getStepY() * offset, facing.getStepZ() * offset);
-        final var vec = getCameraPos(be, partialTicks).subtract(origin);
-        final Vec3 local = switch (facing) {
-            case UP -> new Vec3(-vec.x, -vec.y, vec.z);
-            case SOUTH -> new Vec3(vec.x, -vec.z, vec.y);
-            case NORTH -> new Vec3(vec.x, vec.z, -vec.y);
-            case WEST -> new Vec3(-vec.y, vec.x, vec.z);
-            case EAST -> new Vec3(vec.y, -vec.x, vec.z);
-            default -> vec;
-        };
-        return (float) Math.atan2(local.x, local.z);
-    }
+    /**
+     * Computes the billboard rotation from the current render pose instead of reconstructing
+     * the world/sublevel transform from block and camera coordinates. This keeps the mesh in
+     * the same coordinate frame as its block entity on dedicated-server clients.
+     */
+    private static float getBillboardAngle(PoseStack ms) {
+        Vector4f pivotInViewSpace = new Vector4f(0, 0, 0, 1);
+        ms.last().pose().transform(pivotInViewSpace);
 
-    private static float getBillboardAngleV2(//TODO: Make this one unified method when I figure out how to do this right
-                                             AbstractThrusterBlockEntity be,
-                                             BlockPos pos,
-                                             PoseStack ms,
-                                             float partialTicks
-    ) {
-        // Actual billboard pivot in world space
-        Vector4f pivot = new Vector4f(0, 0, 0, 1);
-        ms.last().pose().transform(pivot);
-
-        Vec3 origin = new Vec3(
-                pos.getX() + pivot.x,
-                pos.getY() + pivot.y,
-                pos.getZ() + pivot.z
+        // The camera is the origin in view space. Transform that direction back into the
+        // flame's local frame, then rotate its local Y axis toward the camera.
+        Vector3f toCameraInViewSpace = new Vector3f(
+                -pivotInViewSpace.x,
+                -pivotInViewSpace.y,
+                -pivotInViewSpace.z
         );
-
-        // Camera direction in world space
-        Vec3 toCamera = getCameraPos(be, partialTicks).subtract(origin);
-
-        // Convert into billboard-local space
-        Matrix3f invRot = new Matrix3f(ms.last().normal()).invert();
-
-        Vector3f local = toCamera.toVector3f();
-        invRot.transform(local);
-
-        // Rotation around local Y
-        return (float) Math.atan2(local.x(), local.z());
+        Matrix3f localFromView = new Matrix3f(ms.last().pose()).invert();
+        localFromView.transform(toCameraInViewSpace);
+        return (float) Math.atan2(toCameraInViewSpace.x(), toCameraInViewSpace.z());
     }
 
-
-    private static Vec3 getCameraPos(AbstractThrusterBlockEntity be, float partialTicks) {
-        final var mc = Minecraft.getInstance();
-        var cam = mc.gameRenderer.getMainCamera().getPosition();
-
-        if (be.getLevel() instanceof PonderLevel && mc.getCameraEntity() instanceof Entity camE)
-            cam = camE.getPosition(partialTicks);
-        if (Sable.HELPER.getContaining(be) instanceof SubLevel subLevel)
-            cam = subLevel.logicalPose().transformPositionInverse(cam);
-
-        return cam;
+    /**
+     * Sublevels on a remote client do not necessarily advance their own game-time counter.
+     * The root ClientLevel is authoritative for the visual clock and advances every client tick.
+     */
+    private static float getFlameRenderTime(AbstractThrusterBlockEntity be, float partialTicks, float phase) {
+        final var rootClientLevel = Minecraft.getInstance().level;
+        long gameTime = rootClientLevel != null
+                ? rootClientLevel.getGameTime()
+                : be.getLevel() != null ? be.getLevel().getGameTime() : 0L;
+        return phase + (gameTime + partialTicks) * 0.1f;
     }
 
     private static float snapToBlockPixel(float value) {
