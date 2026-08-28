@@ -1,8 +1,6 @@
 package org.lightning323.createkinetic.registries;
 
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
-import com.tterrag.registrate.util.nullness.NonNullSupplier;
-import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.bus.api.IEventBus;
@@ -42,8 +40,8 @@ public class KineticBlockEntities {
             .register();
 
     public static final BlockEntityEntry<SableTrackBlockEntity> SABLE_TRACK = REGISTRATE.blockEntity("sable_track", SableTrackBlockEntity::new)
-            .validBlocks(new NonNullSupplier[]{KineticBlocks.TRACK_MOUNT})
-            .renderer(() -> (BlockEntityRendererProvider<SableTrackBlockEntity>) SableTrackRenderer::new)
+            .validBlocks(KineticBlocks.TRACK_MOUNT)
+            .renderer(() -> SableTrackRenderer::new)
             .register();
 
     //------------------------------------------------------------------------------------------------------------------
