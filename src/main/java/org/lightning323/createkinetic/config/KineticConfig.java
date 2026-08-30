@@ -74,7 +74,8 @@ public class KineticConfig {
     private static final ModConfigSpec.IntValue JOYSTICK_KEY_REPEAT_DELAY_MS;
     private static final ModConfigSpec.IntValue JOYSTICK_SPRING_BACK_DELAY_MS;
     private static final ModConfigSpec.BooleanValue JOYSTICK_HUD_SHOW_READOUT;
-    private static final ModConfigSpec.BooleanValue JOYSTICK_HUD_SHOW_LINES;
+    private static final ModConfigSpec.BooleanValue JOYSTICK_HUD_SHOW_BOX;
+    private static final ModConfigSpec.BooleanValue JOYSTICK_HUD_SHOW_LINE;
 
     private static volatile double gyroscopeOmegaTarget;
     private static volatile double gyroscopeDampingRatio;
@@ -85,7 +86,8 @@ public class KineticConfig {
     private static volatile double gyroscopeStressImpact;
     private static volatile double joystickPixelsPerStep;
     private static volatile boolean joystickShowReadout;
-    private static volatile boolean joystickShowLines;
+    private static volatile boolean joystickShowHudLine;
+    private static volatile boolean joystickShowHudBox;
     private static volatile int joystickKeyRepeatDelayMs;
     private static volatile int joystickSpringBackDelayMs;
     private static volatile boolean renderTuningCheatsEnabled;
@@ -136,8 +138,12 @@ public class KineticConfig {
         return joystickShowReadout;
     }
 
-    public static boolean joystickShowLines() {
-        return joystickShowLines;
+    public static boolean joystickShowHudBox() {
+        return joystickShowHudBox;
+    }
+
+    public static boolean joystickShowHudLine(){
+        return joystickShowHudLine;
     }
 
     public static boolean renderTuningCheatsEnabled() {
@@ -163,7 +169,8 @@ public class KineticConfig {
                 joystickKeyRepeatDelayMs = (Integer) JOYSTICK_KEY_REPEAT_DELAY_MS.get();
                 joystickSpringBackDelayMs = (Integer) JOYSTICK_SPRING_BACK_DELAY_MS.get();
                 joystickShowReadout = (Boolean) JOYSTICK_HUD_SHOW_READOUT.get();
-                joystickShowLines = (Boolean) JOYSTICK_HUD_SHOW_LINES.get();
+                joystickShowHudBox = (Boolean) JOYSTICK_HUD_SHOW_BOX.get();
+                joystickShowHudLine = (Boolean) JOYSTICK_HUD_SHOW_LINE.get();
             }
         }
     }
@@ -195,7 +202,8 @@ public class KineticConfig {
         //Joystick
         CLIENT_BUILDER.comment("Joystick settings.").push("Joystick");
         JOYSTICK_HUD_SHOW_READOUT = CLIENT_BUILDER.comment("Show readout in the Joystick HUD").define("showReadout", false);
-        JOYSTICK_HUD_SHOW_LINES = CLIENT_BUILDER.comment("Show lines in the Joystick HUD").define("showLines", false);
+        JOYSTICK_HUD_SHOW_BOX = CLIENT_BUILDER.comment("Show box in the Joystick HUD").define("showHudBox", false);
+        JOYSTICK_HUD_SHOW_LINE = CLIENT_BUILDER.comment("Show line in the Joystick HUD").define("showHudLine", true);
         JOYSTICK_KEY_REPEAT_DELAY_MS = CLIENT_BUILDER.comment("Milliseconds between repeat tilt steps while a direction key is held. Lower = full deflection reached faster (snappier); higher = slower sweep.").defineInRange("keyRepeatDelayMs", 100, 10, 2000);
         JOYSTICK_SPRING_BACK_DELAY_MS = CLIENT_BUILDER.comment("Grace window after the last direction-key press/release before spring-back starts decaying. Lets you tap a key repeatedly without fighting the spring between taps. Set to 0 to spring back immediately.").defineInRange("springBackDelayMs", 300, 0, 5000);
         CLIENT_BUILDER.pop();

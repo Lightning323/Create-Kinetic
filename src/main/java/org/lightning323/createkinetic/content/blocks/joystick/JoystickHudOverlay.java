@@ -87,10 +87,12 @@ public final class JoystickHudOverlay implements LayeredDraw.Layer {
             // Draw crosshair
             int dotX = Math.round((float) cx + (float) tiltX * 2.0F) - CROSSHAIR_SIZE / 2;
             int dotY = Math.round((float) midY + (float) tiltY * 2.0F) - CROSSHAIR_SIZE / 2;
-//            0xAAFFFFFF
-            drawPixelLine(g, cx, cy - 1, dotX + 7, dotY + 7, 0xFFFFFFFF);
 
-            if (KineticConfig.joystickShowLines()) {
+            if(KineticConfig.joystickShowHudLine()) {
+                drawPixelLine(g, cx, cy - 1, dotX + 7, dotY + 7, 0xFFFFFFFF);
+            }
+
+            if (KineticConfig.joystickShowHudBox()) {
 //                int fill = KineticKeys.isFreeCameraHeld() ? 671088640 : 1073741824;
 //                g.fill(squareLeft, squareTop, squareRight, squareBottom, fill);
                 g.blit(HUD_SPRITE, squareLeft, squareTop, 0, 0, HUD_SIZE, HUD_SIZE, HUD_SIZE, HUD_SIZE);
