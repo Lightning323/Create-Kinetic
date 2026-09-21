@@ -3,19 +3,15 @@
  */
 package org.lightning323.createkinetic.client;
 
-import com.mojang.blaze3d.platform.InputConstants;
 import com.simibubi.create.foundation.item.render.CustomRenderedItemModel;
 import dev.engine_room.flywheel.lib.visualization.SimpleBlockEntityVisualizer;
 import dev.ryanhcode.offroad.index.OffroadBlockEntityTypes;
 import net.createmod.catnip.config.ui.BaseConfigScreen;
-import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.ItemLike;
@@ -36,7 +32,6 @@ import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
-import net.neoforged.neoforge.network.PacketDistributor;
 import org.lightning323.createkinetic.CreateKinetic;
 import org.lightning323.createkinetic.config.KineticConfig;
 import org.lightning323.createkinetic.content.blocks.track.SableTrackRenderer;
@@ -46,7 +41,6 @@ import org.lightning323.createkinetic.content.blocks.reaction_wheel.ReactionWhee
 import org.lightning323.createkinetic.content.blocks.reaction_wheel.ReactionWheelVisual;
 import org.lightning323.createkinetic.content.blocks.joystick.*;
 import org.lightning323.createkinetic.registries.*;
-import org.lightning323.createkinetic.network.RequestOpenTuningPayload;
 
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -56,12 +50,8 @@ import static org.lightning323.createkinetic.CreateKinetic.ID;
 
 @Mod(value = CreateKinetic.ID, dist = {Dist.CLIENT})
 public class KineticClient {
-    private static final KeyMapping OPEN_TUNING = new KeyMapping("key." + CreateKinetic.ID + ".open_tuning", InputConstants.Type.KEYSYM, 74, "key.categories." + CreateKinetic.ID);
-
-
     private static void registerClientHandlers(IEventBus modEventBus) {
         modEventBus.register(KineticClient.class);
-        modEventBus.register(KineticKeys.class);
         NeoForge.EVENT_BUS.register(JoystickControlClient.class);
     }
 
@@ -69,15 +59,12 @@ public class KineticClient {
     public static void init(IEventBus modBus) {
         registerClientHandlers(modBus);
         modBus.addListener(KineticClient::clientSetup);
-        modBus.addListener(KineticClient::registerKeys);
-        NeoForge.EVENT_BUS.addListener(EventPriority.NORMAL, KineticClient::clientTick);
         TracksPartialModels.init();
         TracksSpriteShifts.init();
     }
 
     private static void clientSetup(FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
-            TrackRenderTuning.load(Minecraft.getInstance().gameDirectory.toPath().resolve("config/" + CreateKinetic.ID + "-render-tuning.txt"));
             BlockEntityRenderers.register((BlockEntityType) ((BlockEntityType) OffroadBlockEntityTypes.WHEEL_MOUNT.get()), AdjustableWheelMountRenderer::new);
             BlockEntityRenderers.register((BlockEntityType) ((BlockEntityType) KineticBlockEntities.SABLE_TRACK.get()), SableTrackRenderer::new);
         });
@@ -99,24 +86,6 @@ public class KineticClient {
                 base.withButtonLabels("Client Settings", "Common Settings", "Common Settings")
                 .withSpecs(KineticConfig.CLIENT_SPEC, KineticConfig.COMMON_SPEC, KineticConfig.COMMON_SPEC));
     }
-
-    private static void registerKeys(RegisterKeyMappingsEvent event) {
-        event.register(OPEN_TUNING);
-    }
-
-    private static void clientTick(ClientTickEvent.Post event) {
-        Minecraft minecraft = Minecraft.getInstance();
-
-        while (OPEN_TUNING.consumeClick()) {
-            if (minecraft.player == null) continue;
-            PacketDistributor.sendToServer((CustomPacketPayload) new RequestOpenTuningPayload(), (CustomPacketPayload[]) new CustomPacketPayload[0]);
-        }
-    }
-
-    public static void openTuningScreen() {
-        Minecraft.getInstance().setScreen((Screen) new TrackTuningScreen());
-    }
-
 
     @SubscribeEvent
     public static void onLoadComplete(FMLLoadCompleteEvent event) {

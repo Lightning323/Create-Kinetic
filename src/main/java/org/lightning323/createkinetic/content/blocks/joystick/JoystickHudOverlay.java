@@ -93,8 +93,6 @@ public final class JoystickHudOverlay implements LayeredDraw.Layer {
             }
 
             if (KineticConfig.joystickShowHudBox()) {
-//                int fill = KineticKeys.isFreeCameraHeld() ? 671088640 : 1073741824;
-//                g.fill(squareLeft, squareTop, squareRight, squareBottom, fill);
                 g.blit(HUD_SPRITE, squareLeft, squareTop, 0, 0, HUD_SIZE, HUD_SIZE, HUD_SIZE, HUD_SIZE);
             } else {
                 g.blit(HUD_MINIMAL_SPRITE, squareLeft, squareTop, 0, 0, HUD_SIZE, HUD_SIZE, HUD_SIZE, HUD_SIZE);

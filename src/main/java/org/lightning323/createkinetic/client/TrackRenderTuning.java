@@ -1,22 +1,9 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.network.chat.Component
- */
 package org.lightning323.createkinetic.client;
 
 import org.lightning323.createkinetic.content.blocks.track.SableTrackPart;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.LinkOption;
-import java.nio.file.OpenOption;
-import java.nio.file.Path;
-import java.nio.file.attribute.FileAttribute;
-import java.util.Arrays;
-import net.minecraft.network.chat.Component;
 
 public class TrackRenderTuning {
+    public static final float BASE_SLOPE_DEGREES = 0.0f;
     public static final Profile SMALL_SUSPENSION = new Profile("small_suspension");
     public static final Profile SUSPENSION = new Profile("suspension");
     public static final Profile LARGE_SUSPENSION = new Profile("large_suspension");
@@ -24,7 +11,9 @@ public class TrackRenderTuning {
     public static final Profile DRIVE = new Profile("drive");
     public static final Profile LARGE_DRIVE = new Profile("large_drive");
     public static final Profile[] PROFILES = new Profile[]{SMALL_SUSPENSION, SUSPENSION, LARGE_SUSPENSION, SMALL_DRIVE, DRIVE, LARGE_DRIVE};
-    public static float BASE_SLOPE_DEGREES = 0.0f;
+
+    private TrackRenderTuning() {
+    }
 
     public static Profile profileFor(SableTrackPart part) {
         return switch (part) {
@@ -35,71 +24,6 @@ public class TrackRenderTuning {
             case SableTrackPart.LARGE_DRIVE -> LARGE_DRIVE;
             default -> SUSPENSION;
         };
-    }
-
-    public static String dump() {
-        StringBuilder builder = new StringBuilder("Tracks render tuning:");
-        for (Profile profile : PROFILES) {
-            builder.append("\n[").append(profile.name).append("]");
-            for (Element element : profile.elements) {
-                builder.append("\n").append(element.name).append(" x=").append(element.x).append(" y=").append(element.y).append(" z=").append(element.z).append(" scale_x=").append(element.scaleX).append(" scale_y=").append(element.scaleY).append(" scale_z=").append(element.scaleZ).append(" slope=").append(element.slopeDegrees);
-            }
-        }
-        builder.append("\nbase_slope_degrees=").append(BASE_SLOPE_DEGREES);
-        return builder.toString();
-    }
-
-    public static Component dumpComponent() {
-        return Component.literal((String)TrackRenderTuning.dump());
-    }
-
-    public static void save(Path path) {
-        try {
-            Files.createDirectories(path.getParent(), new FileAttribute[0]);
-            Files.writeString(path, (CharSequence)TrackRenderTuning.dump(), new OpenOption[0]);
-        }
-        catch (IOException iOException) {
-            // empty catch block
-        }
-    }
-
-    public static void load(Path path) {
-        if (!Files.isRegularFile(path, new LinkOption[0])) {
-            return;
-        }
-        try {
-            Profile currentProfile = null;
-            for (String rawLine : Files.readAllLines(path)) {
-                String[] tokens;
-                Element element;
-                String line = rawLine.trim();
-                if (line.startsWith("[") && line.endsWith("]")) {
-                    currentProfile = TrackRenderTuning.profileByName(line.substring(1, line.length() - 1));
-                    continue;
-                }
-                if (line.startsWith("base_slope_degrees=")) {
-                    BASE_SLOPE_DEGREES = Float.parseFloat(line.substring("base_slope_degrees=".length()));
-                    continue;
-                }
-                if (currentProfile == null || line.isBlank() || line.startsWith("Tracks render tuning") || (element = currentProfile.elementByName((tokens = line.split(" "))[0])) == null) continue;
-                for (int i = 1; i < tokens.length; ++i) {
-                    String[] pair = tokens[i].split("=");
-                    if (pair.length != 2) continue;
-                    element.set(pair[0], Float.parseFloat(pair[1]));
-                }
-            }
-        }
-        catch (IOException | NumberFormatException exception) {
-            // empty catch block
-        }
-    }
-
-    private static Profile profileByName(String name) {
-        for (Profile profile : PROFILES) {
-            if (!profile.name.equals(name)) continue;
-            return profile;
-        }
-        return null;
     }
 
     public static final class Profile {
@@ -148,14 +72,6 @@ public class TrackRenderTuning {
                 }
             }
         }
-
-        private Element elementByName(String name) {
-            for (Element element : this.elements) {
-                if (!element.name.equals(name)) continue;
-                return element;
-            }
-            return null;
-        }
     }
 
     public static final class Element {
@@ -184,86 +100,5 @@ public class TrackRenderTuning {
             this.scaleZ = scaleZ;
             this.slopeDegrees = slopeDegrees;
         }
-
-        public float get(int axis) {
-            return switch (axis) {
-                case 0 -> this.x;
-                case 1 -> this.y;
-                case 2 -> this.z;
-                case 3 -> this.scaleX;
-                case 4 -> this.scaleY;
-                case 5 -> this.scaleZ;
-                default -> this.slopeDegrees;
-            };
-        }
-
-        public void add(int axis, float delta) {
-            switch (axis) {
-                case 0: {
-                    this.x += delta;
-                    break;
-                }
-                case 1: {
-                    this.y += delta;
-                    break;
-                }
-                case 2: {
-                    this.z += delta;
-                    break;
-                }
-                case 3: {
-                    this.scaleX = Math.max(0.05f, this.scaleX + delta);
-                    break;
-                }
-                case 4: {
-                    this.scaleY = Math.max(0.05f, this.scaleY + delta);
-                    break;
-                }
-                case 5: {
-                    this.scaleZ = Math.max(0.05f, this.scaleZ + delta);
-                    break;
-                }
-                default: {
-                    this.slopeDegrees += delta * 10.0f;
-                }
-            }
-        }
-
-        private void set(String key, float value) {
-            switch (key) {
-                case "x": {
-                    this.x = value;
-                    break;
-                }
-                case "y": {
-                    this.y = value;
-                    break;
-                }
-                case "z": {
-                    this.z = value;
-                    break;
-                }
-                case "scale_x": {
-                    this.scaleX = Math.max(0.05f, value);
-                    break;
-                }
-                case "scale_y": {
-                    this.scaleY = Math.max(0.05f, value);
-                    break;
-                }
-                case "scale_z": {
-                    this.scaleZ = Math.max(0.05f, value);
-                    break;
-                }
-                case "slope": {
-                    this.slopeDegrees = value;
-                }
-            }
-        }
-
-        public String toString() {
-            return Arrays.asList(this.name, Float.valueOf(this.x), Float.valueOf(this.y), Float.valueOf(this.z), Float.valueOf(this.scaleX), Float.valueOf(this.scaleY), Float.valueOf(this.scaleZ), Float.valueOf(this.slopeDegrees)).toString();
-        }
     }
 }
-

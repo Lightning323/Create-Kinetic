@@ -41,8 +41,6 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
-import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import org.lightning323.createkinetic.client.KineticClient;
 import org.lightning323.createkinetic.config.KineticConfig;
 import org.lightning323.createkinetic.content.blocks.reaction_wheel.ReactionWheelController;
@@ -51,9 +49,6 @@ import org.lightning323.createkinetic.events.KineticEvents;
 import org.lightning323.createkinetic.network.KineticPackets;
 import org.lightning323.createkinetic.registries.KineticBlocks;
 import org.lightning323.createkinetic.registries.KineticItems;
-import org.lightning323.createkinetic.network.OpenTuningScreenPayload;
-import org.lightning323.createkinetic.network.RequestOpenTuningPayload;
-import org.lightning323.createkinetic.network.SelectTrackTuningModePayload;
 import org.lightning323.createkinetic.registries.KineticMenuTypes;
 
 import org.lightning323.createkinetic.compat.computercraft.CCProxy;
@@ -75,7 +70,6 @@ public class CreateKinetic {
     }
 
     public CreateKinetic(IEventBus modBus, ModContainer modContainer) {
-        modBus.addListener(CreateKinetic::registerPayloads);
         CreateKinetic.setTooltips();
         if(FMLEnvironment.dist == Dist.CLIENT) {
             KineticClient.init(modBus);
@@ -111,17 +105,6 @@ public class CreateKinetic {
         PropulsionDefaultStress.init(KineticConfig.COMMON_SPEC);
         modBus.register(KineticConfig.class);
 
-    }
-
-    private static void registerPayloads(RegisterPayloadHandlersEvent event) {
-        PayloadRegistrar registrar = event.registrar(ID).versioned("1.0.0");
-        registrar.playToServer(RequestOpenTuningPayload.TYPE, RequestOpenTuningPayload.STREAM_CODEC, RequestOpenTuningPayload::handle);
-        registrar.playToServer(SelectTrackTuningModePayload.TYPE, SelectTrackTuningModePayload.STREAM_CODEC, SelectTrackTuningModePayload::handle);
-        registrar.playToClient(OpenTuningScreenPayload.TYPE, OpenTuningScreenPayload.STREAM_CODEC, (payload, context) -> context.enqueueWork(() -> {
-            if (FMLEnvironment.dist == Dist.CLIENT) {
-                KineticClient.openTuningScreen();
-            }
-        }));
     }
 
     private static void setTooltips() {

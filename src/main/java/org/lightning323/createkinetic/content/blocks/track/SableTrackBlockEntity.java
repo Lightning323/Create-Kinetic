@@ -147,16 +147,11 @@ public class SableTrackBlockEntity extends KineticBlockEntity implements BlockEn
     private double angle;
     private double angularVelocity = 0.0;
     private double touchingFriction = 1.0;
-    private double springMultiplier = 0.5;
-    private double dampingMultiplier = 0.1;
     private double bumpClearanceMultiplier = 0.5;
     private double bumpForceMultiplier = 0.5;
     private double maxImpulseMultiplier = 0.5;
-    private double driveMultiplier = 1.0;
-    private double gripMultiplier = 1.0;
     private int lastPropagatedStrength = 16;
     private int protectedStrengthValue = 16;
-    private String scrollTuningKey = "strength";
     private boolean liftedUp = false;
     private boolean visualSuspensionHidden = false;
     private boolean hasBelt = false;
@@ -201,8 +196,8 @@ public class SableTrackBlockEntity extends KineticBlockEntity implements BlockEn
         double effectiveStrength = this.strength.getValue();
         double normalMassScaling = Math.min(normalMass / effectiveStrength, 1.0) * 8.0;
         double strengthMul = effectiveStrength * normalMassScaling * 2.0;
-        double springStrength = effectiveStrength * normalMassScaling * 40.0 * this.springMultiplier;
-        double dampingStrength = effectiveStrength * normalMassScaling * 10.0 * this.dampingMultiplier;
+        double springStrength = effectiveStrength * normalMassScaling * 40.0 * 0.5;
+        double dampingStrength = effectiveStrength * normalMassScaling * 10.0 * 0.1;
         Pose3d pose = subLevel.logicalPose();
         Direction.Axis axis = facing.getAxis();
         Vec3i side = Direction.get((Direction.AxisDirection) Direction.AxisDirection.POSITIVE, (Direction.Axis) axis).getNormal();
@@ -263,8 +258,8 @@ public class SableTrackBlockEntity extends KineticBlockEntity implements BlockEn
         double surfaceBraking = Math.min(this.touchingFriction, 1.0);
         double brakingFrictionStrength = (0.075 + brakeStrength * 0.3) * surfaceBraking * part.sideGripMultiplier();
         float kineticSpeed = !hasBelt || Math.abs(this.getSharedTrackSpeed(facing)) < 0.05f ? 0.0f : this.getSharedTrackSpeed(facing);
-        this.queuedForce.fma(localVelocity.dot(forwardD) * -brakingFrictionStrength * strengthMul * timeStep + (double) kineticSpeed * (1.0 - brakeStrength) * surfaceBraking * -0.45 * part.driveMultiplier() * this.driveMultiplier * timeStep, forwardD);
-        this.queuedForce.fma(localVelocity.dot(sideD) * -0.6 * this.touchingFriction * strengthMul * part.sideGripMultiplier() * this.gripMultiplier * timeStep, sideD);
+        this.queuedForce.fma(localVelocity.dot(forwardD) * -brakingFrictionStrength * strengthMul * timeStep + (double) kineticSpeed * (1.0 - brakeStrength) * surfaceBraking * -0.45 * part.driveMultiplier() * timeStep, forwardD);
+        this.queuedForce.fma(localVelocity.dot(sideD) * -0.6 * this.touchingFriction * strengthMul * part.sideGripMultiplier() * timeStep, sideD);
         if (this.queuedForce.lengthSquared() < 1.0E-10) {
             return;
         }
@@ -429,143 +424,6 @@ public class SableTrackBlockEntity extends KineticBlockEntity implements BlockEn
 
     public SableTrackRole effectiveRole() {
         return this.effectivePart().role();
-    }
-
-    public double adjustLateralOffset(int direction) {
-        double previous = this.lateralOffset;
-        this.lateralOffset = Mth.clamp((double) ((double) Math.round((this.lateralOffset + (double) direction * 0.125) / 0.125) * 0.125), (double) -1.0, (double) 1.0);
-        if (Math.abs(previous - this.lateralOffset) > 1.0E-6) {
-            this.setChanged();
-            if (this.level != null && !this.level.isClientSide) {
-                this.sendData();
-                this.applyOffsetToConnectedTrack("lateral", this.lateralOffset, false);
-            }
-        }
-        return this.lateralOffset;
-    }
-
-    public double adjustLongitudinalOffset(int direction) {
-        double previous = this.longitudinalOffset;
-        this.longitudinalOffset = Mth.clamp((double) ((double) Math.round((this.longitudinalOffset + (double) direction * 0.125) / 0.125) * 0.125), (double) -1.0, (double) 1.0);
-        if (Math.abs(previous - this.longitudinalOffset) > 1.0E-6) {
-            this.setChanged();
-            if (this.level != null && !this.level.isClientSide) {
-                this.sendData();
-                this.applyOffsetToConnectedTrack("longitudinal", this.longitudinalOffset, false);
-            }
-        }
-        return this.longitudinalOffset;
-    }
-
-    public double adjustHeightOffset(int direction, boolean sideInteraction) {
-        double previous = this.heightOffset;
-        this.heightOffset = Mth.clamp((double) ((double) Math.round((this.heightOffset + (double) direction * 0.125) / 0.125) * 0.125), (double) -0.75, (double) 0.75);
-        if (Math.abs(previous - this.heightOffset) > 1.0E-6) {
-            this.setChanged();
-            if (this.level != null && !this.level.isClientSide) {
-                this.sendData();
-                this.applyOffsetToConnectedTrack("height", this.heightOffset, sideInteraction);
-            }
-        }
-        return this.heightOffset;
-    }
-
-    public double adjustTuning(String key, int direction) {
-        if (key.equals("strength")) {
-            int current = this.strength == null ? 16 : this.strength.getValue();
-            int next = Mth.clamp((int) (current + direction * 5), (int) 5, (int) 180);
-            if (this.strength != null) {
-                this.strength.value = next;
-            }
-            if (this.level != null && !this.level.isClientSide) {
-                this.applyStrengthToConnectedTrack(next);
-            } else {
-                this.onTuningChanged();
-            }
-            return next;
-        }
-        double step = key.equals("drive") ? 0.1 : 0.05;
-        double previous = this.getTuning(key);
-        double next = Mth.clamp((double) ((double) Math.round((previous + (double) direction * step) / step) * step), (double) 0.1, (double) 4.0);
-        switch (key) {
-            case "spring": {
-                this.springMultiplier = next;
-                break;
-            }
-            case "damping": {
-                this.dampingMultiplier = next;
-                break;
-            }
-            case "bump_clearance": {
-                this.bumpClearanceMultiplier = next;
-                break;
-            }
-            case "bump_force": {
-                this.bumpForceMultiplier = next;
-                break;
-            }
-            case "max_impulse": {
-                this.maxImpulseMultiplier = next;
-                break;
-            }
-            case "drive": {
-                this.driveMultiplier = next;
-                break;
-            }
-            case "grip": {
-                this.gripMultiplier = next;
-                break;
-            }
-            default: {
-                return previous;
-            }
-        }
-        if (this.level != null && !this.level.isClientSide) {
-            this.applyTuningToConnectedTrack(key, next);
-        } else {
-            this.onTuningChanged();
-        }
-        return next;
-    }
-
-    public double getTuning(String key) {
-        return switch (key) {
-            case "strength" -> {
-                if (this.strength == null) {
-                    yield 16.0;
-                }
-                yield this.strength.getValue();
-            }
-            case "spring" -> this.springMultiplier;
-            case "damping" -> this.dampingMultiplier;
-            case "bump_clearance" -> this.bumpClearanceMultiplier;
-            case "bump_force" -> this.bumpForceMultiplier;
-            case "max_impulse" -> this.maxImpulseMultiplier;
-            case "drive" -> this.driveMultiplier;
-            case "grip" -> this.gripMultiplier;
-            default -> 1.0;
-        };
-    }
-
-    private void onTuningChanged() {
-        this.setChanged();
-        if (this.level != null && !this.level.isClientSide) {
-            this.sendData();
-        }
-    }
-
-    public void selectScrollTuningMode(String key) {
-        this.scrollTuningKey = key;
-        if (this.strength == null) {
-            return;
-        }
-        if ("strength".equals(key)) {
-            this.strength.value = this.protectedStrengthValue;
-            this.lastPropagatedStrength = this.protectedStrengthValue;
-        } else {
-            this.protectedStrengthValue = this.lastPropagatedStrength;
-            this.strength.value = this.level != null && this.level.isClientSide ? SableTrackBlockEntity.tuningToScroll(this.getTuning(key)) : this.protectedStrengthValue;
-        }
     }
 
     public double getLerpedExtension(float partialTicks) {
@@ -793,28 +651,6 @@ public class SableTrackBlockEntity extends KineticBlockEntity implements BlockEn
         }
         return changed;
     }
-//
-//    private void resetTuning() {
-//        if (this.strength != null) {
-//            this.strength.value = 16;
-//        }
-//        this.lastPropagatedStrength = 16;
-//        this.protectedStrengthValue = 16;
-//        this.springMultiplier = 0.5;
-//        this.dampingMultiplier = 1.0;
-//        this.bumpClearanceMultiplier = 1.0;
-//        this.bumpForceMultiplier = 1.0;
-//        this.maxImpulseMultiplier = 1.0;
-//        this.driveMultiplier = 1.0;
-//        this.gripMultiplier = 1.0;
-//        this.lateralOffset = 0.0;
-//        this.longitudinalOffset = 0.0;
-//        this.heightOffset = 0.0;
-//        this.setChanged();
-//        if (this.level != null && !this.level.isClientSide) {
-//            this.sendData();
-//        }
-//    }
 
     private boolean setBeltColor(DyeColor color) {
         if (this.beltColor == color) {
@@ -917,21 +753,12 @@ public class SableTrackBlockEntity extends KineticBlockEntity implements BlockEn
         if (this.level == null || this.level.isClientSide) {
             return;
         }
-        if ("strength".equals(this.scrollTuningKey)) {
-            this.protectedStrengthValue = value;
-            this.applyStrengthToConnectedTrack(value);
-            return;
-        }
-        if (this.strength != null) {
-            this.strength.value = this.protectedStrengthValue;
-            this.lastPropagatedStrength = this.protectedStrengthValue;
-        }
-        double tuningValue = SableTrackBlockEntity.scrollToTuning(value);
-        this.applyTuningToConnectedTrack(this.scrollTuningKey, tuningValue);
+        this.protectedStrengthValue = value;
+        this.applyStrengthToConnectedTrack(value);
     }
 
     private void propagateTrackStrengthIfChanged() {
-        if (this.level == null || this.level.isClientSide || this.strength == null || !"strength".equals(this.scrollTuningKey)) {
+        if (this.level == null || this.level.isClientSide || this.strength == null) {
             return;
         }
         int current = this.strength.getValue();
@@ -953,124 +780,6 @@ public class SableTrackBlockEntity extends KineticBlockEntity implements BlockEn
         Direction along = facing.getClockWise();
         this.copyStrengthAlong(along, facing, value);
         this.copyStrengthAlong(along.getOpposite(), facing, value);
-    }
-
-    private void applyTuningToConnectedTrack(String key, double value) {
-        if (this.level == null || this.level.isClientSide) {
-            return;
-        }
-        this.setTuning(key, value);
-        Direction facing = (Direction) this.getBlockState().getValue(SableTrackBlock.HORIZONTAL_FACING);
-        Direction along = facing.getClockWise();
-        this.copyTuningAlong(along, facing, key, value);
-        this.copyTuningAlong(along.getOpposite(), facing, key, value);
-    }
-
-    private void copyTuningAlong(Direction direction, Direction facing, String key, double value) {
-        for (int step = 1; step <= 16; ++step) {
-            SableTrackBlockEntity neighbor;
-            BlockPos targetPos = this.getBlockPos().relative(direction, step);
-            BlockEntity blockEntity = this.level.getBlockEntity(targetPos);
-            if (!(blockEntity instanceof SableTrackBlockEntity) || (neighbor = (SableTrackBlockEntity) blockEntity).getBlockState().getValue(SableTrackBlock.HORIZONTAL_FACING) != facing) {
-                return;
-            }
-            neighbor.setTuning(key, value);
-        }
-    }
-
-    private void applyOffsetToConnectedTrack(String key, double value, boolean sideInteraction) {
-        if (this.level == null || this.level.isClientSide) {
-            return;
-        }
-        Direction facing = (Direction) this.getBlockState().getValue(SableTrackBlock.HORIZONTAL_FACING);
-        Direction along = facing.getClockWise();
-        this.copyOffsetAlong(along, facing, key, value, sideInteraction);
-        this.copyOffsetAlong(along.getOpposite(), facing, key, value, sideInteraction);
-    }
-
-    private void copyOffsetAlong(Direction direction, Direction facing, String key, double value, boolean sideInteraction) {
-        for (int step = 1; step <= 16; ++step) {
-            SableTrackBlockEntity neighbor;
-            BlockPos targetPos = this.getBlockPos().relative(direction, step);
-            BlockEntity blockEntity = this.level.getBlockEntity(targetPos);
-            if (!(blockEntity instanceof SableTrackBlockEntity) || (neighbor = (SableTrackBlockEntity) blockEntity).getBlockState().getValue(SableTrackBlock.HORIZONTAL_FACING) != facing) {
-                return;
-            }
-            SableTrackRole role = neighbor.effectiveRole();
-            if (role == SableTrackRole.SUSPENSION || (!sideInteraction && role == SableTrackRole.DRIVE)) {
-                neighbor.setOffset(key, value);
-            }
-        }
-    }
-
-    private void setOffset(String key, double value) {
-        switch (key) {
-            case "lateral": {
-                this.lateralOffset = value;
-                break;
-            }
-            case "longitudinal": {
-                this.longitudinalOffset = value;
-                break;
-            }
-            case "height": {
-                this.heightOffset = value;
-                break;
-            }
-            default: {
-                return;
-            }
-        }
-        this.setChanged();
-        this.invalidateRenderBoundingBox();
-        if (this.level != null && !this.level.isClientSide) {
-            this.sendData();
-        }
-    }
-
-    private void setTuning(String key, double value) {
-        switch (key) {
-            case "spring": {
-                this.springMultiplier = value;
-                break;
-            }
-            case "damping": {
-                this.dampingMultiplier = value;
-                break;
-            }
-            case "bump_clearance": {
-                this.bumpClearanceMultiplier = value;
-                break;
-            }
-            case "bump_force": {
-                this.bumpForceMultiplier = value;
-                break;
-            }
-            case "max_impulse": {
-                this.maxImpulseMultiplier = value;
-                break;
-            }
-            case "drive": {
-                this.driveMultiplier = value;
-                break;
-            }
-            case "grip": {
-                this.gripMultiplier = value;
-                break;
-            }
-            default: {
-                return;
-            }
-        }
-        this.onTuningChanged();
-    }
-
-    private static int tuningToScroll(double value) {
-        return Mth.clamp((int) ((int) Math.round(5.0 + (Mth.clamp((double) value, (double) 0.1, (double) 4.0) - 0.1) / 3.9 * 175.0)), (int) 5, (int) 180);
-    }
-
-    private static double scrollToTuning(int value) {
-        return 0.1 + (double) (Mth.clamp((int) value, (int) 5, (int) 180) - 5) / 175.0 * 3.9;
     }
 
     private void copyStrengthAlong(Direction direction, Direction facing, int value) {
@@ -1102,13 +811,9 @@ public class SableTrackBlockEntity extends KineticBlockEntity implements BlockEn
         tag.putDouble("LateralOffset", this.lateralOffset);
         tag.putDouble("LongitudinalOffset", this.longitudinalOffset);
         tag.putDouble("HeightOffset", this.heightOffset);
-        tag.putDouble("SpringMultiplier", this.springMultiplier);
-        tag.putDouble("DampingMultiplier", this.dampingMultiplier);
         tag.putDouble("BumpClearanceMultiplier", this.bumpClearanceMultiplier);
         tag.putDouble("BumpForceMultiplier", this.bumpForceMultiplier);
         tag.putDouble("MaxImpulseMultiplier", this.maxImpulseMultiplier);
-        tag.putDouble("DriveMultiplier", this.driveMultiplier);
-        tag.putDouble("GripMultiplier", this.gripMultiplier);
         tag.putBoolean("VisualSuspensionHidden", this.visualSuspensionHidden);
         tag.putBoolean("HasBelt", this.hasBelt);
         if (this.beltColor != null) {
@@ -1133,12 +838,6 @@ public class SableTrackBlockEntity extends KineticBlockEntity implements BlockEn
         if (tag.contains("HeightOffset")) {
             this.heightOffset = tag.getDouble("HeightOffset");
         }
-        if (tag.contains("SpringMultiplier")) {
-            this.springMultiplier = tag.getDouble("SpringMultiplier");
-        }
-        if (tag.contains("DampingMultiplier")) {
-            this.dampingMultiplier = tag.getDouble("DampingMultiplier");
-        }
         if (tag.contains("BumpClearanceMultiplier")) {
             this.bumpClearanceMultiplier = tag.getDouble("BumpClearanceMultiplier");
         }
@@ -1147,12 +846,6 @@ public class SableTrackBlockEntity extends KineticBlockEntity implements BlockEn
         }
         if (tag.contains("MaxImpulseMultiplier")) {
             this.maxImpulseMultiplier = tag.getDouble("MaxImpulseMultiplier");
-        }
-        if (tag.contains("DriveMultiplier")) {
-            this.driveMultiplier = tag.getDouble("DriveMultiplier");
-        }
-        if (tag.contains("GripMultiplier")) {
-            this.gripMultiplier = tag.getDouble("GripMultiplier");
         }
         if (tag.contains("VisualSuspensionHidden")) {
             this.visualSuspensionHidden = tag.getBoolean("VisualSuspensionHidden");
@@ -1189,16 +882,6 @@ public class SableTrackBlockEntity extends KineticBlockEntity implements BlockEn
             this.owner = be;
             this.between(5, 180);
         }
-
-//        public ValueSettingsBoard createBoard(Player player, BlockHitResult hitResult) {
-//            SuspensionKeyItem.TuningMode mode = player.getMainHandItem().is(KineticItems.SUSPENSION_KEY.asItem()) ? SuspensionKeyItem.getMode(player.getMainHandItem()) : (player.getOffhandItem().is(KineticItems.SUSPENSION_KEY.asItem()) ? SuspensionKeyItem.getMode(player.getOffhandItem()) : SuspensionKeyItem.TuningMode.STRENGTH);
-//            this.owner.selectScrollTuningMode(mode.key);
-//            if (this.owner.level != null && ((SableTrackBlockEntity) this.owner).level.isClientSide) {
-//                PacketDistributor.sendToServer((CustomPacketPayload) new SelectTrackTuningModePayload(this.owner.getBlockPos(), mode.key), (CustomPacketPayload[]) new CustomPacketPayload[0]);
-//            }
-//            this.value = mode == SuspensionKeyItem.TuningMode.STRENGTH ? this.owner.protectedStrengthValue : SableTrackBlockEntity.tuningToScroll(this.owner.getTuning(mode.key));
-//            return new ValueSettingsBoard(mode.title(), 180, 20, (List) ImmutableList.of((Object) mode.title()), new ValueSettingsFormatter(ValueSettings::format));
-//        }
     }
 
     private static final class TrackStrengthValueBox
@@ -1211,14 +894,6 @@ public class SableTrackBlockEntity extends KineticBlockEntity implements BlockEn
             float yRot = AngleHelper.horizontalAngle((Direction) facing) + 180.0f;
             ((PoseTransformStack) TransformStack.of((PoseStack) ms).rotateYDegrees(yRot)).rotateXDegrees(90.0f);
         }
-
-//        public boolean testHit(LevelAccessor level, BlockPos pos, BlockState state, Vec3 localHit) {
-//            if (KineticClient.holdingSuspensionKey && !KineticClient.holdingSuspensionKeyInPositionMode && !KineticClient.holdingSuspensionKeyInAllPositionMode && !KineticClient.holdingSuspensionKeyInResetMode) {
-//                return true;
-//            }
-//            Vec3 offset = this.getLocalOffset(level, pos, state);
-//            return offset != null && localHit.distanceTo(offset) < (double) (this.scale / 3.0f);
-//        }
 
         public Vec3 getLocalOffset(LevelAccessor level, BlockPos pos, BlockState state) {
             Direction facing = (Direction) state.getValue(SableTrackBlock.HORIZONTAL_FACING);

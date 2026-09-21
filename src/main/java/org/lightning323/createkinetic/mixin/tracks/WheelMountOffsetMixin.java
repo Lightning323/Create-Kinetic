@@ -47,9 +47,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -90,14 +88,6 @@ implements WheelMountOffsetAccess {
     @Unique
     private double kinetic$lastHeightOffset = 0.0;
     @Unique
-    private double kinetic$wheelSpringMultiplier = 1.0;
-    @Unique
-    private double kinetic$wheelDampingMultiplier = 1.0;
-    @Unique
-    private double kinetic$wheelDriveMultiplier = 1.0;
-    @Unique
-    private double kinetic$wheelGripMultiplier = 1.0;
-    @Unique
     private boolean kinetic$visualSuspensionHidden = false;
 
     @Shadow
@@ -105,101 +95,6 @@ implements WheelMountOffsetAccess {
 
     public WheelMountOffsetMixin(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
-    }
-
-    @Override
-    public double kinetic$adjustLateralOffset(int direction) {
-        double previous = this.kinetic$lateralOffset;
-        this.kinetic$lateralOffset = Mth.clamp((double)((double)Math.round((this.kinetic$lateralOffset + (double)direction * 0.125) / 0.125) * 0.125), (double)-1.0, (double)1.5);
-        if (Math.abs(previous - this.kinetic$lateralOffset) > 1.0E-6) {
-            this.setChanged();
-            if (this.level != null && !this.level.isClientSide) {
-                this.sendData();
-            }
-        }
-        return this.kinetic$lateralOffset;
-    }
-
-    @Override
-    public double kinetic$adjustLongitudinalOffset(int direction) {
-        double previous = this.kinetic$longitudinalOffset;
-        this.kinetic$longitudinalOffset = Mth.clamp((double)((double)Math.round((this.kinetic$longitudinalOffset + (double)direction * 0.125) / 0.125) * 0.125), (double)-1.0, (double)1.5);
-        if (Math.abs(previous - this.kinetic$longitudinalOffset) > 1.0E-6) {
-            this.setChanged();
-            if (this.level != null && !this.level.isClientSide) {
-                this.sendData();
-            }
-        }
-        return this.kinetic$longitudinalOffset;
-    }
-
-    @Override
-    public double kinetic$adjustHeightOffset(int direction, boolean sideInteraction) {
-        double previous = this.kinetic$heightOffset;
-        this.kinetic$heightOffset = Mth.clamp((double)((double)Math.round((this.kinetic$heightOffset + (double)direction * 0.125) / 0.125) * 0.125), (double)-0.75, (double)0.75);
-        if (Math.abs(previous - this.kinetic$heightOffset) > 1.0E-6) {
-            this.setChanged();
-            if (this.level != null && !this.level.isClientSide) {
-                this.sendData();
-            }
-        }
-        return this.kinetic$heightOffset;
-    }
-
-    @Override
-    public double kinetic$adjustTuning(String key, int direction) {
-        double step = key.equals("drive") ? 0.1 : 0.05;
-        double previous = this.kinetic$getTuning(key);
-        double next = Mth.clamp((double)((double)Math.round((previous + (double)direction * step) / step) * step), (double)0.1, (double)4.0);
-        switch (key) {
-            case "spring": {
-                this.kinetic$wheelSpringMultiplier = next;
-                break;
-            }
-            case "damping": {
-                this.kinetic$wheelDampingMultiplier = next;
-                break;
-            }
-            case "drive": {
-                this.kinetic$wheelDriveMultiplier = next;
-                break;
-            }
-            case "grip": {
-                this.kinetic$wheelGripMultiplier = next;
-                break;
-            }
-            default: {
-                return previous;
-            }
-        }
-        this.setChanged();
-        if (this.level != null && !this.level.isClientSide) {
-            this.sendData();
-        }
-        return next;
-    }
-
-    @Override
-    public double kinetic$getTuning(String key) {
-        return switch (key) {
-            case "spring" -> this.kinetic$wheelSpringMultiplier;
-            case "damping" -> this.kinetic$wheelDampingMultiplier;
-            case "drive" -> this.kinetic$wheelDriveMultiplier;
-            case "grip" -> this.kinetic$wheelGripMultiplier;
-            default -> 1.0;
-        };
-    }
-
-    @Override
-    public void kinetic$resetTuning() {
-        this.kinetic$wheelSpringMultiplier = 1.0;
-        this.kinetic$wheelDampingMultiplier = 1.0;
-        this.kinetic$wheelDriveMultiplier = 1.0;
-        this.kinetic$wheelGripMultiplier = 1.0;
-        this.setChanged();
-        if (this.level != null && !this.level.isClientSide) {
-            this.sendData();
-        }
     }
 
     @Override
@@ -258,10 +153,6 @@ implements WheelMountOffsetAccess {
         tag.putDouble("TracksLateralOffset", this.kinetic$lateralOffset);
         tag.putDouble("TracksLongitudinalOffset", this.kinetic$longitudinalOffset);
         tag.putDouble("TracksHeightOffset", this.kinetic$heightOffset);
-        tag.putDouble("TracksWheelSpringMultiplier", this.kinetic$wheelSpringMultiplier);
-        tag.putDouble("TracksWheelDampingMultiplier", this.kinetic$wheelDampingMultiplier);
-        tag.putDouble("TracksWheelDriveMultiplier", this.kinetic$wheelDriveMultiplier);
-        tag.putDouble("TracksWheelGripMultiplier", this.kinetic$wheelGripMultiplier);
         tag.putBoolean("TracksVisualSuspensionHidden", this.kinetic$visualSuspensionHidden);
     }
 
@@ -276,18 +167,6 @@ implements WheelMountOffsetAccess {
         if (tag.contains("TracksHeightOffset")) {
             this.kinetic$heightOffset = tag.getDouble("TracksHeightOffset");
         }
-        if (tag.contains("TracksWheelSpringMultiplier")) {
-            this.kinetic$wheelSpringMultiplier = tag.getDouble("TracksWheelSpringMultiplier");
-        }
-        if (tag.contains("TracksWheelDampingMultiplier")) {
-            this.kinetic$wheelDampingMultiplier = tag.getDouble("TracksWheelDampingMultiplier");
-        }
-        if (tag.contains("TracksWheelDriveMultiplier")) {
-            this.kinetic$wheelDriveMultiplier = tag.getDouble("TracksWheelDriveMultiplier");
-        }
-        if (tag.contains("TracksWheelGripMultiplier")) {
-            this.kinetic$wheelGripMultiplier = tag.getDouble("TracksWheelGripMultiplier");
-        }
         if (tag.contains("TracksVisualSuspensionHidden")) {
             this.kinetic$visualSuspensionHidden = tag.getBoolean("TracksVisualSuspensionHidden");
         }
@@ -296,26 +175,6 @@ implements WheelMountOffsetAccess {
             this.kinetic$lastLongitudinalOffset = this.kinetic$longitudinalOffset;
             this.kinetic$lastHeightOffset = this.kinetic$heightOffset;
         }
-    }
-
-    @ModifyConstant(method={"sable$physicsTick"}, constant={@Constant(doubleValue=40.0)})
-    private double kinetic$tuneWheelSpring(double original) {
-        return original * this.kinetic$wheelSpringMultiplier;
-    }
-
-    @ModifyConstant(method={"sable$physicsTick"}, constant={@Constant(doubleValue=10.0)})
-    private double kinetic$tuneWheelDamping(double original) {
-        return original * this.kinetic$wheelDampingMultiplier;
-    }
-
-    @ModifyConstant(method={"sable$physicsTick"}, constant={@Constant(doubleValue=1.75)})
-    private double kinetic$tuneWheelDrive(double original) {
-        return original * this.kinetic$wheelDriveMultiplier;
-    }
-
-    @ModifyConstant(method={"sable$physicsTick"}, constant={@Constant(doubleValue=-0.6)})
-    private double kinetic$tuneWheelGrip(double original) {
-        return original * this.kinetic$wheelGripMultiplier;
     }
 
     @ModifyExpressionValue(method={"sable$physicsTick", "computeMaxExtensionToTerrain"}, at={@At(value="INVOKE", target="Lnet/minecraft/core/BlockPos;getCenter()Lnet/minecraft/world/phys/Vec3;")})

@@ -5,6 +5,8 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Create-Kinetic.iml" filepath="$PROJECT_DIR$/.idea/modules/Create-Kinetic.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Create-Kinetic.main.iml" filepath="$PROJECT_DIR$/.idea/modules/Create-Kinetic.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Create-Kinetic.test.iml" filepath="$PROJECT_DIR$/.idea/modules/Create-Kinetic.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/org.lightning323.Create-Kinetic.main.iml" filepath="$PROJECT_DIR$/.idea/modules/org.lightning323.Create-Kinetic.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/org.lightning323.Create-Kinetic.test.iml" filepath="$PROJECT_DIR$/.idea/modules/org.lightning323.Create-Kinetic.test.iml" />
     </modules>
   </component>
 </project>

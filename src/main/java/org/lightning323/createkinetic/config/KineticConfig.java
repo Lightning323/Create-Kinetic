@@ -60,7 +60,6 @@ public class KineticConfig {
     public static final Map<String, ModConfigSpec.IntValue> FUEL_EFFICIENCY_ENTRIES = new LinkedHashMap<>();
     public static final Map<String, ModConfigSpec.IntValue> FUEL_BURN_RATE_ENTRIES = new LinkedHashMap<>();
     public static final Map<String, ModConfigSpec.ConfigValue<String>> THRUSTER_DYE_COLORS = new LinkedHashMap<>();
-    public static final ModConfigSpec.BooleanValue ENABLE_RENDER_TUNING_CHEATS;
 
     private static final ModConfigSpec.DoubleValue GYROSCOPE_OMEGA_TARGET;
     private static final ModConfigSpec.DoubleValue GYROSCOPE_DAMPING_RATIO;
@@ -90,7 +89,6 @@ public class KineticConfig {
     private static volatile boolean joystickShowHudBox;
     private static volatile int joystickKeyRepeatDelayMs;
     private static volatile int joystickSpringBackDelayMs;
-    private static volatile boolean renderTuningCheatsEnabled;
 
 
     public static double gyroscopeOmegaTarget() {
@@ -146,10 +144,6 @@ public class KineticConfig {
         return joystickShowHudLine;
     }
 
-    public static boolean renderTuningCheatsEnabled() {
-        return renderTuningCheatsEnabled;
-    }
-
     @SubscribeEvent
     static void onLoad(ModConfigEvent event) {
         if (event instanceof ModConfigEvent.Loading) {
@@ -163,7 +157,6 @@ public class KineticConfig {
                 gyroscopeReferenceRpm = (Double) GYROSCOPE_REFERENCE_RPM.get();
                 gyroscopeStressImpact = (Double) GYROSCOPE_STRESS_IMPACT.get();
                 joystickPixelsPerStep = (Double) JOYSTICK_PIXELS_PER_STEP.get();
-                renderTuningCheatsEnabled = (Boolean) ENABLE_RENDER_TUNING_CHEATS.get();
 
             } else if (spec == CLIENT_SPEC) {
                 joystickKeyRepeatDelayMs = (Integer) JOYSTICK_KEY_REPEAT_DELAY_MS.get();
@@ -235,11 +228,6 @@ public class KineticConfig {
         //Joystick
         COMMON_BUILDER.push("Joystick");
         JOYSTICK_PIXELS_PER_STEP = COMMON_BUILDER.comment("Raw mouse pixels per tilt step. Lower = more sensitive. Full deflection (15 steps = 45 deg) is reached after 15x this many pixels of mouse movement.").defineInRange("pixelsPerStep", (double) 30.0F, (double) 1.0F, (double) 500.0F);
-        COMMON_BUILDER.pop();
-
-        //Tracks
-        COMMON_BUILDER.comment("Track settings").push("tracks");
-        ENABLE_RENDER_TUNING_CHEATS = COMMON_BUILDER.comment("Allows operators to open the in-game tracks render tuning menu with J. Disabled by default.").define("enableRenderTuningCheats", false);
         COMMON_BUILDER.pop();
 
         //Gyro
