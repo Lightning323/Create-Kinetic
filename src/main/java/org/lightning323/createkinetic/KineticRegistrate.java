@@ -46,7 +46,7 @@ public final class KineticRegistrate extends CreateRegistrate {
     * the tab items are registered like so:
     * private static final SimulatedRegistrate REGISTRATE = CreateKinetic.getRegistrate();
     * public static final ItemEntry<Item> SMALL_SUSPENSION_TRACK = REGISTRATE.item("small_suspension_track", Item::new).register();
-    * public static final ItemEntry<Item> SUSPENSION_TRACK = ((ItemBuilder)REGISTRATE.item("suspension_track", Item::new).transform((NonNullFunction)CreativeTabItemTransforms.VisibilityType.INVISIBLE.applyItem())).register();
+    * public static final ItemEntry<Item> MEDIUM_SUSPENSION_TRACK = ((ItemBuilder)REGISTRATE.item("medium_suspension_track", Item::new).transform((NonNullFunction)CreativeTabItemTransforms.VisibilityType.INVISIBLE.applyItem())).register();
     * public static final ItemEntry<Item> LARGE_SUSPENSION_TRACK = ((ItemBuilder)REGISTRATE.item("large_suspension_track", Item::new).transform((NonNullFunction)CreativeTabItemTransforms.VisibilityType.INVISIBLE.applyItem())).register();
     *
     * @param modid

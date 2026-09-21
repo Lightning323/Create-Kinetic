@@ -12,7 +12,9 @@ import net.minecraft.resources.ResourceLocation;
 import org.lightning323.createkinetic.CreateKinetic;
 
 public class TracksPartialModels {
-    public static final PartialModel TRACKWORK_WHEELS = TracksPartialModels.block("wheels");
+    public static final PartialModel TRACKWORK_WHEELS_SMALL = TracksPartialModels.block("wheels_small");
+    public static final PartialModel TRACKWORK_WHEELS_MEDIUM = TracksPartialModels.block("wheels_medium");
+    public static final PartialModel TRACKWORK_WHEELS_LARGE = TracksPartialModels.block("wheels_large");
     public static final PartialModel TRACKWORK_COGS = TracksPartialModels.block("cogs");
     public static final PartialModel TRACKWORK_TRACK_LINK = TracksPartialModels.block("track_link");
     public static final PartialModel TRACKWORK_TRACK_LINK_DOWN = TracksPartialModels.block("track_link_down");

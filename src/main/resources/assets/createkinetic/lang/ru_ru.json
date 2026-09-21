@@ -62,7 +62,7 @@
   "block.createkinetic.track_mount.tooltip.condition3": "При Shift-ПКМ ключом",
   "block.createkinetic.track_mount.tooltip.summary": "Крепит _гусеничные_ детали для движения по земле.",
   "item.createkinetic.small_suspension_track": "Гусеница с подвеской",
-  "item.createkinetic.suspension_track": "Гусеница с подвеской",
+  "item.createkinetic.medium_suspension_track": "Средняя гусеница с подвеской",
   "item.createkinetic.large_suspension_track": "Большая гусеница с подвеской",
   "item.createkinetic.small_track_drive_wheel": "Ведущее колесо гусеницы",
   "item.createkinetic.track_drive_wheel": "Ведущее колесо гусеницы",

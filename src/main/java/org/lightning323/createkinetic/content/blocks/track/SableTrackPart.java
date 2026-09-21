@@ -12,8 +12,8 @@ import net.minecraft.world.item.ItemStack;
 public enum SableTrackPart {
     NONE(SableTrackRole.MOUNT, 0.0, 0.0, 0.0, 0.0, 0, 1.0f),
     SMALL_SUSPENSION(SableTrackRole.SUSPENSION, 0.55, 0.6, 1.05, 1.0, 2, 0.75f),
-    SUSPENSION(SableTrackRole.SUSPENSION, 0.75, 0.75, 1.35, 1.05, 3, 1.0f),
-    LARGE_SUSPENSION(SableTrackRole.SUSPENSION, 0.95, 0.95, 1.65, 1.15, 4, 1.25f),
+    SUSPENSION(SableTrackRole.SUSPENSION, 0.96875, 0.75, 1.35, 1.05, 3, 1.0f),
+    LARGE_SUSPENSION(SableTrackRole.SUSPENSION, 1.25, 0.95, 1.65, 1.15, 4, 1.25f),
     SMALL_DRIVE(SableTrackRole.DRIVE, 0.6, 0.5, 1.5, 1.15, 2, 0.8f),
     DRIVE(SableTrackRole.DRIVE, 0.8, 0.55, 1.9, 1.25, 2, 1.0f),
     LARGE_DRIVE(SableTrackRole.DRIVE, 1.0, 0.7, 2.35, 1.35, 3, 1.25f);
@@ -39,6 +39,12 @@ public enum SableTrackPart {
     public static SableTrackPart fromStack(ItemStack stack) {
         if (stack.is(KineticItems.SUSPENSION_TRACK.asItem())) {
             return SMALL_SUSPENSION;
+        }
+        if (stack.is(KineticItems.MEDIUM_SUSPENSION_TRACK.asItem())) {
+            return SUSPENSION;
+        }
+        if (stack.is(KineticItems.LARGE_SUSPENSION_TRACK.asItem())) {
+            return LARGE_SUSPENSION;
         }
         if (stack.is(KineticItems.TRACK_DRIVE_WHEEL.asItem())) {
             return SMALL_DRIVE;

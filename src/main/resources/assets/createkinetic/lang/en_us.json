@@ -62,7 +62,7 @@
   "block.createkinetic.track_mount.tooltip.condition3": "When Sneak R-Clicked with a Wrench",
   "block.createkinetic.track_mount.tooltip.summary": "Mounts _track-like_ items to allow for tracked ground travel.",
   "item.createkinetic.small_suspension_track": "Suspension Track",
-  "item.createkinetic.suspension_track": "Suspension Track",
+  "item.createkinetic.medium_suspension_track": "Medium Suspension Track",
   "item.createkinetic.large_suspension_track": "Large Suspension Track",
   "item.createkinetic.small_track_drive_wheel": "Track Drive Wheel",
   "item.createkinetic.track_drive_wheel": "Track Drive Wheel",

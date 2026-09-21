@@ -4,6 +4,7 @@ import org.lightning323.createkinetic.content.blocks.track.SableTrackPart;
 
 public class TrackRenderTuning {
     public static final float BASE_SLOPE_DEGREES = 0.0f;
+    public static final Profile MOUNT = new Profile("mount");
     public static final Profile SMALL_SUSPENSION = new Profile("small_suspension");
     public static final Profile SUSPENSION = new Profile("suspension");
     public static final Profile LARGE_SUSPENSION = new Profile("large_suspension");
@@ -17,6 +18,7 @@ public class TrackRenderTuning {
 
     public static Profile profileFor(SableTrackPart part) {
         return switch (part) {
+            case SableTrackPart.NONE -> MOUNT;
             case SableTrackPart.SMALL_SUSPENSION -> SMALL_SUSPENSION;
             case SableTrackPart.LARGE_SUSPENSION -> LARGE_SUSPENSION;
             case SableTrackPart.SMALL_DRIVE -> SMALL_DRIVE;
@@ -42,17 +44,28 @@ public class TrackRenderTuning {
 
         private void applyDefaults() {
             switch (this.name) {
+                case "mount": {
+                    break;
+                }
                 case "small_suspension": {
-                    this.topBelt.setDefaults(1.0f, 0.75f, -0.5f, 1.2249999f, 1.0f, 1.0f, 0.0f);
-                    this.bottomBelt.setDefaults(1.0f, -1.0500003f, -0.475f, 1.2249999f, 1.0f, 1.0f, 0.0f);
-                    this.suspensionMount.setDefaults(0.49999997f, -1.1920929E-7f, 0.049999997f, 1.0f, 1.0f, 1.0f, 0.0f);
+                    this.topBelt.setDefaults(1.0f, 0.75f, -0.5f, 0.91875f, 1.0f, 1.0f, 0.0f);
+                    this.bottomBelt.setDefaults(1.0f, -1.0500003f, -0.475f, 0.91875f, 1.0f, 1.0f, 0.0f);
+                    this.suspensionMount.setDefaults(0.49999997f, -1.1920929E-7f, 0.049999997f, 0.75f, 1.0f, 1.0f, 0.0f);
+                    break;
+                }
+                case "suspension": {
+                    this.wheel.setDefaults(1.0f, -0.37f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f);
+                    this.topBelt.setDefaults(1.0f, 0.33125f, -0.5f, 0.91875f, 1.0f, 1.0f, 0.0f);
+                    this.bottomBelt.setDefaults(1.0f, -1.46875f, -0.475f, 0.91875f, 1.0f, 1.0f, 0.0f);
+                    this.suspensionMount.setDefaults(0.49999997f, -1.1920929E-7f, 0.049999997f, 0.75f, 1.0f, 1.0f, 0.0f);
                     break;
                 }
                 case "large_suspension": {
-                    this.wheel.setDefaults(1.0f, -0.85f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f);
-                    this.topBelt.setDefaults(1.0f, 0.49999976f, -0.4750001f, 1.0f, 1.0f, 1.0f, 0.0f);
-                    this.bottomBelt.setDefaults(1.0f, -1.8f, -0.475f, 1.0f, 1.0f, 1.0f, 0.0f);
+                    this.wheel.setDefaults(1.0f, -0.58f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f);
+                    this.topBelt.setDefaults(1.0f, 0.05f, -0.5f, 0.91875f, 1.0f, 1.0f, 0.0f);
+                    this.bottomBelt.setDefaults(1.0f, -1.75f, -0.475f, 0.91875f, 1.0f, 1.0f, 0.0f);
                     this.wrapBelt.setDefaults(1.0f, 0.125f, 0.65f, 1.0f, 1.0f, 1.0f, 0.0f);
+                    this.suspensionMount.setDefaults(0.49999997f, -1.1920929E-7f, 0.049999997f, 0.75f, 1.0f, 1.0f, 0.0f);
                     break;
                 }
                 case "small_drive": {

@@ -29,6 +29,16 @@ public class KineticItems {
                     .model((ctx, prov) -> {})
                     .register();
 
+    public static final ItemEntry<Item> MEDIUM_SUSPENSION_TRACK =
+            REGISTRATE.item("medium_suspension_track", Item::new)
+                    .model((ctx, prov) -> {})
+                    .register();
+
+    public static final ItemEntry<Item> LARGE_SUSPENSION_TRACK =
+            REGISTRATE.item("large_suspension_track", Item::new)
+                    .model((ctx, prov) -> {})
+                    .register();
+
     public static final ItemEntry<Item> TRACK_DRIVE_WHEEL =
             REGISTRATE.item("small_track_drive_wheel", Item::new)
                     .model((ctx, prov) -> {})

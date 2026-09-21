@@ -24,6 +24,8 @@ public class KineticCreativeTabs {
         }
 
         registerSectionItem(OFFROAD_CREATIVE_SECTION, "small_suspension_track", KineticItems.SUSPENSION_TRACK::get);
+        registerSectionItem(OFFROAD_CREATIVE_SECTION, "medium_suspension_track", KineticItems.MEDIUM_SUSPENSION_TRACK::get);
+        registerSectionItem(OFFROAD_CREATIVE_SECTION, "large_suspension_track", KineticItems.LARGE_SUSPENSION_TRACK::get);
         registerSectionItem(OFFROAD_CREATIVE_SECTION, "small_track_drive_wheel", KineticItems.TRACK_DRIVE_WHEEL::get);
         registerSectionItem(OFFROAD_CREATIVE_SECTION, "track_mount", KineticBlocks.TRACK_MOUNT::asItem);
 

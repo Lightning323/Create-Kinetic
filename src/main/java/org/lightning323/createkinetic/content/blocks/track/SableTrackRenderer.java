@@ -159,16 +159,21 @@ public class SableTrackRenderer
             ms.popPose();
             return;
         }
-        PartialModel partialModel = wheel = role == SableTrackRole.DRIVE ? TracksPartialModels.TRACKWORK_COGS : TracksPartialModels.TRACKWORK_WHEELS;
+        PartialModel partialModel = wheel = switch (part) {
+            case SableTrackPart.DRIVE, SableTrackPart.SMALL_DRIVE, SableTrackPart.LARGE_DRIVE -> TracksPartialModels.TRACKWORK_COGS;
+            case SableTrackPart.LARGE_SUSPENSION -> TracksPartialModels.TRACKWORK_WHEELS_LARGE;
+            case SableTrackPart.SUSPENSION -> TracksPartialModels.TRACKWORK_WHEELS_MEDIUM;
+            default -> TracksPartialModels.TRACKWORK_WHEELS_SMALL;
+        };
         double currentHeightOffset = heightOffset;
         double wheelVisualYOffset = role == SableTrackRole.DRIVE ? -0.8 : -1.0;
         if (role == SableTrackRole.SUSPENSION && !be.isVisualSuspensionHidden()) {
             double wheelVisualY = verticalOffset + part.radius() + wheelVisualYOffset + (double) tuning.wheel.y + currentHeightOffset;
             double suspensionBaseY = tuning.suspensionMount.y;
             double suspensionZ = tuning.wheel.z + tuning.suspensionMount.z;
-            SableTrackRenderer.renderOffroadSuspension(blockState, ms, buffer, partLight, tuning.wheel.x + tuning.suspensionMount.x, suspensionBaseY, suspensionZ, wheelVisualY - suspensionBaseY, part.visualScale(), tuning.suspensionMount);
+            SableTrackRenderer.renderOffroadSuspension(blockState, ms, buffer, partLight, tuning.wheel.x + tuning.suspensionMount.x, suspensionBaseY, suspensionZ, wheelVisualY - suspensionBaseY, 1.0f, tuning.suspensionMount);
         }
-        SableTrackRenderer.renderWheelPartial(wheel, blockState, ms, buffer, partLight, longitudinalOffset + (double) tuning.wheel.x, verticalOffset + part.radius() + wheelVisualYOffset + (double) tuning.wheel.y + currentHeightOffset, lateralOffset + (double) (tuning.wheel.z * beltMirror), angle, part.visualScale(), tuning.wheel);
+        SableTrackRenderer.renderWheelPartial(wheel, blockState, ms, buffer, partLight, longitudinalOffset + (double) tuning.wheel.x, verticalOffset + part.radius() + wheelVisualYOffset + (double) tuning.wheel.y + currentHeightOffset, lateralOffset + (double) (tuning.wheel.z * beltMirror), angle, 1.0f, tuning.wheel);
 
         if (hasBelt) {
             if (role == SableTrackRole.DRIVE) {
@@ -176,7 +181,7 @@ public class SableTrackRenderer
             }
             double topBeltYOffset = role == SableTrackRole.SUSPENSION ? -0.75 : -0.8;
             double topBeltHeightOffset = 0;
-            SableTrackRenderer.renderBeltPartial(TracksPartialModels.TRACKWORK_TRACK_LINK, blockState, ms, buffer, partLight, longitudinalOffset + (double) tuning.topBelt.x, part.radius() + (double) tuning.topBelt.y + topBeltYOffset + topBeltHeightOffset, lateralOffset + (double) (tuning.topBelt.z * beltMirror), TrackRenderTuning.BASE_SLOPE_DEGREES + tuning.topBelt.slopeDegrees, part.visualScale(), tuning.topBelt, 1.0f, frontEnd, driveStraightScroll, beltSprite);
+            SableTrackRenderer.renderBeltPartial(TracksPartialModels.TRACKWORK_TRACK_LINK, blockState, ms, buffer, partLight, longitudinalOffset + (double) tuning.topBelt.x, part.radius() + (double) tuning.topBelt.y + topBeltYOffset + topBeltHeightOffset, lateralOffset + (double) (tuning.topBelt.z * beltMirror), TrackRenderTuning.BASE_SLOPE_DEGREES + tuning.topBelt.slopeDegrees, 1.0f, tuning.topBelt, 1.0f, frontEnd, driveStraightScroll, beltSprite);
             double bottomBeltVisualY = verticalOffset + part.radius() + (double) tuning.bottomBelt.y + wheelVisualYOffset + 0.6 + currentHeightOffset;
             double bottomBeltVisualX = longitudinalOffset + (double) tuning.bottomBelt.x;
             double bottomBeltVisualZ = lateralOffset + (double) (tuning.bottomBelt.z * beltMirror);
@@ -189,7 +194,7 @@ public class SableTrackRenderer
             }
             neighborSlopeAngle = TrackRenderTuning.BASE_SLOPE_DEGREES + (float) Math.toDegrees(Math.atan2(slopeDelta, 1.0));
             beltStretch = (float) Math.min(1.65, Math.sqrt(1.0 + visualSlopeDelta * visualSlopeDelta));
-            SableTrackRenderer.renderBeltPartial(TracksPartialModels.TRACKWORK_TRACK_LINK_DOWN, blockState, ms, buffer, partLight, bottomBeltVisualX, bottomBeltVisualY, bottomBeltVisualZ, neighborSlopeAngle + tuning.bottomBelt.slopeDegrees, part.visualScale(), tuning.bottomBelt, beltStretch, frontEnd, driveStraightScroll, beltSprite);
+            SableTrackRenderer.renderBeltPartial(TracksPartialModels.TRACKWORK_TRACK_LINK_DOWN, blockState, ms, buffer, partLight, bottomBeltVisualX, bottomBeltVisualY, bottomBeltVisualZ, neighborSlopeAngle + tuning.bottomBelt.slopeDegrees, 1.0f, tuning.bottomBelt, beltStretch, frontEnd, driveStraightScroll, beltSprite);
         }
 
         ms.popPose();

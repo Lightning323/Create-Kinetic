@@ -564,7 +564,7 @@ public class SableTrackBlockEntity extends KineticBlockEntity implements BlockEn
                     if (neighbor.getHeldItem().is(KineticItems.TRACK_DRIVE_WHEEL.get())) {
                         endedWithDriveWheel = true;
                         break stepLoop;
-                    } else if (!neighbor.getHeldItem().is(KineticItems.SUSPENSION_TRACK.get()))
+                    } else if (SableTrackPart.fromStack(neighbor.getHeldItem()).role() != SableTrackRole.SUSPENSION)
                         break stepLoop;
                 } else break stepLoop;
             }
