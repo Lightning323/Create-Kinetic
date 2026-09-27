@@ -115,14 +115,14 @@ public class JoystickBlock extends Block implements EntityBlock, IBE<JoystickBlo
     }
 
     private void checkForAndInteractTypewriters(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        System.out.println("Checking for typewriters");
+//        System.out.println("Checking for typewriters");
 
         for (int x = -1; x < 2; x++) {
             for (int z = -1; z < 2; z++) {
                 BlockPos pos1 = new BlockPos(pos.getX() + x, pos.getY(), pos.getZ() + z);
                 BlockState state1 = level.getBlockState(pos1);
                 if (state1.getBlock() instanceof LinkedTypewriterBlock ltb) {
-                    System.out.println("Found typewriter at " + pos1);
+//                    System.out.println("Found typewriter at " + pos1);
                     ((LinkedTypewriterBlockInvoker) ltb).invokeUseItemOn(stack, state1, level, pos1, player, hand, hit);
                     return;
                 }

@@ -2,6 +2,8 @@
   "itemGroup.createkinetic": "createkinetic",
   "block.createkinetic.reaction_wheel": "Reaction Wheel",
   "block.createkinetic.joystick": "Joystick",
+  "key.categories.createkinetic": "Create Kinetic",
+  "key.createkinetic.joystick.free_camera": "Free Camera Mode",
   "block.createkinetic.joystick.tooltip.summary": "A two-axis _control stick_ that transmits on configurable _Redstone Link_ frequencies.",
   "block.createkinetic.joystick.tooltip.condition1": "When R-Clicked",
   "block.createkinetic.joystick.tooltip.behaviour1": "_Toggles_ the Joystick. _Mouse movement_ is taken over to tilt the stick while it's active. Press _ESC_ to release.",

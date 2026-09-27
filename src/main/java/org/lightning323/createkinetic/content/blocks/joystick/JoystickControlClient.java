@@ -1,6 +1,7 @@
 package org.lightning323.createkinetic.content.blocks.joystick;
 
 import com.mojang.blaze3d.platform.InputConstants;
+import org.lightning323.createkinetic.client.KineticKeys;
 import com.simibubi.create.foundation.utility.ControlsUtil;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
@@ -93,7 +94,12 @@ public final class JoystickControlClient {
       LocalPlayer player = mc.player;
       if (player != null) {
          Component modeLabel = Component.translatable(mouseMode ? "message.createkinetic.joystick.mode_mouse" : "message.createkinetic.joystick.mode_keys");
-         player.displayClientMessage(Component.translatable(mouseMode ? "message.createkinetic.joystick.entered_mouse" : "message.createkinetic.joystick.entered_keys", new Object[]{modeLabel}), true);
+         if (mouseMode) {
+            Component keyLabel = Component.literal("[").append(KineticKeys.FREE_CAMERA.getTranslatedKeyMessage()).append("]");
+            player.displayClientMessage(Component.translatable("message.createkinetic.joystick.entered_mouse", new Object[]{modeLabel, keyLabel}), true);
+         } else {
+            player.displayClientMessage(Component.translatable("message.createkinetic.joystick.entered_keys", new Object[]{modeLabel}), true);
+         }
       }
 
    }
@@ -226,29 +232,33 @@ public final class JoystickControlClient {
    }
 
    private static void tickBindLoop() {
-      long now = System.currentTimeMillis();
-      JoystickBlockEntity be = activeBE();
-      if (be != null && be.isSpringBack() && !be.isUseMouseInput() && !be.isPowered()) {
-         if (now - lastBoundActionMs >= springBackDelayMs()) {
-            boolean axisXBound = !be.getBinding(JoystickDirection.LEFT.index).isEmpty() || !be.getBinding(JoystickDirection.RIGHT.index).isEmpty();
-            boolean axisYBound = !be.getBinding(JoystickDirection.FORWARD.index).isEmpty() || !be.getBinding(JoystickDirection.BACK.index).isEmpty();
-            boolean changed = false;
-            if (axisXBound && tiltX != 0 && now - lastSpringStepXMs >= stepIntervalMs()) {
-               tiltX = (byte)(tiltX + (tiltX > 0 ? -1 : 1));
-               accumX = (double)0.0F;
-               lastSpringStepXMs = now;
-               changed = true;
-            }
+      if (!KineticKeys.isFreeCameraHeld()) {
+         long now = System.currentTimeMillis();
 
-            if (axisYBound && tiltY != 0 && now - lastSpringStepYMs >= stepIntervalMs()) {
-               tiltY = (byte)(tiltY + (tiltY > 0 ? -1 : 1));
-               accumY = (double)0.0F;
-               lastSpringStepYMs = now;
-               changed = true;
-            }
+         JoystickBlockEntity be = activeBE();
+         if (be != null && be.isSpringBack() && !be.isUseMouseInput() && !be.isPowered()) {
+            if (now - lastBoundActionMs >= springBackDelayMs()) {
+               boolean axisXBound = !be.getBinding(JoystickDirection.LEFT.index).isEmpty() || !be.getBinding(JoystickDirection.RIGHT.index).isEmpty();
+               boolean axisYBound = !be.getBinding(JoystickDirection.FORWARD.index).isEmpty() || !be.getBinding(JoystickDirection.BACK.index).isEmpty();
+               boolean changed = false;
+               if (axisXBound  && tiltX != 0 && now - lastSpringStepXMs >= stepIntervalMs()) {
+                  tiltX = (byte)(tiltX + (tiltX > 0 ? -1 : 1));
+                  accumX = (double)0.0F;
+                  lastSpringStepXMs = now;
+                  changed = true;
+               }
 
-            if (changed) {
-               PacketDistributor.sendToServer(new C2SJoystickTilt(activePos, tiltX, tiltY), new CustomPacketPayload[0]);
+               if (axisYBound  && tiltY != 0 && now - lastSpringStepYMs >= stepIntervalMs()) {
+                  tiltY = (byte)(tiltY + (tiltY > 0 ? -1 : 1));
+                  accumY = (double)0.0F;
+                  lastSpringStepYMs = now;
+                  changed = true;
+               }
+
+               if (changed) {
+                  PacketDistributor.sendToServer(new C2SJoystickTilt(activePos, tiltX, tiltY), new CustomPacketPayload[0]);
+               }
+
             }
          }
       }
@@ -308,8 +318,12 @@ public final class JoystickControlClient {
    }
 
    public static void onBoundKey(int slot, boolean pressed) {
-      if (activePos != null && slot == JoystickBlockEntity.BIND_BUTTON_INDEX) {
-         setButtonPressed(pressed);
+      if (activePos != null) {
+         if (!KineticKeys.isFreeCameraHeld()) {
+            if (slot == JoystickBlockEntity.BIND_BUTTON_INDEX) {
+               setButtonPressed(pressed);
+            }
+         }
       }
    }
 

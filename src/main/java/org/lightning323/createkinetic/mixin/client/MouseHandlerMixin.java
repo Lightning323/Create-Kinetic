@@ -2,6 +2,7 @@ package org.lightning323.createkinetic.mixin.client;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.platform.InputConstants.Type;
+import org.lightning323.createkinetic.client.KineticKeys;
 import org.lightning323.createkinetic.content.blocks.joystick.JoystickControlClient;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.MouseHandler;
@@ -30,8 +31,10 @@ public class MouseHandlerMixin {
    private void createkinetic$turnPlayer(double deltaTime, CallbackInfo ci) {
       if (createkinetic$shouldSuppressInput()) {
          if (JoystickControlClient.isMouseCaptured()) {
-            JoystickControlClient.feedMouseDelta(this.accumulatedDX, this.accumulatedDY);
-            ci.cancel();
+            if (!KineticKeys.isFreeCameraHeld()) {
+               JoystickControlClient.feedMouseDelta(this.accumulatedDX, this.accumulatedDY);
+               ci.cancel();
+            }
          }
       }
    }

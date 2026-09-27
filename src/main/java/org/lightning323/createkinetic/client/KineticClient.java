@@ -50,11 +50,12 @@ import static org.lightning323.createkinetic.CreateKinetic.ID;
 
 @Mod(value = CreateKinetic.ID, dist = {Dist.CLIENT})
 public class KineticClient {
+
     private static void registerClientHandlers(IEventBus modEventBus) {
         modEventBus.register(KineticClient.class);
+        modEventBus.register(KineticKeys.class);
         NeoForge.EVENT_BUS.register(JoystickControlClient.class);
     }
-
 
     public static void init(IEventBus modBus) {
         registerClientHandlers(modBus);
