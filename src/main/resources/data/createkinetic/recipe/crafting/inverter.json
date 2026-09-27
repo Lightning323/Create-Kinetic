@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "T": {
+      "item": "minecraft:redstone_torch"
+    },
+    "D": {
+      "item": "minecraft:redstone"
+    },
+    "I": {
+      "item": "minecraft:copper_ingot"
+    }
+  },
+  "pattern": [
+    "DDT",
+    "III"
+  ],
+  "result": {
+    "count": 1,
+    "id": "createkinetic:inverter"
+  },
+  "show_notification": true
+}

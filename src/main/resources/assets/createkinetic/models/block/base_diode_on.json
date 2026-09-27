@@ -1,0 +1,53 @@
+{
+  "parent": "minecraft:block/block",
+  "ambientocclusion": false,
+  "textures": {
+    "particle": "createkinetic:block/diode_on",
+    "top": "createkinetic:block/diode_on",
+    "schem": "createkinetic:block/gigaschem"
+  },
+  "elements": [
+    {
+      "from": [0, 0, 0],
+      "to": [16, 2, 16],
+      "faces": {
+        "north": {
+          "uv": [0, 2, 16, 0],
+          "texture": "#top",
+          "cullface": "north"
+        },
+        "east": { "uv": [0, 2, 16, 0], "texture": "#top", "cullface": "east" },
+        "south": {
+          "uv": [0, 2, 16, 0],
+          "texture": "#top",
+          "cullface": "south"
+        },
+        "west": { "uv": [0, 2, 16, 0], "texture": "#top", "cullface": "west" },
+        "up": { "uv": [0, 0, 16, 16], "texture": "#top" },
+        "down": { "uv": [0, 0, 16, 16], "texture": "#top", "cullface": "down" }
+      }
+    },
+    {
+      "from": [6, 1, 8],
+      "to": [10, 4, 12],
+      "faces": {
+        "north": { "uv": [6, 8, 10, 11], "texture": "#schem" },
+        "east": { "uv": [12, 8, 16, 11], "texture": "#schem" },
+        "south": { "uv": [0, 12, 4, 15], "texture": "#schem" },
+        "west": { "uv": [8, 4, 12, 7], "texture": "#schem" },
+        "up": { "uv": [6, 8, 10, 12], "texture": "#top" }
+      }
+    },
+    {
+      "from": [6, 1, 4],
+      "to": [10, 4, 8],
+      "faces": {
+        "north": { "uv": [6, 4, 10, 7], "texture": "#top" },
+        "east": { "uv": [8, 0, 12, 3], "texture": "#schem" },
+        "south": { "uv": [6, 4, 10, 7], "texture": "#top" },
+        "west": { "uv": [0, 0, 4, 3], "texture": "#schem" },
+        "up": { "uv": [6, 4, 10, 8], "texture": "#top" }
+      }
+    }
+  ]
+}

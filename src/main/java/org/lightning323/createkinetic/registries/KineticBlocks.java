@@ -47,6 +47,10 @@ import org.lightning323.createkinetic.content.thruster.vector_thruster.creative_
 import org.lightning323.createkinetic.content.thruster.vector_thruster.liquid_vector_thruster.LiquidVectorThrusterBlock;
 import org.lightning323.createkinetic.content.wing.CopycatWingBlock;
 import org.lightning323.createkinetic.content.wing.CopycatWingItem;
+import org.lightning323.createkinetic.content.blocks.redstone.Conjunctor;
+import org.lightning323.createkinetic.content.blocks.redstone.Crossroad;
+import org.lightning323.createkinetic.content.blocks.redstone.Diode;
+import org.lightning323.createkinetic.content.blocks.redstone.Inverter;
 
 public class KineticBlocks {
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(CreateKinetic.ID);
@@ -82,6 +86,11 @@ public class KineticBlocks {
     public static final DeferredBlock<ThrusterBlock> THRUSTER_BLOCK = BLOCKS.register("thruster",
             () -> new ThrusterBlock(Block.Properties.of().mapColor(MapColor.METAL).requiresCorrectToolForDrops()
                     .sound(SoundType.METAL).strength(5.5f, 4.0f).noOcclusion()));
+
+    public static final DeferredBlock<Diode> DIODE_BLOCK = BLOCKS.register("diode", Diode::create);
+    public static final DeferredBlock<Conjunctor> CONJUNCTOR_BLOCK = BLOCKS.register("conjunctor", Conjunctor::create);
+    public static final DeferredBlock<Inverter> INVERTER_BLOCK = BLOCKS.register("inverter", Inverter::create);
+    public static final DeferredBlock<Crossroad> CROSSROAD_BLOCK = BLOCKS.register("crossroad", Crossroad::create);
 
     public static final BlockEntry<ReactionWheelBlock> REACTION_WHEEL = REGISTRATE
             .block("reaction_wheel", ReactionWheelBlock::new).initialProperties(SharedProperties::softMetal)
@@ -122,6 +131,11 @@ public class KineticBlocks {
         registerBlockItem("vector_thruster", KineticBlocks.ION_VECTOR_THRUSTER_BLOCK, new BlockItem.Properties().rarity(Rarity.UNCOMMON));
         registerBlockItem("liquid_vector_thruster", KineticBlocks.LIQUID_VECTOR_THRUSTER_BLOCK, new BlockItem.Properties().rarity(Rarity.UNCOMMON));
         registerBlockItem("creative_vector_thruster", KineticBlocks.CREATIVE_VECTOR_THRUSTER_BLOCK, new BlockItem.Properties().rarity(Rarity.EPIC));
+
+        registerDefaultBlockItem("diode", KineticBlocks.DIODE_BLOCK);
+        registerDefaultBlockItem("conjunctor", KineticBlocks.CONJUNCTOR_BLOCK);
+        registerDefaultBlockItem("inverter", KineticBlocks.INVERTER_BLOCK);
+        registerDefaultBlockItem("crossroad", KineticBlocks.CROSSROAD_BLOCK);
 
 //        registerDefaultBlockItem("wing", KineticBlocks.WING_BLOCK);
         KineticBlocks.BLOCK_ITEMS.register("copycat_wing", () -> new CopycatWingItem(KineticBlocks.COPYCAT_WING.get(), new BlockItem.Properties()));

@@ -29,6 +29,10 @@ public class KineticCreativeTabs {
 
         registerSectionItem(SIMULATED_CREATIVE_SECTION, "reaction_wheel", () -> KineticBlocks.REACTION_WHEEL.asItem());
         registerSectionItem(SIMULATED_CREATIVE_SECTION, "joystick", () -> KineticBlocks.JOYSTICK.asItem());
+        registerSectionItem(SIMULATED_CREATIVE_SECTION, "diode", () -> KineticBlocks.DIODE_BLOCK.get().asItem());
+        registerSectionItem(SIMULATED_CREATIVE_SECTION, "conjunctor", () -> KineticBlocks.CONJUNCTOR_BLOCK.get().asItem());
+        registerSectionItem(SIMULATED_CREATIVE_SECTION, "inverter", () -> KineticBlocks.INVERTER_BLOCK.get().asItem());
+        registerSectionItem(SIMULATED_CREATIVE_SECTION, "crossroad", () -> KineticBlocks.CROSSROAD_BLOCK.get().asItem());
 //        registerSectionItem(SIMULATED_CREATIVE_SECTION, "creative_honey_glue", () -> ModItems.CREATIVE_HONEY_GLUE.get());
 
         registerSectionItem(AERONAUTICS_CREATIVE_SECTION, "copycat_wing", () -> KineticBlocks.COPYCAT_WING.get().asItem());

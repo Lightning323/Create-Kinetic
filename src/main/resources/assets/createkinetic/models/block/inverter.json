@@ -1,0 +1,61 @@
+{
+  "parent": "minecraft:block/block",
+  "render_type": "minecraft:cutout",
+  "ambientocclusion": false,
+  "textures": {
+    "top": "createkinetic:block/inverter",
+    "torch": "minecraft:block/redstone_torch",
+    "particle": "createkinetic:block/inverter"
+  },
+  "elements": [
+    {
+      "from": [0, 0, 0],
+      "to": [16, 2, 16],
+      "faces": {
+        "north": {
+          "uv": [0, 2, 16, 0],
+          "texture": "#top",
+          "cullface": "north"
+        },
+        "east": { "uv": [0, 2, 16, 0], "texture": "#top", "cullface": "east" },
+        "south": {
+          "uv": [0, 2, 16, 0],
+          "texture": "#top",
+          "cullface": "south"
+        },
+        "west": { "uv": [0, 2, 16, 0], "texture": "#top", "cullface": "west" },
+        "up": { "uv": [0, 0, 16, 16], "texture": "#top" },
+        "down": { "uv": [0, 0, 16, 16], "texture": "#top", "cullface": "down" }
+      }
+    },
+    {
+      "name": "Front Torch",
+      "from": [6, 2, 1],
+      "to": [10, 8, 3],
+      "rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 7]},
+      "faces": {
+        "north": {"uv": [6, 5, 10, 11], "texture": "#torch"},
+        "south": {"uv": [6, 5, 10, 11], "texture": "#torch"}
+      }
+    },
+    {
+      "name": "Front Torch",
+      "from": [7, 2, 0],
+      "to": [9, 8, 4],
+      "rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 7]},
+      "faces": {
+        "east": {"uv": [6, 5, 10, 11], "texture": "#torch"},
+        "west": {"uv": [6, 5, 10, 11], "texture": "#torch"}
+      }
+    },
+    {
+      "name": "Front Torch Top",
+      "from": [7, 6, 1],
+      "to": [9, 7, 3],
+      "rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 7]},
+      "faces": {
+        "up": {"uv": [7, 6, 9, 8], "texture": "#torch"}
+      }
+    }
+  ]
+}

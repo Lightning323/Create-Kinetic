@@ -2,6 +2,14 @@
 ------------------------
 
 # Credit
+
+## https://github.com/SiliconCarbideCube/create-redstone-additions
+```
+Portions of the redstone components (Diode, Conjunctor, Inverter, Crossroad) are
+derived from Create: Redstone Additions / Limilium by Slimik42, ported by
+SiliconCarbideCube, and are licensed under the GNU Affero General Public License v3.0.
+```
+
 ## https://github.com/Propulsion-Team/create-propulsion-simulated
 ```
   MIT License
