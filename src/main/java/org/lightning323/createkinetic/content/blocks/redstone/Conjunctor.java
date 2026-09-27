@@ -113,6 +113,9 @@ public class Conjunctor extends DiodeBlock {
     public void setPlacedBy(Level level, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
     }
 
+    //So the tick overrides (Diode.java:113, Inverter.java:127, Conjunctor.java:117, Crossroad.java:150) are unreachable dead code,
+    // and refreshOutput is only reachable from neighborChanged/checkTickOnNeighbor — both block-update callbacks.
+    // In steady state the gate logic runs zero times per tick. The only timer-driven code is animateTick, which is client-only particle spawning.
     @Override
     protected void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         refreshOutput(level, pos, state);
