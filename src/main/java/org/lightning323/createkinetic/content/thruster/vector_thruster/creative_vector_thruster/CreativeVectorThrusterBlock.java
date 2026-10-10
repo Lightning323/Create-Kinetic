@@ -1,0 +1,74 @@
+package org.lightning323.createkinetic.content.thruster.vector_thruster.creative_vector_thruster;
+
+import com.mojang.serialization.MapCodec;
+import com.simibubi.create.content.equipment.wrench.IWrenchable;
+import com.simibubi.create.foundation.blockEntity.SmartBlockEntityTicker;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.lightning323.createkinetic.content.thruster.AbstractThrusterBlock;
+import org.lightning323.createkinetic.content.thruster.AbstractThrusterBlockEntity;
+import org.lightning323.createkinetic.content.thruster.ThrusterShapes;
+import org.lightning323.createkinetic.content.thruster.vector_thruster.ion_vector_thruster.IonVectorThrusterBlock;
+import org.lightning323.createkinetic.registries.KineticBlockEntities;
+
+public class CreativeVectorThrusterBlock extends AbstractThrusterBlock implements IWrenchable {
+    public static final MapCodec<CreativeVectorThrusterBlock> CODEC = simpleCodec(CreativeVectorThrusterBlock::new);
+
+    public CreativeVectorThrusterBlock(Properties properties) {
+        super(properties);
+    }
+
+    @Override
+    protected MapCodec<? extends net.minecraft.world.level.block.DirectionalBlock> codec() {
+        return CODEC;
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public Class<AbstractThrusterBlockEntity> getBlockEntityClass() {
+        return (Class<AbstractThrusterBlockEntity>) (Object) CreativeVectorThrusterBlockEntity.class;
+    }
+
+    @Override
+    public BlockEntityType<? extends AbstractThrusterBlockEntity> getBlockEntityType() {
+        return KineticBlockEntities.CREATIVE_VECTOR_THRUSTER_BLOCK_ENTITY.get();
+    }
+
+    @Override
+    public BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
+        return new CreativeVectorThrusterBlockEntity(pos, state);
+    }
+
+    @Override
+    public InteractionResult onWrenched(BlockState state, UseOnContext context) {
+        if (!context.getLevel().isClientSide) {
+            BlockEntity be = context.getLevel().getBlockEntity(context.getClickedPos());
+            if (be instanceof CreativeVectorThrusterBlockEntity creativeVector) {
+                creativeVector.cyclePlumeType();
+                IWrenchable.playRotateSound(context.getLevel(), context.getClickedPos());
+            }
+        }
+        return InteractionResult.SUCCESS;
+    }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level level, @NotNull BlockState state, @NotNull BlockEntityType<T> type) {
+        if (type == KineticBlockEntities.CREATIVE_VECTOR_THRUSTER_BLOCK_ENTITY.get()) {
+            return new SmartBlockEntityTicker<>();
+        }
+        return null;
+    }
+}

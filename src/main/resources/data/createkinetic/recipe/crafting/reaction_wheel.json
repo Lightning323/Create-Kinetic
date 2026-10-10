@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "M": {
+      "item": "simulated:redstone_magnet"
+    },
+    "G": {
+      "item": "simulated:gimbal_sensor"
+    },
+    "F": {
+      "item": "create:flywheel"
+    },
+    "S": {
+      "item": "create:shaft"
+    }
+  },
+  "pattern": [
+    " F ",
+    "MGM",
+    " S "
+  ],
+  "result": {
+    "count": 1,
+    "id": "createkinetic:reaction_wheel"
+  }
+}

@@ -1,0 +1,25 @@
+{
+	"format_version": "1.21.1",
+	"credit": "Made with Blockbench",
+	"texture_size": [64, 64],
+	"textures": {
+		"0": "createkinetic:block/vector_thruster",
+		"particle": "createkinetic:block/vector_thruster"
+	},
+	"elements": [
+		{
+			"name": "flap",
+			"from": [3, 3, 11.9],
+			"to": [3, 13, 18.9],
+			"rotation": {"angle": 0, "axis": "y", "origin": [3, 8, 12]},
+			"faces": {
+				"north": {"uv": [0, 0, 2.5, 0], "rotation": 90, "texture": "#0"},
+				"east": {"uv": [5.25, 8, 7.75, 9.75], "rotation": 270, "texture": "#0"},
+				"south": {"uv": [0, 0, 2.5, 0], "rotation": 270, "texture": "#0"},
+				"west": {"uv": [5.25, 9.75, 7.75, 8], "rotation": 270, "texture": "#0"},
+				"up": {"uv": [0, 0, 1.75, 0], "rotation": 270, "texture": "#0"},
+				"down": {"uv": [0, 0, 1.75, 0], "rotation": 270, "texture": "#0"}
+			}
+		}
+	]
+}

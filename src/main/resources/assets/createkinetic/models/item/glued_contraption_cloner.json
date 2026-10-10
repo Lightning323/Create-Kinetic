@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "createkinetic:item/glued_contraption_cloner"
+  }
+}

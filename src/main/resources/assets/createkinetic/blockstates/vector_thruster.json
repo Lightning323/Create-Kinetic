@@ -1,0 +1,27 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "createkinetic:block/vector_thruster"
+    },
+    "facing=east": {
+      "model": "createkinetic:block/vector_thruster",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "createkinetic:block/vector_thruster",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "createkinetic:block/vector_thruster",
+      "y": 270
+    },
+    "facing=up": {
+      "model": "createkinetic:block/vector_thruster",
+      "x": 270
+    },
+    "facing=down": {
+      "model": "createkinetic:block/vector_thruster",
+      "x": 90
+    }
+  }
+}

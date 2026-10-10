@@ -2,9 +2,9 @@
 	"format_version": "1.9.0",
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "createkinetic:item/createkinetic_wrench_texture",
-		"1": "createkinetic:item/createkinetic_wrench",
-		"particle": "createkinetic:item/createkinetic_wrench_texture"
+		"0": "createkinetic:item/tracks_wrench_texture",
+		"1": "createkinetic:item/tracks_wrench",
+		"particle": "createkinetic:item/tracks_wrench_texture"
 	},
 	"elements": [
 		{

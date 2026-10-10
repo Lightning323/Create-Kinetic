@@ -1,0 +1,8 @@
+{
+	"render_type": "minecraft:cutout",
+	"parent": "createkinetic:block/redstone_converter/block",
+	"textures": {
+		"1": "createkinetic:block/redstone_converter_on",
+		"particle": "createkinetic:block/redstone_converter_on"
+	}
+}

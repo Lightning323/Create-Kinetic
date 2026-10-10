@@ -1,6 +1,6 @@
-//package org.lightning323.createkinetic.compat.drivebywire;
+package org.lightning323.createkinetic.compat.drivebywire;//package org.lightning323.createkinetic.compat.drivebywire;
 //
-//import org.lightning323.createkinetic.content.joystick.JoystickDirection;
+//import org.lightning323.createkinetic.content.blocks.joystick.JoystickDirection;
 //import java.util.Arrays;
 //import java.util.List;
 //import java.util.Locale;

@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "BIB",
+    "SPS",
+    "SCS"
+  ],
+  "key": {
+    "B": {
+      "item": "create:brass_sheet"
+    },
+    "I": {
+      "item": "simulated:redstone_inductor"
+    },
+    "S": {
+      "item": "create:sturdy_sheet"
+    },
+    "P": {
+      "item": "create:precision_mechanism"
+    },
+    "C": {
+      "item": "create:chute"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "createkinetic:ion_thruster"
+  }
+}

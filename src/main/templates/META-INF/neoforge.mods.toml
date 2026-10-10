@@ -25,11 +25,11 @@ displayName = "${mod_name}" #mandatory
 # A URL for the "homepage" for this mod, displayed in the mod UI
 #displayURL="https://change.me.to.your.mods.homepage.example.invalid/" #optional
 # A file name (in the root of the mod JAR) containing a logo for display
-#logoFile="createkinetic.png" #optional
 # A text field displayed in the mod UI
 #credits="" #optional
 # A text field displayed in the mod UI
 authors = "${mod_authors}" #optional
+logoFile="icon.png"
 
 # The description text for the mod (multi line!) (#mandatory)
 description = '''${mod_description}'''
@@ -46,7 +46,35 @@ config = "${mod_id}.mixins.json"
 # The coremods config file path is not configurable and is always loaded from META-INF/coremods.json
 
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
-[[dependencies."${mod_id}"]] #optional
+#[[dependencies."${mod_id}"]]
+#modId = "create"
+#type = "required"
+#versionRange = "[6.0.6,)"
+#ordering = "AFTER"
+#side = "BOTH"
+#
+#[[dependencies."${mod_id}"]]
+#modId = "computercraft"
+#type = "optional"
+#versionRange = "*"
+#ordering = "AFTER"
+#side = "BOTH"
+#
+#[[dependencies."${mod_id}"]]
+#modId = "jei"
+#type = "optional"
+#versionRange = "*"
+#ordering = "AFTER"
+#side = "BOTH"
+#
+#[[dependencies."${mod_id}"]]
+#modId = "sable"
+#type = "required"
+#versionRange = "[${sable_version},)"
+#ordering = "AFTER"
+#side = "BOTH"
+
+
 # the modid of the dependency
 modId = "neoforge" #mandatory
 # The type of the dependency. Can be one of "required", "optional", "incompatible" or "discouraged" (case insensitive).

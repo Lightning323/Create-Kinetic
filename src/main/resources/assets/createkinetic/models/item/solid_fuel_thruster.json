@@ -1,0 +1,9 @@
+{
+  "parent": "createkinetic:block/solid_fuel_thruster",
+  "display": {
+    "gui": {
+      "rotation": [30, 45, 0],
+      "scale": [0.625, 0.625, 0.625]
+    }
+  }
+}

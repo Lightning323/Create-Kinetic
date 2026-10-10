@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "createkinetic:copycat_wing",
+    "createkinetic:copycat_wing_8",
+    "createkinetic:copycat_wing_12",
+    "createkinetic:joystick"
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "parent": "createkinetic:fuel_propulsion",
+  "display": {
+    "icon": {
+      "id": "createkinetic:ion_thruster"
+    },
+    "title": {
+      "translate": "advancement.createkinetic.energy_propulsion.title"
+    },
+    "description": {
+      "translate": "advancement.createkinetic.energy_propulsion.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_ion_thruster": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "createkinetic:ion_thruster"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_ion_thruster"
+    ]
+  ]
+}

@@ -8,18 +8,3 @@ An addon mod for VS2 and Create! Use alongside your other favorite VS2/Create mo
 Contributions are welcome, pull requests should follow the following format
 * Clearly state what you are changing
 * Ensure the code runs and is in working order
-
-## Features
-* Rudders
-* Ship totems
-* Sails (retractable)
-* Anchor
-* Ship helm
-  * New control system similar to redstone links, but with rotational force and better aesthetics for ships!
-<!--
------------------------------------------------------------
-## TODO / notes)
-* 
--->
-
-

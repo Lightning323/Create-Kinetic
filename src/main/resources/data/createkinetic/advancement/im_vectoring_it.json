@@ -1,0 +1,37 @@
+{
+  "parent": "createkinetic:energy_propulsion",
+  "display": {
+    "icon": {
+      "id": "createkinetic:vector_thruster"
+    },
+    "title": {
+      "translate": "advancement.createkinetic.im_vectoring_it.title"
+    },
+    "description": {
+      "translate": "advancement.createkinetic.im_vectoring_it.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_vector_thruster": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "createkinetic:vector_thruster"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_vector_thruster"
+    ]
+  ]
+}

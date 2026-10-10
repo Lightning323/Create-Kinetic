@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "createkinetic:thruster",
+    "createkinetic:creative_thruster",
+    "createkinetic:ion_thruster",
+    "createkinetic:vector_thruster",
+    "createkinetic:liquid_vector_thruster",
+    "createkinetic:creative_vector_thruster"
+  ]
+}

@@ -1,0 +1,6 @@
+{
+    "fluid": "northstar:hydrocarbon",
+    "thrust_multiplier": 1.1,
+    "consumption_multiplier": 0.9,
+    "required_mod": "northstar"
+}

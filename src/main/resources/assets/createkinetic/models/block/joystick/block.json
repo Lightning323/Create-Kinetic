@@ -2,24 +2,23 @@
 	"format_version": "1.9.0",
 	"credit": "Made with Blockbench",
 	"render_type": "minecraft:cutout_mipped",
-	"texture_size": [32, 32],
 	"textures": {
 		"0": "createkinetic:block/joystick/brass/block",
-		"1": "createkinetic:block/joystick/brass/antenna",
-		"particle": "createkinetic:block/joystick/brass/antenna"
+		"particle": "createkinetic:block/joystick/brass/block",
+		"redstone_antenna": "create:block/redstone_antenna"
 	},
 	"elements": [
 		{
 			"name": "main",
-			"from": [0, 0, 0],
-			"to": [16, 3, 16],
+			"from": [1, 0, 1],
+			"to": [15, 3, 15],
 			"faces": {
 				"north": {"uv": [8, 0, 16, 1.5], "texture": "#0"},
 				"east": {"uv": [8, 0, 16, 1.5], "texture": "#0"},
 				"south": {"uv": [8, 0, 16, 1.5], "texture": "#0"},
 				"west": {"uv": [8, 0, 16, 1.5], "texture": "#0"},
-				"up": {"uv": [8, 8, 0, 0], "texture": "#0"},
-				"down": {"uv": [16, 8, 8, 16], "texture": "#0"}
+				"up": {"uv": [7, 7, 0, 0], "texture": "#0"},
+				"down": {"uv": [7, 7, 0, 14], "texture": "#0"}
 			}
 		},
 		{
@@ -28,26 +27,54 @@
 			"to": [11, 4, 11],
 			"rotation": {"angle": 0, "axis": "y", "origin": [7, 2, 7]},
 			"faces": {
-				"north": {"uv": [11.5, 1.5, 14.5, 2], "texture": "#0"},
-				"east": {"uv": [14.5, 1.5, 11.5, 2], "texture": "#0"},
-				"south": {"uv": [11.5, 1.5, 14.5, 2], "texture": "#0"},
-				"west": {"uv": [14.5, 1.5, 11.5, 2], "texture": "#0"},
+				"north": {"uv": [8, 5, 11, 4.5], "texture": "#0"},
+				"east": {"uv": [11, 5, 8, 4.5], "texture": "#0"},
+				"south": {"uv": [8, 5, 11, 4.5], "texture": "#0"},
+				"west": {"uv": [11, 5, 8, 4.5], "texture": "#0"},
 				"up": {"uv": [11, 4.5, 8, 1.5], "texture": "#0"},
 				"down": {"uv": [11, 1.5, 8, 4.5], "texture": "#0"}
 			}
 		},
 		{
-			"name": "main",
-			"from": [14, 3, 1],
-			"to": [15, 10, 2],
-			"rotation": {"angle": 0, "axis": "y", "origin": [21, 4, -7]},
+			"name": "AntennaTop",
+			"from": [12, 9, 3],
+			"to": [13, 10, 4],
+			"rotation": {"angle": 0, "axis": "y", "origin": [19, 4, -5]},
 			"faces": {
-				"north": {"uv": [6.85714, 0, 9.14286, 16], "texture": "#1"},
-				"east": {"uv": [6.85714, 0, 9.14286, 16], "texture": "#1"},
-				"south": {"uv": [6.85714, 0, 9.14286, 16], "texture": "#1"},
-				"west": {"uv": [6.85714, 0, 9.14286, 16], "texture": "#1"},
-				"up": {"uv": [6.85714, 0, 9.14286, 2.28571], "texture": "#1"},
-				"down": {"uv": [6.85714, 13.71429, 9.14286, 16], "texture": "#1"}
+				"north": {"uv": [0, 0, 0, 0], "texture": "#redstone_antenna"},
+				"east": {"uv": [0, 0, 0, 0], "texture": "#redstone_antenna"},
+				"south": {"uv": [0, 0, 0, 0], "texture": "#redstone_antenna"},
+				"west": {"uv": [0, 0, 0, 0], "texture": "#redstone_antenna"},
+				"up": {"uv": [1, 1, 2, 2], "rotation": 180, "texture": "#redstone_antenna"},
+				"down": {"uv": [0, 0, 0, 0], "texture": "#redstone_antenna"}
+			}
+		},
+		{
+			"name": "AntennaZ",
+			"from": [12, 1, 2],
+			"to": [13, 11, 5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [19, 4, -5]},
+			"faces": {
+				"north": {"uv": [0, 0, 0, 0], "texture": "#redstone_antenna"},
+				"east": {"uv": [0, 0, 3, 10], "texture": "#redstone_antenna"},
+				"south": {"uv": [0, 0, 0, 0], "texture": "#redstone_antenna"},
+				"west": {"uv": [0, 0, 3, 10], "texture": "#redstone_antenna"},
+				"up": {"uv": [0, 0, 0, 0], "texture": "#redstone_antenna"},
+				"down": {"uv": [0, 0, 0, 0], "texture": "#redstone_antenna"}
+			}
+		},
+		{
+			"name": "AntennaX",
+			"from": [11, 1, 3],
+			"to": [14, 11, 4],
+			"rotation": {"angle": 0, "axis": "y", "origin": [19, 4, -5]},
+			"faces": {
+				"north": {"uv": [0, 0, 3, 10], "texture": "#redstone_antenna"},
+				"east": {"uv": [0, 0, 0, 0], "texture": "#redstone_antenna"},
+				"south": {"uv": [0, 0, 3, 10], "texture": "#redstone_antenna"},
+				"west": {"uv": [0, 0, 0, 0], "texture": "#redstone_antenna"},
+				"up": {"uv": [0, 0, 0, 0], "texture": "#redstone_antenna"},
+				"down": {"uv": [0, 0, 0, 0], "texture": "#redstone_antenna"}
 			}
 		}
 	],
@@ -70,7 +97,21 @@
 			"origin": [0, 0, 0],
 			"scope": 0,
 			"color": 0,
-			"children": [2]
+			"children": []
+		},
+		{
+			"name": "button",
+			"origin": [0, 0, 0],
+			"scope": 0,
+			"color": 0,
+			"children": []
+		},
+		{
+			"name": "Antenna",
+			"origin": [0, 0, 0],
+			"scope": 0,
+			"color": 0,
+			"children": [2, 3, 4]
 		}
 	]
 }

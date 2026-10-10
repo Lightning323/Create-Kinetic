@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PIP",
+    " G "
+  ],
+  "key": {
+    "P": { "item": "create:brass_sheet" },
+    "I": { "item": "createkinetic:ion_thruster" },
+    "G": { "item": "simulated:gimbal_sensor" }
+  },
+  "result": {
+    "id": "createkinetic:vector_thruster",
+    "count": 1
+  }
+}

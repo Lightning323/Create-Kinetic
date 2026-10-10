@@ -1,0 +1,16 @@
+{
+  "replace": false,
+  "values": [
+    "createkinetic:thruster",
+    "createkinetic:creative_thruster",
+    "createkinetic:ion_thruster",
+    "createkinetic:copycat_wing",
+    "createkinetic:copycat_wing_8",
+    "createkinetic:copycat_wing_12",
+    "createkinetic:joystick",
+    "createkinetic:vector_thruster",
+    "createkinetic:creative_vector_thruster",
+    "createkinetic:liquid_vector_thruster",
+    "createkinetic:reaction_wheel"
+  ]
+}

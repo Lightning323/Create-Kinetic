@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "D": {
+      "item": "minecraft:redstone"
+    },
+    "I": {
+      "item": "minecraft:copper_ingot"
+    }
+  },
+  "pattern": [
+    " D ",
+    "DID",
+    "IDI"
+  ],
+  "result": {
+    "count": 1,
+    "id": "createkinetic:crossroad"
+  },
+  "show_notification": true
+}

@@ -3,20 +3,21 @@
   "minVersion": "0.8",
   "package": "org.lightning323.createkinetic.mixin",
   "compatibilityLevel": "JAVA_21",
+  "refmap": "createkinetic.refmap.json",
+  "plugin": "org.lightning323.createkinetic.mixin.plugin.PropulsionMixinPlugin",
   "mixins": [
     "tracks.WheelMountBlockMixin",
-    "tracks.WheelMountOffsetMixin"
+    "tracks.WheelMountOffsetMixin",
+    "linked_typewriter.LinkedTypewriterBlockInvoker",
+    "client.MinecraftMixin"
   ],
   "client": [
+    "tracks.KineticBlockEntityRendererMixin",
     "client.MouseHandlerMixin",
     "client.KeyboardHandlerMixin",
-    "client.GameRendererMixin",
-    "tracks.KineticBlockEntityRendererMixin"
+    "client.GameRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
-  },
-  "overwrites": {
-    "requireAnnotations": true
   }
 }

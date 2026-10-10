@@ -1,0 +1,2 @@
+kubejs.compat.org.lightning323.createkinetic.PropulsionKubeJSPlugin
+kubejs.compat.org.lightning323.createkinetic.PropulsionKubeJSPlugin

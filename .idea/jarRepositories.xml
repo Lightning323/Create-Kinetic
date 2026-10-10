@@ -136,5 +136,10 @@
       <option name="name" value="maven4" />
       <option name="url" value="https://maven.enjarai.dev/mirrors" />
     </remote-repository>
+    <remote-repository>
+      <option name="id" value="JMG's Maven (Journeymap)" />
+      <option name="name" value="JMG's Maven (Journeymap)" />
+      <option name="url" value="https://jm.gserv.me/repository/maven-public/" />
+    </remote-repository>
   </component>
 </project>

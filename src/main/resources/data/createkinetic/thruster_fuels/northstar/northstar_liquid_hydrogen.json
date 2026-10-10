@@ -1,0 +1,6 @@
+{
+    "fluid": "northstar:liquid_hydrogen",
+    "thrust_multiplier": 1.25,
+    "consumption_multiplier": 1.0,
+    "required_mod": "northstar"
+}

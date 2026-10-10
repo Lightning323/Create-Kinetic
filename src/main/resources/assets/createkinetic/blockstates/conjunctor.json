@@ -1,0 +1,64 @@
+{
+  "variants": {
+    "facing=east,power_type=0": {
+      "model": "createkinetic:block/conjunctor_ff",
+      "y": 270
+    },
+    "facing=north,power_type=0": {
+      "model": "createkinetic:block/conjunctor_ff",
+      "y": 180
+    },
+    "facing=south,power_type=0": {
+      "model": "createkinetic:block/conjunctor_ff"
+    },
+    "facing=west,power_type=0": {
+      "model": "createkinetic:block/conjunctor_ff",
+      "y": 90
+    },
+    "facing=east,power_type=1": {
+      "model": "createkinetic:block/conjunctor_fn",
+      "y": 270
+    },
+    "facing=north,power_type=1": {
+      "model": "createkinetic:block/conjunctor_fn",
+      "y": 180
+    },
+    "facing=south,power_type=1": {
+      "model": "createkinetic:block/conjunctor_fn"
+    },
+    "facing=west,power_type=1": {
+      "model": "createkinetic:block/conjunctor_fn",
+      "y": 90
+    },
+    "facing=east,power_type=2": {
+      "model": "createkinetic:block/conjunctor_nf",
+      "y": 270
+    },
+    "facing=north,power_type=2": {
+      "model": "createkinetic:block/conjunctor_nf",
+      "y": 180
+    },
+    "facing=south,power_type=2": {
+      "model": "createkinetic:block/conjunctor_nf"
+    },
+    "facing=west,power_type=2": {
+      "model": "createkinetic:block/conjunctor_nf",
+      "y": 90
+    },
+    "facing=east,power_type=3": {
+      "model": "createkinetic:block/conjunctor_nn",
+      "y": 270
+    },
+    "facing=north,power_type=3": {
+      "model": "createkinetic:block/conjunctor_nn",
+      "y": 180
+    },
+    "facing=south,power_type=3": {
+      "model": "createkinetic:block/conjunctor_nn"
+    },
+    "facing=west,power_type=3": {
+      "model": "createkinetic:block/conjunctor_nn",
+      "y": 90
+    }
+  }
+}

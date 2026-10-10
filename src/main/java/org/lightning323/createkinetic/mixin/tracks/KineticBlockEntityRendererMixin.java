@@ -32,21 +32,24 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(value={KineticBlockEntityRenderer.class})
+import static org.lightning323.createkinetic.CreateKinetic.trackHiddenTag;
+
+@Mixin(value = {KineticBlockEntityRenderer.class})
 public abstract class KineticBlockEntityRendererMixin {
-    @Inject(method={"renderRotatingBuffer(Lcom/simibubi/create/content/kinetics/base/KineticBlockEntity;Lnet/createmod/catnip/render/SuperByteBuffer;Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;I)V"}, at={@At(value="HEAD")}, cancellable=true, require=0)
-    private static void tracks$skipHiddenWheelMountShaft(KineticBlockEntity be, SuperByteBuffer superByteBuffer, PoseStack poseStack, VertexConsumer vertexConsumer, int light, CallbackInfo ci) {
+    @Inject(method = {"renderRotatingBuffer(Lcom/simibubi/create/content/kinetics/base/KineticBlockEntity;Lnet/createmod/catnip/render/SuperByteBuffer;Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;I)V"}, at = {@At(value = "HEAD")}, cancellable = true, require = 0)
+    private static void kinetic$skipHiddenWheelMountShaft(KineticBlockEntity be, SuperByteBuffer superByteBuffer, PoseStack poseStack, VertexConsumer vertexConsumer, int light, CallbackInfo ci) {
         WheelMountBlockEntity wheelMount;
-        if (be instanceof WheelMountBlockEntity && KineticBlockEntityRendererMixin.tracks$isMountHidden((wheelMount = (WheelMountBlockEntity)be).getBlockState())) {
+        if (be instanceof WheelMountBlockEntity && KineticBlockEntityRendererMixin.kinetic$isMountHidden((wheelMount = (WheelMountBlockEntity) be).getBlockState())) {
             ci.cancel();
         }
     }
 
-    private static boolean tracks$isMountHidden(BlockState state) {
+    private static boolean kinetic$isMountHidden(BlockState state) {
         for (Property property : state.getProperties()) {
             BooleanProperty booleanProperty;
-            if (!(property instanceof BooleanProperty) || !"tracks_hidden".equals((booleanProperty = (BooleanProperty)property).getName())) continue;
-            return (Boolean)state.getValue((Property)booleanProperty);
+            if (!(property instanceof BooleanProperty) || !trackHiddenTag.equals((booleanProperty = (BooleanProperty) property).getName()))
+                continue;
+            return (Boolean) state.getValue((Property) booleanProperty);
         }
         return false;
     }

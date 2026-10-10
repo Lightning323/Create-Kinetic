@@ -1,0 +1,244 @@
+{
+  "variants": {
+    "facing=east,power=0": {
+      "model": "createkinetic:block/base_diode",
+      "y": 270
+    },
+    "facing=north,power=0": {
+      "model": "createkinetic:block/base_diode",
+      "y": 180
+    },
+    "facing=south,power=0": {
+      "model": "createkinetic:block/base_diode"
+    },
+    "facing=west,power=0": {
+      "model": "createkinetic:block/base_diode",
+      "y": 90
+    },
+    "facing=east,power=1": {
+      "model": "createkinetic:block/base_diode_on",
+      "y": 270
+    },
+    "facing=north,power=1": {
+      "model": "createkinetic:block/base_diode_on",
+      "y": 180
+    },
+    "facing=south,power=1": {
+      "model": "createkinetic:block/base_diode_on"
+    },
+    "facing=west,power=1": {
+      "model": "createkinetic:block/base_diode_on",
+      "y": 90
+    },
+    "facing=east,power=2": {
+      "model": "createkinetic:block/base_diode_on",
+      "y": 270
+    },
+    "facing=north,power=2": {
+      "model": "createkinetic:block/base_diode_on",
+      "y": 180
+    },
+    "facing=south,power=2": {
+      "model": "createkinetic:block/base_diode_on"
+    },
+    "facing=west,power=2": {
+      "model": "createkinetic:block/base_diode_on",
+      "y": 90
+    },
+    "facing=east,power=3": {
+      "model": "createkinetic:block/base_diode_on",
+      "y": 270
+    },
+    "facing=north,power=3": {
+      "model": "createkinetic:block/base_diode_on",
+      "y": 180
+    },
+    "facing=south,power=3": {
+      "model": "createkinetic:block/base_diode_on"
+    },
+    "facing=west,power=3": {
+      "model": "createkinetic:block/base_diode_on",
+      "y": 90
+    },
+    "facing=east,power=4": {
+      "model": "createkinetic:block/base_diode_on",
+      "y": 270
+    },
+    "facing=north,power=4": {
+      "model": "createkinetic:block/base_diode_on",
+      "y": 180
+    },
+    "facing=south,power=4": {
+      "model": "createkinetic:block/base_diode_on"
+    },
+    "facing=west,power=4": {
+      "model": "createkinetic:block/base_diode_on",
+      "y": 90
+    },
+    "facing=east,power=5": {
+      "model": "createkinetic:block/base_diode_on",
+      "y": 270
+    },
+    "facing=north,power=5": {
+      "model": "createkinetic:block/base_diode_on",
+      "y": 180
+    },
+    "facing=south,power=5": {
+      "model": "createkinetic:block/base_diode_on"
+    },
+    "facing=west,power=5": {
+      "model": "createkinetic:block/base_diode_on",
+      "y": 90
+    },
+    "facing=east,power=6": {
+      "model": "createkinetic:block/base_diode_on",
+      "y": 270
+    },
+    "facing=north,power=6": {
+      "model": "createkinetic:block/base_diode_on",
+      "y": 180
+    },
+    "facing=south,power=6": {
+      "model": "createkinetic:block/base_diode_on"
+    },
+    "facing=west,power=6": {
+      "model": "createkinetic:block/base_diode_on",
+      "y": 90
+    },
+    "facing=east,power=7": {
+      "model": "createkinetic:block/base_diode_on",
+      "y": 270
+    },
+    "facing=north,power=7": {
+      "model": "createkinetic:block/base_diode_on",
+      "y": 180
+    },
+    "facing=south,power=7": {
+      "model": "createkinetic:block/base_diode_on"
+    },
+    "facing=west,power=7": {
+      "model": "createkinetic:block/base_diode_on",
+      "y": 90
+    },
+    "facing=east,power=8": {
+      "model": "createkinetic:block/base_diode_on",
+      "y": 270
+    },
+    "facing=north,power=8": {
+      "model": "createkinetic:block/base_diode_on",
+      "y": 180
+    },
+    "facing=south,power=8": {
+      "model": "createkinetic:block/base_diode_on"
+    },
+    "facing=west,power=8": {
+      "model": "createkinetic:block/base_diode_on",
+      "y": 90
+    },
+    "facing=east,power=9": {
+      "model": "createkinetic:block/base_diode_on",
+      "y": 270
+    },
+    "facing=north,power=9": {
+      "model": "createkinetic:block/base_diode_on",
+      "y": 180
+    },
+    "facing=south,power=9": {
+      "model": "createkinetic:block/base_diode_on"
+    },
+    "facing=west,power=9": {
+      "model": "createkinetic:block/base_diode_on",
+      "y": 90
+    },
+    "facing=east,power=10": {
+      "model": "createkinetic:block/base_diode_on",
+      "y": 270
+    },
+    "facing=north,power=10": {
+      "model": "createkinetic:block/base_diode_on",
+      "y": 180
+    },
+    "facing=south,power=10": {
+      "model": "createkinetic:block/base_diode_on"
+    },
+    "facing=west,power=10": {
+      "model": "createkinetic:block/base_diode_on",
+      "y": 90
+    },
+    "facing=east,power=11": {
+      "model": "createkinetic:block/base_diode_on",
+      "y": 270
+    },
+    "facing=north,power=11": {
+      "model": "createkinetic:block/base_diode_on",
+      "y": 180
+    },
+    "facing=south,power=11": {
+      "model": "createkinetic:block/base_diode_on"
+    },
+    "facing=west,power=11": {
+      "model": "createkinetic:block/base_diode_on",
+      "y": 90
+    },
+    "facing=east,power=12": {
+      "model": "createkinetic:block/base_diode_on",
+      "y": 270
+    },
+    "facing=north,power=12": {
+      "model": "createkinetic:block/base_diode_on",
+      "y": 180
+    },
+    "facing=south,power=12": {
+      "model": "createkinetic:block/base_diode_on"
+    },
+    "facing=west,power=12": {
+      "model": "createkinetic:block/base_diode_on",
+      "y": 90
+    },
+    "facing=east,power=13": {
+      "model": "createkinetic:block/base_diode_on",
+      "y": 270
+    },
+    "facing=north,power=13": {
+      "model": "createkinetic:block/base_diode_on",
+      "y": 180
+    },
+    "facing=south,power=13": {
+      "model": "createkinetic:block/base_diode_on"
+    },
+    "facing=west,power=13": {
+      "model": "createkinetic:block/base_diode_on",
+      "y": 90
+    },
+    "facing=east,power=14": {
+      "model": "createkinetic:block/base_diode_on",
+      "y": 270
+    },
+    "facing=north,power=14": {
+      "model": "createkinetic:block/base_diode_on",
+      "y": 180
+    },
+    "facing=south,power=14": {
+      "model": "createkinetic:block/base_diode_on"
+    },
+    "facing=west,power=14": {
+      "model": "createkinetic:block/base_diode_on",
+      "y": 90
+    },
+    "facing=east,power=15": {
+      "model": "createkinetic:block/base_diode_on",
+      "y": 270
+    },
+    "facing=north,power=15": {
+      "model": "createkinetic:block/base_diode_on",
+      "y": 180
+    },
+    "facing=south,power=15": {
+      "model": "createkinetic:block/base_diode_on"
+    },
+    "facing=west,power=15": {
+      "model": "createkinetic:block/base_diode_on",
+      "y": 90
+    }
+  }
+}

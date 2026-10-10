@@ -1,7 +1,7 @@
-//package org.lightning323.createkinetic.compat.jei;
+package org.lightning323.createkinetic.compat.jei;//package org.lightning323.createkinetic.compat.jei;
 //
 //import org.lightning323.createkinetic.CreateKinetic;
-//import org.lightning323.createkinetic.content.joystick.JoystickScreen;
+//import org.lightning323.createkinetic.content.blocks.joystick.JoystickScreen;
 //import com.simibubi.create.compat.jei.GhostIngredientHandler;
 //import mezz.jei.api.IModPlugin;
 //import mezz.jei.api.JeiPlugin;
