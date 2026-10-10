@@ -8,13 +8,16 @@
     "D": {
       "item": "minecraft:redstone"
     },
+    "B": {
+      "item": "create:brass_sheet"
+    },
     "I": {
-      "item": "minecraft:copper_ingot"
+      "tag": "c:stones"
     }
   },
   "pattern": [
-    "DDT",
-    "III"
+    "DTD",
+    "IBI"
   ],
   "result": {
     "count": 1,

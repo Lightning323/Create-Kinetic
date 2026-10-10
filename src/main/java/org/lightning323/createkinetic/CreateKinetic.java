@@ -71,12 +71,12 @@ public class CreateKinetic {
 
     public CreateKinetic(IEventBus modBus, ModContainer modContainer) {
         CreateKinetic.setTooltips();
+        getRegistrate().registerEventListeners(modBus);
         if(FMLEnvironment.dist == Dist.CLIENT) {
             KineticClient.init(modBus);
         }
         KineticBlockEntities.register(modBus);
         SableEventPlatform.INSTANCE.onPhysicsTick(KineticEvents::physicsTick);
-        getRegistrate().registerEventListeners(modBus);
         KineticMenuTypes.register();
         modBus.register(KineticPackets.class);
         NeoForge.EVENT_BUS.register(JoystickSessions.class);

@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "T": {
+      "item": "simulated:directional_gearshift"
+    },
+    "D": {
+      "item": "simulated:analog_transmission"
+    },
+    "B": {
+      "item": "minecraft:redstone_torch"
+    }
+  },
+  "pattern": [
+    "T",
+    "D",
+    "B"
+  ],
+  "result": {
+    "count": 1,
+    "id": "createkinetic:analog_gearshift"
+  },
+  "show_notification": true
+}
