@@ -34,6 +34,7 @@ import org.lightning323.createkinetic.KineticRegistrate;
 import org.lightning323.createkinetic.config.KineticConfig;
 import org.lightning323.createkinetic.content.blocks.track.SableTrackBlock;
 import org.lightning323.createkinetic.content.blocks.track.SableTrackRole;
+import org.lightning323.createkinetic.content.blocks.analog_gearshift.AnalogGearshiftBlock;
 import org.lightning323.createkinetic.content.blocks.reaction_wheel.ReactionWheelBlock;
 import org.lightning323.createkinetic.content.items.TrackMountBlockItem;
 import net.minecraft.client.renderer.RenderType;
@@ -104,6 +105,21 @@ public class KineticBlocks {
             .properties((p) -> p.noOcclusion())
             .transform(TagGen.axeOrPickaxe())
             .simpleItem().register();
+
+    public static final BlockEntry<AnalogGearshiftBlock> ANALOG_GEARSHIFT = REGISTRATE
+            .block("analog_gearshift", AnalogGearshiftBlock::new)
+            .initialProperties(SharedProperties::stone)
+            .properties(p -> p.noOcclusion().isRedstoneConductor((state, level, pos) -> false).mapColor(MapColor.PODZOL))
+            .transform(TagGen.axeOrPickaxe())
+            .addLayer(() -> RenderType::cutoutMipped)
+            //We already have the blockstate + model files, so tell registrate not to generate them
+            .blockstate((ctx, prov) -> {
+            })
+            .item()
+            .model((ctx, prov) -> {
+            })
+            .build()
+            .register();
 
     public static final BlockEntry<SableTrackBlock> TRACK_MOUNT = REGISTRATE.block("track_mount",
                     properties -> new SableTrackBlock(properties, SableTrackRole.MOUNT))

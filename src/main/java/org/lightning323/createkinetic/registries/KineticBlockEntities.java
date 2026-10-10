@@ -1,5 +1,6 @@
 package org.lightning323.createkinetic.registries;
 
+import com.simibubi.create.content.kinetics.transmission.SplitShaftVisual;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -8,6 +9,8 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.lightning323.createkinetic.CreateKinetic;
 import org.lightning323.createkinetic.KineticRegistrate;
+import org.lightning323.createkinetic.content.blocks.analog_gearshift.AnalogGearshiftBlockEntity;
+import org.lightning323.createkinetic.content.blocks.analog_gearshift.AnalogGearshiftRenderer;
 import org.lightning323.createkinetic.content.blocks.joystick.JoystickBlockEntity;
 import org.lightning323.createkinetic.content.blocks.joystick.JoystickRenderer;
 import org.lightning323.createkinetic.content.blocks.reaction_wheel.ReactionWheelBlockEntity;
@@ -42,6 +45,13 @@ public class KineticBlockEntities {
     public static final BlockEntityEntry<SableTrackBlockEntity> SABLE_TRACK = REGISTRATE.blockEntity("sable_track", SableTrackBlockEntity::new)
             .validBlocks(KineticBlocks.TRACK_MOUNT)
             .renderer(() -> SableTrackRenderer::new)
+            .register();
+
+    public static final BlockEntityEntry<AnalogGearshiftBlockEntity> ANALOG_GEARSHIFT = REGISTRATE
+            .blockEntity("analog_gearshift", AnalogGearshiftBlockEntity::new)
+            .visual(() -> SplitShaftVisual::new)
+            .renderer(() -> AnalogGearshiftRenderer::new)
+            .validBlocks(KineticBlocks.ANALOG_GEARSHIFT)
             .register();
 
     //------------------------------------------------------------------------------------------------------------------

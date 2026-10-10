@@ -52,9 +52,12 @@ public final class KineticPartialModels {
    public static final PartialModel CREATIVE_THRUSTER_MULTIBLOCK_3X3X3 = partial("creative_thruster_multiblock_3x3x3");
    public static final PartialModel ION_THRUSTER_MULTIBLOCK_2X2X2 = partial("2x2x2_ion_thruster");
    public static final PartialModel ION_THRUSTER_MULTIBLOCK_3X3X3 = partial("3x3x3_ion_thruster");
-   //Transmission
-   public static final PartialModel TRANSMISSION_PLUS = partial("transmission_plus");
-   public static final PartialModel TRANSMISSION_MINUS = partial("transmission_minus");
+//Transmission
+    public static final PartialModel TRANSMISSION_PLUS = partial("transmission_plus");
+    public static final PartialModel TRANSMISSION_MINUS = partial("transmission_minus");
+    //Analog gearshift
+    public static final PartialModel ANALOG_GEARSHIFT_CENTER = block("analog_gearshift/barrel");
+    public static final PartialModel ANALOG_GEARSHIFT_BARREL_SHAFT = block("analog_gearshift/barrel_shaft");
 
 
 
