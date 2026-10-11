@@ -139,7 +139,7 @@ public class KineticBlocks {
             .register();
 
 
-    public static final BlockEntry<BeamLanternBlock> BEAM_LANTERN = REGISTRATE.block("brass_beam_lantern", BeamLanternBlock::new)
+    public static final BlockEntry<BeamLanternBlock> BEAM_LANTERN = REGISTRATE.block("beam_lantern", BeamLanternBlock::new)
             .initialProperties(() -> Blocks.COPPER_BLOCK)
             .properties(p -> p.mapColor(MapColor.GOLD).lightLevel(state -> state.getValue(BeamLanternBlock.LIT) ? 15 : 0).sound(SoundType.COPPER).strength(5.0f, 6.0f))
             .item()

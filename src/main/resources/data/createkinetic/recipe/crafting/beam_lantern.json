@@ -3,22 +3,21 @@
   "category": "misc",
   "key": {
     "B": {
-      "item": "create:brass_ingot"
+      "item": "create:brass_sheet"
     },
     "R": {
       "item": "minecraft:redstone_lamp"
     },
     "C": {
-      "item": "create:copper_casing"
+      "item": "create:industrial_iron_block"
     }
   },
   "pattern": [
-    "BBB",
-    "BRB",
-    " B "
+    "CRC",
+    "CBC"
   ],
   "result": {
     "count": 1,
-    "id": "createkinetic:brass_beam_lantern"
+    "id": "createkinetic:beam_lantern"
   }
 }

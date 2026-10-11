@@ -6,15 +6,15 @@
       "item": "minecraft:redstone"
     },
     "B": {
-      "item": "create:andesite_ingot"
+      "item": "create:andesite_alloy"
     },
     "I": {
       "tag": "c:stones"
     }
   },
   "pattern": [
-    "DDD",
-    "IBI"
+    "DBD",
+    "III"
   ],
   "result": {
     "count": 1,

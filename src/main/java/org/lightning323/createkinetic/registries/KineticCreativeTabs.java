@@ -27,14 +27,17 @@ public class KineticCreativeTabs {
         registerSectionItem(OFFROAD_CREATIVE_SECTION, "small_track_drive_wheel", KineticItems.TRACK_DRIVE_WHEEL::get);
         registerSectionItem(OFFROAD_CREATIVE_SECTION, "track_mount", KineticBlocks.TRACK_MOUNT::asItem);
 
+
+        registerSectionItem(SIMULATED_CREATIVE_SECTION, "conjunctor", () -> KineticBlocks.CONJUNCTOR_BLOCK.get().asItem());
+        registerSectionItem(SIMULATED_CREATIVE_SECTION, "inverter", () -> KineticBlocks.INVERTER_BLOCK.get().asItem());
+        registerSectionItem(SIMULATED_CREATIVE_SECTION, "crossroad", () -> KineticBlocks.CROSSROAD_BLOCK.get().asItem());
+
         registerSectionItem(SIMULATED_CREATIVE_SECTION, "reaction_wheel", () -> KineticBlocks.REACTION_WHEEL.asItem());
         registerSectionItem(SIMULATED_CREATIVE_SECTION, "joystick", () -> KineticBlocks.JOYSTICK.asItem());
         registerSectionItem(SIMULATED_CREATIVE_SECTION, "analog_gearshift", () -> KineticBlocks.ANALOG_GEARSHIFT.asItem());
 
-        registerSectionItem(SIMULATED_CREATIVE_SECTION, "conjunctor", () -> KineticBlocks.CONJUNCTOR_BLOCK.get().asItem());
-        registerSectionItem(SIMULATED_CREATIVE_SECTION, "brass_beam_lantern", () -> KineticBlocks.BEAM_LANTERN.get().asItem());
-        registerSectionItem(SIMULATED_CREATIVE_SECTION, "inverter", () -> KineticBlocks.INVERTER_BLOCK.get().asItem());
-        registerSectionItem(SIMULATED_CREATIVE_SECTION, "crossroad", () -> KineticBlocks.CROSSROAD_BLOCK.get().asItem());
+        registerSectionItem(SIMULATED_CREATIVE_SECTION, "beam_lantern", () -> KineticBlocks.BEAM_LANTERN.get().asItem());
+
 
 //        registerSectionItem(SIMULATED_CREATIVE_SECTION, "creative_honey_glue", () -> ModItems.CREATIVE_HONEY_GLUE.get());
 

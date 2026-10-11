@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "D": {
+      "item": "minecraft:redstone"
+    },
+    "B": {
+      "item": "create:brass_sheet"
+    },
+    "I": {
+      "tag": "c:stones"
+    },
+    "A": {
+      "item": "minecraft:amethyst_shard"
+    }
+  },
+  "pattern": [
+    " A ",
+    "DBD",
+    "III"
+  ],
+  "result": {
+    "count": 1,
+    "id": "createkinetic:conjunctor"
+  },
+  "show_notification": true
+}

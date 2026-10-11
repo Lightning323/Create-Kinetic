@@ -327,5 +327,5 @@
   "message.assemblystick.mover_finalize_failed": "Placement finished, but source cleanup failed.",
   "simulated.simulated_section.propulsion_main": "Kinetic",
   "simulated.simulated_section.kinetic_tools": "Creative Tools",
-  "block.createkinetic.brass_beam_lantern": "Brass Beam Lantern"
+  "block.createkinetic.beam_lantern": "Beam Lantern"
 }
