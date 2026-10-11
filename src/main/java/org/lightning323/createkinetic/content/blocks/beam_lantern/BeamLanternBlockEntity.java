@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BeamLanternBlockEntity extends SmartBlockEntity {
+    // Remember the direction the beam is currently propagating in
+    private Direction lastFacing = null;
     private int targetLit = 0;
     private int chargeTicks = 0;
     private boolean lastPowered = false;
@@ -70,7 +72,16 @@ public class BeamLanternBlockEntity extends SmartBlockEntity {
         }
 
         if (state.getValue(BeamLanternBlock.LIT)) {
+            Direction currentDir = BeamLanternBlock.getFacing(state);
+            // If the direction changed since last tick, clean up the old beam first
+            if (lastFacing != null && !lastFacing.equals(currentDir)) {
+                removeBeam((ServerLevel) level, worldPosition, state);
+            }
             placeBeam((ServerLevel) level, worldPosition, state);
+            lastFacing = currentDir;
+        } else {
+            // Not lit – clear stored direction
+            lastFacing = null;
         }
     }
 

@@ -1,14 +1,28 @@
 {
-	"format_version": "26.3",
+	"format_version": "1.9.0",
 	"credit": "Made with Blockbench",
 	"parent": "minecraft:block/block",
 	"ambientocclusion": false,
 	"textures": {
 		"1": "createkinetic:block/brass_diode_base",
 		"particle": "createkinetic:block/conjunctor_ff",
-		"top": "createkinetic:block/conjunctor_ff"
+		"top": "createkinetic:block/conjunctor_ff",
+		"unlit": "block/redstone_torch_off"
 	},
 	"elements": [
+		{
+			"from": [6, 1, 6],
+			"to": [10, 5, 10],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 1, 0]},
+			"faces": {
+				"north": {"uv": [3, 3, 5, 5], "texture": "#top"},
+				"east": {"uv": [3, 3, 5, 5], "texture": "#top"},
+				"south": {"uv": [3, 3, 5, 5], "texture": "#top"},
+				"west": {"uv": [3, 3, 5, 5], "texture": "#top"},
+				"up": {"uv": [3, 3, 5, 5], "texture": "#top"},
+				"down": {"uv": [0, 0, 0, 0], "texture": "#top"}
+			}
+		},
 		{
 			"from": [0, 0, 0],
 			"to": [16, 2, 16],
@@ -22,16 +36,15 @@
 			}
 		},
 		{
-			"from": [6, 1, 6],
-			"to": [10, 5, 10],
-			"rotation": {"angle": 0, "axis": "y", "origin": [0, 1, 0]},
+			"from": [7, 2, 2],
+			"to": [9, 7, 4],
 			"faces": {
-				"north": {"uv": [3, 3, 5, 5], "texture": "#top"},
-				"east": {"uv": [3, 3, 5, 5], "texture": "#top"},
-				"south": {"uv": [3, 3, 5, 5], "texture": "#top"},
-				"west": {"uv": [3, 3, 5, 5], "texture": "#top"},
-				"up": {"uv": [3, 3, 5, 5], "texture": "#top"},
-				"down": {"uv": [0, 0, 0, 0], "texture": "#top"}
+				"north": {"uv": [7, 6, 9, 11], "texture": "#unlit"},
+				"east": {"uv": [7, 6, 9, 11], "texture": "#unlit"},
+				"south": {"uv": [7, 6, 9, 11], "texture": "#unlit"},
+				"west": {"uv": [7, 6, 9, 11], "texture": "#unlit"},
+				"up": {"uv": [7, 6, 9, 8], "texture": "#unlit"},
+				"down": {"uv": [0, 0, 0, 0], "texture": "#unlit"}
 			}
 		}
 	]

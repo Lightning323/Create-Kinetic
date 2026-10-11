@@ -42,9 +42,15 @@ public class BeamLanternBlock extends Block implements IBE<BeamLanternBlockEntit
         Level level = context.getLevel();
         BlockPos pos = context.getClickedPos();
         if (!level.isClientSide()) {
-            // Update the block state in the world
-            // Flag 3 or 11 updates the client and triggers block rerenders/updates
+            // Cycle the UP property (change orientation)
             level.setBlock(pos, state.cycle(UP), 11);
+            // If the lantern is lit, we need to clean up the old beam and recompute it.
+            if (state.getValue(LIT)) {
+                // Schedule a tick so the block entity can handle cleanup/re‑propagation
+                if (level instanceof ServerLevel serverLevel) {
+                    serverLevel.scheduleTick(pos, this, 1);
+                }
+            }
         }
         return InteractionResult.SUCCESS;
     }
