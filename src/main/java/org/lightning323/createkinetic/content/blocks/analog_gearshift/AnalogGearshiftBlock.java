@@ -5,7 +5,6 @@ import com.simibubi.create.content.kinetics.base.DirectionalAxisKineticBlock;
 import com.simibubi.create.content.kinetics.base.IRotate;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.base.RotatedPillarKineticBlock;
-import com.simibubi.create.content.kinetics.transmission.SplitShaftBlockEntity;
 import com.simibubi.create.foundation.block.IBE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -23,7 +22,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.ticks.TickPriority;
 import org.jetbrains.annotations.Nullable;
 import org.lightning323.createkinetic.registries.KineticBlockEntities;
@@ -39,7 +37,12 @@ public class AnalogGearshiftBlock extends DirectionalAxisKineticBlock implements
 
     @Override
     public BlockState updateAfterWrenched(BlockState newState, UseOnContext context) {
-        return super.updateAfterWrenched(getPoweredState(context.getLevel(), newState, context.getClickedPos()), context);
+        Level level = context.getLevel();
+        BlockPos pos = context.getClickedPos();
+        if (!level.isClientSide) {
+            withBlockEntityDo(level, pos, AnalogGearshiftBlockEntity::updateSignals);
+        }
+        return super.updateAfterWrenched(newState, context);
     }
 
     @Override
@@ -78,49 +81,16 @@ public class AnalogGearshiftBlock extends DirectionalAxisKineticBlock implements
             facing = facing.getOpposite();
         }
 
-        BlockState state = defaultBlockState().setValue(FACING, facing)
-                .setValue(AXIS_ALONG_FIRST_COORDINATE, axisAlongFirst);
-        return getPoweredState(context.getLevel(), state, context.getClickedPos());
+        return defaultBlockState().setValue(FACING, facing)
+                .setValue(AXIS_ALONG_FIRST_COORDINATE, axisAlongFirst)
+                .setValue(LEFT_POWERED, false)
+                .setValue(RIGHT_POWERED, false);
     }
 
     @Override
     public void neighborChanged(BlockState state, Level level, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
         if (!level.isClientSide) {
-            boolean previouslyLeftPowered = state.getValue(LEFT_POWERED);
-            boolean previouslyRightPowered = state.getValue(RIGHT_POWERED);
-            BlockState newState = getPoweredState(level, state, pos);
-            if (previouslyLeftPowered != newState.getValue(LEFT_POWERED) || previouslyRightPowered != newState.getValue(RIGHT_POWERED)) {
-                detachKinetics(level, pos, true);
-                level.setBlock(pos, newState, 2);
-            }
-        }
-    }
-
-    public BlockState getPoweredState(Level level, BlockState state, BlockPos pos) {
-        Direction leftDirection = getLeftDirection(state);
-        Direction rightDirection = getRightDirection(state);
-        int leftSignal = level.getSignal(pos.offset(leftDirection.getNormal()), leftDirection);
-        int rightSignal = level.getSignal(pos.offset(rightDirection.getNormal()), rightDirection);
-        boolean previouslyLeftPowered = state.getValue(LEFT_POWERED);
-        if (previouslyLeftPowered != leftSignal > 0) {
-            state = state.cycle(LEFT_POWERED);
-        }
-
-        boolean previouslyRightPowered = state.getValue(RIGHT_POWERED);
-        if (previouslyRightPowered != rightSignal > 0) {
-            state = state.cycle(RIGHT_POWERED);
-        }
-
-        return state;
-    }
-
-    public void detachKinetics(Level worldIn, BlockPos pos, boolean reAttachNextTick) {
-        BlockEntity be = worldIn.getBlockEntity(pos);
-        if (be instanceof KineticBlockEntity) {
-            RotationPropagator.handleRemoved(worldIn, pos, (KineticBlockEntity) be);
-            if (reAttachNextTick) {
-                worldIn.scheduleTick(pos, this, 1, TickPriority.EXTREMELY_HIGH);
-            }
+            withBlockEntityDo(level, pos, AnalogGearshiftBlockEntity::updateSignals);
         }
     }
 
@@ -144,6 +114,7 @@ public class AnalogGearshiftBlock extends DirectionalAxisKineticBlock implements
 
     @Override
     public void tick(BlockState state, ServerLevel worldIn, BlockPos pos, RandomSource random) {
+        // Re-attach kinetics after signal change detachment
         if (worldIn.getBlockEntity(pos) instanceof KineticBlockEntity kte) {
             RotationPropagator.handleAdded(worldIn, pos, kte);
         }
@@ -153,9 +124,11 @@ public class AnalogGearshiftBlock extends DirectionalAxisKineticBlock implements
     public InteractionResult onWrenched(BlockState state, UseOnContext context) {
         InteractionResult interactionResult = super.onWrenched(state, context);
         if (interactionResult.consumesAction() && !context.getLevel().isClientSide) {
-            detachKinetics(context.getLevel(), context.getClickedPos(), true);
+            withBlockEntityDo(context.getLevel(), context.getClickedPos(), be -> {
+                be.detachKinetics();
+                be.updateSignals();
+            });
         }
-
         return interactionResult;
     }
 }

@@ -1,5 +1,7 @@
 package org.lightning323.createkinetic.content.blocks.analog_gearshift;
 
+import com.simibubi.create.content.kinetics.RotationPropagator;
+import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.transmission.SplitShaftBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -7,6 +9,7 @@ import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.ticks.TickPriority;
 
 public class AnalogGearshiftBlockEntity extends SplitShaftBlockEntity {
     private int leftSignal = 0;
@@ -16,28 +19,45 @@ public class AnalogGearshiftBlockEntity extends SplitShaftBlockEntity {
         super(type, pos, state);
     }
 
-    @Override
-    public void tick() {
-        if (level != null && !level.isClientSide) {
-            BlockState state = getBlockState();
-            int newLeft = getAnalogSignal(state, true);
-            int newRight = getAnalogSignal(state, false);
-            if (newLeft != leftSignal || newRight != rightSignal) {
-                detachKinetics();
-                removeSource();
-                leftSignal = newLeft;
-                rightSignal = newRight;
-                setChanged();
-                BlockState newState = state.setValue(AnalogGearshiftBlock.LEFT_POWERED, newLeft > 0)
-                        .setValue(AnalogGearshiftBlock.RIGHT_POWERED, newRight > 0);
-                if (newState != state) {
-                    level.setBlockAndUpdate(worldPosition, newState);
-                }
-                sendData();
-                attachKinetics();
+    // No tick() method! Fully event-driven.
+
+    /**
+     * Called by the Block when a neighbor changes. Evaluates exact 0-15 signals.
+     */
+    public void updateSignals() {
+        if (level == null || level.isClientSide) {
+            return;
+        }
+
+        BlockState state = getBlockState();
+        int newLeft = getAnalogSignal(state, true);
+        int newRight = getAnalogSignal(state, false);
+
+        if (newLeft != leftSignal || newRight != rightSignal) {
+            // Detach kinetics before changing rotation modifiers
+            detachKinetics();
+            removeSource();
+
+            leftSignal = newLeft;
+            rightSignal = newRight;
+            setChanged();
+
+            // Update blockstate booleans for client rendering/visuals
+            BlockState newState = state.setValue(AnalogGearshiftBlock.LEFT_POWERED, leftSignal > 0)
+                    .setValue(AnalogGearshiftBlock.RIGHT_POWERED, rightSignal > 0);
+
+            if (newState != state) {
+                level.setBlock(worldPosition, newState, 2); // Flag 2: Update clients without neighbor spam
+            }
+
+            sendData();
+
+            // Re-attach kinetics next tick via RotationPropagator
+            if (level instanceof net.minecraft.server.level.ServerLevel serverLevel) {
+                RotationPropagator.handleRemoved(serverLevel, worldPosition, this);
+                serverLevel.scheduleTick(worldPosition, getBlockState().getBlock(), 1, TickPriority.EXTREMELY_HIGH);
             }
         }
-        super.tick();
     }
 
     @Override
@@ -46,6 +66,7 @@ public class AnalogGearshiftBlockEntity extends SplitShaftBlockEntity {
             if (face == getSourceFacing()) {
                 return 1.0F;
             }
+            // Full analog calculation using exact 0-15 signal strength
             return (leftSignal - rightSignal) / 15.0F;
         }
         return 0.0F;
@@ -56,6 +77,12 @@ public class AnalogGearshiftBlockEntity extends SplitShaftBlockEntity {
                 ? AnalogGearshiftBlock.getLeftDirection(state)
                 : AnalogGearshiftBlock.getRightDirection(state);
         return level.getSignal(worldPosition.offset(side.getNormal()), side);
+    }
+
+    public void detachKinetics() {
+        if (level instanceof net.minecraft.server.level.ServerLevel serverLevel) {
+            RotationPropagator.handleRemoved(serverLevel, worldPosition, this);
+        }
     }
 
     @Override
