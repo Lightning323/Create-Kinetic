@@ -50,7 +50,7 @@ import org.lightning323.createkinetic.content.wing.CopycatWingBlock;
 import org.lightning323.createkinetic.content.wing.CopycatWingItem;
 import org.lightning323.createkinetic.content.blocks.redstone.Conjunctor;
 import org.lightning323.createkinetic.content.blocks.redstone.Crossroad;
-import org.lightning323.createkinetic.content.blocks.redstone.Diode;
+//import org.lightning323.createkinetic.content.blocks.redstone.Diode;
 import org.lightning323.createkinetic.content.blocks.redstone.Inverter;
 
 public class KineticBlocks {
@@ -64,10 +64,6 @@ public class KineticBlocks {
         () -> new CopycatWingBlock(Block.Properties.of().strength(1.5f, 2.0f), 8));
     public static final DeferredBlock<CopycatWingBlock> COPYCAT_WING = BLOCKS.register("copycat_wing",
         () -> new CopycatWingBlock(Block.Properties.of().strength(1.5f, 2.0f), 4));
-
-//    public static final DeferredBlock<WingBlock> WING_BLOCK = BLOCKS.register("wing",
-//        () -> new WingBlock(Block.Properties.of().mapColor(MapColor.COLOR_LIGHT_GRAY).sound(SoundType.COPPER)
-//            .strength(1.5f, 2.0f).noOcclusion()));
 
     public static final DeferredBlock<CreativeVectorThrusterBlock> CREATIVE_VECTOR_THRUSTER_BLOCK = BLOCKS.register("creative_vector_thruster",
             () -> new CreativeVectorThrusterBlock(Block.Properties.of().mapColor(MapColor.METAL)
@@ -88,7 +84,7 @@ public class KineticBlocks {
             () -> new ThrusterBlock(Block.Properties.of().mapColor(MapColor.METAL).requiresCorrectToolForDrops()
                     .sound(SoundType.METAL).strength(5.5f, 4.0f).noOcclusion()));
 
-    public static final DeferredBlock<Diode> DIODE_BLOCK = BLOCKS.register("diode", Diode::create);
+//    public static final DeferredBlock<Diode> DIODE_BLOCK = BLOCKS.register("diode", Diode::create);
     public static final DeferredBlock<Conjunctor> CONJUNCTOR_BLOCK = BLOCKS.register("conjunctor", Conjunctor::create);
     public static final DeferredBlock<Inverter> INVERTER_BLOCK = BLOCKS.register("inverter", Inverter::create);
     public static final DeferredBlock<Crossroad> CROSSROAD_BLOCK = BLOCKS.register("crossroad", Crossroad::create);
@@ -148,12 +144,11 @@ public class KineticBlocks {
         registerBlockItem("liquid_vector_thruster", KineticBlocks.LIQUID_VECTOR_THRUSTER_BLOCK, new BlockItem.Properties().rarity(Rarity.UNCOMMON));
         registerBlockItem("creative_vector_thruster", KineticBlocks.CREATIVE_VECTOR_THRUSTER_BLOCK, new BlockItem.Properties().rarity(Rarity.EPIC));
 
-        registerDefaultBlockItem("diode", KineticBlocks.DIODE_BLOCK);
+//        registerDefaultBlockItem("diode", KineticBlocks.DIODE_BLOCK);
         registerDefaultBlockItem("conjunctor", KineticBlocks.CONJUNCTOR_BLOCK);
         registerDefaultBlockItem("inverter", KineticBlocks.INVERTER_BLOCK);
         registerDefaultBlockItem("crossroad", KineticBlocks.CROSSROAD_BLOCK);
 
-//        registerDefaultBlockItem("wing", KineticBlocks.WING_BLOCK);
         KineticBlocks.BLOCK_ITEMS.register("copycat_wing", () -> new CopycatWingItem(KineticBlocks.COPYCAT_WING.get(), new BlockItem.Properties()));
         KineticBlocks.BLOCK_ITEMS.register("copycat_wing_8", () -> new CopycatWingItem(KineticBlocks.COPYCAT_WING_8.get(), new BlockItem.Properties()));
         KineticBlocks.BLOCK_ITEMS.register("copycat_wing_12", () -> new CopycatWingItem(KineticBlocks.COPYCAT_WING_12.get(), new BlockItem.Properties()));
