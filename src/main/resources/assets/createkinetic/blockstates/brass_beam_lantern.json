@@ -1,0 +1,20 @@
+{
+  "variants": {
+    "facing=down,lit=false": {
+      "model": "createkinetic:block/brass_beam_lantern_down",
+      "x": 0
+    },
+    "facing=down,lit=true": {
+      "model": "createkinetic:block/brass_beam_lantern_down_on",
+      "x": 0
+    },
+    "facing=up,lit=false": {
+      "model": "createkinetic:block/brass_beam_lantern_up",
+      "x": 180
+    },
+    "facing=up,lit=true": {
+      "model": "createkinetic:block/brass_beam_lantern_up_on",
+      "x": 180
+    }
+  }
+}

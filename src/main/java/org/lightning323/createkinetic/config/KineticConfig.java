@@ -76,6 +76,9 @@ public class KineticConfig {
     private static final ModConfigSpec.BooleanValue JOYSTICK_HUD_SHOW_BOX;
     private static final ModConfigSpec.BooleanValue JOYSTICK_HUD_SHOW_LINE;
 
+    private static final ModConfigSpec.IntValue BEAM_LANTERN_MAX_PROPAGATION_LENGTH;
+    private static final ModConfigSpec.IntValue BEAM_LANTERN_CHARGE_UP_TICKS;
+
     private static volatile double gyroscopeOmegaTarget;
     private static volatile double gyroscopeDampingRatio;
     private static volatile double gyroscopeAuthorityPerUnit;
@@ -89,6 +92,8 @@ public class KineticConfig {
     private static volatile boolean joystickShowHudBox;
     private static volatile int joystickKeyRepeatDelayMs;
     private static volatile int joystickSpringBackDelayMs;
+    private static volatile int beamLanternMaxPropagationLength;
+    private static volatile int beamLanternChargeUpTicks;
 
 
     public static double gyroscopeOmegaTarget() {
@@ -144,6 +149,16 @@ public class KineticConfig {
         return joystickShowHudLine;
     }
 
+
+    public static int beamLanternMaxPropagationLength() {
+        return beamLanternMaxPropagationLength;
+    }
+
+    public static int beamLanternChargeUpTicks() {
+        return beamLanternChargeUpTicks;
+    }
+
+
     @SubscribeEvent
     static void onLoad(ModConfigEvent event) {
         if (event instanceof ModConfigEvent.Loading) {
@@ -157,6 +172,8 @@ public class KineticConfig {
                 gyroscopeReferenceRpm = (Double) GYROSCOPE_REFERENCE_RPM.get();
                 gyroscopeStressImpact = (Double) GYROSCOPE_STRESS_IMPACT.get();
                 joystickPixelsPerStep = (Double) JOYSTICK_PIXELS_PER_STEP.get();
+                beamLanternMaxPropagationLength = (Integer) BEAM_LANTERN_MAX_PROPAGATION_LENGTH.get();
+                beamLanternChargeUpTicks = (Integer) BEAM_LANTERN_CHARGE_UP_TICKS.get();
 
             } else if (spec == CLIENT_SPEC) {
                 joystickKeyRepeatDelayMs = (Integer) JOYSTICK_KEY_REPEAT_DELAY_MS.get();
@@ -397,6 +414,10 @@ public class KineticConfig {
             THRUSTER_DYE_COLORS.put("minecraft:" + e[0] + "_dye",
                     COMMON_BUILDER.define(e[0], e[1]));
         }
+
+        COMMON_BUILDER.push("beamLantern");
+        BEAM_LANTERN_MAX_PROPAGATION_LENGTH = COMMON_BUILDER.comment("Maximum propagation length of the beam lantern in blocks.").defineInRange("maxPropagationLength", 256, 1, 1024);
+        BEAM_LANTERN_CHARGE_UP_TICKS = COMMON_BUILDER.comment("Number of ticks for the beam lantern to charge up when toggled.").defineInRange("chargeUpTicks", 4, 0, 100);
         COMMON_BUILDER.pop();
 
         PropulsionDefaultStress.INSTANCE.registerAll(COMMON_BUILDER);

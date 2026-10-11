@@ -246,12 +246,10 @@
   "createkinetic.ponder.shared.thruster_3x3.back_layer_inputs": "Feed the back layer input manifold for full operation.",
   "createkinetic.ponder.shared.thruster_3x3.valid_fuel_now": "Insert valid thruster fuel into the rear-fed manifold.",
   "createkinetic.ponder.shared.thruster_3x3.power_thruster": "Apply redstone to the thruster and the whole multiblock works.",
-
   "createkinetic.ponder.ponder_vector_thruster_normal.header": "Ion Vector Thruster",
   "createkinetic.ponder.ponder_creative_vector_thruster.header": "Creative Vector Thruster",
   "createkinetic.ponder.ponder_liquid_vector_thruster.header": "Vector Thruster",
   "createkinetic.ponder.shared.vector_thruster_fe.header": "Powering a Vector Thruster",
-
   "createkinetic.ponder.shared.vector_thruster_fe.intro.main": "Ion Vector Thruster uses Forge energy to produce thrust.",
   "createkinetic.ponder.shared.vector_thruster_fe.intro.fe": "Forge energy is stored in the thruster's internal energy storage.",
   "createkinetic.ponder.shared.vector_thruster_fe.intro.fe_storage": "Currently %s FE is able to be stored in the thruster's internal storage.",
@@ -259,7 +257,6 @@
   "createkinetic.ponder.shared.vector_thruster_fe.moving.intro": "Vector Thrusters can rotate in all directions, this is controlled by the frequencies on the thruster.",
   "createkinetic.ponder.shared.vector_thruster_fe.moving.text_1": "A redstone power can be anything from 0-15, this will increase the distance of rotation from the base.",
   "createkinetic.ponder.shared.vector_thruster_fe.moving.text_3": "The thruster will tilt towards any direction the signal is powered on.",
-
   "createkinetic.ponder.shared.vector_thruster_fe.powering.intro": "Powering a thruster is easy, any external signal to the thruster will be the power, this can range from 0-15, and will use power accordingly.",
   "createkinetic.ponder.shared.vector_thruster_creative.intro.main": "Creative Vector Thrusters produce configurable thrust without fuel or Forge energy.",
   "createkinetic.ponder.shared.vector_thruster_creative.intro.thrust": "Set the creative thrust amount from the value box on the bottom of the thruster.",
@@ -268,12 +265,10 @@
   "createkinetic.ponder.shared.vector_thruster_liquid.intro.fuel": "Pump valid thruster fuel into the liquid vector thruster through the pipe below.",
   "createkinetic.ponder.shared.vector_thruster_liquid.intro.pumped": "Once fuel is pumped in, the internal tank can feed the thruster while it is powered.",
   "createkinetic.ponder.shared.vector_thruster_liquid.powering.intro": "Apply redstone power to throttle the liquid vector thruster, from 0-15.",
-
   "block.createkinetic.vector_thruster": "Ion Vector Thruster",
   "block.createkinetic.creative_vector_thruster": "Creative Vector Thruster",
   "createkinetic.creative_vector_thruster.tooltip.summary": "Vector thruster with configurable creative thrust and wrench-cycled particle mode.",
   "block.createkinetic.liquid_vector_thruster": "Vector Thruster",
-
   "item.createkinetic.oxidizer_bucket": "Oxidizer Bucket",
   "fluid.createkinetic.oxidizer": "Oxidizer",
   "block.createkinetic.oxidizer": "Oxidizer",
@@ -290,7 +285,6 @@
   "advancement.createkinetic.feed_the_fire_621.description": "Power a Coral Generator",
   "advancement.createkinetic.mighty_wings.title": "Mighty Wings",
   "advancement.createkinetic.mighty_wings.description": "Craft Tempered Wings",
-
   "item.createkinetic.assembler_stick": "Auto Assembly",
   "item.createkinetic.creative_honey_glue": "Creative Honey Glue",
   "item.createkinetic.glued_contraption_mover": "Contraption Mover",
@@ -320,7 +314,6 @@
   "item.createkinetic.contraption_remover.tooltip.summary": "Hard wipes the full connected glued contraption instantly.",
   "item.createkinetic.contraption_remover.tooltip.condition1": "Glued contraption",
   "item.createkinetic.contraption_remover.tooltip.behaviour1": "Right-click to _hard-wipe_ all connected glued blocks and glue entities.",
-
   "message.assemblystick.assemble_failed": "Assembly failed.",
   "message.assemblystick.disassemble_failed": "Disassembly failed due to safety checks.",
   "message.assemblystick.creative_honey_glue_too_large": "Creative Honey Glue stopped: more than %s blocks connected.",
@@ -333,5 +326,6 @@
   "message.assemblystick.cloner_finalize_success": "Contraption cloned successfully.",
   "message.assemblystick.mover_finalize_failed": "Placement finished, but source cleanup failed.",
   "simulated.simulated_section.propulsion_main": "Kinetic",
-  "simulated.simulated_section.kinetic_tools": "Creative Tools"
+  "simulated.simulated_section.kinetic_tools": "Creative Tools",
+  "block.createkinetic.brass_beam_lantern": "Brass Beam Lantern"
 }

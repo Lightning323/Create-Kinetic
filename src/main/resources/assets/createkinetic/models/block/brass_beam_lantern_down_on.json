@@ -1,0 +1,9 @@
+{
+  "parent": "createkinetic:block/brass_beam_lantern_down",
+  "textures": {
+    "0": "createkinetic:block/beam_lantern/brass_bottom",
+    "1": "createkinetic:block/beam_lantern/brass_side",
+    "2": "createkinetic:block/beam_lantern/top",
+    "particle": "createkinetic:block/beam_lantern/brass_side"
+  }
+}

@@ -10,7 +10,9 @@ final class RedstoneGateHelper {
     }
 
     static boolean attenuates(BlockState state) {
-        return state.is(KineticBlocks.DIODE_BLOCK.get()) || state.is(KineticBlocks.CROSSROAD_BLOCK.get());
+        return
+//                state.is(KineticBlocks.DIODE_BLOCK.get()) ||
+                state.is(KineticBlocks.CROSSROAD_BLOCK.get());
     }
 
     static int wirePower(BlockState state) {

@@ -11,6 +11,8 @@ import org.lightning323.createkinetic.CreateKinetic;
 import org.lightning323.createkinetic.KineticRegistrate;
 import org.lightning323.createkinetic.content.blocks.analog_gearshift.AnalogGearshiftBlockEntity;
 import org.lightning323.createkinetic.content.blocks.analog_gearshift.AnalogGearshiftRenderer;
+import org.lightning323.createkinetic.content.blocks.beam_lantern.BeamLanternBlockEntity;
+import org.lightning323.createkinetic.content.blocks.beam_lantern.BeamLanternRenderer;
 import org.lightning323.createkinetic.content.blocks.joystick.JoystickBlockEntity;
 import org.lightning323.createkinetic.content.blocks.joystick.JoystickRenderer;
 import org.lightning323.createkinetic.content.blocks.reaction_wheel.ReactionWheelBlockEntity;
@@ -40,6 +42,11 @@ public class KineticBlockEntities {
             .blockEntity("gyroscope", ReactionWheelBlockEntity::new)
             .validBlocks(KineticBlocks.REACTION_WHEEL)
             .renderer(() -> ReactionWheelRenderer::new)
+            .register();
+
+    public static final BlockEntityEntry<BeamLanternBlockEntity> BEAM_LANTERN = REGISTRATE.blockEntity("beam_lantern", BeamLanternBlockEntity::new)
+            .validBlock(KineticBlocks.BEAM_LANTERN)
+            .renderer(() -> BeamLanternRenderer::new)
             .register();
 
     public static final BlockEntityEntry<SableTrackBlockEntity> SABLE_TRACK = REGISTRATE.blockEntity("sable_track", SableTrackBlockEntity::new)

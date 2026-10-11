@@ -25,6 +25,7 @@ import com.tterrag.registrate.util.entry.BlockEntry;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredBlock;
@@ -35,6 +36,7 @@ import org.lightning323.createkinetic.config.KineticConfig;
 import org.lightning323.createkinetic.content.blocks.track.SableTrackBlock;
 import org.lightning323.createkinetic.content.blocks.track.SableTrackRole;
 import org.lightning323.createkinetic.content.blocks.analog_gearshift.AnalogGearshiftBlock;
+import org.lightning323.createkinetic.content.blocks.beam_lantern.BeamLanternBlock;
 import org.lightning323.createkinetic.content.blocks.reaction_wheel.ReactionWheelBlock;
 import org.lightning323.createkinetic.content.items.TrackMountBlockItem;
 import net.minecraft.client.renderer.RenderType;
@@ -117,6 +119,7 @@ public class KineticBlocks {
             .build()
             .register();
 
+
     public static final BlockEntry<SableTrackBlock> TRACK_MOUNT = REGISTRATE.block("track_mount",
                     properties -> new SableTrackBlock(properties, SableTrackRole.MOUNT))
             .initialProperties(SharedProperties::stone)
@@ -136,6 +139,14 @@ public class KineticBlocks {
             .register();
 
 
+    public static final BlockEntry<BeamLanternBlock> BEAM_LANTERN = REGISTRATE.block("brass_beam_lantern", BeamLanternBlock::new)
+            .initialProperties(() -> Blocks.COPPER_BLOCK)
+            .properties(p -> p.mapColor(MapColor.GOLD).lightLevel(state -> state.getValue(BeamLanternBlock.LIT) ? 15 : 0).sound(SoundType.COPPER).strength(5.0f, 6.0f))
+            .item()
+            .build()
+            .register();
+
+
     static {
         registerDefaultBlockItem("thruster", KineticBlocks.THRUSTER_BLOCK);
         registerBlockItem("creative_thruster", KineticBlocks.CREATIVE_THRUSTER_BLOCK, new BlockItem.Properties().rarity(Rarity.EPIC));
@@ -143,6 +154,8 @@ public class KineticBlocks {
         registerBlockItem("vector_thruster", KineticBlocks.ION_VECTOR_THRUSTER_BLOCK, new BlockItem.Properties().rarity(Rarity.UNCOMMON));
         registerBlockItem("liquid_vector_thruster", KineticBlocks.LIQUID_VECTOR_THRUSTER_BLOCK, new BlockItem.Properties().rarity(Rarity.UNCOMMON));
         registerBlockItem("creative_vector_thruster", KineticBlocks.CREATIVE_VECTOR_THRUSTER_BLOCK, new BlockItem.Properties().rarity(Rarity.EPIC));
+
+
 
 //        registerDefaultBlockItem("diode", KineticBlocks.DIODE_BLOCK);
         registerDefaultBlockItem("conjunctor", KineticBlocks.CONJUNCTOR_BLOCK);
