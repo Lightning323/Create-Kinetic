@@ -11,6 +11,8 @@
     "createkinetic:vector_thruster",
     "createkinetic:creative_vector_thruster",
     "createkinetic:liquid_vector_thruster",
-    "createkinetic:reaction_wheel"
+    "createkinetic:reaction_wheel",
+    "createkinetic:analog_gearshift",
+    "createkinetic:beam_lantern"
   ]
 }
