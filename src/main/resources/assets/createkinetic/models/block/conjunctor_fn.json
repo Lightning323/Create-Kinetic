@@ -6,24 +6,12 @@
 	"render_type": "minecraft:cutout",
 	"textures": {
 		"1": "createkinetic:block/brass_diode_base",
+		"3": "createkinetic:block/amethyst_diode",
 		"particle": "createkinetic:block/conjunctor_ff",
 		"top": "createkinetic:block/conjunctor_ff",
 		"unlit": "block/redstone_torch_off"
 	},
 	"elements": [
-		{
-			"from": [6, 1, 6],
-			"to": [10, 5, 10],
-			"rotation": {"angle": 0, "axis": "y", "origin": [0, 1, 0]},
-			"faces": {
-				"north": {"uv": [3, 3, 5, 5], "texture": "#top"},
-				"east": {"uv": [3, 3, 5, 5], "texture": "#top"},
-				"south": {"uv": [3, 3, 5, 5], "texture": "#top"},
-				"west": {"uv": [3, 3, 5, 5], "texture": "#top"},
-				"up": {"uv": [3, 3, 5, 5], "texture": "#top"},
-				"down": {"uv": [0, 0, 0, 0], "texture": "#top"}
-			}
-		},
 		{
 			"from": [0, 0, 0],
 			"to": [16, 2, 16],
@@ -37,8 +25,9 @@
 			}
 		},
 		{
-			"from": [7, 2, 2],
-			"to": [9, 7, 4],
+			"from": [7, 2, 1],
+			"to": [9, 7, 3],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0, -1]},
 			"faces": {
 				"north": {"uv": [7, 6, 9, 11], "texture": "#unlit"},
 				"east": {"uv": [7, 6, 9, 11], "texture": "#unlit"},
@@ -46,6 +35,34 @@
 				"west": {"uv": [7, 6, 9, 11], "texture": "#unlit"},
 				"up": {"uv": [7, 6, 9, 8], "texture": "#unlit"},
 				"down": {"uv": [0, 0, 0, 0], "texture": "#unlit"}
+			}
+		},
+		{
+			"name": "amethyst",
+			"from": [5, 2, 5],
+			"to": [11, 7, 11],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 2, 0]},
+			"faces": {
+				"north": {"uv": [4.5, 13.5, 7.5, 16], "texture": "#3"},
+				"east": {"uv": [4.5, 13.5, 7.5, 16], "texture": "#3"},
+				"south": {"uv": [4.5, 13.5, 7.5, 16], "texture": "#3"},
+				"west": {"uv": [4.5, 13.5, 7.5, 16], "texture": "#3"},
+				"up": {"uv": [4.5, 10.5, 7.5, 13.5], "texture": "#3"},
+				"down": {"uv": [0, 0, 0, 0], "texture": "#3"}
+			}
+		},
+		{
+			"name": "shell",
+			"from": [4.95, 2, 4.95],
+			"to": [11.05, 7.1, 11.05],
+			"rotation": {"angle": 0, "axis": "y", "origin": [-0.05, 2, -0.05]},
+			"faces": {
+				"north": {"uv": [8.5, 13.5, 11.5, 16], "texture": "#3"},
+				"east": {"uv": [8.5, 13.5, 11.5, 16], "texture": "#3"},
+				"south": {"uv": [8.5, 13.5, 11.5, 16], "texture": "#3"},
+				"west": {"uv": [8.5, 13.5, 11.5, 16], "texture": "#3"},
+				"up": {"uv": [8.5, 10.5, 11.5, 13.5], "texture": "#3"},
+				"down": {"uv": [0, 0, 0, 0], "texture": "#3"}
 			}
 		}
 	]
