@@ -417,7 +417,7 @@ public class KineticConfig {
 
         COMMON_BUILDER.push("beamLantern");
         BEAM_LANTERN_MAX_PROPAGATION_LENGTH = COMMON_BUILDER.comment("Maximum propagation length of the beam lantern in blocks.").defineInRange("maxPropagationLength", 256, 1, 1024);
-        BEAM_LANTERN_CHARGE_UP_TICKS = COMMON_BUILDER.comment("Number of ticks for the beam lantern to charge up when toggled.").defineInRange("chargeUpTicks", 4, 0, 100);
+        BEAM_LANTERN_CHARGE_UP_TICKS = COMMON_BUILDER.comment("Number of ticks for the beam lantern to charge up when toggled.").defineInRange("chargeUpTicks", 10, 0, 100);
         COMMON_BUILDER.pop();
 
         PropulsionDefaultStress.INSTANCE.registerAll(COMMON_BUILDER);

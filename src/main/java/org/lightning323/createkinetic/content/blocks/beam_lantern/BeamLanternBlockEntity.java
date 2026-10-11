@@ -41,11 +41,9 @@ public class BeamLanternBlockEntity extends SmartBlockEntity {
         }
 
         BlockState state = getBlockState();
-        boolean powered = state.getValue(BeamLanternBlock.POWERED);
-        int maxCharge = Math.max(0, KineticConfig.beamLanternChargeUpTicks());
-        boolean shouldBeLit = powered;
-
-        int shouldBeLitInt = shouldBeLit ? 1 : 0;
+        final boolean powered = state.getValue(BeamLanternBlock.POWERED);
+        final int maxCharge = Math.max(0, KineticConfig.beamLanternChargeUpTicks());
+        final int shouldBeLitInt = powered ? 1 : 0;
         if (shouldBeLitInt != targetLit) {
             targetLit = shouldBeLitInt;
             chargeTicks = 0;
