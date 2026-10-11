@@ -1,9 +1,25 @@
 {
-  "parent": "createkinetic:block/brass_beam_lantern_up",
-  "textures": {
-    "0": "createkinetic:block/beam_lantern/brass_bottom",
-    "1": "createkinetic:block/beam_lantern/brass_side",
-    "2": "createkinetic:block/beam_lantern/top",
-    "particle": "createkinetic:block/beam_lantern/brass_side"
-  }
+	"format_version": "26.3",
+	"credit": "Made with Blockbench",
+	"parent": "createkinetic:block/brass_beam_lantern_up",
+	"textures": {
+		"0": "createkinetic:block/beam_lantern/brass_bottom",
+		"1": "createkinetic:block/beam_lantern/brass_side",
+		"2": "createkinetic:block/beam_lantern/top_on",
+		"particle": "createkinetic:block/beam_lantern/brass_side"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 0],
+			"to": [16, 16, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#1"},
+				"east": {"uv": [0, 0, 16, 16], "texture": "#1"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#1"},
+				"west": {"uv": [0, 0, 16, 16], "texture": "#1"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#2"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#0"}
+			}
+		}
+	]
 }

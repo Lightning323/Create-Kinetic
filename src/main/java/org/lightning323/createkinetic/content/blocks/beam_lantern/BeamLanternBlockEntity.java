@@ -86,7 +86,7 @@ public class BeamLanternBlockEntity extends SmartBlockEntity {
     }
 
     private void placeBeam(ServerLevel level, BlockPos origin, BlockState state) {
-        Direction dir = state.getValue(BeamLanternBlock.FACING);
+        Direction dir = BeamLanternBlock.getFacing(state);
         int maxLen = KineticConfig.beamLanternMaxPropagationLength();
         int len = 0;
         BlockPos.MutableBlockPos m = new BlockPos.MutableBlockPos();
@@ -127,7 +127,7 @@ public class BeamLanternBlockEntity extends SmartBlockEntity {
             be.removeBeam(level, origin, state);
             return;
         }
-        Direction dir = state.getValue(BeamLanternBlock.FACING);
+        Direction dir = BeamLanternBlock.getFacing(state);
         int maxLen = KineticConfig.beamLanternMaxPropagationLength();
         int len = 0;
         BlockPos.MutableBlockPos m = new BlockPos.MutableBlockPos();

@@ -1,12 +1,15 @@
 package org.lightning323.createkinetic.content.blocks.beam_lantern;
 
+import com.simibubi.create.content.equipment.wrench.IWrenchable;
 import com.simibubi.create.foundation.block.IBE;
 import com.simibubi.create.foundation.block.WrenchableDirectionalBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -16,19 +19,40 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import org.lightning323.createkinetic.registries.KineticBlockEntities;
 
-public class BeamLanternBlock extends WrenchableDirectionalBlock implements IBE<BeamLanternBlockEntity> {
+public class BeamLanternBlock extends Block implements IBE<BeamLanternBlockEntity>, IWrenchable {
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
     public static final BooleanProperty LIT = BooleanProperty.create("lit");
+    public static final BooleanProperty UP = BooleanProperty.create("up");
 
     public BeamLanternBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.defaultBlockState().setValue(POWERED, false).setValue(LIT, false).setValue(FACING, Direction.DOWN));
+        this.registerDefaultState(this.defaultBlockState()
+                .setValue(POWERED, false)
+                .setValue(LIT, false)
+                .setValue(UP, false));
+    }
+
+    public static Direction getFacing(BlockState state) {
+        boolean isUp = state.getValue(BeamLanternBlock.UP);
+        return isUp ? Direction.UP : Direction.DOWN;
+    }
+
+    @Override
+    public InteractionResult onWrenched(BlockState state, UseOnContext context) {
+        Level level = context.getLevel();
+        BlockPos pos = context.getClickedPos();
+        if (!level.isClientSide()) {
+            // Update the block state in the world
+            // Flag 3 or 11 updates the client and triggers block rerenders/updates
+            level.setBlock(pos, state.cycle(UP), 11);
+        }
+        return InteractionResult.SUCCESS;
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
-        builder.add(POWERED, LIT);
+        builder.add(UP, POWERED, LIT);
     }
 
     @Override
@@ -37,7 +61,7 @@ public class BeamLanternBlock extends WrenchableDirectionalBlock implements IBE<
         if (facing != Direction.UP && facing != Direction.DOWN) {
             facing = Direction.DOWN;
         }
-        BlockState state = this.defaultBlockState().setValue(FACING, facing);
+        BlockState state = this.defaultBlockState().setValue(BeamLanternBlock.UP, facing == Direction.UP);
         return state.setValue(POWERED, context.getLevel().hasNeighborSignal(context.getClickedPos()));
     }
 
