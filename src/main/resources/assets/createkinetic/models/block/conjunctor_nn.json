@@ -3,6 +3,7 @@
 	"credit": "Made with Blockbench",
 	"parent": "minecraft:block/block",
 	"ambientocclusion": false,
+	"render_type": "minecraft:cutout",
 	"textures": {
 		"1": "createkinetic:block/brass_diode_base",
 		"particle": "createkinetic:block/conjunctor_ff",
