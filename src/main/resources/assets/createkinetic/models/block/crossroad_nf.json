@@ -5,8 +5,8 @@
 	"ambientocclusion": false,
 	"render_type": "minecraft:cutout",
 	"textures": {
+		"1": "createkinetic:block/crossroad_ff",
 		"2": "createkinetic:block/redstone_bridge",
-		"3": "createkinetic:block/crossroad_ff",
 		"particle": "createkinetic:block/andesite_diode_base",
 		"top": "createkinetic:block/andesite_diode_base"
 	},
@@ -15,11 +15,11 @@
 			"from": [0, 0, 0],
 			"to": [16, 2, 16],
 			"faces": {
-				"north": {"uv": [0, 9, 8, 8], "texture": "#3", "cullface": "north"},
-				"east": {"uv": [7, 16, 8, 8], "rotation": 90, "texture": "#3", "cullface": "east"},
-				"south": {"uv": [0, 9, 8, 8], "texture": "#3", "cullface": "south"},
-				"west": {"uv": [1, 16, 0, 8], "rotation": 90, "texture": "#3", "cullface": "west"},
-				"up": {"uv": [0, 8, 8, 16], "texture": "#3"},
+				"north": {"uv": [14, 16, 16, 0], "rotation": 90, "texture": "#top", "cullface": "north"},
+				"east": {"uv": [0, 16, 16, 14], "rotation": 180, "texture": "#top", "cullface": "east"},
+				"south": {"uv": [0, 16, 2, 0], "rotation": 270, "texture": "#top", "cullface": "south"},
+				"west": {"uv": [16, 2, 0, 0], "texture": "#top", "cullface": "west"},
+				"up": {"uv": [0, 8, 8, 16], "texture": "#1"},
 				"down": {"uv": [0, 0, 16, 16], "rotation": 90, "texture": "#top", "cullface": "down"}
 			}
 		},
