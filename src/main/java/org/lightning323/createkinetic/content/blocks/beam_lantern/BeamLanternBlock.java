@@ -2,7 +2,6 @@ package org.lightning323.createkinetic.content.blocks.beam_lantern;
 
 import com.simibubi.create.content.equipment.wrench.IWrenchable;
 import com.simibubi.create.foundation.block.IBE;
-import com.simibubi.create.foundation.block.WrenchableDirectionalBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -41,16 +40,15 @@ public class BeamLanternBlock extends Block implements IBE<BeamLanternBlockEntit
     public InteractionResult onWrenched(BlockState state, UseOnContext context) {
         Level level = context.getLevel();
         BlockPos pos = context.getClickedPos();
-        if (!level.isClientSide()) {
+        if (!level.isClientSide() && level instanceof ServerLevel serverLevel) {
             // Cycle the UP property (change orientation)
-            level.setBlock(pos, state.cycle(UP), 11);
-            // If the lantern is lit, we need to clean up the old beam and recompute it.
-            if (state.getValue(LIT)) {
-                // Schedule a tick so the block entity can handle cleanup/re‑propagation
-                if (level instanceof ServerLevel serverLevel) {
-                    serverLevel.scheduleTick(pos, this, 1);
-                }
-            }
+            BlockState newState = state.cycle(UP);
+            level.setBlock(pos, newState, 11);
+
+            // Tell the block entity to instantly clean up old beam and re-emit in the new direction
+            withBlockEntityDo(serverLevel, pos, be -> {
+                be.handleDirectionChange(getFacing(newState));
+            });
         }
         return InteractionResult.SUCCESS;
     }
@@ -76,29 +74,20 @@ public class BeamLanternBlock extends Block implements IBE<BeamLanternBlockEntit
         if (level.isClientSide) {
             return;
         }
-        boolean hasSignal = level.hasNeighborSignal(pos);
-        if (hasSignal != state.getValue(POWERED)) {
-            level.setBlock(pos, state.setValue(POWERED, hasSignal), 2);
-            if (!level.getBlockTicks().willTickThisTick(pos, this)) {
-                level.scheduleTick(pos, this, 1);
-            }
-        }
+        // Delegate power evaluation and charge scheduling directly to the block entity
+        withBlockEntityDo(level, pos, BeamLanternBlockEntity::updatePowered);
     }
 
     @Override
     public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-        withBlockEntityDo(level, pos, BeamLanternBlockEntity::updatePowered);
+        // Triggers when a scheduled charge-up tick finishes
+        withBlockEntityDo(level, pos, BeamLanternBlockEntity::serverTick);
     }
 
     @Override
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
         if (state.getBlock() != newState.getBlock() && level instanceof ServerLevel serverLevel) {
-            if (serverLevel.getBlockEntity(pos) instanceof BeamLanternBlockEntity be) {
-                be.removeBeam(serverLevel, pos, state);
-            } else {
-                // fallback
-                BeamLanternBlockEntity.removeBeamStatic(serverLevel, pos, state);
-            }
+            withBlockEntityDo(serverLevel, pos, be -> be.removeBeam(serverLevel));
         }
         super.onRemove(state, level, pos, newState, isMoving);
     }
