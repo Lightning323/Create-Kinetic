@@ -130,6 +130,13 @@ public class JoystickBlock extends Block implements EntityBlock, IBE<JoystickBlo
         }
     }
 
+    @Override
+    public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
+        if (!level.isClientSide) {
+            withBlockEntityDo(level, pos, JoystickBlockEntity::updatePowered);
+        }
+    }
+
 
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return KineticBlockEntities.JOYSTICK.create(pos, state);

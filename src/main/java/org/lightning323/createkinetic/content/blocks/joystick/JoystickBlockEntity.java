@@ -47,6 +47,7 @@ public class JoystickBlockEntity extends SmartBlockEntity implements MenuProvide
    private static final int TRANSMITTER_COUNT;
    private static final int BUTTON_TRANSMITTER_INDEX;
    private static final Map<UUID, JoystickBlockEntity> SERVER_ACTIVE_SESSIONS;
+
    private @Nullable UUID currentUser;
    private boolean powered;
    private byte tiltX;
@@ -56,13 +57,14 @@ public class JoystickBlockEntity extends SmartBlockEntity implements MenuProvide
    private boolean useMouseInput = true;
    private boolean springBack = false;
    private final String[] bindings = createDefaultBindings();
+
    private final LerpedFloat lerpedTiltX = LerpedFloat.linear();
    private final LerpedFloat lerpedTiltY = LerpedFloat.linear();
    private final LerpedFloat lerpedButtonPress = LerpedFloat.linear();
    private final ItemStackHandler frequencyItems;
    private final Transmitter[] transmitters;
    private boolean networkRegistered;
-   private final int[] lastTransmittedStrength;
+   private int tickCounter = 0;
 
    public boolean isPowered() {
       return this.powered;
@@ -92,7 +94,6 @@ public class JoystickBlockEntity extends SmartBlockEntity implements MenuProvide
          }
       };
       this.transmitters = new Transmitter[TRANSMITTER_COUNT];
-      this.lastTransmittedStrength = new int[TRANSMITTER_COUNT];
 
       for(JoystickDirection d : JoystickDirection.VALUES) {
          this.transmitters[d.index] = new DirectionalTransmitter(d);
@@ -109,51 +110,54 @@ public class JoystickBlockEntity extends SmartBlockEntity implements MenuProvide
       this.registerAllTransmitters();
    }
 
+   @Override
    public void tick() {
       super.tick();
-      if (this.level != null) {
-         if (this.level.isClientSide) {
-            this.lerpedTiltX.chase((double)this.tiltX, (double)0.35F, Chaser.EXP);
-            this.lerpedTiltY.chase((double)this.tiltY, (double)0.35F, Chaser.EXP);
-            this.lerpedButtonPress.chase(this.buttonPressed ? (double)1.0F : (double)0.0F, (double)0.35F, Chaser.EXP);
-            this.lerpedTiltX.tickChaser();
-            this.lerpedTiltY.tickChaser();
-            this.lerpedButtonPress.tickChaser();
-            JoystickClientRaycast.tickGrip(this);
-         } else {
-            if (this.currentUser != null) {
-               Player player = this.level.getPlayerByUUID(this.currentUser);
-               if (player == null || !playerInRange(player, this.level, this.getBlockPos())) {
-                  this.disconnectUser();
-               }
-            }
+      if (this.level == null) return;
 
-            boolean desiredPowered = this.level.getBestNeighborSignal(this.worldPosition) > 0;
-            boolean desiredInUse = this.currentUser != null;
-            this.powered = desiredPowered;
-            if (this.currentUser == null && !desiredPowered && (this.tiltX != 0 || this.tiltY != 0)) {
-               this.tiltX = 0;
-               this.tiltY = 0;
-               this.setChanged();
-               this.sendData();
+      if (this.level.isClientSide) {
+         this.lerpedTiltX.chase((double)this.tiltX, (double)0.35F, Chaser.EXP);
+         this.lerpedTiltY.chase((double)this.tiltY, (double)0.35F, Chaser.EXP);
+         this.lerpedButtonPress.chase(this.buttonPressed ? (double)1.0F : (double)0.0F, (double)0.35F, Chaser.EXP);
+         this.lerpedTiltX.tickChaser();
+         this.lerpedTiltY.tickChaser();
+         this.lerpedButtonPress.tickChaser();
+         JoystickClientRaycast.tickGrip(this);
+      } else {
+         // Throttled player range check (every 10 ticks / 0.5s)
+         if (this.currentUser != null && ++tickCounter >= 10) {
+            tickCounter = 0;
+            Player player = this.level.getPlayerByUUID(this.currentUser);
+            if (player == null || !playerInRange(player, this.level, this.getBlockPos())) {
+               this.disconnectUser();
             }
-
-            BlockState state = this.getBlockState();
-            BlockState target = state;
-            if (state.hasProperty(JoystickBlock.POWERED) && (Boolean)state.getValue(JoystickBlock.POWERED) != desiredPowered) {
-               target = (BlockState)state.setValue(JoystickBlock.POWERED, desiredPowered);
-            }
-
-            if (state.hasProperty(JoystickBlock.IN_USE) && (Boolean)state.getValue(JoystickBlock.IN_USE) != desiredInUse) {
-               target = (BlockState)target.setValue(JoystickBlock.IN_USE, desiredInUse);
-            }
-
-            if (target != state) {
-               this.level.setBlockAndUpdate(this.worldPosition, target);
-            }
-
-            this.pushNetworkIfChanged();
          }
+      }
+   }
+
+   /**
+    * Called by the Block when redstone neighbors change.
+    */
+   public void updatePowered() {
+      if (level == null || level.isClientSide) return;
+
+      boolean desiredPowered = this.level.getBestNeighborSignal(this.worldPosition) > 0;
+      if (this.powered != desiredPowered) {
+         this.powered = desiredPowered;
+
+         // If redstone power drops and no user is currently using it, reset tilt immediately
+         if (!desiredPowered && this.currentUser == null && (this.tiltX != 0 || this.tiltY != 0)) {
+            this.tiltX = 0;
+            this.tiltY = 0;
+            this.updateAllTransmitterNetworks();
+         }
+
+         BlockState state = this.getBlockState();
+         if (state.hasProperty(JoystickBlock.POWERED) && state.getValue(JoystickBlock.POWERED) != desiredPowered) {
+            this.level.setBlockAndUpdate(this.worldPosition, state.setValue(JoystickBlock.POWERED, desiredPowered));
+         }
+         this.setChanged();
+         this.sendData();
       }
    }
 
@@ -197,7 +201,6 @@ public class JoystickBlockEntity extends SmartBlockEntity implements MenuProvide
             this.setChanged();
             this.sendData();
          }
-
       }
    }
 
@@ -212,7 +215,6 @@ public class JoystickBlockEntity extends SmartBlockEntity implements MenuProvide
             this.setChanged();
             this.sendData();
          }
-
       }
    }
 
@@ -227,7 +229,6 @@ public class JoystickBlockEntity extends SmartBlockEntity implements MenuProvide
             this.setChanged();
             this.sendData();
          }
-
       }
    }
 
@@ -244,7 +245,6 @@ public class JoystickBlockEntity extends SmartBlockEntity implements MenuProvide
                this.setChanged();
                this.sendData();
             }
-
          }
       }
    }
@@ -266,7 +266,6 @@ public class JoystickBlockEntity extends SmartBlockEntity implements MenuProvide
                this.frequencyItems.setStackInSlot(i, ItemStack.EMPTY);
             }
          }
-
       }
    }
 
@@ -279,6 +278,7 @@ public class JoystickBlockEntity extends SmartBlockEntity implements MenuProvide
             this.tiltY = clampedY;
             this.setChanged();
             this.sendData();
+            this.updateAllTransmitterNetworks();
          }
       }
    }
@@ -289,6 +289,7 @@ public class JoystickBlockEntity extends SmartBlockEntity implements MenuProvide
             this.buttonPressed = pressed;
             this.setChanged();
             this.sendData();
+            this.updateAllTransmitterNetworks();
          }
       }
    }
@@ -298,7 +299,7 @@ public class JoystickBlockEntity extends SmartBlockEntity implements MenuProvide
    }
 
    static JoystickBlockEntity findActiveSession(UUID uuid) {
-      return (JoystickBlockEntity)SERVER_ACTIVE_SESSIONS.get(uuid);
+      return SERVER_ACTIVE_SESSIONS.get(uuid);
    }
 
    static void clearSessionsForLevel(Level level) {
@@ -310,7 +311,7 @@ public class JoystickBlockEntity extends SmartBlockEntity implements MenuProvide
          return false;
       } else {
          this.currentUser = userID;
-         this.powered = true;
+         this.powered = true; // Engage active use power state
          this.buttonPressed = false;
          if (this.level == null) {
             return true;
@@ -323,8 +324,12 @@ public class JoystickBlockEntity extends SmartBlockEntity implements MenuProvide
                SERVER_ACTIVE_SESSIONS.put(userID, this);
                this.setChanged();
                this.sendData();
-            }
 
+               BlockState state = this.getBlockState();
+               if (state.hasProperty(JoystickBlock.IN_USE) && !state.getValue(JoystickBlock.IN_USE)) {
+                  this.level.setBlockAndUpdate(this.worldPosition, state.setValue(JoystickBlock.IN_USE, true));
+               }
+            }
             return true;
          }
       }
@@ -339,15 +344,30 @@ public class JoystickBlockEntity extends SmartBlockEntity implements MenuProvide
                JoystickControlClient.exit("");
             }
          } else {
+//            System.out.println("Disconnecting user (SERVERSIDE) " + previous);
             if (previous != null) {
                SERVER_ACTIVE_SESSIONS.remove(previous, this);
             }
 
             this.buttonPressed = false;
+
+            // RESET CONDITION: If disengaged and NOT powered by redstone, snap back to zero!
+            updatePowered(); //Update powered state to check once again if it has changed
+            if (!this.powered) {
+//               System.out.println("Resetting joystick (SERVERSIDE)");
+               this.tiltX = 0;
+               this.tiltY = 0;
+            }
+
             this.setChanged();
             this.sendData();
-         }
+            this.updateAllTransmitterNetworks();
 
+            BlockState state = this.getBlockState();
+            if (state.hasProperty(JoystickBlock.IN_USE) && state.getValue(JoystickBlock.IN_USE)) {
+               this.level.setBlockAndUpdate(this.worldPosition, state.setValue(JoystickBlock.IN_USE, false));
+            }
+         }
       }
    }
 
@@ -376,10 +396,8 @@ public class JoystickBlockEntity extends SmartBlockEntity implements MenuProvide
          if (this.currentUser != null) {
             tag.putUUID("CurrentUser", this.currentUser);
          }
-
          tag.putBoolean("Powered", this.powered);
       }
-
    }
 
    protected void read(CompoundTag tag, HolderLookup.Provider registries, boolean clientPacket) {
@@ -421,7 +439,6 @@ public class JoystickBlockEntity extends SmartBlockEntity implements MenuProvide
             }
          }
       }
-
    }
 
    private void onFrequencySlotChanged(int slot) {
@@ -432,7 +449,6 @@ public class JoystickBlockEntity extends SmartBlockEntity implements MenuProvide
          if (idx >= 0 && idx < this.transmitters.length) {
             this.transmitters[idx].rebuildFrequency();
          }
-
       }
    }
 
@@ -449,7 +465,6 @@ public class JoystickBlockEntity extends SmartBlockEntity implements MenuProvide
             t.rebuildFrequency();
             Create.REDSTONE_LINK_NETWORK_HANDLER.addToNetwork(this.level, t);
          }
-
          this.networkRegistered = true;
       }
    }
@@ -459,21 +474,15 @@ public class JoystickBlockEntity extends SmartBlockEntity implements MenuProvide
          for(Transmitter t : this.transmitters) {
             Create.REDSTONE_LINK_NETWORK_HANDLER.removeFromNetwork(this.level, t);
          }
-
          this.networkRegistered = false;
       }
    }
 
-   private void pushNetworkIfChanged() {
+   private void updateAllTransmitterNetworks() {
       if (this.level != null && !this.level.isClientSide && this.networkRegistered) {
-         for(int i = 0; i < this.transmitters.length; ++i) {
-            int current = this.transmitters[i].getTransmittedStrength();
-            if (current != this.lastTransmittedStrength[i]) {
-               this.lastTransmittedStrength[i] = current;
-               Create.REDSTONE_LINK_NETWORK_HANDLER.updateNetworkOf(this.level, this.transmitters[i]);
-            }
+         for(Transmitter t : this.transmitters) {
+            Create.REDSTONE_LINK_NETWORK_HANDLER.updateNetworkOf(this.level, t);
          }
-
       }
    }
 
@@ -484,7 +493,6 @@ public class JoystickBlockEntity extends SmartBlockEntity implements MenuProvide
       } else if (this.currentUser != null) {
          SERVER_ACTIVE_SESSIONS.remove(this.currentUser, this);
       }
-
       super.invalidate();
    }
 
@@ -499,12 +507,12 @@ public class JoystickBlockEntity extends SmartBlockEntity implements MenuProvide
    static {
       BIND_COUNT = JoystickDirection.VALUES.length + 1;
       BIND_BUTTON_INDEX = JoystickDirection.VALUES.length;
-      BUTTON_SLOT_1 = JoystickDirection.VALUES.length * 2;
+      BUTTON_SLOT_1 = JoystickDirection.VALUES.length + 2;
       BUTTON_SLOT_2 = BUTTON_SLOT_1 + 1;
       FREQUENCY_SLOTS = BUTTON_SLOT_2 + 1;
       TRANSMITTER_COUNT = JoystickDirection.VALUES.length + 1;
       BUTTON_TRANSMITTER_INDEX = JoystickDirection.VALUES.length;
-      SERVER_ACTIVE_SESSIONS = new ConcurrentHashMap();
+      SERVER_ACTIVE_SESSIONS = new ConcurrentHashMap<>();
    }
 
    private abstract class Transmitter implements IRedstoneLinkable {
@@ -530,7 +538,6 @@ public class JoystickBlockEntity extends SmartBlockEntity implements MenuProvide
             } else {
                this.key = newKey;
             }
-
          }
       }
 
