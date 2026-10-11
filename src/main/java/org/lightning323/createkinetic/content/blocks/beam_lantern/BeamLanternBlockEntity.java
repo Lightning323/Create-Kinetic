@@ -28,11 +28,6 @@ public class BeamLanternBlockEntity extends SmartBlockEntity {
     public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
     }
 
-    // Completely removed tick()! We handle everything via state changes and scheduled ticks.
-
-    /**
-     * Called by the Block when redstone power changes.
-     */
     public void updatePowered() {
         if (level == null || level.isClientSide) {
             return;
@@ -45,10 +40,8 @@ public class BeamLanternBlockEntity extends SmartBlockEntity {
 
             int chargeDelay = Math.max(0, KineticConfig.beamLanternChargeUpTicks());
             if (chargeDelay > 0 && hasSignal) {
-                // Schedule the lighting action after the charge delay
                 level.scheduleTick(worldPosition, state.getBlock(), chargeDelay);
             } else {
-                // Instant toggle if no charge-up config
                 setLit(hasSignal);
             }
         }
@@ -87,8 +80,6 @@ public class BeamLanternBlockEntity extends SmartBlockEntity {
         if (level == null || level.isClientSide) return;
         if (!getBlockState().getValue(BeamLanternBlock.LIT)) return;
 
-        // Clean up old beam, update facing, place new beam
-        removeBeam((ServerLevel) level);
         lastFacing = newDir;
         placeBeam((ServerLevel) level, worldPosition, getBlockState());
     }
@@ -100,7 +91,7 @@ public class BeamLanternBlockEntity extends SmartBlockEntity {
         BlockPos.MutableBlockPos m = new BlockPos.MutableBlockPos();
         m.set(origin);
 
-        beamPositions.clear();
+        List<BlockPos> newBeam = new ArrayList<>();
         while (len < maxLen) {
             m.move(dir);
             len++;
@@ -110,21 +101,45 @@ public class BeamLanternBlockEntity extends SmartBlockEntity {
             }
             BlockState bs = level.getBlockState(pos);
             if (bs.isAir() || bs.getBlock() == Blocks.LIGHT) {
-                level.setBlockAndUpdate(pos, Blocks.LIGHT.defaultBlockState());
-                beamPositions.add(pos);
+                newBeam.add(pos);
             } else {
                 break;
             }
         }
+
+        // 1. Compute diff: Find positions that were in the old beam but are NOT in the new beam
+        List<BlockPos> toRemove = new ArrayList<>(beamPositions);
+        toRemove.removeAll(newBeam);
+        for (BlockPos p : toRemove) {
+            if (level.isLoaded(p) && level.getBlockState(p).getBlock() == Blocks.LIGHT) {
+                // Flag 2 = Update clients (so light disappears), but suppress neighbor updates
+                level.setBlock(p, Blocks.AIR.defaultBlockState(), 2);
+            }
+        }
+
+        // 2. Add/keep positions: Only set blocks that aren't already Blocks.LIGHT
+        for (BlockPos p : newBeam) {
+            if (level.isLoaded(p)) {
+                if (level.getBlockState(p).getBlock() != Blocks.LIGHT) {
+                    level.setBlock(p, Blocks.LIGHT.defaultBlockState(), 2);
+                }
+            }
+        }
+
+        beamPositions.clear();
+        beamPositions.addAll(newBeam);
+        setChanged();
     }
 
     public void removeBeam(ServerLevel level) {
         for (BlockPos p : beamPositions) {
             if (level.isLoaded(p) && level.getBlockState(p).getBlock() == Blocks.LIGHT) {
-                level.setBlockAndUpdate(p, Blocks.AIR.defaultBlockState());
+                // Flag 2: Clean up without triggering neighbor updates
+                level.setBlock(p, Blocks.AIR.defaultBlockState(), 2);
             }
         }
         beamPositions.clear();
+        setChanged();
     }
 
     @Override
@@ -133,8 +148,7 @@ public class BeamLanternBlockEntity extends SmartBlockEntity {
         if (lastFacing != null) {
             tag.putInt("LastFacing", lastFacing.get3DDataValue());
         }
-        // Save beam positions so we can clean them up properly if unloaded/reloaded
-        tag.put("BeamCount", net.minecraft.nbt.IntTag.valueOf(beamPositions.size()));
+        tag.putInt("BeamCount", beamPositions.size());
         for (int i = 0; i < beamPositions.size(); i++) {
             tag.put("BeamPos_" + i, NbtUtils.writeBlockPos(beamPositions.get(i)));
         }
@@ -152,7 +166,6 @@ public class BeamLanternBlockEntity extends SmartBlockEntity {
             for (int i = 0; i < count; i++) {
                 String key = "BeamPos_" + i;
                 if (tag.contains(key)) {
-                    // Pass both the tag and the key string, then safely add if present
                     NbtUtils.readBlockPos(tag, key).ifPresent(beamPositions::add);
                 }
             }
