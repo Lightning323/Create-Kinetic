@@ -9,6 +9,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -90,6 +91,22 @@ public class BeamLanternBlock extends Block implements IBE<BeamLanternBlockEntit
             withBlockEntityDo(serverLevel, pos, be -> be.removeBeam(serverLevel));
         }
         super.onRemove(state, level, pos, newState, isMoving);
+    }
+
+
+    @Override
+    public boolean isSignalSource(BlockState state) {
+        return false;
+    }
+
+    @Override
+    public int getSignal(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
+        return 0;
+    }
+
+    @Override
+    public int getDirectSignal(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
+        return 0;
     }
 
     @Override
