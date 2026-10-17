@@ -327,5 +327,12 @@
   "message.assemblystick.mover_finalize_failed": "Placement finished, but source cleanup failed.",
   "simulated.simulated_section.propulsion_main": "Kinetic",
   "simulated.simulated_section.kinetic_tools": "Creative Tools",
-  "block.createkinetic.beam_lantern": "Beam Lantern"
+  "block.createkinetic.beam_lantern": "Beam Lantern",
+  "block.createkinetic.beam_lantern.tooltip.summary": "Emits a _beam of light_ in the direction it faces.",
+  "block.createkinetic.beam_lantern.tooltip.condition1": "When R-Clicked",
+  "block.createkinetic.beam_lantern.tooltip.behaviour1": "_Toggles_ its _Default On_ state. A _Default On_ lantern stays _lit without redstone_ and turns _dark while powered_.",
+  "block.createkinetic.beam_lantern.tooltip.condition2": "When Rotated with a Wrench",
+  "block.createkinetic.beam_lantern.tooltip.behaviour2": "Flips the beam between facing _up_ and _down_.",
+  "block.createkinetic.beam_lantern.tooltip.condition3": "When Powered by Redstone",
+  "block.createkinetic.beam_lantern.tooltip.behaviour3": "Lights the beam, unless _Default On_ is active."
 }
