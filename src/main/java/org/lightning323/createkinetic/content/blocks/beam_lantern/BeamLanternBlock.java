@@ -1,5 +1,6 @@
 package org.lightning323.createkinetic.content.blocks.beam_lantern;
 
+import com.simibubi.create.AllItems;
 import com.simibubi.create.content.equipment.wrench.IWrenchable;
 import com.simibubi.create.foundation.block.IBE;
 import net.minecraft.core.BlockPos;
@@ -7,6 +8,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.BlockGetter;
@@ -17,24 +19,35 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.phys.BlockHitResult;
 import org.lightning323.createkinetic.registries.KineticBlockEntities;
 
 public class BeamLanternBlock extends Block implements IBE<BeamLanternBlockEntity>, IWrenchable {
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
     public static final BooleanProperty LIT = BooleanProperty.create("lit");
     public static final BooleanProperty UP = BooleanProperty.create("up");
+    public static final BooleanProperty DEFAULT_ON = BooleanProperty.create("default_on");
 
     public BeamLanternBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.defaultBlockState()
                 .setValue(POWERED, false)
                 .setValue(LIT, false)
-                .setValue(UP, false));
+                .setValue(UP, false)
+                .setValue(DEFAULT_ON, true));
     }
 
     public static Direction getFacing(BlockState state) {
         boolean isUp = state.getValue(BeamLanternBlock.UP);
         return isUp ? Direction.UP : Direction.DOWN;
+    }
+
+    /**
+     * When DEFAULT_ON is set, the lantern is lit while unpowered and dark while powered (inverted).
+     * Otherwise it behaves like a regular redstone lamp (lit while powered).
+     */
+    public static boolean isLitFor(BlockState state) {
+        return state.getValue(POWERED) != state.getValue(DEFAULT_ON);
     }
 
     @Override
@@ -57,7 +70,7 @@ public class BeamLanternBlock extends Block implements IBE<BeamLanternBlockEntit
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
-        builder.add(UP, POWERED, LIT);
+        builder.add(UP, POWERED, LIT, DEFAULT_ON);
     }
 
     @Override
@@ -67,7 +80,25 @@ public class BeamLanternBlock extends Block implements IBE<BeamLanternBlockEntit
             facing = Direction.DOWN;
         }
         BlockState state = this.defaultBlockState().setValue(BeamLanternBlock.UP, facing == Direction.UP);
-        return state.setValue(POWERED, context.getLevel().hasNeighborSignal(context.getClickedPos()));
+        state = state.setValue(POWERED, context.getLevel().hasNeighborSignal(context.getClickedPos()));
+        // Derive the initial lit state so the block is correct the moment it is placed. Do NOT
+        // try to reconcile this from onPlace(): onPlace runs on every setBlockState, so any state
+        // write from there recursively re-enters onPlace and overflows the stack.
+        return state.setValue(LIT, isLitFor(state));
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player,
+                                               BlockHitResult hitResult) {
+        // Let the wrench handle its own interaction (rotation/pickup).
+        if (player.getMainHandItem().is(AllItems.WRENCH)) {
+            return InteractionResult.PASS;
+        }
+        if (!level.isClientSide()) {
+            level.setBlock(pos, state.cycle(DEFAULT_ON), Block.UPDATE_CLIENTS);
+            withBlockEntityDo(level, pos, BeamLanternBlockEntity::updatePowered);
+        }
+        return InteractionResult.sidedSuccess(level.isClientSide());
     }
 
     @Override

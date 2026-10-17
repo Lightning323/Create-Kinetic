@@ -28,22 +28,52 @@ public class BeamLanternBlockEntity extends SmartBlockEntity {
     public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
     }
 
+    @Override
+    public void initialize() {
+        super.initialize();
+        if (level == null || level.isClientSide) {
+            return;
+        }
+        // Runs once, on the BE's first tick. Only re-emits an already-lit beam (e.g. after a
+        // chunk reload); it never writes block state, so it cannot re-enter itself.
+        BlockState state = level.getBlockState(worldPosition);
+        if (state.getValue(BeamLanternBlock.LIT)) {
+            lastFacing = BeamLanternBlock.getFacing(state);
+            placeBeam((ServerLevel) level, worldPosition, state);
+        }
+    }
+
+    /**
+     * Reconciles the stored {@code POWERED}/{@code LIT} state with the current redstone signal.
+     * Called from {@code neighborChanged} and when the player toggles {@code DEFAULT_ON}. Reads the
+     * authoritative state from the level (not the BE's cached state) so a state written during a
+     * block update cannot be observed stale.
+     */
     public void updatePowered() {
         if (level == null || level.isClientSide) {
             return;
         }
-        BlockState state = getBlockState();
+        BlockState state = level.getBlockState(worldPosition);
         boolean hasSignal = level.hasNeighborSignal(worldPosition);
 
         if (hasSignal != state.getValue(BeamLanternBlock.POWERED)) {
-            level.setBlockAndUpdate(worldPosition, state.setValue(BeamLanternBlock.POWERED, hasSignal));
+            state = state.setValue(BeamLanternBlock.POWERED, hasSignal);
+            level.setBlockAndUpdate(worldPosition, state);
+        }
 
-            int chargeDelay = Math.max(0, KineticConfig.beamLanternChargeUpTicks());
-            if (chargeDelay > 0 && hasSignal) {
+        boolean shouldBeLit = BeamLanternBlock.isLitFor(state);
+        if (state.getValue(BeamLanternBlock.LIT) == shouldBeLit) {
+            return;
+        }
+
+        int chargeDelay = Math.max(0, KineticConfig.beamLanternChargeUpTicks());
+        if (shouldBeLit && chargeDelay > 0) {
+            // One-shot scheduled tick: only queued (and only once) while the lantern charges up.
+            if (!level.getBlockTicks().hasScheduledTick(worldPosition, state.getBlock())) {
                 level.scheduleTick(worldPosition, state.getBlock(), chargeDelay);
-            } else {
-                setLit(hasSignal);
             }
+        } else {
+            setLit(shouldBeLit);
         }
     }
 
@@ -52,13 +82,12 @@ public class BeamLanternBlockEntity extends SmartBlockEntity {
      */
     public void serverTick() {
         if (level == null || level.isClientSide) return;
-        boolean powered = getBlockState().getValue(BeamLanternBlock.POWERED);
-        setLit(powered);
+        setLit(BeamLanternBlock.isLitFor(level.getBlockState(worldPosition)));
     }
 
     public void setLit(boolean lit) {
         if (level == null || level.isClientSide) return;
-        BlockState state = getBlockState();
+        BlockState state = level.getBlockState(worldPosition);
         if (state.getValue(BeamLanternBlock.LIT) == lit) return;
 
         BlockState newState = state.setValue(BeamLanternBlock.LIT, lit);
@@ -78,10 +107,11 @@ public class BeamLanternBlockEntity extends SmartBlockEntity {
      */
     public void handleDirectionChange(Direction newDir) {
         if (level == null || level.isClientSide) return;
-        if (!getBlockState().getValue(BeamLanternBlock.LIT)) return;
+        BlockState state = level.getBlockState(worldPosition);
+        if (!state.getValue(BeamLanternBlock.LIT)) return;
 
         lastFacing = newDir;
-        placeBeam((ServerLevel) level, worldPosition, getBlockState());
+        placeBeam((ServerLevel) level, worldPosition, state);
     }
 
     private void placeBeam(ServerLevel level, BlockPos origin, BlockState state) {
