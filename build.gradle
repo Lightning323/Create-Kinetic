@@ -242,6 +242,7 @@ dependencies {
     runtimeOnly files("libs/Jade-${minecraft_version}-NeoForge-15.10.5.jar")
     runtimeOnly "curse.maven:forge-config-api-port-547434:7213611"
     implementation "curse.maven:dye-depot-988504:8493712"
+    runtimeOnly "maven.modrinth:fyecrpLB:MHxbi4Pb" //Creative mode tweaks
 
     //libraries
     implementation "com.fasterxml.jackson.core:jackson-annotations:2.18.2"
