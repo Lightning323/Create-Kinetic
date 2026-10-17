@@ -507,7 +507,7 @@ public class JoystickBlockEntity extends SmartBlockEntity implements MenuProvide
    static {
       BIND_COUNT = JoystickDirection.VALUES.length + 1;
       BIND_BUTTON_INDEX = JoystickDirection.VALUES.length;
-      BUTTON_SLOT_1 = JoystickDirection.VALUES.length + 2;
+      BUTTON_SLOT_1 = JoystickDirection.VALUES.length * 2;
       BUTTON_SLOT_2 = BUTTON_SLOT_1 + 1;
       FREQUENCY_SLOTS = BUTTON_SLOT_2 + 1;
       TRANSMITTER_COUNT = JoystickDirection.VALUES.length + 1;
