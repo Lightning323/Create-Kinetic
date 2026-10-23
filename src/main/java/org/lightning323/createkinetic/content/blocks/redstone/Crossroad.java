@@ -100,12 +100,20 @@ public class Crossroad extends DiodeBlock {
     @Override
     protected int getInputSignal(Level level, BlockPos pos, BlockState state) {
         Direction back = state.getValue(FACING);
-        BlockPos backPos = pos.relative(back);
         Direction front = back.getOpposite();
-        BlockPos frontPos = pos.relative(front);
-        BlockPos source = level.getSignal(frontPos, front) > level.getSignal(backPos, back) ? frontPos : backPos;
-        int signal = Math.max(level.getSignal(frontPos, front), level.getSignal(backPos, back));
-        BlockState sourceState = level.getBlockState(source);
+        return Math.max(getSideInputSignal(level, pos, back), getSideInputSignal(level, pos, front));
+    }
+
+    protected int getFlankInputSignal(Level level, BlockPos pos, BlockState state) {
+        Direction left = state.getValue(FACING).getClockWise();
+        Direction right = left.getOpposite();
+        return Math.max(getSideInputSignal(level, pos, right), getSideInputSignal(level, pos, left));
+    }
+
+    private static int getSideInputSignal(Level level, BlockPos pos, Direction side) {
+        BlockPos sourcePos = pos.relative(side);
+        BlockState sourceState = level.getBlockState(sourcePos);
+        int signal = getSignalWithoutSelf(level, sourcePos, side, pos);
         if (RedstoneGateHelper.attenuates(sourceState)) {
             signal = Math.max(signal - 1, 0);
         }
@@ -113,19 +121,27 @@ public class Crossroad extends DiodeBlock {
         return wire > 0 ? wire - 1 : signal;
     }
 
-    protected int getFlankInputSignal(Level level, BlockPos pos, BlockState state) {
-        Direction left = state.getValue(FACING).getClockWise();
-        BlockPos leftPos = pos.relative(left);
-        Direction right = left.getOpposite();
-        BlockPos rightPos = pos.relative(right);
-        BlockPos source = level.getSignal(rightPos, right) > level.getSignal(leftPos, left) ? rightPos : leftPos;
-        int signal = Math.max(level.getSignal(rightPos, right), level.getSignal(leftPos, left));
-        BlockState sourceState = level.getBlockState(source);
-        if (RedstoneGateHelper.attenuates(sourceState)) {
-            signal = Math.max(signal - 1, 0);
+    /**
+     * Equivalent to {@link Level#getSignal(BlockPos, Direction)}, except the crossroad's own
+     * direct signal is excluded from the weak-power calculation. Full-cube receivers such as a
+     * redstone lamp reflect the crossroad's strong output back through {@code getDirectSignalTo};
+     * including that reflection makes the crossroad read its own output as an input and latch on.
+     */
+    private static int getSignalWithoutSelf(Level level, BlockPos sourcePos, Direction side, BlockPos selfPos) {
+        BlockState sourceState = level.getBlockState(sourcePos);
+        int signal = sourceState.getSignal(level, sourcePos, side);
+        if (!sourceState.shouldCheckWeakPower(level, sourcePos, side)) {
+            return signal;
         }
-        int wire = RedstoneGateHelper.wirePower(sourceState);
-        return wire > 0 ? wire - 1 : signal;
+        int weakSignal = 0;
+        for (Direction direction : Direction.values()) {
+            BlockPos neighbor = sourcePos.relative(direction);
+            if (neighbor.equals(selfPos)) {
+                continue;
+            }
+            weakSignal = Math.max(weakSignal, level.getDirectSignal(neighbor, direction));
+        }
+        return Math.max(signal, weakSignal);
     }
 
     @Override
