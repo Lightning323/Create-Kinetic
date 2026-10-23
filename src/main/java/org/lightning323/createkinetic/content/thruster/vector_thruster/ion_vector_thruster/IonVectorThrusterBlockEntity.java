@@ -6,6 +6,8 @@ import net.createmod.catnip.lang.LangBuilder;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.energy.IEnergyStorage;
@@ -239,6 +241,27 @@ public class IonVectorThrusterBlockEntity extends AbstractVectorThrusterBlockEnt
         return KineticConfig.ION_THRUSTER_ENERGY_CAPACITY_FE.get();
     }
 
+    @Override
+    protected void write(final CompoundTag tag, final HolderLookup.Provider registries, final boolean clientPacket) {
+        tag.putInt("EnergyStored", this.energyStored);
+        tag.putDouble("EnergyDrainAccumulator", this.energyDrainAccumulator);
+        tag.putDouble("LastConsumedFePerTick", this.lastConsumedFePerTick);
+        super.write(tag, registries, clientPacket);
+    }
+
+    @Override
+    protected void read(final CompoundTag tag, final HolderLookup.Provider registries, final boolean clientPacket) {
+        this.energyStored = tag.getInt("EnergyStored");
+        this.energyDrainAccumulator = tag.getDouble("EnergyDrainAccumulator");
+        this.lastConsumedFePerTick = tag.getDouble("LastConsumedFePerTick");
+        this.lastEnergyDrainGameTime = -1L;
+        this.clampEnergyToCapacity();
+        super.read(tag, registries, clientPacket);
+    }
+
+    private void clampEnergyToCapacity() {
+        this.energyStored = Math.clamp(this.energyStored, 0, this.getEnergyCapacity());
+    }
 
     @Override
     protected boolean isWorking() {

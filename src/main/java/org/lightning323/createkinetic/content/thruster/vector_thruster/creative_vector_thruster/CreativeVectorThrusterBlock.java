@@ -4,26 +4,20 @@ import com.mojang.serialization.MapCodec;
 import com.simibubi.create.content.equipment.wrench.IWrenchable;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntityTicker;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.lightning323.createkinetic.content.thruster.AbstractThrusterBlock;
 import org.lightning323.createkinetic.content.thruster.AbstractThrusterBlockEntity;
-import org.lightning323.createkinetic.content.thruster.ThrusterShapes;
-import org.lightning323.createkinetic.content.thruster.vector_thruster.ion_vector_thruster.IonVectorThrusterBlock;
+import org.lightning323.createkinetic.content.thruster.vector_thruster.AbstractVectorThrusterBlock;
 import org.lightning323.createkinetic.registries.KineticBlockEntities;
 
-public class CreativeVectorThrusterBlock extends AbstractThrusterBlock implements IWrenchable {
+public class CreativeVectorThrusterBlock extends AbstractVectorThrusterBlock implements IWrenchable {
     public static final MapCodec<CreativeVectorThrusterBlock> CODEC = simpleCodec(CreativeVectorThrusterBlock::new);
 
     public CreativeVectorThrusterBlock(Properties properties) {
